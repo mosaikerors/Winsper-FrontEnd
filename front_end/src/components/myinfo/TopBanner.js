@@ -25,12 +25,24 @@ const styles = StyleSheet.create({
     attendance: {
         marginTop: 46,
         marginRight: 34,
-        width: 70,
+        //width: 70,
         height: 40
+    },
+    checked: {
+        width: 90
+    },
+    unchecked: {
+        width: 70
     }
 })
 
 class TopBanner extends React.Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            checked: false,  //是否签到
+        }
+    }
     render() {
         return (
             <React.Fragment>
@@ -58,7 +70,19 @@ class TopBanner extends React.Component {
                         </Text>
                     </View>
                     <View style={{ flexDirection: 'row-reverse', flex: 1 }}>
-                        <Button containerStyle={[styles.attendance, styles.border]} title="签到" />
+                        {this.state.checked ? (
+                            <Button containerStyle={[styles.attendance, styles.border,styles.checked]}
+                                title="已签到"
+                                onPress={() => this.setState({ checked: false })}
+                                icon={{ name: "check" }}
+                            />
+                        ) : (
+                                < Button containerStyle={[styles.attendance, styles.border,styles.unchecked]}
+                                    title="签到"
+                                    onPress={() => this.setState({ checked: true })}
+                                />
+                            )
+                        }
                     </View>
                 </View>
             </React.Fragment>
