@@ -23,10 +23,10 @@ const styles = StyleSheet.create({
         //borderWidth:1
     },
     attendance: {
-        marginTop: 50,
+        marginTop: 46,
         marginRight: 34,
         width: 70,
-        height:40
+        height: 40
     }
 })
 
@@ -34,7 +34,7 @@ class TopBanner extends React.Component {
     render() {
         return (
             <React.Fragment>
-                <View style={{ flexDirection: "row" }}>
+                <View style={{ flexDirection: "row", marginBottom: 12 }}>
                     <Avatar
                         rounded
                         size="large"
@@ -58,7 +58,7 @@ class TopBanner extends React.Component {
                         </Text>
                     </View>
                     <View style={{ flexDirection: 'row-reverse', flex: 1 }}>
-                        <Button containerStyle={[styles.attendance,styles.border]} title="签到" />
+                        <Button containerStyle={[styles.attendance, styles.border]} title="签到" />
                     </View>
                 </View>
             </React.Fragment>
