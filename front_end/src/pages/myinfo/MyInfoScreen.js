@@ -15,14 +15,14 @@ const styles = StyleSheet.create({
 class SettingsScreen extends React.Component {
     render() {
         return (
-            <React.Fragment>
+            <View>
                 <TopBanner />
                 <Divider />
                 <FollowBanner />
                 <Divider />
                 <DetailedBlock />
                 <BottomBanner />
-            </React.Fragment>
+            </View>
         );
     }
 }
