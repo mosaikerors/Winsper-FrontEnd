@@ -18,7 +18,7 @@ const styles = StyleSheet.create({
 class FollowBanner extends React.Component {
     render() {
         return (
-            <React.Fragment>
+            <View>
                 <View style={{ flexDirection: 'row' }}>
                     <View style={styles.block}>
                         <Text>1</Text>
@@ -33,7 +33,7 @@ class FollowBanner extends React.Component {
                         <Text>粉丝</Text>
                     </View>
                 </View>
-            </React.Fragment>
+            </View>
         );
     }
 }

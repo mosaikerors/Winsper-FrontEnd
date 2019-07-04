@@ -16,7 +16,7 @@ const styles = StyleSheet.create({
 class BottomBanner extends React.Component {
     render() {
         return (
-            <React.Fragment>
+            <View>
                 <View style={{ flex: 1, flexDirection: 'column-reverse' }}>
                     <View style={{ height: 40, flexDirection: 'row' }}>
                         <View style={{ flexDirection: 'row'}}>
@@ -30,7 +30,7 @@ class BottomBanner extends React.Component {
                     </View>
                     <Divider />
                 </View>
-            </React.Fragment>
+            </View>
         );
     }
 }
