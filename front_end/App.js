@@ -1,49 +1,72 @@
-/**
- * Sample React Native App
- * https://github.com/facebook/react-native
- *
- * @format
- * @flow
- */
-
 import React, {Component} from 'react';
-import {Platform, StyleSheet, Text, View} from 'react-native';
+import {
+  View, Text, StyleSheet, ScrollView,
+  Image, TouchableOpacity, NativeModules,
+} from 'react-native';
 
-const instructions = Platform.select({
-  ios: 'Press Cmd+R to reload,\n' + 'Cmd+D or shake for dev menu',
-  android:
-    'Double tap R on your keyboard to reload,\n' +
-    'Shake or press menu button for dev menu',
-});
 
-type Props = {};
-export default class App extends Component<Props> {
-  render() {
-    return (
-      <View style={styles.container}>
-        <Text style={styles.welcome}>Welcome to React Native!</Text>
-        <Text style={styles.instructions}>To get started, edit App.js</Text>
-        <Text style={styles.instructions}>{instructions}</Text>
-      </View>
-    );
-  }
-}
+let ImagePicker = NativeModules.ImageCropPicker;
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
     justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: '#F5FCFF',
+    alignItems: 'center'
   },
-  welcome: {
+  button: {
+    backgroundColor: 'blue',
+    marginBottom: 10
+  },
+  text: {
+    color: 'white',
     fontSize: 20,
-    textAlign: 'center',
-    margin: 10,
-  },
-  instructions: {
-    textAlign: 'center',
-    color: '#333333',
-    marginBottom: 5,
-  },
+    textAlign: 'center'
+  }
 });
+
+export default class App extends Component {
+  
+  constructor() {
+    super();
+    this.state = {
+      image: null,
+      images: null
+    };
+    this.renderImage = this.renderImage.bind(this);
+  }
+  pickMultiple() {
+    ImagePicker.openPicker({
+      multiple: true,
+      waitAnimationEnd: false,
+      includeExif: true,
+      forceJpg: true,
+    }).then(images => {
+      this.setState({
+        image: null,
+        images: images.map(i => {
+          console.log('received image', i);
+          return {uri: i.path, width: i.width, height: i.height, mime: i.mime};
+        })
+      });
+    }).catch(e => alert(e));
+  }
+  
+  
+  renderImage(image) {
+    return <Image style={{width: 300, height: 300, resizeMode: 'contain'}} source={image} />
+  }
+  
+  
+  render() {
+    return (
+        <View style={styles.container}>
+      <ScrollView>
+        {this.state.image ? this.renderImage(this.state.image) : null}
+        {this.state.images ? this.state.images.map(i => <View key={i.uri}>{this.renderImage(i)}</View>) : null}
+      </ScrollView>
+      <TouchableOpacity onPress={this.pickMultiple.bind(this)} style={styles.button}>
+        <Text style={styles.text}>Select Multiple</Text>
+      </TouchableOpacity>
+    </View>);
+  }
+}

@@ -1,11 +1,19 @@
 import React from "react";
 import { View } from "react-native";
-import {Header, ListItem,Avatar, Badge, Icon, withBadge} from "react-native-elements";
+import {Header, ListItem} from "react-native-elements";
 import Carousel from "react-native-snap-carousel";
 import styled from "styled-components/native"
+import CreateHean from "./CreateHean"
+import { createStackNavigator, createAppContainer } from 'react-navigation';
 
 
-class ExploreScreen extends React.Component {
+
+class Explore extends React.Component {
+    
+    static navigationOptions = {
+        title: 'Explore',
+    };
+    
     constructor(props){
         super(props);
         this.state = {
@@ -62,9 +70,6 @@ class ExploreScreen extends React.Component {
     render() {
         return (
             <View>
-                <Header
-                    centerComponent={{ text: 'MY TITLE', style: { color: '#fff' } }}
-                />
                 <CarouselBackgroundView>
                     <Carousel
                         ref={ (c) => { this._carousel = c; } }
@@ -84,6 +89,7 @@ class ExploreScreen extends React.Component {
                             key={i}
                             title={item.title}
                             leftIcon={{ name: item.icon }}
+                            onPress={()=>this.props.navigation.navigate(item.pagename)}
                         />
                     ))
                 }
@@ -93,7 +99,28 @@ class ExploreScreen extends React.Component {
     }
 }
 
-export default ExploreScreen;
+const Stack = createStackNavigator(
+    {
+        Explore: {
+            screen: Explore,
+        },
+        CreateHean: {
+            screen: CreateHean,
+        },
+    },
+    {
+        initialRouteName: 'Explore',
+    }
+);
+
+const Container = createAppContainer(Stack);
+
+export default class ExploreScreen extends React.Component {
+    render() {
+        return <Container />;
+    }
+}
+
 const VideoTitleText = styled.Text`
   color: white;
   top: 28;
@@ -123,18 +150,23 @@ const CarouselBackgroundView = styled.View`
 const list = [
     {
         title: '手账',
-        icon: 'av-timer'
+        icon: 'av-timer',
+        pagename: 'CreateHean'
     },
     {
         title: '函',
-        icon: 'flight-takeoff'
+        icon: 'flight-takeoff',
+        pagename: 'CreateHean'
+    
     },
     {
         title: '心情报表',
-        icon: 'av-timer'
+        icon: 'av-timer',
+        pagename: 'CreateHean'
     },
     {
         title: '日记',
-        icon: 'flight-takeoff'
+        icon: 'flight-takeoff',
+        pagename: 'CreateHean'
     }
-]
+];
