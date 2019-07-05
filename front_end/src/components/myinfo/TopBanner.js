@@ -45,7 +45,7 @@ class TopBanner extends React.Component {
     }
     render() {
         return (
-            <View>
+            <React.Fragment>
                 <View style={{ flexDirection: "row", marginBottom: 12 }}>
                     <Avatar
                         rounded
@@ -85,7 +85,7 @@ class TopBanner extends React.Component {
                         }
                     </View>
                 </View>
-            </View>
+            </React.Fragment>
         );
     }
 }

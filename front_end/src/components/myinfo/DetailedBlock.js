@@ -19,7 +19,7 @@ const styles = StyleSheet.create({
 class DetailedBlock extends React.Component {
     render() {
         return (
-            <View>
+            <React.Fragment>
                 <Card containerStyle={{ flexDirection: 'column' }}>
                     <View style={{ height: 100, flexDirection: 'row' }}>
                         <View style={styles.block}>
@@ -66,7 +66,7 @@ class DetailedBlock extends React.Component {
                         </View>
                     </View>
                 </Card>
-            </View>
+            </React.Fragment>
         );
     }
 }
