@@ -12,13 +12,16 @@ const styles = StyleSheet.create({
     },
 })
 
-class SettingsScreen extends React.Component {
+class InitialScreen extends React.Component {
+    static navigationOptions = {
+        title: 'Me',
+    };
     render() {
         return (
             <React.Fragment>
                 <TopBanner />
                 <Divider />
-                <FollowBanner />
+                <FollowBanner navigation={this.props.navigation} />
                 <Divider />
                 <DetailedBlock />
                 <BottomBanner />
@@ -26,4 +29,4 @@ class SettingsScreen extends React.Component {
         );
     }
 }
-export default SettingsScreen;
+export default InitialScreen;
