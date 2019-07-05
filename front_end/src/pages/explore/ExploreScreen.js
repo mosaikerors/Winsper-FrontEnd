@@ -1,6 +1,6 @@
 import React from "react";
 import { View } from "react-native";
-import {Header, ListItem} from "react-native-elements";
+import { ListItem} from "react-native-elements";
 import Carousel from "react-native-snap-carousel";
 import styled from "styled-components/native"
 import CreateHean from "./CreateHean"
@@ -65,7 +65,7 @@ class Explore extends React.Component {
                 <VideoTitleText>{item.title}</VideoTitleText>
             </ThumbnailBackgroundView>
         );
-    }
+    };
     
     render() {
         return (

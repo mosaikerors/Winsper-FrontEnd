@@ -1,29 +1,35 @@
 import React, {Component, Fragment} from 'react';
-import { TextareaItem } from '@ant-design/react-native'
+import {TextareaItem} from '@ant-design/react-native'
 import {ListItem} from 'react-native-elements'
 import {
-    View, Text, StyleSheet, ScrollView,
-    Image, TouchableOpacity, NativeModules,
+    View, ScrollView,
+    Image, NativeModules,Alert
 } from 'react-native';
-import ''
-let ImagePicker = NativeModules.ImageCropPicker;
 
-export default class App extends Component{
+const ImagePicker = NativeModules.ImageCropPicker;
+
+class App extends Component{
     constructor() {
         super();
         this.state = {
-            image: null,
             images: null
         };
-        this.list = [
-            { title: '地点', func: this.pickMultiple },
-            { title: '私密度', func: this.pickMultiple },
-            { title: '添加照片', func: this.pickMultiple }
-        ];
         this.renderImage = this.renderImage.bind(this);
-        this.pickMultiple = this.pickMultiple.bind(this);
+        this.addPlace = this.addPlace.bind(this);
+        this.addPrivacy = this.addPrivacy.bind(this);
+        this.addImage = this.addImage.bind(this);
+        
     }
-    pickMultiple() {
+    
+    addPrivacy(){
+        Alert.alert("privacy")
+    }
+    
+    addPlace(){
+        Alert.alert("place")
+    }
+    
+    addImage() {
         ImagePicker.openPicker({
             multiple: true,
             waitAnimationEnd: false,
@@ -31,9 +37,7 @@ export default class App extends Component{
             forceJpg: true,
         }).then(images => {
             this.setState({
-                image: null,
                 images: images.map(i => {
-                    console.log('received image', i);
                     return {uri: i.path, width: i.width, height: i.height, mime: i.mime};
                 })
             });
@@ -43,6 +47,7 @@ export default class App extends Component{
     renderImage(image) {
         return <Image style={{width: 300, height: 300, resizeMode: 'contain'}} source={image} />
     }
+    
     static navigationOptions = {
         title: 'New',
     };
@@ -51,48 +56,39 @@ export default class App extends Component{
         return (
             <Fragment>
                 <TextareaItem
-                    rows={10}
                     placeholder="记下此刻心情"
-                    autoHeight
-                    style={{ paddingVertical: 5 }}
-                    
+                    rows={10}
                 />
-                <View style={styles.container}>
-                    <ScrollView>
-                        {this.state.image ? this.renderImage(this.state.image) : null}
-                        {this.state.images ? this.state.images.map(i => <View key={i.uri}>{this.renderImage(i)}</View>) : null}
-                    </ScrollView>
-                    <TouchableOpacity onPress={this.pickMultiple.bind(this)} style={styles.button}>
-                        <Text style={styles.text}>Select Multiple</Text>
-                    </TouchableOpacity>
+                <ScrollView>
+                    {this.state.image ? this.renderImage(this.state.image) : null}
+                    {this.state.images ? this.state.images.map(i => <View key={i.uri}>{this.renderImage(i)}</View>) : null}
+                </ScrollView>
+                <View>
+                    <ListItem
+                        title={"添加图片"}
+                        onPress={this.addImage}
+                        leftIcon={{ name: "image" }}
+                        chevronColor="white"
+                        chevron
+                    />
+                    <ListItem
+                        title={"地点"}
+                        onPress={this.addPlace}
+                        leftIcon={{ name: "map" }}
+                        chevronColor="white"
+                        chevron
+                    />
+                    <ListItem
+                        title={"可见范围"}
+                        onPress={this.addPrivacy}
+                        leftIcon={{ name: "people" }}
+                        chevronColor="white"
+                        chevron
+                    />
                 </View>
-                {
-                    this.list.map((item,i)=>(
-                        <ListItem
-                            key={i}
-                            title={item.title}
-                            onPress={()=>item.func}
-                        />
-                    ))
-                }
             </Fragment>
         );
     }
 }
 
-const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        justifyContent: 'center',
-        alignItems: 'center'
-    },
-    button: {
-        backgroundColor: 'blue',
-        marginBottom: 10
-    },
-    text: {
-        color: 'white',
-        fontSize: 20,
-        textAlign: 'center'
-    }
-});
+export default App;
