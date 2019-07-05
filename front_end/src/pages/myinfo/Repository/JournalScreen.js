@@ -29,8 +29,9 @@ class JournalScreen extends React.Component {
         return (
             <React.Fragment>
                 <View>
-                    {list.map((listItem) => (
+                    {list.map((listItem, index) => (
                         <ListItem
+                            key={index}
                             leftAvatar={{ source: { uri: listItem.avatar_url } }}
                             title={listItem.name}
                             subtitle={listItem.subtitle}
