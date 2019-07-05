@@ -15,6 +15,7 @@ import LoggedOutScreen from "./LoggedOutScreen"
 
 const MyInfoScreen = createStackNavigator(
     {
+        LoggedOut: { screen: LoggedOutScreen },
         LoggedIn: { screen: LoggedInScreen },
         Following: { screen: FollowingScreen },
         Followers: { screen: FollowersScreen },
@@ -27,7 +28,6 @@ const MyInfoScreen = createStackNavigator(
         Submission: { screen: SubmissionScreen },
         MoodReport: { screen: MoodReportScreen },
         Comment: { screen: CommentScreen },
-        LoggedOut: { screen: LoggedOutScreen }
     },
     {
         initialRouteName: "LoggedIn"

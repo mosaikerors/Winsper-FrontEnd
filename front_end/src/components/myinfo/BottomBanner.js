@@ -2,6 +2,7 @@ import React from "react";
 import { Text, View, StyleSheet } from "react-native";
 import { Button, Avatar, Divider, Card } from 'react-native-elements'
 import { TouchableOpacity } from "react-native-gesture-handler";
+import { StackActions, NavigationActions } from "react-navigation";
 
 const styles = StyleSheet.create({
     border: {
@@ -16,6 +17,13 @@ const styles = StyleSheet.create({
     }
 })
 
+const logout = StackActions.reset({
+    index: 0,
+    actions: [
+        NavigationActions.navigate({ routeName: 'LoggedOut' })
+    ]
+});
+
 class BottomBanner extends React.Component {
     render() {
         return (
@@ -28,7 +36,7 @@ class BottomBanner extends React.Component {
                             <View style={styles.block}><Text>东19</Text></View>
                         </View>
                         <View style={{ flexDirection: 'row-reverse', flex: 1 }}>
-                            <TouchableOpacity style={styles.block} onPress={() => this.props.navigation.navigate('LoggedOut')}>
+                            <TouchableOpacity style={styles.block} onPress={() => this.props.navigation.dispatch(logout)}>
                                 <Text>退出登录</Text>
                             </TouchableOpacity>
                         </View>
