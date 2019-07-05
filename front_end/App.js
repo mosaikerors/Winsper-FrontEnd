@@ -1,72 +1,96 @@
-import React, {Component} from 'react';
-import {
-  View, Text, StyleSheet, ScrollView,
-  Image, TouchableOpacity, NativeModules,
-} from 'react-native';
 
-
-let ImagePicker = NativeModules.ImageCropPicker;
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center'
-  },
-  button: {
-    backgroundColor: 'blue',
-    marginBottom: 10
-  },
-  text: {
-    color: 'white',
-    fontSize: 20,
-    textAlign: 'center'
-  }
-});
-
-export default class App extends Component {
-  
-  constructor() {
-    super();
-    this.state = {
-      image: null,
-      images: null
-    };
-    this.renderImage = this.renderImage.bind(this);
-  }
-  pickMultiple() {
-    ImagePicker.openPicker({
-      multiple: true,
-      waitAnimationEnd: false,
-      includeExif: true,
-      forceJpg: true,
-    }).then(images => {
-      this.setState({
-        image: null,
-        images: images.map(i => {
-          console.log('received image', i);
-          return {uri: i.path, width: i.width, height: i.height, mime: i.mime};
-        })
-      });
-    }).catch(e => alert(e));
-  }
-  
-  
-  renderImage(image) {
-    return <Image style={{width: 300, height: 300, resizeMode: 'contain'}} source={image} />
-  }
-  
-  
-  render() {
-    return (
-        <View style={styles.container}>
-      <ScrollView>
-        {this.state.image ? this.renderImage(this.state.image) : null}
-        {this.state.images ? this.state.images.map(i => <View key={i.uri}>{this.renderImage(i)}</View>) : null}
-      </ScrollView>
-      <TouchableOpacity onPress={this.pickMultiple.bind(this)} style={styles.button}>
-        <Text style={styles.text}>Select Multiple</Text>
-      </TouchableOpacity>
-    </View>);
-  }
-}
+// import React, { Component } from 'react';
+// import {
+//     StyleSheet,
+//     View
+// } from 'react-native';
+//
+// export default class ReactNativeProject extends Component {
+//     render() {
+//         return (
+//             <View style={styles.container}>
+//
+//                 <View style={styles.viewItem1}>
+//                     <View style={{flex:1,height:40,backgroundColor:'red'}}></View>
+//                     <View style={{flex:1,height:40,backgroundColor:'blue',alignSelf:'center'}}></View>
+//                     <View style={{flex:1,height:40,backgroundColor:'red',alignSelf:'flex-end'}}></View>
+//                 </View>
+//
+//                 <View style={styles.viewItem2}>
+//                     <View style={styles.viewItem2Child1}>
+//                     </View>
+//                     <View style={styles.viewItem2Child2}>
+//                     </View>
+//                 </View>
+//
+//                 <View style={styles.viewItem3}>
+//                     <View style={styles.viewItem3Child1}>
+//                     </View>
+//                     <View style={styles.viewItem3Child2}>
+//                     </View>
+//                     <View style={styles.viewItem3Child3}>
+//                     </View>
+//                 </View>
+//
+//                 <View style={{flex:2,backgroundColor:'#bbceee',flexDirection:'row'}}>
+//                     <View style={{flex:1,height:100,flexDirection:'row',justifyContent:'center',marginTop:30}}>
+//                         <View style={{width:100,backgroundColor:'red'}}></View>
+//                         <View style={{width:70,backgroundColor:'blue'}}></View>
+//                     </View>
+//                 </View>
+//             </View>
+//         );
+//     }
+// }
+//
+// const styles = StyleSheet.create({
+//     container: {
+//         flex: 1
+//     },
+//     viewItem1:{
+//         flex:1,
+//         flexDirection:'row',
+//         height:50,
+//         backgroundColor:'#FF33CC'
+//     },
+//     viewItem2:{
+//         flex:1,
+//         flexDirection:'row',
+//         height:50,
+//         marginTop:15,
+//         backgroundColor:'#00FFFF',
+//
+//         flexWrap:'wrap'
+//     },
+//     viewItem2Child1:
+//         {
+//             width:200,
+//             height:30,
+//             backgroundColor:'green'
+//         },
+//     viewItem2Child2:
+//         {
+//             width:200,
+//             height:30,
+//             backgroundColor:'red'
+//         },
+//     viewItem3:{
+//         flex:1,
+//         flexDirection:'row',
+//         height:50,
+//         backgroundColor:'#CCBBFF'
+//     },
+//     viewItem3Child1:{
+//         flex:1,
+//         backgroundColor:'#00ffbb'
+//     },
+//     viewItem3Child2:{
+//         flex:1,
+//         backgroundColor:'#aabbdd'
+//     },
+//     viewItem3Child3:
+//         {
+//             flex:1,
+//             backgroundColor:'#0000ff'
+//         }
+// });
