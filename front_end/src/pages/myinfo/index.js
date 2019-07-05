@@ -1,5 +1,5 @@
 import { createStackNavigator, createAppContainer } from "react-navigation";
-import InitialScreen from "./InitialScreen"
+import LoggedInScreen from "./LoggedInScreen"
 import FollowingScreen from "./Follow/FollowingScreen"
 import FollowersScreen from "./Follow/FollowersScreen"
 import MutualFollowScreen from "./Follow/MutualFollowScreen";
@@ -11,10 +11,11 @@ import JournalScreen from "./Repository/JournalScreen";
 import SubmissionScreen from "./Repository/SubmissionScreen";
 import MoodReportScreen from "./Repository/MoodReportScreen";
 import CommentScreen from "./Repository/CommentScreen";
+import LoggedOutScreen from "./LoggedOutScreen"
 
 const MyInfoScreen = createStackNavigator(
     {
-        Initial: { screen: InitialScreen },
+        LoggedIn: { screen: LoggedInScreen },
         Following: { screen: FollowingScreen },
         Followers: { screen: FollowersScreen },
         MutualFollow: { screen: MutualFollowScreen },
@@ -26,9 +27,10 @@ const MyInfoScreen = createStackNavigator(
         Submission: { screen: SubmissionScreen },
         MoodReport: { screen: MoodReportScreen },
         Comment: { screen: CommentScreen },
+        LoggedOut: { screen: LoggedOutScreen }
     },
     {
-        initialRouteName: 'Initial'
+        initialRouteName: "LoggedIn"
     }
 );
 

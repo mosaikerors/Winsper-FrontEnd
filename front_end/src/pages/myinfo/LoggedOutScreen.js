@@ -10,23 +10,30 @@ const styles = StyleSheet.create({
     border: {
         borderWidth: 1,
     },
+    attendance: {
+        marginTop: 46,
+        marginRight: 34,
+        //width: 70,
+        height: 40
+    },
+    checked: {
+        width: 90
+    },
 })
 
-class InitialScreen extends React.Component {
+class LoggedOutScreen extends React.Component {
     static navigationOptions = {
-        title: '我的',
+        title: '风语',
     };
     render() {
         return (
             <React.Fragment>
-                <TopBanner />
-                <Divider />
-                <FollowBanner navigation={this.props.navigation} />
-                <Divider />
-                <DetailedBlock navigation={this.props.navigation} />
-                <BottomBanner />
+                <Button containerStyle={[styles.attendance, styles.border, styles.checked]}
+                    title="登录"
+                    onPress={() => this.setState({ checked: false })}
+                />
             </React.Fragment>
         );
     }
 }
-export default InitialScreen;
+export default LoggedOutScreen;
