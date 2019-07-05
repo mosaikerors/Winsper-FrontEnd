@@ -14,7 +14,7 @@ const styles = StyleSheet.create({
 
 class InitialScreen extends React.Component {
     static navigationOptions = {
-        title: 'Me',
+        title: '我的',
     };
     render() {
         return (
@@ -23,7 +23,7 @@ class InitialScreen extends React.Component {
                 <Divider />
                 <FollowBanner navigation={this.props.navigation} />
                 <Divider />
-                <DetailedBlock />
+                <DetailedBlock navigation={this.props.navigation} />
                 <BottomBanner />
             </React.Fragment>
         );

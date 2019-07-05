@@ -26,7 +26,7 @@ class FollowBanner extends React.Component {
             <React.Fragment>
                 <View style={{ flexDirection: 'row' }}>
                     <View style={styles.block}>
-                        <TouchableOpacity style={styles.text}>
+                        <TouchableOpacity style={styles.text} onPress={()=>this.props.navigation.navigate('MutualFollow')}>
                             <Text>1</Text>
                             <Text>互相关注</Text>
                         </TouchableOpacity>
@@ -38,7 +38,7 @@ class FollowBanner extends React.Component {
                         </TouchableOpacity>
                     </View>
                     <View style={styles.block}>
-                        <TouchableOpacity style={styles.text}>
+                        <TouchableOpacity style={styles.text} onPress={()=>this.props.navigation.navigate('Followers')}>
                             <Text>1</Text>
                             <Text>粉丝</Text>
                         </TouchableOpacity>

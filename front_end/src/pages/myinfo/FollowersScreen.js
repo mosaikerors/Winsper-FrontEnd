@@ -21,9 +21,9 @@ const list = [
     }
 ];
 
-class FollowingScreen extends React.Component {
+class FollowersScreen extends React.Component {
     static navigationOptions = {
-        title: '我的关注',
+        title: '我的粉丝',
     };
     render() {
         return (
@@ -41,4 +41,4 @@ class FollowingScreen extends React.Component {
         );
     }
 }
-export default FollowingScreen;
+export default FollowersScreen;
