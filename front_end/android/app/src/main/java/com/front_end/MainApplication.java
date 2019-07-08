@@ -3,6 +3,8 @@ package com.front_end;
 import android.app.Application;
 
 import com.facebook.react.ReactApplication;
+import org.lovebing.reactnative.baidumap.BaiduMapPackage;
+import cn.qiuxiang.react.amap3d.AMap3DPackage;
 import com.reactnative.ivpusic.imagepicker.PickerPackage;
 import com.oblador.vectoricons.VectorIconsPackage;
 import com.BV.LinearGradient.LinearGradientPackage;
@@ -28,6 +30,8 @@ public class MainApplication extends Application implements ReactApplication {
     protected List<ReactPackage> getPackages() {
       return Arrays.<ReactPackage>asList(
           new MainReactPackage(),
+            new BaiduMapPackage(),
+            new AMap3DPackage(),
             new PickerPackage(),
             new VectorIconsPackage(),
             new LinearGradientPackage(),
