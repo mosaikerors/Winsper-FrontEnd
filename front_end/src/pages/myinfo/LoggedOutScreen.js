@@ -1,7 +1,9 @@
 import React from "react";
-import { Text, View, StyleSheet } from "react-native";
+import { Text, View, StyleSheet, ScrollView } from "react-native";
 import { Button, Avatar, Divider, Card } from 'react-native-elements'
 import { StackActions, NavigationActions } from "react-navigation";
+import Signup from "../../components/myinfo/Signup";
+import Signin from "../../components/myinfo/Signin";
 
 const styles = StyleSheet.create({
     border: {
@@ -32,10 +34,10 @@ class LoggedOutScreen extends React.Component {
     render() {
         return (
             <React.Fragment>
-                <Button containerStyle={[styles.attendance, styles.border, styles.checked]}
-                    title="登录"
-                    onPress={() => this.props.navigation.dispatch(login)}
-                />
+                <ScrollView>
+                    <Signup />
+                    <Signin />
+                </ScrollView>
             </React.Fragment>
         );
     }

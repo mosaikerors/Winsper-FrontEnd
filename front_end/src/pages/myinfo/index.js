@@ -4,7 +4,7 @@ import FollowingScreen from "./Follow/FollowingScreen"
 import FollowersScreen from "./Follow/FollowersScreen"
 import MutualFollowScreen from "./Follow/MutualFollowScreen";
 import MessageScreen from "./Repository/MessageScreen";
-import HeanScreen from "./Repository/HeanScreen";
+import HeanListScreen from "./Repository/HeanListScreen";
 import CollectionScreen from "./Repository/CollectionScreen";
 import DiaryScreen from "./Repository/DiaryScreen";
 import JournalScreen from "./Repository/JournalScreen";
@@ -13,6 +13,7 @@ import MoodReportScreen from "./Repository/MoodReportScreen";
 import CommentScreen from "./Repository/CommentScreen";
 import LoggedOutScreen from "./LoggedOutScreen"
 import SettingsScreen from "./SettingsScreen"
+import HeanDetailScreen from "./Repository/HeanDetailScreen"
 
 const MyInfoScreen = createStackNavigator(
     {
@@ -22,14 +23,15 @@ const MyInfoScreen = createStackNavigator(
         Followers: { screen: FollowersScreen },
         MutualFollow: { screen: MutualFollowScreen },
         Message: { screen: MessageScreen },
-        Hean: { screen: HeanScreen },
+        HeanList: { screen: HeanListScreen },
         Collection: { screen: CollectionScreen },
         Diary: { screen: DiaryScreen },
         Journal: { screen: JournalScreen },
         Submission: { screen: SubmissionScreen },
         MoodReport: { screen: MoodReportScreen },
         Comment: { screen: CommentScreen },
-        Settings: {screen: SettingsScreen}
+        Settings: { screen: SettingsScreen },
+        HeanDetail: { screen: HeanDetailScreen }
     },
     {
         initialRouteName: "LoggedIn"
