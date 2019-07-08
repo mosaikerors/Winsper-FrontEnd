@@ -43,7 +43,7 @@ class Explore extends React.Component {
             CarouselItem: [
                 {
                     key: 1,
-                    src: "https://images.pexels.com/photos/2171077/pexels-photo-2171077.jpeg?auto=compress&cs=tinysrgb&dpr=2&w=500"
+                    src: "http://i0.hdslb.com/bfs/archive/1.jpg"
                 },
                 {
                     key: 2,
