@@ -5276,6 +5276,11 @@ react-lifecycles-compat@^3.0.4:
   resolved "https://registry.npm.taobao.org/react-lifecycles-compat/download/react-lifecycles-compat-3.0.4.tgz#4f1a273afdfc8f3488a8c516bfda78f872352362"
   integrity sha1-TxonOv38jzSIqMUWv9p4+HI1I2I=
 
+react-native-baidu-map@^1.0.6:
+  version "1.0.6"
+  resolved "https://registry.npm.taobao.org/react-native-baidu-map/download/react-native-baidu-map-1.0.6.tgz#685af096f0096a514bd7d4fd536c8b257240b207"
+  integrity sha1-aFrwlvAJalFL19T9U2yLJXJAsgc=
+
 react-native-collapsible@^1.4.0:
   version "1.4.0"
   resolved "https://registry.yarnpkg.com/react-native-collapsible/-/react-native-collapsible-1.4.0.tgz#ec03cac361178319b77bb9993b73677356dd89d2"
