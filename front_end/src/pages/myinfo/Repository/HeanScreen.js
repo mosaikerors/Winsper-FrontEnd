@@ -1,6 +1,7 @@
 import React from "react";
 import { Text, View, StyleSheet } from "react-native";
 import { ListItem } from 'react-native-elements'
+import HeanCard from "../../../components/common/HeanCard";
 
 const styles = StyleSheet.create({
     border: {
@@ -29,14 +30,7 @@ class HeanScreen extends React.Component {
         return (
             <React.Fragment>
                 <View>
-                    {list.map((listItem, index) => (
-                        <ListItem
-                            key={index}
-                            leftAvatar={{ source: { uri: listItem.avatar_url } }}
-                            title={listItem.name}
-                            subtitle={listItem.subtitle}
-                        />
-                    ))}
+                    <HeanCard />
                 </View>
             </React.Fragment>
         );
