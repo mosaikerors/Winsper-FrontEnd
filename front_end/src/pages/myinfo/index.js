@@ -12,6 +12,7 @@ import SubmissionScreen from "./Repository/SubmissionScreen";
 import MoodReportScreen from "./Repository/MoodReportScreen";
 import CommentScreen from "./Repository/CommentScreen";
 import LoggedOutScreen from "./LoggedOutScreen"
+import SettingsScreen from "./SettingsScreen"
 
 const MyInfoScreen = createStackNavigator(
     {
@@ -28,6 +29,7 @@ const MyInfoScreen = createStackNavigator(
         Submission: { screen: SubmissionScreen },
         MoodReport: { screen: MoodReportScreen },
         Comment: { screen: CommentScreen },
+        Settings: {screen: SettingsScreen}
     },
     {
         initialRouteName: "LoggedIn"

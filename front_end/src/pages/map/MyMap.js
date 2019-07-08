@@ -88,9 +88,9 @@ export default class MyMap extends Component {
                     //console.warn('center', this.state.center.longitude);
                     console.log("here")
                     Geolocation.getCurrentPosition(data => {
-                        console.warn(JSON.stringify(data));
+                        console.log(JSON.stringify(data));
                     }, e => {
-                        console.warn(e, 'error');
+                        console.log(e, 'error');
                     })
                 }} />
             </React.Fragment>
