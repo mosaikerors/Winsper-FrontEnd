@@ -54,7 +54,7 @@ const theme = getTheme();
 class HeanCard extends React.Component{
     render(){
         return(
-            <ScrollView style={styles.scrollView}>
+            <View style={styles.scrollView}>
                 <View style={styles.container}>
                     <View style={theme.cardStyle}>
                         <Image source={{uri: this.props.src}} style={theme.cardImageStyle}/>
@@ -73,7 +73,7 @@ class HeanCard extends React.Component{
                         </View>
                     </View>
                 </View>
-            </ScrollView>
+            </View>
         )
     }
 }

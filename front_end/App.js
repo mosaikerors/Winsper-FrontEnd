@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 // import ImageViewer from "react-native-image-zoom-viewer";
 // import React, { Component } from "react";
 // import { Modal, View, TouchableOpacity } from "react-native";
@@ -61,3 +62,42 @@ export default class TouchableImage extends Component{
         )
     }
 }
+=======
+import React, { Component } from 'react';
+import { FlatList, StyleSheet, Text, View } from 'react-native';
+import { TouchableOpacity } from 'react-native-gesture-handler';
+
+export default class FlatListBasics extends Component {
+  render() {
+    return (
+      <View style={styles.container}>
+        <FlatList
+          data={[
+            {key: 'Devin'},
+            {key: 'Jackson'},
+            {key: 'James'},
+            {key: 'Joel'},
+            {key: 'John'},
+            {key: 'Jillian'},
+            {key: 'Jimmy'},
+            {key: 'Julie'},
+          ]}
+          renderItem={({item}) => <TouchableOpacity><Text style={styles.item}>{item.key}</Text></TouchableOpacity>}
+        />
+      </View>
+    );
+  }
+}
+
+const styles = StyleSheet.create({
+  container: {
+   flex: 1,
+   paddingTop: 22
+  },
+  item: {
+    padding: 10,
+    fontSize: 18,
+    height: 44,
+  },
+})
+>>>>>>> 5b7423bc5608ee207194b5c7f54b903bd15d7af2

@@ -1,5 +1,5 @@
 import ExploreScreen from './explore/ExploreScreen';
-import MyInfoScreen from './myinfo/MyInfoScreen';
+import MyInfoScreen from './myinfo/index';
 import MapScreen from './map/MapScreen';
 import React, { Component } from 'react';
 import { StyleSheet } from 'react-native';

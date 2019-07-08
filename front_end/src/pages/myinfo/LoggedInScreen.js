@@ -12,18 +12,21 @@ const styles = StyleSheet.create({
     },
 })
 
-class SettingsScreen extends React.Component {
+class LoggedInScreen extends React.Component {
+    static navigationOptions = {
+        title: '我的',
+    };
     render() {
         return (
-            <View>
+            <React.Fragment>
                 <TopBanner />
                 <Divider />
-                <FollowBanner />
+                <FollowBanner navigation={this.props.navigation} />
                 <Divider />
-                <DetailedBlock />
-                <BottomBanner />
-            </View>
+                <DetailedBlock navigation={this.props.navigation} />
+                <BottomBanner navigation={this.props.navigation} />
+            </React.Fragment>
         );
     }
 }
-export default SettingsScreen;
+export default LoggedInScreen;
