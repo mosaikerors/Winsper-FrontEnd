@@ -1,6 +1,8 @@
 import React from "react";
 import { Text, View, StyleSheet, TextInput } from "react-native";
 import { Button, Avatar, Divider, Card } from 'react-native-elements'
+import agent from "../../agent";
+import { connect } from "react-redux";
 
 const styles = StyleSheet.create({
     border: {
@@ -22,6 +24,14 @@ const styles = StyleSheet.create({
     }
 })
 
+const mapStateToProps = state => ({
+    token: state.user.token,
+    uId: state.user.uId,
+})
+
+const mapDispatchToProps = dispatch => ({
+})
+
 class SettingsScreen extends React.Component {
     static navigationOptions = {
         title: '设置',
@@ -31,7 +41,16 @@ class SettingsScreen extends React.Component {
         this.state = {
             text: ''
         }
+        this.submit = this.submit.bind(this);
     }
+
+    async submit() {
+        const { uId, token } = this.props;
+        const newUsername = this.state.text;
+        const response = await agent.user.updateInfo(uId, newUsername, token)
+        console.log(response)
+    }
+
     render() {
         return (
             <React.Fragment>
@@ -56,4 +75,4 @@ class SettingsScreen extends React.Component {
         );
     }
 }
-export default SettingsScreen;
+export default connect(mapStateToProps, mapDispatchToProps)(SettingsScreen);

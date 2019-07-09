@@ -88,7 +88,11 @@ export default class MyMap extends Component {
                     //console.warn('center', this.state.center.longitude);
                     console.log("here")
                     Geolocation.getCurrentPosition(data => {
-                        console.log(JSON.stringify(data));
+                        console.log(data.coords)
+                        //console.log(Object.keys(data))
+                        const json = JSON.stringify(data)
+                        //console.log(json);
+                        //console.log(Object.keys(json))
                     }, e => {
                         console.log(e, 'error');
                     })
