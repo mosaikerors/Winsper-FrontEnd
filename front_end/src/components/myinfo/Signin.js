@@ -8,15 +8,32 @@ const styles = StyleSheet.create({
     border: {
         borderWidth: 1,
     },
-    attendance: {
-        marginTop: 46,
-        marginRight: 34,
-        //width: 70,
+    label: {
+        justifyContent: "center",
+        alignItems: "center",
+        marginRight: 5,
+        flex: 1
+    },
+    input: {
+        width: 300,
+        borderWidth: 1,
         height: 40
     },
-    checked: {
-        width: 90
+    labelAndInput: {
+        flexDirection: 'row',
+        width: 350,
+        marginTop: 10
     },
+    submitButtonContainer: {
+        marginTop: 10,
+        marginBottom: -5,
+        height: 70,
+        justifyContent: "center",
+        alignItems: "center"
+    },
+    submitButton: {
+        width: 70,
+    }
 })
 
 const login = StackActions.reset({
@@ -27,7 +44,6 @@ const login = StackActions.reset({
 });
 
 const mapStateToProps = state => ({
-
 })
 
 const mapDispatchToProps = dispatch => ({
@@ -68,18 +84,28 @@ class Signin extends React.Component {
             <React.Fragment>
                 <View style={{ alignItems: 'center' }}>
                     <Card title="登录">
-                        <View style={{ flexDirection: 'row' }}>
-                            <Text>手机号</Text>
-                            <TextInput style={{ width: 300, borderWidth: 1 }} onChangeText={text => this.updateState('phone', text)} />
+                        <View style={styles.labelAndInput}>
+                            <View style={[styles.label]}>
+                                <Text>手机号</Text>
+                            </View>
+                            <View style={{ flexDirection: "row-reverse" }}>
+                                <TextInput style={styles.input} onChangeText={text => this.updateState('phone', text)} />
+                            </View>
                         </View>
-                        <View style={{ flexDirection: 'row' }}>
-                            <Text>密码</Text>
-                            <TextInput style={{ width: 300, borderWidth: 1 }} onChangeText={text => this.updateState('password', text)} />
+                        <View style={styles.labelAndInput}>
+                            <View style={[styles.label]}>
+                                <Text>密码</Text>
+                            </View>
+                            <View style={{ flexDirection: "row-reverse" }}>
+                                <TextInput style={styles.input} onChangeText={text => this.updateState('password', text)} />
+                            </View>
                         </View>
-                        <Button containerStyle={[styles.attendance, styles.checked]}
-                            title="登录"
-                            onPress={this.submit/*() => this.props.navigation.dispatch(login)*/}
-                        />
+                        <View style={styles.submitButtonContainer}>
+                            <Button containerStyle={[styles.submitButton]}
+                                title="登录"
+                                onPress={this.submit}
+                            />
+                        </View>
                     </Card>
                 </View>
             </React.Fragment>

@@ -3,21 +3,42 @@ import { Text, View, StyleSheet, TextInput } from "react-native";
 import { Button, Avatar, Divider, Card } from 'react-native-elements'
 import agent from "../../agent"
 
-const requests = require('superagent');
-
 const styles = StyleSheet.create({
     border: {
         borderWidth: 1,
     },
-    attendance: {
-        marginTop: 46,
-        marginRight: 34,
-        //width: 70,
+    label: {
+        justifyContent: "center",
+        alignItems: "center",
+        marginRight: 5,
+        flex: 1
+    },
+    input: {
+        width: 300,
+        borderWidth: 1,
         height: 40
     },
-    checked: {
-        width: 90
+    codeInput: {
+        flex: 1,
+        marginRight: 5,
+        borderWidth: 1,
+        height: 40
     },
+    labelAndInput: {
+        flexDirection: 'row',
+        width: 350,
+        marginTop: 10
+    },
+    submitButtonContainer: {
+        marginTop: 10,
+        marginBottom: -5,
+        height: 70,
+        justifyContent: "center",
+        alignItems: "center"
+    },
+    submitButton: {
+        width: 70,
+    }
 })
 
 class Signup extends React.Component {
@@ -62,27 +83,46 @@ class Signup extends React.Component {
             <React.Fragment>
                 <View style={{ alignItems: 'center' }}>
                     <Card title="注册">
-                        <View style={{ flexDirection: 'row' }}>
-                            <Text>手机号</Text>
-                            <TextInput style={{ width: 300, borderWidth: 1 }} onChangeText={text => this.updateState('phone', text)} />
+                        <View style={styles.labelAndInput}>
+                            <View style={[styles.label]}>
+                                <Text>手机号</Text>
+                            </View>
+                            <View style={{ flexDirection: "row-reverse" }}>
+                                <TextInput style={styles.input} onChangeText={text => this.updateState('phone', text)} />
+                            </View>
                         </View>
-                        <View style={{ flexDirection: 'row' }}>
-                            <Text>验证码</Text>
-                            <TextInput style={{ width: 200, borderWidth: 1 }} onChangeText={text => this.updateState('code', text)} />
-                            <Button title="获取验证码" onPress={this.sendCode} />
+                        <View style={styles.labelAndInput}>
+                            <View style={[styles.label]}>
+                                <Text>验证码</Text>
+                            </View>
+                            <View style={{ flexDirection: "row", width: 300 }}>
+                                <TextInput style={styles.codeInput} onChangeText={text => this.updateState('code', text)} />
+
+                                <Button title="获取验证码" onPress={this.sendCode} />
+                            </View>
                         </View>
-                        <View style={{ flexDirection: 'row' }}>
-                            <Text>用户名</Text>
-                            <TextInput style={{ width: 300, borderWidth: 1 }} onChangeText={text => this.updateState('username', text)} />
+                        <View style={styles.labelAndInput}>
+                            <View style={[styles.label]}>
+                                <Text>用户名</Text>
+                            </View>
+                            <View style={{ flexDirection: "row-reverse" }}>
+                                <TextInput style={styles.input} onChangeText={text => this.updateState('username', text)} />
+                            </View>
                         </View>
-                        <View style={{ flexDirection: 'row' }}>
-                            <Text>密码</Text>
-                            <TextInput style={{ width: 300, borderWidth: 1 }} onChangeText={text => this.updateState('password', text)} />
+                        <View style={styles.labelAndInput}>
+                            <View style={[styles.label]}>
+                                <Text>密码</Text>
+                            </View>
+                            <View style={{ flexDirection: "row-reverse" }}>
+                                <TextInput style={styles.input} onChangeText={text => this.updateState('password', text)} />
+                            </View>
                         </View>
-                        <Button containerStyle={[styles.attendance, styles.checked]}
-                            title="注册"
-                            onPress={this.submit}
-                        />
+                        <View style={styles.submitButtonContainer}>
+                            <Button containerStyle={[styles.submitButton]}
+                                title="注册"
+                                onPress={this.submit}
+                            />
+                        </View>
                     </Card>
                 </View>
             </React.Fragment>
