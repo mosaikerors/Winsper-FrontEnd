@@ -13,6 +13,16 @@ const user = {
             .send({ token, phone, code, username, password })
             .then(res => res.body)
             .catch(err => err.response.body),
+    firstSignin: (phone, password) =>
+        requests.post(API_ROOT + "/user/user/login")
+            .send({ phone, password })
+            .then(res => res.body)
+            .catch(err => err.response.body),
+    nextSignin: (uId, token) =>
+        requests.post(API_ROOT + "/user/user/login")
+            .send({ uId, token })
+            .then(res => res.body)
+            .catch(err => err.response.body)
 }
 
 export default { user }

@@ -1,11 +1,10 @@
-import { combineReducers } from 'redux'
-import todos from '../reducers/todos'
-import visibilityFilter from '../reducers/visibilityFilter'
-import { createStore } from 'redux'
+import { combineReducers, createStore } from 'redux'
+import user from "../reducers/user"
 
-const rootReducer = combineReducers({
-    todos,
-    visibilityFilter
+const reducer = combineReducers({
+    user,
 });
 
-export default createStore(rootReducer);
+const store = createStore(reducer);
+
+export default store;

@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import Comment from '../../../components/common/Comment'
 import { Avatar, Text } from 'react-native-elements';
 import { Dimensions, View, ScrollView } from 'react-native';
-import PhotoGroup from '../../../components/common/PhoteGroup';
+import PhotoGroup from '../../../components/common/ImageGroup';
 const { width } = Dimensions.get("window");
 import AntDesign from 'react-native-vector-icons/AntDesign'
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons'

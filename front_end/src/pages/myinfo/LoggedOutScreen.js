@@ -1,7 +1,6 @@
 import React from "react";
 import { Text, View, StyleSheet, ScrollView } from "react-native";
 import { Button, Avatar, Divider, Card } from 'react-native-elements'
-import { StackActions, NavigationActions } from "react-navigation";
 import Signup from "../../components/myinfo/Signup";
 import Signin from "../../components/myinfo/Signin";
 
@@ -20,12 +19,7 @@ const styles = StyleSheet.create({
     },
 })
 
-const login = StackActions.reset({
-    index: 0,
-    actions: [
-        NavigationActions.navigate({ routeName: 'LoggedIn' })
-    ]
-});
+
 
 class LoggedOutScreen extends React.Component {
     static navigationOptions = {

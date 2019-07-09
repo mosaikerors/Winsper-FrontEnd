@@ -81,7 +81,7 @@ class Signup extends React.Component {
                         </View>
                         <Button containerStyle={[styles.attendance, styles.checked]}
                             title="注册"
-                            onPress={ this.submit /*this.props.navigation.dispatch(login)*/ }
+                            onPress={this.submit}
                         />
                     </Card>
                 </View>
