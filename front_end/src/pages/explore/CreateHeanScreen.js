@@ -1,11 +1,7 @@
 import React, { Component, Fragment } from 'react';
 import { TextareaItem } from '@ant-design/react-native'
 import { Button, ListItem } from 'react-native-elements'
-import {
-    View,
-    Image, NativeModules
-} from 'react-native';
-import { Toast } from '@ant-design/react-native';
+import { View, NativeModules } from 'react-native';
 import RNFetchBlob from 'react-native-fetch-blob'
 import Geolocation from 'Geolocation';
 import ImageGroup from '../../components/common/ImageGroup'
@@ -24,7 +20,6 @@ class CreateHeanScreen extends Component {
             location: "", // send to back end
             place: "添加地点"     // display to user
         };
-        this.renderImage = this.renderImage.bind(this);
         this.addPlace = this.addPlace.bind(this);
         this.addPrivacy = this.addPrivacy.bind(this);
         this.addImage = this.addImage.bind(this);
@@ -36,13 +31,9 @@ class CreateHeanScreen extends Component {
         this.setState({
             content: value
         });
-        console.log(this.state.content);
     };
 
     upload() {
-        Toast.loading('Loading...', 1, () => {
-            console.log('Load complete !!!');
-        });
         let { images } = this.state;
         let body = [];
         body.push({ name: 'uId', data: uId });
@@ -72,9 +63,7 @@ class CreateHeanScreen extends Component {
     }
 
     addPlace() {
-        console.log("click!!!");
         Geolocation.getCurrentPosition(data => {
-            console.log(data.coords);
             let location = data.coords.latitude.toString() + "," + data.coords.longitude.toString();
             //let url = "http://api.map.baidu.com/reverse_geocoding/v3/?output=json&coordtype=wgs84ll&" +
             //    "location=" + location + "&ak=hhuldMVGYO4w0sRt8FVTXVIFbG5mA1Lz&mcode=09:D4:76:A9:31:7F:98:" +
@@ -106,11 +95,7 @@ class CreateHeanScreen extends Component {
             });
         }).catch(e => alert(e));
     }
-
-    renderImage(image) {
-        return <Image style={{ width: 300, height: 300, resizeMode: 'contain' }} source={image} />
-    }
-
+    
     static navigationOptions = {
         title: '新建',
     };
@@ -151,5 +136,5 @@ class CreateHeanScreen extends Component {
         );
     }
 }
-
 export default CreateHeanScreen;
+

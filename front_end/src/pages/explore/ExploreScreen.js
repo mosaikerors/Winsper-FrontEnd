@@ -1,7 +1,6 @@
 import React, { Fragment } from "react";
 import { Image, ListItem } from "react-native-elements";
 import { Dimensions } from 'react-native'
-import { createStackNavigator, createAppContainer } from 'react-navigation';
 import Carousel from 'react-native-looped-carousel';
 
 const { width, height } = Dimensions.get('window');
@@ -41,7 +40,7 @@ class ExploreScreen extends React.Component {
             CarouselItem: [
                 {
                     key: 1,
-                    src: "http://i0.hdslb.com/bfs/archive/1.jpg"
+                    src: "https://500px.com/photo/311850945/rohrweihe-western-marsh-harrier-hunting-by-sigrun-br%C3%BCggenthies"
                 },
                 {
                     key: 2,
