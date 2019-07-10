@@ -45,11 +45,20 @@ const login = StackActions.reset({
 });
 
 const mapStateToProps = state => ({
+    uId: state.user.uId,
+    token: state.user.token,
 })
 
 const mapDispatchToProps = dispatch => ({
     onSubmit: (token, uId, username, status) =>
-        dispatch({ type: 'SIGN_IN', payload: { token, uId, username, status } })
+        dispatch({ type: 'SIGN_IN', payload: { token, uId, username, status } }),
+    onLoadHeans: (heans) => {
+        /*console.log("*************************response**********************")
+        console.log(response);*/
+        console.log("*************************heans**********************")
+        console.log(heans);
+        return dispatch({ type: "LOAD_ALL_HEANS", payload: heans })
+    }
 })
 
 class Signin extends React.Component {
@@ -66,12 +75,22 @@ class Signin extends React.Component {
 
     async submit() {
         const { phone, password } = this.state;
+        const { uId, token } = this.props;
         try {
             const response = await agent.user.firstSignin(phone, password);
             console.log(response);
             if (/*response.hasOwnProperty("message") && */response.message === "ok") {
                 this.props.navigation.dispatch(login)
                 this.props.onSubmit(response.token, response.uId, response.username, response.status)
+                try {
+                    const heanResp = await agent.hean.getAll(uId, token);
+                    console.log("***********heanResp*************")
+                    console.log(heanResp)
+                    this.props.onLoadHeans(heanResp.heanArray);
+                }
+                catch (error) {
+                    console.log(error)
+                }
             }
         }
         catch (error) {

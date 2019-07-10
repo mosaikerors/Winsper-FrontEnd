@@ -39,7 +39,13 @@ const hean = {
             .set('uId', uId)
             .send({ uId })
             .then(res => res.body)
-            .catch(err => err.response.body)
+            .catch(err => err.response.body),
+    getAll: (uId, token) =>
+        requests.get(API_ROOT + "/hean/all")
+            .set('Authorization', 'Bearer ' + token)
+            .set('uId', uId)
+            .then(res => res.body)
+            .catch(err => err.response.body),
 }
 
-export default { user,hean }
+export default { user, hean }

@@ -71,13 +71,16 @@ export default class MyMap extends Component {
                         console.log(e)
                     }}
                 >
-                {/*}        <Overlay.Marker
-                            title={"TBC"}
-                            location={{ longitude: 121.4445179, latitude: 31.0316825 }}
-                />*/}
-
+                    {this.props.heans.map(hean => {
+                        console.log(hean);
+                        return (
+                            <Overlay.Marker
+                                location={{ longitude: hean.longtitude, latitude: hean.latitude }}
+                            />
+                        )
+                    })}
                 </MapView>
-                <Button title="Locate" onPress={() => {
+                {/*<Button title="Locate" onPress={() => {
                     //console.warn('center', this.state.center.longitude);
                     console.log("here")
                     Geolocation.getCurrentPosition(data => {
@@ -89,7 +92,7 @@ export default class MyMap extends Component {
                     }, e => {
                         console.log(e, 'error');
                     })
-                }} />
+                }} />*/}
             </React.Fragment>
         );
     }
@@ -98,9 +101,7 @@ export default class MyMap extends Component {
 const styles = StyleSheet.create({
     map: {
         width: Dimensions.get('window').width,
-        height: Dimensions.get('window').height - 200,
-        //width: 100,
-        //height: 100,
+        height: Dimensions.get('window').height,
         marginBottom: 16
     }
 });
