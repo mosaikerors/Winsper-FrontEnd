@@ -32,4 +32,14 @@ const user = {
             .catch(err => err.response.body)
 }
 
-export default { user }
+const hean = {
+    searchByUId: (uId, token) =>
+        requests.post(API_ROOT + "/hean/byUId")
+            .set('Authorization', 'Bearer ' + token)
+            .set('uId', uId)
+            .send({ uId })
+            .then(res => res.body)
+            .catch(err => err.response.body)
+}
+
+export default { user,hean }

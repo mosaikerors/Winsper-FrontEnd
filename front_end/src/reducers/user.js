@@ -10,6 +10,7 @@ const user = (state = defaultState, action) => {
       //  return state;
     switch (action.type) {
         case 'SIGN_IN':
+            console.log(action.payload.uId)
             return {
                 ...state,
                 token: action.payload.token,

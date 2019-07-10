@@ -47,7 +47,8 @@ export default class MyMap extends Component {
         };
     }
 
-    componentDidMount() {
+    componentWillMount() {
+        console.log(123)
     }
 
     render() {
@@ -70,19 +71,11 @@ export default class MyMap extends Component {
                         console.log(e)
                     }}
                 >
-                    <Overlay.Marker
-                        title={"TBC"}
-                        location={{ longitude: 121.4445179, latitude: 31.0316825 }}
-                    />
-                    <Overlay.Marker
-                        title={"TBC"}
-                        location={{ longitude: 121.4455179, latitude: 31.0316825 }}
-                    />
+                {/*}        <Overlay.Marker
+                            title={"TBC"}
+                            location={{ longitude: 121.4445179, latitude: 31.0316825 }}
+                />*/}
 
-                    <Overlay.Arc
-                        width={5}
-                        center={[{ longitude: 121.4445179, latitude: 31.0316825 }, { longitude: 121.4445179, latitude: 31.0326825 }, { longitude: 121.4455179, latitude: 31.0316825 }]}
-                    />
                 </MapView>
                 <Button title="Locate" onPress={() => {
                     //console.warn('center', this.state.center.longitude);
@@ -106,6 +99,8 @@ const styles = StyleSheet.create({
     map: {
         width: Dimensions.get('window').width,
         height: Dimensions.get('window').height - 200,
+        //width: 100,
+        //height: 100,
         marginBottom: 16
     }
 });

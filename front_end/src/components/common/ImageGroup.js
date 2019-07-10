@@ -14,7 +14,7 @@ export default class App extends Component{
                 return(
                     <View style={styles.container}>
                         <View style={styles.image}>
-                            <Image source={{uri: this.props.images[0].url}} style={styles.big}/>
+                            <Image source={{uri: this.props.images[0]}} style={styles.big}/>
                         </View>
                     </View>);
                     
@@ -22,31 +22,33 @@ export default class App extends Component{
                 return (
                     <View style={styles.container}>
                         <View style={styles.image}>
-                            <Image source={{uri: this.props.images[0].url}} style={styles.small}/>
-                            <Image source={{uri: this.props.images[1].url}} style={styles.small}/>
+                            <Image source={{uri: this.props.images[0]}} style={styles.small}/>
+                            <Image source={{uri: this.props.images[1]}} style={styles.small}/>
                         </View>
                     </View>);
             case 3:
                 return (
                     <View style={styles.container}>
                         <View style={styles.image}>
-                            <Image source={{uri: this.props.images[0].url}} style={styles.small}/>
-                            <Image source={{uri: this.props.images[1].url}} style={styles.small}/>
-                            <Image source={{uri: this.props.images[2].url}} style={styles.small}/>
+                            <Image source={{uri: this.props.images[0]}} style={styles.small}/>
+                            <Image source={{uri: this.props.images[1]}} style={styles.small}/>
+                            <Image source={{uri: this.props.images[2]}} style={styles.small}/>
                         </View>
                     </View>);
             case 4:
                 return (
                     <View style={styles.container}>
                         <View style={styles.image}>
-                            <Image source={{uri: this.props.images[0].url}} style={styles.small}/>
-                            <Image source={{uri: this.props.images[1].url}} style={styles.small}/>
+                            <Image source={{uri: this.props.images[0]}} style={styles.small}/>
+                            <Image source={{uri: this.props.images[1]}} style={styles.small}/>
                         </View>
                         <View style={styles.image}>
-                            <Image source={{uri: this.props.images[2].url}} style={styles.small}/>
-                            <Image source={{uri: this.props.images[3].url}} style={styles.small}/>
+                            <Image source={{uri: this.props.images[2]}} style={styles.small}/>
+                            <Image source={{uri: this.props.images[3]}} style={styles.small}/>
                         </View>
                     </View>);
+            default:
+                return null;
         }
     }
 }
