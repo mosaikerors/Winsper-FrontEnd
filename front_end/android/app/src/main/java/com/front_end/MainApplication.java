@@ -3,6 +3,9 @@ package com.front_end;
 import android.app.Application;
 
 import com.facebook.react.ReactApplication;
+import com.brentvatne.react.ReactVideoPackage;
+import com.github.xinthink.rnmk.ReactMaterialKitPackage;
+import com.RNFetchBlob.RNFetchBlobPackage;
 import org.lovebing.reactnative.baidumap.BaiduMapPackage;
 import com.reactnative.ivpusic.imagepicker.PickerPackage;
 import com.oblador.vectoricons.VectorIconsPackage;
@@ -29,6 +32,9 @@ public class MainApplication extends Application implements ReactApplication {
     protected List<ReactPackage> getPackages() {
       return Arrays.<ReactPackage>asList(
           new MainReactPackage(),
+            new ReactVideoPackage(),
+            new ReactMaterialKitPackage(),
+            new RNFetchBlobPackage(),
             new BaiduMapPackage(),
             new PickerPackage(),
             new VectorIconsPackage(),
