@@ -1,4 +1,4 @@
-import ExploreScreenNavigator from './explore/ExploreScreen/index';
+import ExploreScreenNavigator from './explore/index';
 import MyInfoScreenNavigator from './myinfo/index';
 import MapScreen from './map/MapScreen';
 import React, { Component } from 'react';
