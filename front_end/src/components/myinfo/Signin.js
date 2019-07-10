@@ -3,6 +3,7 @@ import { Text, View, StyleSheet, TextInput } from "react-native";
 import { Button, Avatar, Divider, Card } from 'react-native-elements'
 import { StackActions, NavigationActions } from "react-navigation";
 import { connect } from "react-redux";
+import agent from "../../agent"
 
 const styles = StyleSheet.create({
     border: {
@@ -65,11 +66,16 @@ class Signin extends React.Component {
 
     async submit() {
         const { phone, password } = this.state;
-        const response = await agent.user.firstSignin(phone, password);
-        console.log(response);
-        if (/*response.hasOwnProperty("message") && */response.message === "ok") {
-            this.props.navigation.dispatch(login)
-            this.props.onSubmit(response.token, response.uId, response.username, response.status)
+        try {
+            const response = await agent.user.firstSignin(phone, password);
+            console.log(response);
+            if (/*response.hasOwnProperty("message") && */response.message === "ok") {
+                this.props.navigation.dispatch(login)
+                this.props.onSubmit(response.token, response.uId, response.username, response.status)
+            }
+        }
+        catch (error) {
+            console.log(error)
         }
     }
 

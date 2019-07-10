@@ -30,7 +30,7 @@ class LoggedOutScreen extends React.Component {
             <React.Fragment>
                 <ScrollView>
                     <Signup />
-                    <Signin />
+                    <Signin navigation={this.props.navigation} />
                 </ScrollView>
             </React.Fragment>
         );
