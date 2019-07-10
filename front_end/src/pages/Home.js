@@ -1,5 +1,5 @@
-import ExploreScreen from './explore/ExploreScreen';
-import MyInfoScreen from './myinfo/index';
+import ExploreScreenNavigator from './explore/ExploreScreen/index';
+import MyInfoScreenNavigator from './myinfo/index';
 import MapScreen from './map/MapScreen';
 import React, { Component } from 'react';
 import { StyleSheet } from 'react-native';
@@ -49,7 +49,7 @@ export default class TabDemo extends Component {
                     renderSelectedIcon={() => <Ionicons name="md-planet" size={px2dp(22)} color="#3496f0" />}
                     badgeText="1"
                     onPress={() => this.setState({ selectedTab: 'explore' })}>
-                    <ExploreScreen />
+                    <ExploreScreenNavigator />
                 </TabNavigator.Item>
                 <TabNavigator.Item
                     selected={this.state.selectedTab === 'map'}
@@ -67,7 +67,7 @@ export default class TabDemo extends Component {
                     renderIcon={() => <Icon name="user" size={px2dp(22)} color="#666" />}
                     renderSelectedIcon={() => <Icon name="user" size={px2dp(22)} color="#3496f0" />}
                     onPress={() => this.setState({ selectedTab: 'myInfo' })}>
-                    <MyInfoScreen />
+                    <MyInfoScreenNavigator />
                 </TabNavigator.Item>
             </TabNavigator>
         );

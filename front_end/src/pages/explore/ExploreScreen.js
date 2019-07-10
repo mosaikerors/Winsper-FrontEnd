@@ -1,7 +1,6 @@
-import React, {Fragment} from "react";
-import {Image, ListItem} from "react-native-elements";
-import CreateHean from "./CreateHean"
-import {Dimensions} from 'react-native'
+import React, { Fragment } from "react";
+import { Image, ListItem } from "react-native-elements";
+import { Dimensions } from 'react-native'
 import { createStackNavigator, createAppContainer } from 'react-navigation';
 import Carousel from 'react-native-looped-carousel';
 
@@ -16,7 +15,7 @@ const list = [
         title: '函',
         icon: 'flight-takeoff',
         pagename: 'CreateHean'
-        
+
     },
     {
         title: '心情报表',
@@ -30,16 +29,15 @@ const list = [
     }
 ];
 
-class Explore extends React.Component {
-    
+class ExploreScreen extends React.Component {
     static navigationOptions = {
-        title: 'Explore',
+        title: '发现',
     };
-    
-    constructor(props){
+
+    constructor(props) {
         super(props);
         this.state = {
-            size: {width: width, height: height / 3},
+            size: { width: width, height: height / 3 },
             CarouselItem: [
                 {
                     key: 1,
@@ -50,13 +48,13 @@ class Explore extends React.Component {
                     src: "https://images.pexels.com/photos/1727200/pexels-photo-1727200.jpeg?auto=compress&cs=tinysrgb&dpr=2&w=500"
                 },
                 {
-                    key:3,
-                    src:"https://images.pexels.com/photos/1702624/pexels-photo-1702624.jpeg?auto=compress&cs=tinysrgb&dpr=2&w=500"
+                    key: 3,
+                    src: "https://images.pexels.com/photos/1702624/pexels-photo-1702624.jpeg?auto=compress&cs=tinysrgb&dpr=2&w=500"
                 }
             ]
         }
     }
-    
+
     render() {
         return (
             <Fragment>
@@ -66,15 +64,15 @@ class Explore extends React.Component {
                     autoplay
                     pageInfo
                 >
-                {
-                    this.state.CarouselItem.map((item,i)=>(
-                        <Image
-                            key={i}
-                            source={{uri:item.src}}
-                            style={this.state.size}/>
-                    ))
-                }
-                
+                    {
+                        this.state.CarouselItem.map((item, i) => (
+                            <Image
+                                key={i}
+                                source={{ uri: item.src }}
+                                style={this.state.size} />
+                        ))
+                    }
+
                 </Carousel>
                 {
                     list.map((item, i) => (
@@ -82,7 +80,7 @@ class Explore extends React.Component {
                             key={i}
                             title={item.title}
                             leftIcon={{ name: item.icon }}
-                            onPress={()=>this.props.navigation.navigate(item.pagename)}
+                            onPress={() => this.props.navigation.navigate(item.pagename)}
                         />
                     ))
                 }
@@ -91,24 +89,4 @@ class Explore extends React.Component {
     }
 }
 
-const Stack = createStackNavigator(
-    {
-        Explore: {
-            screen: Explore,
-        },
-        CreateHean: {
-            screen: CreateHean,
-        },
-    },
-    {
-        initialRouteName: 'Explore',
-    }
-);
-
-const Container = createAppContainer(Stack);
-
-export default class ExploreScreen extends React.Component {
-    render() {
-        return <Container />;
-    }
-}
+export default ExploreScreen;

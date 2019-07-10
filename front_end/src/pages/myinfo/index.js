@@ -15,7 +15,7 @@ import LoggedOutScreen from "./LoggedOutScreen"
 import SettingsScreen from "./SettingsScreen"
 import HeanDetailScreen from "./Repository/HeanDetailScreen"
 
-const MyInfoScreen = createStackNavigator(
+const MyInfoScreenNavigator = createStackNavigator(
     {
         LoggedOut: { screen: LoggedOutScreen },
         LoggedIn: { screen: LoggedInScreen },
@@ -38,4 +38,4 @@ const MyInfoScreen = createStackNavigator(
     }
 );
 
-export default createAppContainer(MyInfoScreen);
+export default createAppContainer(MyInfoScreenNavigator);
