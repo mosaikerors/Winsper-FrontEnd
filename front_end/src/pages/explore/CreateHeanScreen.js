@@ -4,7 +4,7 @@ import { Button, ListItem } from 'react-native-elements'
 import { View, NativeModules } from 'react-native';
 import RNFetchBlob from 'react-native-fetch-blob'
 import Geolocation from 'Geolocation';
-import ImageGroup from '../../components/common/ImageGroup'
+import ImageGroup from '../../components/hean/ImageGroup'
 import { AK, SHA1, packageName } from '../../config';
 
 const uId = "10";

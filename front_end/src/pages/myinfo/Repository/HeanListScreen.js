@@ -1,7 +1,7 @@
 import React from "react";
 import { Text, View, StyleSheet } from "react-native";
 import { ListItem } from 'react-native-elements'
-import HeanCard from "../../../components/common/HeanCard";
+import HeanCard from "../../../components/hean/HeanCard";
 import { TouchableOpacity, FlatList } from "react-native-gesture-handler";
 import agent from "../../../agent";
 import { connect } from "react-redux"

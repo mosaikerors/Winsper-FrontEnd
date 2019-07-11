@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
-import Comment from '../../../components/common/Comment'
+import Comment from '../../../components/hean/Comment'
 import { Avatar, Text } from 'react-native-elements';
 import { Dimensions, View, ScrollView } from 'react-native';
-import PhotoGroup from '../../../components/common/ImageGroup';
+import PhotoGroup from '../../../components/hean/ImageGroup';
 const { width } = Dimensions.get("window");
 import AntDesign from 'react-native-vector-icons/AntDesign'
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons'
