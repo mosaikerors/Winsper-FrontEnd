@@ -22,6 +22,7 @@
     "react-native-looped-carousel": "^0.1.13",
     "react-native-material-kit": "^0.5.1",
     "react-native-paper": "^2.16.0",
+    "react-native-scrollable-tab-view": "^0.10.0",
     "react-native-snap-carousel": "^3.8.0",
     "react-native-swipeout": "^2.3.6",
     "react-native-swiper": "^1.5.14",

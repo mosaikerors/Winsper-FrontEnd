@@ -3,6 +3,7 @@ import { Text, View, StyleSheet, ScrollView } from "react-native";
 import { Button, Avatar, Divider, Card } from 'react-native-elements'
 import Signup from "../../components/myinfo/Signup";
 import Signin from "../../components/myinfo/Signin";
+import ScrollableTabView, { DefaultTabBar } from "react-native-scrollable-tab-view";
 
 const styles = StyleSheet.create({
     border: {
@@ -28,10 +29,10 @@ class LoggedOutScreen extends React.Component {
     render() {
         return (
             <React.Fragment>
-                <ScrollView>
-                    <Signup />
-                    <Signin navigation={this.props.navigation} />
-                </ScrollView>
+                <ScrollableTabView renderTabBar={() => <DefaultTabBar />}>
+                    <Signup tabLabel="注册" />
+                    <Signin tabLabel="登录" navigation={this.props.navigation} />
+                </ScrollableTabView>
             </React.Fragment>
         );
     }

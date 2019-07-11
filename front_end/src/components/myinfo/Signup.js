@@ -81,8 +81,8 @@ class Signup extends React.Component {
     render() {
         return (
             <React.Fragment>
-                <View style={{ alignItems: 'center' }}>
-                    <Card title="注册">
+                <View style={{ alignItems: 'center', justifyContent: 'center', flex: 1 }}>
+                    <Card title="注册" containerStyle={{ marginBottom: 50 }}>
                         <View style={styles.labelAndInput}>
                             <View style={[styles.label]}>
                                 <Text>手机号</Text>

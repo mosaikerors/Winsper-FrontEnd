@@ -107,8 +107,8 @@ class Signin extends React.Component {
     render() {
         return (
             <React.Fragment>
-                <View style={{ alignItems: 'center' }}>
-                    <Card title="登录">
+                <View style={{ alignItems: 'center', justifyContent: 'center', flex: 1 }}>
+                    <Card title="登录" containerStyle={{ marginBottom: 70 }}>
                         <View style={styles.labelAndInput}>
                             <View style={[styles.label]}>
                                 <Text>手机号</Text>
