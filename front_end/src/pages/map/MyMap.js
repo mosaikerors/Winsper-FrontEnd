@@ -81,18 +81,15 @@ export default class MyMap extends Component {
                     })}
                 </MapView>
                 {/*<Button title="Locate" onPress={() => {
-                    //console.warn('center', this.state.center.longitude);
                     console.log("here")
                     Geolocation.getCurrentPosition(data => {
                         console.log(data.coords)
-                        //console.log(Object.keys(data))
-                        const json = JSON.stringify(data)
-                        //console.log(json);
-                        //console.log(Object.keys(json))
                     }, e => {
                         console.log(e, 'error');
-                    })
-                }} />*/}
+                    },
+                        { enableHignAccuracy: false, timeout: 20000, maximumAge: 10000 })  //make sure geolocation won't get timeout
+                }}
+            />*/}
             </React.Fragment>
         );
     }
@@ -101,7 +98,7 @@ export default class MyMap extends Component {
 const styles = StyleSheet.create({
     map: {
         width: Dimensions.get('window').width,
-        height: Dimensions.get('window').height,
+        height: Dimensions.get('window').height - 200,
         marginBottom: 16
     }
 });
