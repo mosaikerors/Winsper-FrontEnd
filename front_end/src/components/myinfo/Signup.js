@@ -50,17 +50,49 @@ class Signup extends React.Component {
             code: '',
             username: '',
             password: '',
+            sendCodeButton: { clickable: true, timeToClick: 0 }
         }
+        //control how many seconds left before the sendCode button gets clickable again
+        setInterval(()=>this.updateSendCodeButton(), 1000);
+        /*setInterval(() => {
+            console.log(this.state.phone)
+            this.setState(previousState => {
+              return { phone: !previousState.phone };
+            });
+          }, 1000);*/
+
         this.updateState = this.updateState.bind(this);
         this.sendCode = this.sendCode.bind(this);
         this.submit = this.submit.bind(this);
+        this.updateSendCodeButton = this.updateSendCodeButton.bind(this);
+    }
+
+    updateSendCodeButton() {
+        console.log(this.state)
+        if (this.state.sendCodeButton.timeToClick === 1)
+            this.setState({
+                sendCodeButton: {
+                    clickable: true,
+                    timeToClick: 0
+                }
+            })
+        else this.setState(prevState => ({
+            sendCodeButton: {
+                clickable: prevState.sendCodeButton.clickable,
+                timeToClick: prevState.sendCodeButton.timeToClick - 1
+            }
+        }));
     }
 
     async sendCode() {
         console.log(this.state.phone)
         const response = await agent.user.sendCode(this.state.phone);
         this.setState({
-            token: response.token
+            token: response.token,
+            sendCodeButton: {
+                clickable: false,
+                timeToClick: 5,  //can send code only once for each minute
+            }
         })
         console.log(response)
     }
@@ -97,8 +129,10 @@ class Signup extends React.Component {
                             </View>
                             <View style={{ flexDirection: "row", width: 300 }}>
                                 <TextInput style={styles.codeInput} onChangeText={text => this.updateState('code', text)} />
-
-                                <Button title="获取验证码" onPress={this.sendCode} />
+                                {this.state.sendCodeButton.clickable ?
+                                    <Button title="获取验证码" onPress={this.sendCode} /> :
+                                    <Button title={`已发送(${this.state.sendCodeButton.timeToClick})`} disabled />
+                                }
                             </View>
                         </View>
                         <View style={styles.labelAndInput}>
