@@ -24,7 +24,7 @@ class CreateHeanScreen extends Component {
             location: "", // send to back end
             place: "添加地点"     // display to user
         };
-        this.renderImage = this.renderImage.bind(this);
+        //this.renderImage = this.renderImage.bind(this);
         this.addPlace = this.addPlace.bind(this);
         this.addPrivacy = this.addPrivacy.bind(this);
         this.addImage = this.addImage.bind(this);
@@ -99,17 +99,16 @@ class CreateHeanScreen extends Component {
             includeExif: true,
             forceJpg: true,
         }).then(images => {
+            console.log(images)
             this.setState({
-                images: images.map(i => {
-                    return { uri: i.path, width: i.width, height: i.height, mime: i.mime };
-                })
+                images: images.map(i => ({ uri: i.path, width: i.width, height: i.height, mime: i.mime }))
             });
         }).catch(e => alert(e));
     }
 
-    renderImage(image) {
-        return <Image style={{ width: 300, height: 300, resizeMode: 'contain' }} source={image} />
-    }
+    //renderImage(image) {
+    //    return <Image style={{ width: 300, height: 300, resizeMode: 'contain' }} source={image} />
+    //}
 
     static navigationOptions = {
         title: '新建',
