@@ -25,29 +25,21 @@ class MapScreen extends React.Component {
         }
     }
 
-    async componentWillMount() {
-        const { uId, token } = this.props;
-        console.log("here: " + uId);
-        console.log("here: " + token);
-        try {
-            const response = await agent.hean.getAll(uId, token);
-            console.log(response);
-            this.setState({
-                heans: response.heanArray
-            })
-        }
-        catch (err) {
-            console.log(err)
-        }
+    //once login, props will change and this hook will be triggared, at this time, to get all heans from back end.
+    //seemingly cannot use componentWillUpdate hook here due to some magic recursive call
+    async componentWillReceiveProps(nextProps) {
+        const { uId, token } = nextProps;
+        const response = await agent.hean.getAll(uId, token);
+        this.setState({
+            heans: response.heanArray
+        })
     }
 
     render() {
-        console.log("******" + this.props.heans)
         return (
-            <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-                {<MyMap heans={this.props.heans} />}
-                {/*<Text>map</Text>*/}
-            </View>
+            <React.Fragment>
+                <MyMap heans={this.state.heans} />
+            </React.Fragment>
         );
     }
 }
