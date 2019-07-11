@@ -34,7 +34,9 @@ const MyInfoScreenNavigator = createStackNavigator(
         HeanDetail: { screen: HeanDetailScreen }
     },
     {
-        initialRouteName: "LoggedIn"
+        initialRouteName: "LoggedOut",
+        headerMode: 'none'
+        //cardStyle: {opacity:0.7}
     }
 );
 

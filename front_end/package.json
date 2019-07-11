@@ -8,6 +8,7 @@
   },
   "dependencies": {
     "@ant-design/react-native": "^3.1.9",
+    "@react-native-community/blur": "^3.3.1",
     "prop-types": "latest",
     "react": "16.8.3",
     "react-native": "0.59.9",

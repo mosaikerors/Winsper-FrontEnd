@@ -40,7 +40,7 @@ export default class TabDemo extends Component {
 
     render() {
         return (
-            <TabNavigator style={styles.container}>
+            <TabNavigator style={styles.container} tabBarStyle={{backgroundColor:'#ffffff'}}>
                 <TabNavigator.Item
                     selected={this.state.selectedTab === 'explore'}
                     title="Explore"

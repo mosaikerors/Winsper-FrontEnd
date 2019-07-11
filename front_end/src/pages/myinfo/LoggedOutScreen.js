@@ -1,5 +1,5 @@
 import React from "react";
-import { Text, View, StyleSheet, ScrollView } from "react-native";
+import { Text, View, StyleSheet, ScrollView, ImageBackground } from "react-native";
 import { Button, Avatar, Divider, Card } from 'react-native-elements'
 import Signup from "../../components/myinfo/Signup";
 import Signin from "../../components/myinfo/Signin";
@@ -20,19 +20,18 @@ const styles = StyleSheet.create({
     },
 })
 
-
+const backgroundImage = require("../../../images/p6.jpg")
 
 class LoggedOutScreen extends React.Component {
-    static navigationOptions = {
-        title: '风语',
-    };
     render() {
         return (
             <React.Fragment>
-                <ScrollableTabView renderTabBar={() => <DefaultTabBar />}>
-                    <Signup tabLabel="注册" />
-                    <Signin tabLabel="登录" navigation={this.props.navigation} />
-                </ScrollableTabView>
+                <ImageBackground source={backgroundImage} style={{ width: '100%', height: '100%', opacity: 0.8 }}>
+                    <ScrollableTabView renderTabBar={() => <DefaultTabBar />} style={{ marginTop: 40 }} >
+                        <Signup tabLabel="注册" />
+                        <Signin tabLabel="登录" navigation={this.props.navigation} />
+                    </ScrollableTabView>
+                </ImageBackground>
             </React.Fragment>
         );
     }

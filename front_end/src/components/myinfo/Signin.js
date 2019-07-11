@@ -1,40 +1,30 @@
 import React from "react";
 import { Text, View, StyleSheet, TextInput } from "react-native";
-import { Button, Avatar, Divider, Card } from 'react-native-elements'
+import { Button, Avatar, Divider, Card, Input } from 'react-native-elements'
 import { StackActions, NavigationActions } from "react-navigation";
 import { connect } from "react-redux";
 import agent from "../../agent"
+import Icon from "react-native-vector-icons/FontAwesome"
 
 const styles = StyleSheet.create({
     border: {
         borderWidth: 1,
     },
-    label: {
-        justifyContent: "center",
-        alignItems: "center",
-        marginRight: 5,
-        flex: 1
+    inputContainer: {
+        width: '88%',
     },
     input: {
-        width: 300,
-        borderWidth: 1,
-        height: 40
-    },
-    labelAndInput: {
-        flexDirection: 'row',
-        width: 350,
-        marginTop: 10
-    },
-    submitButtonContainer: {
-        marginTop: 10,
-        marginBottom: -5,
-        height: 70,
-        justifyContent: "center",
-        alignItems: "center"
+        borderRadius: 50,
+        borderWidth: 2,
+        borderBottomWidth: 2,
+        margin: 12,
     },
     submitButton: {
-        width: 70,
-    }
+        width: 90,
+        height: 50,
+        marginTop: 20,
+        borderRadius: 50,
+    },
 })
 
 const login = StackActions.reset({
@@ -107,31 +97,35 @@ class Signin extends React.Component {
     render() {
         return (
             <React.Fragment>
-                <View style={{ alignItems: 'center', justifyContent: 'center', flex: 1 }}>
-                    <Card title="登录" containerStyle={{ marginBottom: 70 }}>
-                        <View style={styles.labelAndInput}>
-                            <View style={[styles.label]}>
-                                <Text>手机号</Text>
-                            </View>
-                            <View style={{ flexDirection: "row-reverse" }}>
-                                <TextInput style={styles.input} onChangeText={text => this.updateState('phone', text)} />
-                            </View>
-                        </View>
-                        <View style={styles.labelAndInput}>
-                            <View style={[styles.label]}>
-                                <Text>密码</Text>
-                            </View>
-                            <View style={{ flexDirection: "row-reverse" }}>
-                                <TextInput style={styles.input} onChangeText={text => this.updateState('password', text)} />
-                            </View>
-                        </View>
-                        <View style={styles.submitButtonContainer}>
-                            <Button containerStyle={[styles.submitButton]}
-                                title="登录"
-                                onPress={this.submit}
-                            />
-                        </View>
-                    </Card>
+
+                <View style={{ alignItems: 'center', justifyContent: 'center', flex: 1, marginTop: 10 }}>
+                    <View style={{ marginBottom: 30 }}>
+                        <Text style={{ fontSize: 30, fontWeight: "bold", letterSpacing: 2 }}>
+                            登录
+                        </Text>
+                    </View>
+                    <View style={styles.inputContainer}>
+                        <Input
+                            placeholder="手机号"
+                            leftIcon={<Icon name="user" size={18} style={{ marginRight: 8, marginLeft: 6 }} />}
+                            inputContainerStyle={styles.input}
+                            onChangeText={text => this.updateState('phone', text)}
+                        />
+                    </View>
+                    <View style={styles.inputContainer}>
+                        <Input
+                            placeholder="密码"
+                            leftIcon={<Icon name="user" size={18} style={{ marginRight: 8, marginLeft: 6 }} />}
+                            inputContainerStyle={styles.input}
+                            onChangeText={text => this.updateState('password', text)}
+                        />
+                    </View>
+                    <Button
+                        title="登录"
+                        onPress={this.submit}
+                        buttonStyle={styles.submitButton}
+                        titleStyle={{ fontSize: 20 }}
+                    />
                 </View>
             </React.Fragment>
         );
