@@ -78,7 +78,11 @@ class CreateHeanScreen extends Component {
                         place: res.result.formatted_address
                     })
                 })
-        });
+        }, e => {
+            console.log(e, 'error');
+        },
+            { enableHignAccuracy: false, timeout: 20000, maximumAge: 10000 }
+        );
     }
 
     addImage() {
@@ -94,7 +98,7 @@ class CreateHeanScreen extends Component {
             });
         }).catch(e => alert(e));
     }
-    
+
     static navigationOptions = {
         title: '新建',
     };

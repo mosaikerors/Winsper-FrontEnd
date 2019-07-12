@@ -40,7 +40,8 @@ class Signup extends React.Component {
             code: '',
             username: '',
             password: '',
-            sendCodeButton: { clickable: true, timeToClick: 0 }
+            sendCodeButton: { clickable: true, timeToClick: 0 },
+            sigupOK: false
         }
         //control how many seconds left before the sendCode button gets clickable again
         setInterval(() => this.updateSendCodeButton(), 1000);
@@ -91,6 +92,12 @@ class Signup extends React.Component {
         const { token, phone, code, username, password } = this.state;
         const response = await agent.user.sigup(token, phone, code, username, password);
         console.log(response);
+        if (response.message === "ok") {
+            this.setState({
+                signupOK: true
+            })
+            this.props.updateInfo(phone, password)
+        }
     }
 
     updateState(field, text) {
@@ -103,7 +110,7 @@ class Signup extends React.Component {
     render() {
         return (
             <React.Fragment>
-                <View style={{ alignItems: 'center', justifyContent: 'center', flex: 1, marginTop: 10 }}>
+                <View style={{ alignItems: 'center', justifyContent: 'center', flex: 1, marginTop: -10 }}>
                     <View style={{ marginBottom: 30 }}>
                         <Text style={{ fontSize: 30, fontWeight: "bold", letterSpacing: 2 }}>
                             注册
@@ -159,11 +166,27 @@ class Signup extends React.Component {
                             onChangeText={text => this.updateState('password', text)}
                         />
                     </View>
-                    <Button
-                        title="注册"
-                        buttonStyle={styles.submitButton}
-                        titleStyle={{ fontSize: 20 }}
-                    />
+                    {this.state.signupOK ? (
+                        <View style={{ width: "100%", alignItems: "center" }}>
+                            <Button
+                                icon={<Icon name="check" size={15} color="white" style={{ margin: 5 }} />}
+                                title="注册成功"
+                                backgroundColor="#00e676"
+                                buttonStyle={[styles.submitButton, { width: 120, backgroundColor: "#64dd17" }]}
+                                titleStyle={{ fontSize: 20 }}
+                            />
+                        </View>
+                    ) : (
+                            <View style={{ width: "100%", alignItems: "center" }}>
+                                <Button
+                                    title="注册"
+                                    buttonStyle={styles.submitButton}
+                                    titleStyle={{ fontSize: 20 }}
+                                    onPress={this.submit}
+                                />
+                            </View>
+                        )
+                    }
                 </View>
             </React.Fragment>
         );

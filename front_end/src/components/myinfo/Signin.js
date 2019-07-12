@@ -94,11 +94,18 @@ class Signin extends React.Component {
         });
     }
 
+    componentWillReceiveProps(nextProps) {
+        console.log(nextProps.phone)
+        this.setState({
+            phone: nextProps.phone,
+            password: nextProps.password
+        })
+    }
+
     render() {
         return (
             <React.Fragment>
-
-                <View style={{ alignItems: 'center', justifyContent: 'center', flex: 1, marginTop: 10 }}>
+                <View style={{ alignItems: 'center', justifyContent: 'center', flex: 1, marginTop: -10 }}>
                     <View style={{ marginBottom: 30 }}>
                         <Text style={{ fontSize: 30, fontWeight: "bold", letterSpacing: 2 }}>
                             登录
@@ -109,14 +116,17 @@ class Signin extends React.Component {
                             placeholder="手机号"
                             leftIcon={<Icon name="user" size={18} style={{ marginRight: 8, marginLeft: 6 }} />}
                             inputContainerStyle={styles.input}
+                            value={this.state.phone}
                             onChangeText={text => this.updateState('phone', text)}
                         />
                     </View>
                     <View style={styles.inputContainer}>
                         <Input
+                            textContentType="password"
                             placeholder="密码"
                             leftIcon={<Icon name="user" size={18} style={{ marginRight: 8, marginLeft: 6 }} />}
                             inputContainerStyle={styles.input}
+                            value={this.state.password}
                             onChangeText={text => this.updateState('password', text)}
                         />
                     </View>

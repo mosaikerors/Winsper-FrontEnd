@@ -23,13 +23,22 @@ const styles = StyleSheet.create({
 const backgroundImage = require("../../../images/p6.jpg")
 
 class LoggedOutScreen extends React.Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            phone: '',
+            password: ''
+        }
+    }
+
     render() {
+        const { phone, password } = this.state;
         return (
             <React.Fragment>
                 <ImageBackground source={backgroundImage} style={{ width: '100%', height: '100%', opacity: 0.8 }}>
-                    <ScrollableTabView renderTabBar={() => <DefaultTabBar />} style={{ marginTop: 40 }} >
-                        <Signup tabLabel="注册" />
-                        <Signin tabLabel="登录" navigation={this.props.navigation} />
+                    <ScrollableTabView renderTabBar={() => <DefaultTabBar />} style={{ marginTop: 40 }}>
+                        <Signup tabLabel="注册" updateInfo={(phone, password) => { console.log(password); this.setState({ phone, password }) }} />
+                        <Signin tabLabel="登录" navigation={this.props.navigation} phone={phone} password={password} />
                     </ScrollableTabView>
                 </ImageBackground>
             </React.Fragment>

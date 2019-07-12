@@ -49,30 +49,17 @@ class HeanListScreen extends React.Component {
         }
     }
 
-    /* async componentWillReceiveProps() {
-         const { uId, token } = this.props;
-         console.log("here" + uId);
-         console.log("here" + token);
-         try {
-             const response = await agent.hean.searchByUId(uId, token)
-             console.log(response)
-         }
-         catch (err) {
-             console.log(err)
-         }
-     }*/
-
     render() {
-        //if (this.state.heans.length === 0)
-        //  return null;
+        if (!this.state.heans)
+            return <Text>No heans yet!</Text>;
         console.log(this.state.heans)
         return (
             <React.Fragment>
                 <FlatList
                     data={this.state.heans}
                     renderItem={({ item, index }) => (
-                        <TouchableOpacity style={{ height: 400 }} onPress={() => this.props.navigation.navigate("HeanDetail", { hean: item })}>
-                            <View style={{ height: "100%", borderWidth: 1 }}>
+                        <TouchableOpacity style={{ }} onPress={() => this.props.navigation.navigate("HeanDetail", { hean: item })}>
+                            <View style={{ height: "100%",  }}>
                                 <HeanCard
                                     src={item.pics[0]}
                                 />
@@ -81,11 +68,6 @@ class HeanListScreen extends React.Component {
                         </TouchableOpacity>
                     )}
                 />
-                {/*<View style={{ borderWidth: 1, flex: 1 }}>
-                    <TouchableOpacity style={{ height: "100%" }} onPress={() => this.props.navigation.navigate("HeanDetail")}>
-                        <HeanCard />
-                    </TouchableOpacity>
-                    </View>*/}
             </React.Fragment>
         );
     }
