@@ -12,8 +12,9 @@ import SubmissionScreen from "./Repository/SubmissionScreen";
 import MoodReportScreen from "./Repository/MoodReportScreen";
 import CommentScreen from "./Repository/CommentScreen";
 import LoggedOutScreen from "./LoggedOutScreen"
-import SettingsScreen from "./SettingsScreen"
+import SettingsScreen from "./Settings/SettingsScreen"
 import HeanDetailScreen from "./Repository/HeanDetailScreen"
+import AccountSafetyScreen from "./Settings/AccountSafetyScreen"
 
 const MyInfoScreenNavigator = createStackNavigator(
     {
@@ -31,6 +32,7 @@ const MyInfoScreenNavigator = createStackNavigator(
         MoodReport: { screen: MoodReportScreen },
         Comment: { screen: CommentScreen },
         Settings: { screen: SettingsScreen },
+        AccountSafety: {screen: AccountSafetyScreen},
         HeanDetail: { screen: HeanDetailScreen }
     },
     {

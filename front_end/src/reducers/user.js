@@ -35,6 +35,11 @@ const user = (state = defaultState, action) => {
                 hasChecked: false,
                 feather: action.payload.newFeather
             }
+        case 'UPDATE_INFO':
+            return {
+                ...state,
+                username: action.payload.newUsername,
+            }
         default:
             return state;
     }

@@ -2,6 +2,7 @@ import React from "react";
 import { Text, View, StyleSheet } from "react-native";
 import { Button, Avatar } from 'react-native-elements'
 import agent from "../../agent"
+import { connect } from "react-redux"
 
 const styles = StyleSheet.create({
     border: {
@@ -61,7 +62,7 @@ class TopBanner extends React.Component {
     }
 
     //签到
-    check() {
+    async check() {
         const { uId, token } = this.props;
         const response = await agent.user.check(uId, token);
         if (response.message === 'ok') {

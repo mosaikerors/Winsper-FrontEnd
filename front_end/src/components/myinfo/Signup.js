@@ -59,7 +59,7 @@ class Signup extends React.Component {
     }
 
     updateSendCodeButton() {
-        console.log(this.state)
+        //console.log(this.state)
         if (this.state.sendCodeButton.timeToClick === 1)
             this.setState({
                 sendCodeButton: {

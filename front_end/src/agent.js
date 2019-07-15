@@ -24,7 +24,7 @@ const user = {
             .then(res => res.body)
             .catch(err => err.response.body),
     updateInfo: (uId, username, token) =>
-        requests.post(API_ROOT + "/user/updateInfo")
+        requests.put(API_ROOT + "/user/updateInfo")
             .set('Authorization', 'Bearer ' + token)
             .set('uId', uId)
             .send({ uId, username })

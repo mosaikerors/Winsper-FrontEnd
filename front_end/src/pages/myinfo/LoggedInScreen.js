@@ -5,6 +5,7 @@ import TopBanner from "../../components/myinfo/TopBanner";
 import FollowBanner from "../../components/myinfo/FollowBanner";
 import DetailedBlock from "../../components/myinfo/DetailedBlock";
 import BottomBanner from "../../components/myinfo/BottomBanner";
+import { connect } from "react-redux"
 
 const styles = StyleSheet.create({
     border: {
