@@ -12,6 +12,17 @@ const styles = StyleSheet.create({
     },
 })
 
+const mapStateToProps = state => ({
+    uId: state.user.uId,
+    token: state.user.token,
+    mutualFollow: state.user.mutualFollow,
+    following: state.user.following,
+    followers: state.user.followers
+})
+
+const mapDispatchToProps = dispatch => ({
+})
+
 class LoggedInScreen extends React.Component {
     static navigationOptions = {
         title: '我的',
@@ -29,4 +40,4 @@ class LoggedInScreen extends React.Component {
         );
     }
 }
-export default LoggedInScreen;
+export default connect(mapStateToProps, mapDispatchToProps)(LoggedInScreen);

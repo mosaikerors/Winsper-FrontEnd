@@ -20,6 +20,17 @@ const styles = StyleSheet.create({
     }
 })
 
+const mapStateToProps = state => ({
+    uId: state.user.uId,
+    token: state.user.token,
+    mutualFollow: state.user.mutualFollow,
+    following: state.user.following,
+    followers: state.user.followers
+})
+
+const mapDispatchToProps = dispatch => ({
+})
+
 class FollowBanner extends React.Component {
     render() {
         return (
@@ -27,19 +38,19 @@ class FollowBanner extends React.Component {
                 <View style={{ flexDirection: 'row' }}>
                     <View style={styles.block}>
                         <TouchableOpacity style={styles.text} onPress={()=>this.props.navigation.navigate('MutualFollow')}>
-                            <Text>1</Text>
+                            <Text>{this.props.mutualFollow}</Text>
                             <Text>互相关注</Text>
                         </TouchableOpacity>
                     </View>
                     <View style={styles.block}>
                         <TouchableOpacity style={styles.text} onPress={()=>this.props.navigation.navigate('Following')}>
-                            <Text>1</Text>
+                            <Text>{this.props.following}</Text>
                             <Text>关注</Text>
                         </TouchableOpacity>
                     </View>
                     <View style={styles.block}>
                         <TouchableOpacity style={styles.text} onPress={()=>this.props.navigation.navigate('Followers')}>
-                            <Text>1</Text>
+                            <Text>{this.props.followers}</Text>
                             <Text>粉丝</Text>
                         </TouchableOpacity>
                     </View>
@@ -48,4 +59,4 @@ class FollowBanner extends React.Component {
         );
     }
 }
-export default FollowBanner;
+export default connect(mapStateToProps, mapDispatchToProps)(FollowBanner);

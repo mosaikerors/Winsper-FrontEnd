@@ -1,6 +1,7 @@
 import React from "react";
 import { Text, View, StyleSheet } from "react-native";
 import { Button, Avatar } from 'react-native-elements'
+import agent from "../../agent"
 
 const styles = StyleSheet.create({
     border: {
@@ -36,19 +37,45 @@ const styles = StyleSheet.create({
     }
 })
 
+
+const mapStateToProps = state => ({
+    uId: state.user.uId,
+    token: state.user.token,
+    username: state.user.username,
+    feather: state.user.feather,
+    hasChecked: state.user.hasChecked,
+})
+
+const mapDispatchToProps = dispatch => ({
+    onCheck: (newFeather) =>
+        dispatch({ type: 'CHECK', payload: { newFeather } })
+})
+
 class TopBanner extends React.Component {
     constructor(props) {
         super(props);
-        this.state = {
-            checked: false,  //是否签到
+        /*this.state = {
+            checked: this.props.hasChecked,  //是否签到
+        }*/
+        this.check = this.check.bind(this);
+    }
+
+    //签到
+    check() {
+        const { uId, token } = this.props;
+        const response = await agent.user.check(uId, token);
+        if (response.message === 'ok') {
+            this.props.onCheck(response.newFeather);
         }
     }
+
     render() {
         return (
             <React.Fragment>
                 <View style={{ flexDirection: "row", marginBottom: 12 }}>
                     <Avatar
                         rounded
+                        //source={{}}
                         size="large"
                         icon={{ name: 'user', color: 'orange', type: 'font-awesome' }}
                         overlayContainerStyle={{ backgroundColor: 'cyan', flex: 4, borderWidth: 1 }}
@@ -61,25 +88,26 @@ class TopBanner extends React.Component {
                         <Text
                             style={[styles.username, styles.border]}
                         >
-                            Gusabary
+                            {this.props.username}
                         </Text>
                         <Text
                             style={[styles.feather, styles.border]}
                         >
-                            羽毛：8
+                            羽毛：{this.props.feather}
                         </Text>
                     </View>
                     <View style={{ flexDirection: 'row-reverse', flex: 1 }}>
-                        {this.state.checked ? (
-                            <Button containerStyle={[styles.attendance, styles.border,styles.checked]}
+                        {this.props.hasChecked ? (
+                            <Button containerStyle={[styles.attendance, styles.border, styles.checked]}
                                 title="已签到"
-                                onPress={() => this.setState({ checked: false })}
+                                disabled
+                                //onPress={() => this.setState({ checked: false })}
                                 icon={{ name: "check" }}
                             />
                         ) : (
-                                < Button containerStyle={[styles.attendance, styles.border,styles.unchecked]}
+                                <Button containerStyle={[styles.attendance, styles.border, styles.unchecked]}
                                     title="签到"
-                                    onPress={() => this.setState({ checked: true })}
+                                    onPress={this.check}
                                 />
                             )
                         }
@@ -89,4 +117,4 @@ class TopBanner extends React.Component {
         );
     }
 }
-export default TopBanner;
+export default connect(mapStateToProps, mapDispatchToProps)(TopBanner);
