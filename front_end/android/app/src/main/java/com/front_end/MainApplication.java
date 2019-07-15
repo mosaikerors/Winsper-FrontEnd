@@ -3,10 +3,10 @@ package com.front_end;
 import android.app.Application;
 
 import com.facebook.react.ReactApplication;
+import cn.qiuxiang.react.amap3d.AMap3DPackage;
 import com.brentvatne.react.ReactVideoPackage;
 import com.github.xinthink.rnmk.ReactMaterialKitPackage;
 import com.RNFetchBlob.RNFetchBlobPackage;
-import org.lovebing.reactnative.baidumap.BaiduMapPackage;
 import com.reactnative.ivpusic.imagepicker.PickerPackage;
 import com.oblador.vectoricons.VectorIconsPackage;
 import com.BV.LinearGradient.LinearGradientPackage;
@@ -32,10 +32,10 @@ public class MainApplication extends Application implements ReactApplication {
     protected List<ReactPackage> getPackages() {
       return Arrays.<ReactPackage>asList(
           new MainReactPackage(),
+            new AMap3DPackage(),
             new ReactVideoPackage(),
             new ReactMaterialKitPackage(),
             new RNFetchBlobPackage(),
-            new BaiduMapPackage(),
             new PickerPackage(),
             new VectorIconsPackage(),
             new LinearGradientPackage(),

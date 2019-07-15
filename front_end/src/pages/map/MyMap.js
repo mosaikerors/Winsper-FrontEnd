@@ -1,96 +1,46 @@
-import React, {
-    Component,
-    PropTypes
-} from 'react';
-
-import {
-    MapView,
-    MapTypes,
-    Overlay
-} from 'react-native-baidu-map';
-
-import {
-    Button,
-    AppRegistry,
-    StyleSheet,
-    Text,
-    View,
-    TouchableHighlight
-} from 'react-native';
+import React, { Component } from 'react';
+//import { MapView, MapTypes, Overlay } from 'react-native-baidu-map';
+import { MapView } from "react-native-amap3d"
+import { StyleSheet, Dimensions } from 'react-native';
 
 import Geolocation from 'Geolocation'
-import Dimensions from 'Dimensions';
 
 export default class MyMap extends Component {
-
     constructor() {
         super();
 
-        this.state = {
-            mapType: MapTypes.NORMAL,
-            zoom: 16.5,
-            center: {
-                longitude: 121.4445179,
-                latitude: 31.0316825
-            },
-            trafficEnabled: false,
-            baiduHeatMapEnabled: false,
-            markers: [{
-                longitude: 121.4445179,
-                latitude: 31.0316825,
-                title: "Window of the world"
-            }, {
-                longitude: 113.995516,
-                latitude: 22.537642,
-                title: ""
-            }]
-        };
-    }
-
-    componentWillMount() {
-        console.log(123)
     }
 
     render() {
         return (
             <React.Fragment>
                 <MapView
-                    //trafficEnabled={this.state.trafficEnabled}
-                    //baiduHeatMapEnabled={this.state.baiduHeatMapEnabled}
-                    //zoomControlsVisible={false}
-                    zoom={this.state.zoom}
-                    mapType={MapTypes.NORMAL}
-                    center={this.state.center}
-                    //marker={this.state.marker}
-                    //markers={this.state.markers}
-                    style={styles.map} // critial!!
-                    //onMarkerClick={(e) => {
-                    //    console.warn(JSON.stringify(e));
-                    //}}
-                    onMapClick={(e) => {
-                        console.log(e);
-                        this.props.tabBar.hide()
+                    style={styles.map}
+                    showsZoomControls={false}
+                    zoomLevel={16.5}
+                    coordinate={{
+                        latitude: 31.0316825,
+                        longitude: 121.4445179,
                     }}
-                >
-                    {this.props.heans.map(hean => {
-                        console.log(hean);
-                        return (
-                            <Overlay.Marker
-                                location={{ longitude: hean.longtitude, latitude: hean.latitude }}
-                            />
-                        )
-                    })}
-                </MapView>
-                {/*<Button title="Locate" onPress={() => {
-                    console.log("here")
-                    Geolocation.getCurrentPosition(data => {
+                    onPress={() => Geolocation.getCurrentPosition(data => {
                         console.log(data.coords)
                     }, e => {
                         console.log(e, 'error');
                     },
-                        { enableHignAccuracy: false, timeout: 20000, maximumAge: 10000 })  //make sure geolocation won't get timeout
-                }}
-            />*/}
+                        { enableHignAccuracy: false, timeout: 20000, maximumAge: 10000 }
+                    )}
+                >
+                    <MapView.Marker
+                        draggable
+                        title='这是一个可拖拽的标记'
+                        onDragEnd={({ nativeEvent }) =>
+                            console.log(`${nativeEvent.latitude}, ${nativeEvent.longitude}`)}
+                        coordinate={{
+                            latitude: 31.0316825,
+                            longitude: 121.4445179,
+                        }}
+                    />
+                </MapView>
             </React.Fragment>
         );
     }
