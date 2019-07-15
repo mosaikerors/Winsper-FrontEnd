@@ -21,6 +21,7 @@
     "react-native-image-zoom-viewer": "^2.2.26",
     "react-native-linear-gradient": "^2.5.4",
     "react-native-looped-carousel": "^0.1.13",
+    "react-native-material-design": "^0.3.7",
     "react-native-material-kit": "^0.5.1",
     "react-native-paper": "^2.16.0",
     "react-native-scrollable-tab-view": "^0.10.0",

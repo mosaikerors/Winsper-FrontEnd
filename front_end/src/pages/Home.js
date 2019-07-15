@@ -7,6 +7,7 @@ import Icon from 'react-native-vector-icons/FontAwesome'
 import Ionicons from 'react-native-vector-icons/Ionicons'
 import { Dimensions } from 'react-native'
 import TabNavigator from "react-native-tab-navigator";
+import { connect } from "react-redux";
 
 const deviceW = Dimensions.get('window').width;
 const basePx = 375;
@@ -33,43 +34,86 @@ function px2dp(px) {
     return px * deviceW / basePx
 }
 
-export default class TabDemo extends Component {
+const mapStateToProps = state => ({
+    doShowBar: state.common.doShowBar
+})
+
+const mapDispatchToProps = dispatch => ({
+})
+
+class Home extends Component {
     state = {
         selectedTab: 'map'
     };
 
     render() {
-        return (
-            <TabNavigator style={styles.container} tabBarStyle={{ backgroundColor: '#ffffff' /*,height:0*/}} >
-                <TabNavigator.Item
-                    selected={this.state.selectedTab === 'explore'}
-                    title="Explore"
-                    selectedTitleStyle={{ color: "#3496f0" }}
-                    renderIcon={() => <Ionicons name="md-planet" size={px2dp(22)} color="#666" />}
-                    renderSelectedIcon={() => <Ionicons name="md-planet" size={px2dp(22)} color="#3496f0" />}
-                    badgeText="1"
-                    onPress={() => this.setState({ selectedTab: 'explore' })}>
-                    <ExploreScreenNavigator />
-                </TabNavigator.Item>
-                <TabNavigator.Item
-                    selected={this.state.selectedTab === 'map'}
-                    title="Map"
-                    selectedTitleStyle={{ color: "#3496f0" }}
-                    renderIcon={() => <Icon name="map-marker" size={px2dp(22)} color="#666" />}
-                    renderSelectedIcon={() => <Icon name="map-marker" size={px2dp(22)} color="#3496f0" />}
-                    onPress={() => this.setState({ selectedTab: 'map' })}>
-                    <MapScreen />
-                </TabNavigator.Item>
-                <TabNavigator.Item
-                    selected={this.state.selectedTab === 'myInfo'}
-                    title="MyInfo"
-                    selectedTitleStyle={{ color: "#3496f0" }}
-                    renderIcon={() => <Icon name="user" size={px2dp(22)} color="#666" />}
-                    renderSelectedIcon={() => <Icon name="user" size={px2dp(22)} color="#3496f0" />}
-                    onPress={() => this.setState({ selectedTab: 'myInfo' })}>
-                    <MyInfoScreenNavigator />
-                </TabNavigator.Item>
-            </TabNavigator>
-        );
+        if (this.props.doShowBar)
+            return (
+                <TabNavigator style={styles.container} tabBarStyle={{ backgroundColor: '#ffffff' /*,height:0*/ }} >
+                    <TabNavigator.Item
+                        selected={this.state.selectedTab === 'explore'}
+                        title="Explore"
+                        selectedTitleStyle={{ color: "#3496f0" }}
+                        renderIcon={() => <Ionicons name="md-planet" size={px2dp(22)} color="#666" />}
+                        renderSelectedIcon={() => <Ionicons name="md-planet" size={px2dp(22)} color="#3496f0" />}
+                        badgeText="1"
+                        onPress={() => this.setState({ selectedTab: 'explore' })}>
+                        <ExploreScreenNavigator />
+                    </TabNavigator.Item>
+                    <TabNavigator.Item
+                        selected={this.state.selectedTab === 'map'}
+                        title="Map"
+                        selectedTitleStyle={{ color: "#3496f0" }}
+                        renderIcon={() => <Icon name="map-marker" size={px2dp(22)} color="#666" />}
+                        renderSelectedIcon={() => <Icon name="map-marker" size={px2dp(22)} color="#3496f0" />}
+                        onPress={() => this.setState({ selectedTab: 'map' })}>
+                        <MapScreen />
+                    </TabNavigator.Item>
+                    <TabNavigator.Item
+                        selected={this.state.selectedTab === 'myInfo'}
+                        title="MyInfo"
+                        selectedTitleStyle={{ color: "#3496f0" }}
+                        renderIcon={() => <Icon name="user" size={px2dp(22)} color="#666" />}
+                        renderSelectedIcon={() => <Icon name="user" size={px2dp(22)} color="#3496f0" />}
+                        onPress={() => this.setState({ selectedTab: 'myInfo' })}>
+                        <MyInfoScreenNavigator />
+                    </TabNavigator.Item>
+                </TabNavigator>
+            );
+        else
+            return (
+                <TabNavigator style={styles.container} tabBarStyle={{ backgroundColor: '#ffffff', height: 0 }} >
+                    <TabNavigator.Item
+                        selected={this.state.selectedTab === 'explore'}
+                        title="Explore"
+                        selectedTitleStyle={{ color: "#3496f0" }}
+                        renderIcon={() => <Ionicons name="md-planet" size={px2dp(22)} color="#666" />}
+                        renderSelectedIcon={() => <Ionicons name="md-planet" size={px2dp(22)} color="#3496f0" />}
+                        badgeText="1"
+                        onPress={() => this.setState({ selectedTab: 'explore' })}>
+                        <ExploreScreenNavigator />
+                    </TabNavigator.Item>
+                    <TabNavigator.Item
+                        selected={this.state.selectedTab === 'map'}
+                        title="Map"
+                        selectedTitleStyle={{ color: "#3496f0" }}
+                        renderIcon={() => <Icon name="map-marker" size={px2dp(22)} color="#666" />}
+                        renderSelectedIcon={() => <Icon name="map-marker" size={px2dp(22)} color="#3496f0" />}
+                        onPress={() => this.setState({ selectedTab: 'map' })}>
+                        <MapScreen />
+                    </TabNavigator.Item>
+                    <TabNavigator.Item
+                        selected={this.state.selectedTab === 'myInfo'}
+                        title="MyInfo"
+                        selectedTitleStyle={{ color: "#3496f0" }}
+                        renderIcon={() => <Icon name="user" size={px2dp(22)} color="#666" />}
+                        renderSelectedIcon={() => <Icon name="user" size={px2dp(22)} color="#3496f0" />}
+                        onPress={() => this.setState({ selectedTab: 'myInfo' })}>
+                        <MyInfoScreenNavigator />
+                    </TabNavigator.Item>
+                </TabNavigator>
+            );
     }
 }
+
+export default connect(mapStateToProps, mapDispatchToProps)(Home);

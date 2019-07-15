@@ -1,31 +1,10 @@
-import React, {
-    Component,
-    PropTypes
-} from 'react';
-
-import {
-    MapView,
-    MapTypes,
-    Overlay
-} from 'react-native-baidu-map';
-
-import {
-    Button,
-    AppRegistry,
-    StyleSheet,
-    Text,
-    View,
-    TouchableHighlight
-} from 'react-native';
-
-import Geolocation from 'Geolocation'
-import Dimensions from 'Dimensions';
+import React, {Component} from 'react';
+import { MapView, MapTypes, Overlay } from 'react-native-baidu-map';
+import { StyleSheet, Dimensions } from 'react-native';
 
 export default class MyMap extends Component {
-
     constructor() {
         super();
-
         this.state = {
             mapType: MapTypes.NORMAL,
             zoom: 16.5,
@@ -47,10 +26,6 @@ export default class MyMap extends Component {
         };
     }
 
-    componentWillMount() {
-        console.log(123)
-    }
-
     render() {
         return (
             <React.Fragment>
@@ -61,6 +36,7 @@ export default class MyMap extends Component {
                     zoom={this.state.zoom}
                     mapType={MapTypes.NORMAL}
                     center={this.state.center}
+<<<<<<< HEAD
                     //marker={this.state.marker}
                     //markers={this.state.markers}
                     style={styles.map} // critial!!
@@ -70,10 +46,20 @@ export default class MyMap extends Component {
                     onMapClick={(e) => {
                         console.log(e);
                         this.props.tabBar.hide()
+=======
+                    marker={this.state.marker}
+                    markers={this.state.markers}
+                    style={styles.map}
+                    onMarkerClick={(e) => {
+                        console.warn(JSON.stringify(e));
+                    }}
+                    onMapClick={(e) => {
+                        console.log(e);
+                        console.log(this.props.heans)
+>>>>>>> 3ac9ec47915de4166b0e6e59236593e83b063583
                     }}
                 >
                     {this.props.heans.map(hean => {
-                        console.log(hean);
                         return (
                             <Overlay.Marker
                                 location={{ longitude: hean.longtitude, latitude: hean.latitude }}
@@ -81,16 +67,6 @@ export default class MyMap extends Component {
                         )
                     })}
                 </MapView>
-                {/*<Button title="Locate" onPress={() => {
-                    console.log("here")
-                    Geolocation.getCurrentPosition(data => {
-                        console.log(data.coords)
-                    }, e => {
-                        console.log(e, 'error');
-                    },
-                        { enableHignAccuracy: false, timeout: 20000, maximumAge: 10000 })  //make sure geolocation won't get timeout
-                }}
-            />*/}
             </React.Fragment>
         );
     }
