@@ -1,8 +1,6 @@
 import React, {Component} from 'react';
-import {Dimensions, View} from 'react-native';
+import { View } from 'react-native';
 import {Avatar, Text} from "react-native-elements";
-const {width} = Dimensions.get("window");
-
 export default class Comment extends Component{
     constructor(props){
         super(props);

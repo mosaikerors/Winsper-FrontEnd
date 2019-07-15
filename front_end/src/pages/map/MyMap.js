@@ -1,31 +1,10 @@
-import React, {
-    Component,
-    PropTypes
-} from 'react';
-
-import {
-    MapView,
-    MapTypes,
-    Overlay
-} from 'react-native-baidu-map';
-
-import {
-    Button,
-    AppRegistry,
-    StyleSheet,
-    Text,
-    View,
-    TouchableHighlight
-} from 'react-native';
-
-import Geolocation from 'Geolocation'
-import Dimensions from 'Dimensions';
+import React, {Component} from 'react';
+import { MapView, MapTypes, Overlay } from 'react-native-baidu-map';
+import { StyleSheet, Dimensions } from 'react-native';
 
 export default class MyMap extends Component {
-
     constructor() {
         super();
-
         this.state = {
             mapType: MapTypes.NORMAL,
             zoom: 16.5,
@@ -47,10 +26,6 @@ export default class MyMap extends Component {
         };
     }
 
-    componentWillMount() {
-        console.log(123)
-    }
-
     render() {
         return (
             <React.Fragment>
@@ -63,16 +38,16 @@ export default class MyMap extends Component {
                     center={this.state.center}
                     marker={this.state.marker}
                     markers={this.state.markers}
-                    style={styles.map} // critial!!
+                    style={styles.map}
                     onMarkerClick={(e) => {
                         console.warn(JSON.stringify(e));
                     }}
                     onMapClick={(e) => {
-                        console.log(e)
+                        console.log(e);
+                        console.log(this.props.heans)
                     }}
                 >
                     {this.props.heans.map(hean => {
-                        console.log(hean);
                         return (
                             <Overlay.Marker
                                 location={{ longitude: hean.longtitude, latitude: hean.latitude }}
@@ -80,16 +55,6 @@ export default class MyMap extends Component {
                         )
                     })}
                 </MapView>
-                {/*<Button title="Locate" onPress={() => {
-                    console.log("here")
-                    Geolocation.getCurrentPosition(data => {
-                        console.log(data.coords)
-                    }, e => {
-                        console.log(e, 'error');
-                    },
-                        { enableHignAccuracy: false, timeout: 20000, maximumAge: 10000 })  //make sure geolocation won't get timeout
-                }}
-            />*/}
             </React.Fragment>
         );
     }
