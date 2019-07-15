@@ -1,0 +1,10 @@
+kind: pipline
+name: test
+
+steps:
+  - name: test
+    image: node:11.12.0
+    commands:
+      - cd front_end
+      - yarn install
+      - yarn test

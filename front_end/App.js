@@ -1,81 +1,83 @@
 import React from 'react';
-import {
-    Text,
-    View,
-    ScrollView,
-    Image, StyleSheet, Platform
-} from 'react-native';
-import {
-    getTheme
-} from 'react-native-material-kit';
-import AntDesign from 'react-native-vector-icons/AntDesign'
-import MaterialIcons from "react-native-vector-icons/MaterialIcons";
-import { Divider } from 'react-native-elements';
+import { Button, View, Text } from 'react-native';
+import { createStackNavigator, createAppContainer } from 'react-navigation'; // Version can be specified in package.json
 
-const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        alignItems: 'stretch',
-        padding: 18,
-        borderWidth: 1
-    },
-    image: {
-        borderWidth: 1,
-    },
-    title: {
-        marginTop: 12,
-        marginLeft: 5,
-        marginBottom: 5
-    },
-});
-
-const theme = getTheme();
-const backgroundImage = require("./images/p6.jpg")
-
-class HeanCard extends React.Component {
+class HomeScreen extends React.Component {
+    static navigationOptions = {
+        title: 'Home',
+    };
+    
     render() {
         return (
-            <React.Fragment>
-                <View style={styles.container}>
-
-                    <Image source={backgroundImage} style={{ height: 250, width: "100%" }} />
-
-                    <View style={styles.title}>
-                        <Text style={{ fontSize: 24, fontWeight: "bold" }}>
-                            text
-                        </Text>
-                    </View>
-
-                    <Divider />
-
-                    <View style={{ borderWidth: 0, marginBottom: 5 }}>
-                        <Text style={{ fontSize: 16 }}>
-                            contentqwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwww
-                        </Text>
-                    </View>
-
-                    <Divider />
-
-                    <View style={{ flexDirection: "row-reverse", marginTop: 10, height: 50, }}>
-                        <View style={{ width: 50, flexDirection: "row" }}>
-                            <MaterialIcons
-                                style={{ marginRight: 5 }}
-                                size={20}
-                                name={"favorite"} />
-                            <Text>{5}</Text>
-                        </View>
-                        <View style={{ width: 50, flexDirection: "row" }}>
-                            <MaterialIcons
-                                style={{ marginRight: 5 }}
-                                size={20}
-                                name={"like2"} />
-                            <Text>{4}</Text>
-                        </View>
-                    </View>
-                </View>
-            </React.Fragment>
-        )
+            <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
+                <Text>Home Screen</Text>
+                <Button
+                    title="Go to Details"
+                    onPress={() => {
+                        /* 1. Navigate to the Details route with params */
+                        this.props.navigation.navigate('Details', {
+                            itemId: 86,
+                            otherParam: 'anything you want here',
+                        });
+                    }}
+                />
+            </View>
+        );
     }
 }
 
-export default HeanCard;
+class DetailsScreen extends React.Component {
+    static navigationOptions = ({ navigation }) => {
+        return {
+            title: navigation.getParam('otherParam', 'A Nested Details Screen'),
+        };
+    };
+    
+    render() {
+        /* 2. Get the param, provide a fallback value if not available */
+        const { navigation } = this.props;
+        const itemId = navigation.getParam('itemId', 'NO-ID');
+        const otherParam = navigation.getParam('otherParam', 'some default value');
+        
+        return (
+            <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
+                <Text>Details Screen</Text>
+                <Text>itemId: {JSON.stringify(itemId)}</Text>
+                <Text>otherParam: {JSON.stringify(otherParam)}</Text>
+                <Button
+                    title="Go to Details... again"
+                    onPress={() =>
+                        this.props.navigation.push('Details', {
+                            itemId: Math.floor(Math.random() * 100),
+                        })}
+                />
+                <Button
+                    title="Go to Home"
+                    onPress={() => this.props.navigation.navigate('Home')}
+                />
+                <Button
+                    title="Go back"
+                    onPress={() => this.props.navigation.goBack()}
+                />
+            </View>
+        );
+    }
+}
+
+const RootStack = createStackNavigator(
+    {
+        Home: HomeScreen,
+        Details: DetailsScreen,
+    },
+    {
+        initialRouteName: 'Home',
+    }
+);
+
+const AppContainer = createAppContainer(RootStack);
+
+export default class App extends React.Component {
+    render() {
+        return <AppContainer />;
+    }
+}

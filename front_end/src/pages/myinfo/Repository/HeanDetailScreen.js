@@ -1,88 +1,121 @@
 import React, { Component } from 'react';
 import Comment from '../../../components/hean/Comment'
-import { Avatar, Text } from 'react-native-elements';
-import { Dimensions, View, ScrollView } from 'react-native';
-import PhotoGroup from '../../../components/hean/ImageGroup';
-const { width } = Dimensions.get("window");
+import { Avatar, Input} from 'react-native-elements';
+import { Dimensions, ScrollView, View, Text } from 'react-native';
+import ImageGroup from '../../../components/hean/ImageGroup';
 import AntDesign from 'react-native-vector-icons/AntDesign'
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons'
-import Fontisto from "react-native-vector-icons/Fontisto";
-import { Input } from 'react-native-elements';
+import FontAwesome from "react-native-vector-icons/FontAwesome";
+const { width } = Dimensions.get("window");
 
 class HeanDetailScreen extends Component {
-    //title = this.props.navigation.getParam("index", 0);
     static navigationOptions = {
         title: "函"
     };
     constructor(props) {
         super(props);
         const hean = this.props.navigation.getParam("hean", {});
-        console.log(hean)
         this.state = {
             username: "简媜",
-            time: hean.createdTime,//"今天 12:23",
-            //content: "约在医院门口见面，并且好好地晚餐。你的衣角仍飘荡着辛涩的药味，这应是最无菌的一次约会。可惜的，惨淡夜色让你看起来苍白，仿佛生与死的演绎仍鞭笞着你瘦而长的身躯。最高的纪录是，一个星期见十三名儿童死去，你常说你已学会在面对病人死亡之时，让脑子一片空白，继续做一个饱餐、更浴、睡眠的无所谓的人。在早期，你所写的那首《白鹭鸶》诗里，曾雄壮地要求天地给你这一袭白衣；白衣红里，你在数年之后《关渡手稿》这样写：恐怕，我是你的尸体衣裳，非婚礼华服，并且悄悄地后记着：“每次当病人危急时，我们明知无用，仍勉强做些急救的工作。其目的并非要救病人，而是来安慰家属。”",
+            time: hean.createdTime,
             content: hean.text,
-            /*images: [
-                "https://images.pexels.com/photos/1343465/pexels-photo-1343465.jpeg?auto=compress&cs=tinysrgb&dpr=2&w=500",
-                "http://puui.qpic.cn/vcover_vt_pic/0/vbb35hm6m6da1wc1561952321/0",
-                "https://04imgmini.eastday.com/mobile/20190704/20190704163428_479ba6554be5639c7db51838bb57ad45_1.jpeg",
-                "http://puui.qpic.cn/vcover_vt_pic/0/vbb35hm6m6da1wc1561952321/0",
-            ],*/
             images: hean.pics,
             comments: [
+                {
+                    "username": "lalala",
+                    "time": "今天 11:57",
+                    "content": "Two roads diverged in a yellow wood,\n" +
+                        "And sorry I could not travel both\n" +
+                        "And be one traveler, long I stood\n" +
+                        "And looked down one as far as I could\n" +
+                        "To where it bent in the undergrowth;\n" +
+                        "Then took the other, as just as fair,\n" +
+                        "And having perhaps the better claim,\n" +
+                        "Because it was grassy and wanted wear;\n" +
+                        "Though as for that the passing there\n" +
+                        "Had worn them really about the same,\n" +
+                        "And both that morning equally lay\n" +
+                        "In leaves no step had trodden black.\n" +
+                        "Oh, I kept the first for another day!\n" +
+                        "Yet knowing how way leads on to way,\n" +
+                        "I doubted if I should ever come back.\n" +
+                        "I shall be telling this with a sigh\n" +
+                        "Somewhere ages and ages hence:​",
+                    "avatar": "http://puui.qpic.cn/vcover_vt_pic/0/vbb35hm6m6da1wc1561952321/0"
+                },
                 {
                     "username": "lalala",
                     "time": "今天 11:57",
                     "content": "窗景如画，人如画！每一帧都能作桌面的，除却琅琊榜，最爱阿令～图片截不到正面视角，应该会更有意境……（为了让自己缓缓，要对糖视而不见[允悲]） ​",
                     "avatar": "http://puui.qpic.cn/vcover_vt_pic/0/vbb35hm6m6da1wc1561952321/0"
                 },
+                {
+                    "username": "lalala",
+                    "time": "今天 11:57",
+                    "content": "窗景如画，人如画！每一帧都能作桌面的，除却琅琊榜，最爱阿令～图片截不到正面视角，应该会更有意境……（为了让自己缓缓，要对糖视而不见[允悲]） ​",
+                    "avatar": "http://puui.qpic.cn/vcover_vt_pic/0/vbb35hm6m6da1wc1561952321/0"
+                },
+                {
+                    "username": "lalala",
+                    "time": "今天 11:57",
+                    "content": "窗景如画，人如画！每一帧都能作桌面的，除却琅琊榜，最爱阿令～图片截不到正面视角，应该会更有意境……（为了让自己缓缓，要对糖视而不见[允悲]） ​",
+                    "avatar": "http://puui.qpic.cn/vcover_vt_pic/0/vbb35hm6m6da1wc1561952321/0"
+                }
             ]
-        }
-        console.log(this.state)
+        };
     }
 
     render() {
+        const hean = this.props.navigation.getParam("hean", {});
         return (
-            <ScrollView style={{ marginLeft: width / 18, marginRight: width / 18, backgroundColor: "#" }}>
-                <View style={{ flex: 0, flexDirection: "row", alignItems: "center" }}>
-                    <Avatar
-                        squared
-                        size={"medium"}
-                        source={{ uri: "http://puui.qpic.cn/vcover_vt_pic/0/vbb35hm6m6da1wc1561952321/0" }}
-                    />
-                    <View>
-                        <Text style={{ marginLeft: 10, }}>{this.state.username}</Text>
-                        <Text>{this.state.time}</Text>
+            <ScrollView>
+                <View style={{ margin: width / 18}}>
+                    <View style={{flexDirection: "row", alignItems: "center", marginBottom: width / 18 }}>
+                        <Avatar
+                            rounded
+                            size={"medium"}
+                            source={{ uri: "http://puui.qpic.cn/vcover_vt_pic/0/vbb35hm6m6da1wc1561952321/0" }}
+                        />
+                        <View>
+                            <Text style={{ marginLeft: 10, }}>{this.state.username}</Text>
+                            <Text>{this.state.time}</Text>
+                        </View>
                     </View>
+                    <Text>{this.state.content}</Text>
+                    <ImageGroup length={hean.pics.length} images={hean.pics} />
+                    <View style={{flexDirection:"row", justifyContent:"space-around"}}>
+                        <View style={{flexDirection:"row",alignItems:"center"}}>
+                            <AntDesign
+                                name={"like2"}
+                                size={20}
+                                color={"red"}
+                            />
+                            <Text>{10000}</Text>
+                        </View>
+                        <View style={{flexDirection:"row",alignItems:"center"}}>
+                            <MaterialIcons
+                                name={"favorite"}
+                                size={20}
+                                color={"red"}
+                            />
+                            <Text>{10000}</Text>
+                        </View>
+                        <View style={{flexDirection:"row",alignItems:"center"}}>
+                            <FontAwesome
+                                name={"comment-o"}
+                                size={20}
+                            />
+                            <Text>{10000}</Text>
+                        </View>
+                    </View>
+                    
+                    <Input placeholder={"抢个沙发吧"} />
+                    {
+                        this.state.comments.map((item, index) => (
+                            <Comment time={item.time} avatar={item.avatar} username={item.username} content={item.content} />
+                        ))
+                    }
                 </View>
-                <Text>{this.state.content}</Text>
-                <PhotoGroup length={this.state.images.length} images={this.state.images} />
-                <View style={{ flex: 0, flexDirection: "row", alignItems: "center" }}>
-                    <View style={{ flex: 1, flexDirection: "row" }}>
-                        <AntDesign
-                            name={"like2"} size={24} />
-                        <Text>{100}</Text>
-                    </View>
-
-                    <View style={{ flex: 1, flexDirection: "row" }}>
-                        <MaterialIcons
-                            name={"favorite-border"} size={24} />
-                        <Text>{100}</Text>
-                    </View>
-
-                    <View style={{ flex: 1, flexDirection: "row" }}>
-                        <Fontisto
-                            name={"like2"} size={24} />
-                        <Text>{100}</Text>
-                    </View>
-                </View>
-                <Input placeholder={"抢个沙发吧"} />
-                {
-                    this.state.comments.map((item, index) => (
-                        <Comment time={item.time} avatar={item.avatar} username={item.username} content={item.content} />
-                    ))
-                }
             </ScrollView>
         );
     }

@@ -38,7 +38,6 @@ const MyInfoScreenNavigator = createStackNavigator(
     {
         initialRouteName: "LoggedOut",
         headerMode: 'none'
-        //cardStyle: {opacity:0.7}
     }
 );
 

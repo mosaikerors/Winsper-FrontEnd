@@ -65,9 +65,6 @@ class CreateHeanScreen extends Component {
     addPlace() {
         Geolocation.getCurrentPosition(data => {
             let location = data.coords.latitude.toString() + "," + data.coords.longitude.toString();
-            //let url = "http://api.map.baidu.com/reverse_geocoding/v3/?output=json&coordtype=wgs84ll&" +
-            //    "location=" + location + "&ak=hhuldMVGYO4w0sRt8FVTXVIFbG5mA1Lz&mcode=09:D4:76:A9:31:7F:98:" +
-            //    "C0:38:21:C3:D2:35:AB:60:AE:94:36:EB:45;com.front_end";
             const baseUrl = "http://api.map.baidu.com/reverse_geocoding/v3/";
             const url = `${baseUrl}?output=json&coordtype=wgs84ll&location=${location}&ak=${AK}&mcode=${SHA1};${packageName}`;
             fetch(url)

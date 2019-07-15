@@ -8,10 +8,17 @@ import Geolocation from 'Geolocation'
 export default class MyMap extends Component {
     constructor() {
         super();
-
     }
 
     render() {
+        //Geolocation.requestAuthorization();
+        /*Geolocation.getCurrentPosition(data => {
+            console.log(data.coords)
+        }, e => {
+            console.log(e, 'error');
+        },
+            { enableHignAccuracy: false, timeout: 60 * 1000, maximumAge: 10000 }
+        );*/
         return (
             <React.Fragment>
                 <MapView
@@ -22,13 +29,7 @@ export default class MyMap extends Component {
                         latitude: 31.0316825,
                         longitude: 121.4445179,
                     }}
-                    onPress={() => Geolocation.getCurrentPosition(data => {
-                        console.log(data.coords)
-                    }, e => {
-                        console.log(e, 'error');
-                    },
-                        { enableHignAccuracy: false, timeout: 20000, maximumAge: 10000 }
-                    )}
+                    //onPress
                 >
                     <MapView.Marker
                         draggable
