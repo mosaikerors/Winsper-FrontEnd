@@ -31,7 +31,7 @@ const styles = StyleSheet.create({
         height: 40
     },
     checked: {
-        width: 90
+        width: 90,
     },
     unchecked: {
         width: 70
@@ -65,12 +65,14 @@ class TopBanner extends React.Component {
     async check() {
         const { uId, token } = this.props;
         const response = await agent.user.check(uId, token);
+        console.log(response)
         if (response.message === 'ok') {
             this.props.onCheck(response.newFeather);
         }
     }
 
     render() {
+        console.log("***this: " + this.props.feather)
         return (
             <React.Fragment>
                 <View style={{ flexDirection: "row", marginBottom: 12 }}>
@@ -99,7 +101,8 @@ class TopBanner extends React.Component {
                     </View>
                     <View style={{ flexDirection: 'row-reverse', flex: 1 }}>
                         {this.props.hasChecked ? (
-                            <Button containerStyle={[styles.attendance, styles.border, styles.checked]}
+                            <Button
+                                containerStyle={[styles.attendance, styles.border, styles.checked]}
                                 title="已签到"
                                 disabled
                                 //onPress={() => this.setState({ checked: false })}

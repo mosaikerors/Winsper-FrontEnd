@@ -16,26 +16,27 @@ const user = {
     firstSignin: (phone, password) =>
         requests.post(API_ROOT + "/user/login")
             .send({ phone, password })
-            .then(res => res.body)
+            //.then(res => res.body)
+            .then(res => ({ ...res.body, feather: 4, mutualFollow: 2, following: 2, followers: 2, hasChecked: false }))
             .catch(err => err.response.body),
     nextSignin: (uId, token) =>
         requests.post(API_ROOT + "/user/login")
             .send({ uId, token })
             .then(res => res.body)
             .catch(err => err.response.body),
-    updateInfo: (uId, username, token) =>
-        requests.put(API_ROOT + "/user/updateInfo")
+    updateInfo: (uId, username, token) => ({ message: "ok", newUsername: username })
+    /*    requests.put(API_ROOT + "/user/updateInfo")
             .set('Authorization', 'Bearer ' + token)
             .set('uId', uId)
             .send({ uId, username })
             .then(res => res.body)
-            .catch(err => err.response.body),
-    check: (uId, token) =>
-        requests.post(API_ROOT + "/user/check")
+            .catch(err => err.response.body),*/,
+    check: (uId, token) => ({ message: "ok", newFeather: 5 })
+    /*    requests.post(API_ROOT + "/user/check")
             .set('Authorization', 'Bearer ' + token)
             .set('uId', uId)
             .then(res => res.body)
-            .catch(err => err.response.body),
+            .catch(err => err.response.body),*/
 }
 
 const hean = {

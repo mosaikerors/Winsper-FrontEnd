@@ -24,15 +24,17 @@ const user = (state = defaultState, action) => {
                 username: action.payload.username,
                 status: action.payload.status,
                 feather: action.payload.feather,
+                mutualFollow: action.payload.mutualFollow,
                 following: action.payload.following,
                 followers: action.payload.followers,
                 hasChecked: action.payload.hasChecked,
                 avatar: action.payload.avatar
             }
         case 'CHECK':
+            console.log("here")
             return {
                 ...state,
-                hasChecked: false,
+                hasChecked: true,
                 feather: action.payload.newFeather
             }
         case 'UPDATE_INFO':

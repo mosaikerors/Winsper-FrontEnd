@@ -55,20 +55,21 @@ export default class MyMap extends Component {
         return (
             <React.Fragment>
                 <MapView
-                    trafficEnabled={this.state.trafficEnabled}
-                    baiduHeatMapEnabled={this.state.baiduHeatMapEnabled}
-                    zoomControlsVisible={false}
+                    //trafficEnabled={this.state.trafficEnabled}
+                    //baiduHeatMapEnabled={this.state.baiduHeatMapEnabled}
+                    //zoomControlsVisible={false}
                     zoom={this.state.zoom}
-                    mapType={this.state.mapType}
+                    mapType={MapTypes.NORMAL}
                     center={this.state.center}
-                    marker={this.state.marker}
-                    markers={this.state.markers}
+                    //marker={this.state.marker}
+                    //markers={this.state.markers}
                     style={styles.map} // critial!!
-                    onMarkerClick={(e) => {
-                        console.warn(JSON.stringify(e));
-                    }}
+                    //onMarkerClick={(e) => {
+                    //    console.warn(JSON.stringify(e));
+                    //}}
                     onMapClick={(e) => {
-                        console.log(e)
+                        console.log(e);
+                        this.props.tabBar.hide()
                     }}
                 >
                     {this.props.heans.map(hean => {
