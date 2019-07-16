@@ -32,13 +32,26 @@ const MyInfoScreenNavigator = createStackNavigator(
         MoodReport: { screen: MoodReportScreen },
         Comment: { screen: CommentScreen },
         Settings: { screen: SettingsScreen },
-        AccountSafety: {screen: AccountSafetyScreen},
+        AccountSafety: { screen: AccountSafetyScreen },
         HeanDetail: { screen: HeanDetailScreen }
     },
     {
         initialRouteName: "LoggedOut",
-        headerMode: 'none'
+        headerMode: 'none',   //是否显示页眉
     }
 );
 
-export default createAppContainer(MyInfoScreenNavigator);
+MyInfoScreenNavigator.navigationOptions = ({ navigation }) => {
+    let tabBarVisible = true;
+    //console.log(navigation.state);
+    const topScreen = navigation.state.routes[navigation.state.routes.length - 1].routeName;
+    if (topScreen === "LoggedOut") {
+        tabBarVisible = false;
+    }
+
+    return {
+        tabBarVisible,
+    };
+}
+
+export default (MyInfoScreenNavigator);

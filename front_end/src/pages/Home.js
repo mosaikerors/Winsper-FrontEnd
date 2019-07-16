@@ -21,7 +21,7 @@ function px2dp(px) {
 const Home = createBottomTabNavigator(
     {
         Explore: ExploreScreenNavigator,
-        Map: { screen: MapScreen },
+        Map: MapScreen,
         MyInfo: MyInfoScreenNavigator
     },
     {
@@ -39,7 +39,7 @@ const Home = createBottomTabNavigator(
             },
         }),
         tabBarOptions: {
-            style: { backgroundColor: 'rgba(255,255,255,0)'/*,display:"none"*/ },
+            style: { backgroundColor: 'rgba(255,255,255,0)', /*display: "flex" */},
         }
     }
 );
