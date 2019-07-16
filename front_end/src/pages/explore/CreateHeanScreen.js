@@ -89,7 +89,6 @@ class CreateHeanScreen extends Component {
             includeExif: true,
             forceJpg: true,
         }).then(images => {
-            console.log(images)
             this.setState({
                 images: images.map(i => ({ uri: i.path, width: i.width, height: i.height, mime: i.mime }))
             });
@@ -101,6 +100,11 @@ class CreateHeanScreen extends Component {
     };
 
     render() {
+        let imageURL = [];
+        let {images} = this.state;
+        for(let i=0; i<images.length; ++i){
+            imageURL.push(images[i].uri)
+        }
         return (
             <Fragment>
                 <TextareaItem
@@ -111,7 +115,7 @@ class CreateHeanScreen extends Component {
                 />
                 {
                     this.state.images.length !== 0 ?
-                        <ImageGroup images={this.state.images} length={this.state.images.length} />
+                        <ImageGroup images={imageURL} length={this.state.images.length} />
                         :
                         null
                 }

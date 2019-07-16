@@ -3,6 +3,8 @@ package com.front_end;
 import android.app.Application;
 
 import com.facebook.react.ReactApplication;
+import org.lovebing.reactnative.baidumap.BaiduMapPackage;
+import com.cmcewen.blurview.BlurViewPackage;
 import cn.qiuxiang.react.amap3d.AMap3DPackage;
 import com.brentvatne.react.ReactVideoPackage;
 import com.github.xinthink.rnmk.ReactMaterialKitPackage;
@@ -32,6 +34,8 @@ public class MainApplication extends Application implements ReactApplication {
     protected List<ReactPackage> getPackages() {
       return Arrays.<ReactPackage>asList(
           new MainReactPackage(),
+            new BaiduMapPackage(),
+            new BlurViewPackage(),
             new AMap3DPackage(),
             new ReactVideoPackage(),
             new ReactMaterialKitPackage(),
