@@ -1,7 +1,9 @@
 import React from 'react';
-import { Button, View, Text, PanResponder, Animated, TouchableOpacity } from 'react-native';
+import { Button, View, Text, PanResponder, Animated, TouchableOpacity, Image } from 'react-native';
 
 const rt = (a, b) => Math.sqrt(a * a + b * b)
+
+// judge whether the rotate angle is greater than pi or not
 const judgeClockWise = (x, y, rawTheta) => {
     const theta = rawTheta < 0 ? rawTheta + Math.PI * 2 : rawTheta
     if (theta > Math.PI * 1.5 || theta < Math.PI * 0.5) {
@@ -13,26 +15,29 @@ const judgeClockWise = (x, y, rawTheta) => {
         return false;
     return true;
 }
+
+// unify radian value to [0, 2*pi)
 const unify = (radian) => {
     let unifiedRadian = radian % (Math.PI * 2)
     if (unifiedRadian < 0)
         unifiedRadian += Math.PI * 2
     return unifiedRadian;
 }
-class D extends React.Component {
+
+class Sticker extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
             pos: { x: 200, y: 200 },
             storedPos: { x: 200, y: 200 },
-            size: { height: 100, width: 100 },
             scale: 1,
             storedScale: 1,
             rotate: 0,
             storedRotate: 0
         };
 
-        this.getStyle = this.getStyle.bind(this);
+        this.getContainerStyle = this.getContainerStyle.bind(this);
+        this.getContentStyle = this.getContentStyle.bind(this);
         this.dragResponder = PanResponder.create({
             onMoveShouldSetPanResponder: () => true,
             onMoveShouldSetPanResponderCapture: () => true,
@@ -47,8 +52,8 @@ class D extends React.Component {
             onMoveShouldSetPanResponder: () => true,
             onMoveShouldSetPanResponderCapture: () => true,
             onPanResponderMove: (e, gestureState) => {
-                const scaleX = (this.state.storedScale * this.state.size.width + gestureState.dx) / this.state.size.width;
-                const scaleY = (this.state.storedScale * this.state.size.height + gestureState.dy) / this.state.size.height;
+                const scaleX = (this.state.storedScale * this.props.width + gestureState.dx) / this.props.width;
+                const scaleY = (this.state.storedScale * this.props.height + gestureState.dy) / this.props.height;
                 this.setState({
                     scale: scaleX < scaleY ? scaleX : scaleY
                 })
@@ -60,7 +65,7 @@ class D extends React.Component {
             onMoveShouldSetPanResponder: () => true,
             onMoveShouldSetPanResponderCapture: () => true,
             onPanResponderMove: (e, gestureState) => {
-                const { height, width } = this.state.size;
+                const { height, width } = this.props;
                 const { dx, dy } = gestureState;
                 const before = rt(height * this.state.storedScale / 2, width * this.state.storedScale / 2);
                 const theta = unify(Math.atan(height / width) - this.state.storedRotate);
@@ -75,15 +80,24 @@ class D extends React.Component {
         });
     }
 
-    getStyle() {
+    getContainerStyle() {
         return {
             position: "absolute",
-            top: this.state.pos.y,
-            left: this.state.pos.x,
-            height: this.state.size.height * this.state.scale,
-            width: this.state.size.width * this.state.scale,
+            top: this.state.pos.y - (this.state.scale - 1) / 2 * this.props.height,
+            left: this.state.pos.x - (this.state.scale - 1) / 2 * this.props.width,
             borderWidth: 1,
             transform: [{ rotate: `${this.state.rotate * 180 / Math.PI}deg` }]
+        }
+    }
+    getContentStyle() {
+        return {
+            borderWidth: 1,
+            marginLeft: 30,
+            marginRight: 30,
+            flex: 1,
+            justifyContent: "center",
+            height: this.props.height * this.state.scale,
+            width: this.props.width * this.state.scale,
         }
     }
 
@@ -92,18 +106,26 @@ class D extends React.Component {
             <React.Fragment>
                 <View style={{ flex: 1, flexDirection: "column" }}>
 
-                    <View style={this.getStyle()}>
+                    <View style={this.getContainerStyle()}>
                         <View style={{ width: "100%", flexDirection: "row" }}>
                             <View style={{ flexDirection: "row-reverse", flex: 1 }} {...this.rotateResponder.panHandlers}>
                                 <TouchableOpacity style={{ backgroundColor: "violet", height: 30, width: 30 }} />
                             </View>
                         </View>
 
-                        <View style={{ borderWidth: 1, marginLeft: 30, marginRight: 30, flex: 1 }} {...this.dragResponder.panHandlers}>
+                        <View style={this.getContentStyle()} {...this.dragResponder.panHandlers}>
                             <TouchableOpacity>
-                                <Text>
-                                    TBC
-                                </Text>
+                                {this.props.source ?
+                                    <Image source={this.props.source} style={[{
+                                        //position: "relative",
+                                        top: (this.state.scale - 1) * this.props.height / 2,
+                                        left: (this.state.scale - 1) * this.props.width / 2,
+                                        transform: [{ scale: this.state.scale }]
+                                    }]} /> :
+                                    <View style={{ justifyContent: "center", alignItems: "center"}}>
+                                        <Text>{this.props.text}</Text>
+                                    </View>
+                                }
                             </TouchableOpacity>
                         </View>
 
@@ -123,4 +145,4 @@ class D extends React.Component {
     }
 }
 
-export default D;
+export default Sticker;
