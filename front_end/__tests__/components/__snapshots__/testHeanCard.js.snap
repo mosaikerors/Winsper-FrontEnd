@@ -1,0 +1,597 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`renders FilterItem correctly 1`] = `
+<View
+  style={
+    Object {
+      "backgroundColor": "#ffffff",
+      "borderColor": "#ffffff",
+      "borderRadius": 2,
+      "borderWidth": 1,
+      "shadowColor": "rgba(0, 0, 0, 0.12)",
+      "shadowOffset": Object {
+        "height": 1,
+        "width": 2,
+      },
+      "shadowOpacity": 0.8,
+      "shadowRadius": 2,
+    }
+  }
+>
+  <Image
+    source={
+      Object {
+        "uri": "../assets/images/p1.jpg",
+      }
+    }
+    style={
+      Object {
+        "height": 170,
+        "resizeMode": "cover",
+      }
+    }
+  />
+  <Text
+    style={
+      Object {
+        "color": "rgba(0, 0, 0, 0.54)",
+        "padding": 15,
+      }
+    }
+  >
+    mount 方法则会将 React 组件渲染为真实的 DOM 节点，特别是在依赖真实的 DOM 结构必须存在的情况下，比如说按钮的点击事件。
+  </Text>
+  <View
+    style={
+      Object {
+        "flexDirection": "row",
+        "justifyContent": "space-around",
+      }
+    }
+  >
+    <View
+      style={
+        Object {
+          "alignItems": "center",
+          "flexDirection": "row",
+        }
+      }
+    >
+      <Text
+        allowFontScaling={false}
+        style={
+          Array [
+            Object {
+              "color": "red",
+              "fontSize": 20,
+            },
+            undefined,
+            Object {
+              "fontFamily": "anticon",
+              "fontStyle": "normal",
+              "fontWeight": "normal",
+            },
+            Object {},
+          ]
+        }
+      >
+        
+      </Text>
+      <Text>
+        1000
+      </Text>
+    </View>
+    <View
+      style={
+        Object {
+          "alignItems": "center",
+          "flexDirection": "row",
+        }
+      }
+    >
+      <Text
+        allowFontScaling={false}
+        style={
+          Array [
+            Object {
+              "color": "black",
+              "fontSize": 20,
+            },
+            undefined,
+            Object {
+              "fontFamily": "Feather",
+              "fontStyle": "normal",
+              "fontWeight": "normal",
+            },
+            Object {},
+          ]
+        }
+      >
+        
+      </Text>
+      <Text>
+        999
+      </Text>
+    </View>
+    <View
+      style={
+        Object {
+          "alignItems": "center",
+          "flexDirection": "row",
+        }
+      }
+    >
+      <Text
+        allowFontScaling={false}
+        style={
+          Array [
+            Object {
+              "color": undefined,
+              "fontSize": 20,
+            },
+            undefined,
+            Object {
+              "fontFamily": "FontAwesome",
+              "fontStyle": "normal",
+              "fontWeight": "normal",
+            },
+            Object {},
+          ]
+        }
+      >
+        
+      </Text>
+      <Text>
+        111
+      </Text>
+    </View>
+  </View>
+</View>
+`;
+
+exports[`renders FilterItem correctly 2`] = `
+<View
+  style={
+    Object {
+      "backgroundColor": "#ffffff",
+      "borderColor": "#ffffff",
+      "borderRadius": 2,
+      "borderWidth": 1,
+      "shadowColor": "rgba(0, 0, 0, 0.12)",
+      "shadowOffset": Object {
+        "height": 1,
+        "width": 2,
+      },
+      "shadowOpacity": 0.8,
+      "shadowRadius": 2,
+    }
+  }
+>
+  <Image
+    source={
+      Object {
+        "uri": "../assets/images/p1.jpg",
+      }
+    }
+    style={
+      Object {
+        "height": 170,
+        "resizeMode": "cover",
+      }
+    }
+  />
+  <Text
+    style={
+      Object {
+        "color": "rgba(0, 0, 0, 0.54)",
+        "padding": 15,
+      }
+    }
+  >
+    mount 方法则会将 React 组件渲染为真实的 DOM 节点，特别是在依赖真实的 DOM 结构必须存在的情况下，比如说按钮的点击事件。
+  </Text>
+  <View
+    style={
+      Object {
+        "flexDirection": "row",
+        "justifyContent": "space-around",
+      }
+    }
+  >
+    <View
+      style={
+        Object {
+          "alignItems": "center",
+          "flexDirection": "row",
+        }
+      }
+    >
+      <Text
+        allowFontScaling={false}
+        style={
+          Array [
+            Object {
+              "color": "black",
+              "fontSize": 20,
+            },
+            undefined,
+            Object {
+              "fontFamily": "anticon",
+              "fontStyle": "normal",
+              "fontWeight": "normal",
+            },
+            Object {},
+          ]
+        }
+      >
+        
+      </Text>
+      <Text>
+        1000
+      </Text>
+    </View>
+    <View
+      style={
+        Object {
+          "alignItems": "center",
+          "flexDirection": "row",
+        }
+      }
+    >
+      <Text
+        allowFontScaling={false}
+        style={
+          Array [
+            Object {
+              "color": "black",
+              "fontSize": 20,
+            },
+            undefined,
+            Object {
+              "fontFamily": "Feather",
+              "fontStyle": "normal",
+              "fontWeight": "normal",
+            },
+            Object {},
+          ]
+        }
+      >
+        
+      </Text>
+      <Text>
+        999
+      </Text>
+    </View>
+    <View
+      style={
+        Object {
+          "alignItems": "center",
+          "flexDirection": "row",
+        }
+      }
+    >
+      <Text
+        allowFontScaling={false}
+        style={
+          Array [
+            Object {
+              "color": undefined,
+              "fontSize": 20,
+            },
+            undefined,
+            Object {
+              "fontFamily": "FontAwesome",
+              "fontStyle": "normal",
+              "fontWeight": "normal",
+            },
+            Object {},
+          ]
+        }
+      >
+        
+      </Text>
+      <Text>
+        111
+      </Text>
+    </View>
+  </View>
+</View>
+`;
+
+exports[`renders FilterItem correctly 3`] = `
+<View
+  style={
+    Object {
+      "backgroundColor": "#ffffff",
+      "borderColor": "#ffffff",
+      "borderRadius": 2,
+      "borderWidth": 1,
+      "shadowColor": "rgba(0, 0, 0, 0.12)",
+      "shadowOffset": Object {
+        "height": 1,
+        "width": 2,
+      },
+      "shadowOpacity": 0.8,
+      "shadowRadius": 2,
+    }
+  }
+>
+  <Image
+    source={
+      Object {
+        "uri": "../assets/images/p1.jpg",
+      }
+    }
+    style={
+      Object {
+        "height": 170,
+        "resizeMode": "cover",
+      }
+    }
+  />
+  <Text
+    style={
+      Object {
+        "color": "rgba(0, 0, 0, 0.54)",
+        "padding": 15,
+      }
+    }
+  >
+    mount 方法则会将 React 组件渲染为真实的 DOM 节点，特别是在依赖真实的 DOM 结构必须存在的情况下，比如说按钮的点击事件。
+  </Text>
+  <View
+    style={
+      Object {
+        "flexDirection": "row",
+        "justifyContent": "space-around",
+      }
+    }
+  >
+    <View
+      style={
+        Object {
+          "alignItems": "center",
+          "flexDirection": "row",
+        }
+      }
+    >
+      <Text
+        allowFontScaling={false}
+        style={
+          Array [
+            Object {
+              "color": "black",
+              "fontSize": 20,
+            },
+            undefined,
+            Object {
+              "fontFamily": "anticon",
+              "fontStyle": "normal",
+              "fontWeight": "normal",
+            },
+            Object {},
+          ]
+        }
+      >
+        
+      </Text>
+      <Text>
+        1000
+      </Text>
+    </View>
+    <View
+      style={
+        Object {
+          "alignItems": "center",
+          "flexDirection": "row",
+        }
+      }
+    >
+      <Text
+        allowFontScaling={false}
+        style={
+          Array [
+            Object {
+              "color": "red",
+              "fontSize": 20,
+            },
+            undefined,
+            Object {
+              "fontFamily": "Feather",
+              "fontStyle": "normal",
+              "fontWeight": "normal",
+            },
+            Object {},
+          ]
+        }
+      >
+        
+      </Text>
+      <Text>
+        999
+      </Text>
+    </View>
+    <View
+      style={
+        Object {
+          "alignItems": "center",
+          "flexDirection": "row",
+        }
+      }
+    >
+      <Text
+        allowFontScaling={false}
+        style={
+          Array [
+            Object {
+              "color": undefined,
+              "fontSize": 20,
+            },
+            undefined,
+            Object {
+              "fontFamily": "FontAwesome",
+              "fontStyle": "normal",
+              "fontWeight": "normal",
+            },
+            Object {},
+          ]
+        }
+      >
+        
+      </Text>
+      <Text>
+        111
+      </Text>
+    </View>
+  </View>
+</View>
+`;
+
+exports[`renders FilterItem correctly 4`] = `
+<View
+  style={
+    Object {
+      "backgroundColor": "#ffffff",
+      "borderColor": "#ffffff",
+      "borderRadius": 2,
+      "borderWidth": 1,
+      "shadowColor": "rgba(0, 0, 0, 0.12)",
+      "shadowOffset": Object {
+        "height": 1,
+        "width": 2,
+      },
+      "shadowOpacity": 0.8,
+      "shadowRadius": 2,
+    }
+  }
+>
+  <Image
+    source={
+      Object {
+        "uri": "https://tse4-mm.cn.bing.net/th?id=OIP.ImYDTf5CrXft11OUpTMSTQHaEA&w=215&h=160&c=7&o=5&dpr=1.5&pid=1.7",
+      }
+    }
+    style={
+      Object {
+        "height": 170,
+        "resizeMode": "cover",
+      }
+    }
+  />
+  <Text
+    style={
+      Object {
+        "color": "rgba(0, 0, 0, 0.54)",
+        "padding": 15,
+      }
+    }
+  >
+    mount 方法则会将 React 组件渲染为真实的 DOM 节点，特别是在依赖真实的 DOM 结构必须存在的情况下，比如说按钮的点击事件。
+  </Text>
+  <View
+    style={
+      Object {
+        "flexDirection": "row",
+        "justifyContent": "space-around",
+      }
+    }
+  >
+    <View
+      style={
+        Object {
+          "alignItems": "center",
+          "flexDirection": "row",
+        }
+      }
+    >
+      <Text
+        allowFontScaling={false}
+        style={
+          Array [
+            Object {
+              "color": "red",
+              "fontSize": 20,
+            },
+            undefined,
+            Object {
+              "fontFamily": "anticon",
+              "fontStyle": "normal",
+              "fontWeight": "normal",
+            },
+            Object {},
+          ]
+        }
+      >
+        
+      </Text>
+      <Text>
+        1000
+      </Text>
+    </View>
+    <View
+      style={
+        Object {
+          "alignItems": "center",
+          "flexDirection": "row",
+        }
+      }
+    >
+      <Text
+        allowFontScaling={false}
+        style={
+          Array [
+            Object {
+              "color": "black",
+              "fontSize": 20,
+            },
+            undefined,
+            Object {
+              "fontFamily": "Feather",
+              "fontStyle": "normal",
+              "fontWeight": "normal",
+            },
+            Object {},
+          ]
+        }
+      >
+        
+      </Text>
+      <Text>
+        999
+      </Text>
+    </View>
+    <View
+      style={
+        Object {
+          "alignItems": "center",
+          "flexDirection": "row",
+        }
+      }
+    >
+      <Text
+        allowFontScaling={false}
+        style={
+          Array [
+            Object {
+              "color": undefined,
+              "fontSize": 20,
+            },
+            undefined,
+            Object {
+              "fontFamily": "FontAwesome",
+              "fontStyle": "normal",
+              "fontWeight": "normal",
+            },
+            Object {},
+          ]
+        }
+      >
+        
+      </Text>
+      <Text>
+        111
+      </Text>
+    </View>
+  </View>
+</View>
+`;
