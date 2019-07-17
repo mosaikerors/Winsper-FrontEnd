@@ -1,123 +1,153 @@
 import React from 'react';
-import { Button, View, Text, PanResponder, Animated, TouchableOpacity } from 'react-native';
+import { View, Text, PanResponder, Animated, TouchableOpacity } from 'react-native';
+import { StyleSheet, Dimensions, Image, ScrollView } from 'react-native';
+import { Button, Divider } from "react-native-elements"
+import Drawer from "react-native-drawer"
+import Sticker from "./src/components/journal/sticker"
 
-const rt = (a, b) => Math.sqrt(a * a + b * b)
-const judgeClockWise = (x, y, rawTheta) => {
-    const theta = rawTheta < 0 ? rawTheta + Math.PI * 2 : rawTheta
-    if (theta > Math.PI * 1.5 || theta < Math.PI * 0.5) {
-        if (-(Math.tan(theta)) * x < y)
-            return true;
-        return false;
+const styles = StyleSheet.create({
+    stage: {
+        width: Dimensions.get('window').width * 0.8,
+        height: Dimensions.get('window').height * 0.8,
+        borderWidth: 1
+    },
+    drawer: { shadowColor: '#000000', shadowOpacity: 0.8, shadowRadius: 3 },
+    controlPanel: {
+        flex: 1,
+        backgroundColor: 'pink',
+    },
+    controlPanelWelcome: {
+        fontSize: 20,
+        textAlign: 'center',
+        margin: 15,
+        color: 'white',
+        fontWeight: 'bold',
+    },
+});
+
+const icon4 = require("./images/sticker/icon4.png")
+const icon5 = require("./images/sticker/icon5.png")
+const icon6 = require("./images/sticker/icon6.png")
+
+const getScale = ({ width, height }) => {
+    const maxSize = width > height ? width : height;
+    return 70 / maxSize
+}
+
+class ControlPanel extends React.Component {
+    render() {
+        return (
+            <View style={styles.controlPanel}>
+                <Text style={styles.controlPanelWelcome}>
+                    Your Stickers
+                </Text>
+                <ScrollView>
+                    <View style={{ justifyContent: "space-between" }}>
+                        <View style={{ flexDirection: "row", justifyContent: "space-around" }}>
+                            <TouchableOpacity onPress={() => this.props.addSticker(1)} >
+                                <Image source={icon4} style={{ transform: [{ scale: getScale(Image.resolveAssetSource(icon4)) }] }} />
+                            </TouchableOpacity>
+                            <Image source={icon4} style={{ transform: [{ scale: getScale(Image.resolveAssetSource(icon4)) }] }} />
+                            <Image source={icon5} style={{ transform: [{ scale: getScale(Image.resolveAssetSource(icon5)) }] }} />
+                            <Image source={icon4} style={{ transform: [{ scale: getScale(Image.resolveAssetSource(icon4)) }] }} />
+                            <Image source={icon6} style={{ transform: [{ scale: getScale(Image.resolveAssetSource(icon6)) }] }} />
+                        </View>
+                        <View style={{ flexDirection: "row", justifyContent: "space-around" }}>
+                            <Image source={icon5} style={{ transform: [{ scale: getScale(Image.resolveAssetSource(icon5)) }] }} />
+                            <Image source={icon4} style={{ transform: [{ scale: getScale(Image.resolveAssetSource(icon4)) }] }} />
+                            <Image source={icon6} style={{ transform: [{ scale: getScale(Image.resolveAssetSource(icon6)) }] }} />
+                            <Image source={icon5} style={{ transform: [{ scale: getScale(Image.resolveAssetSource(icon5)) }] }} />
+                            <Image source={icon4} style={{ transform: [{ scale: getScale(Image.resolveAssetSource(icon4)) }] }} />
+                        </View>
+                        <View style={{ flexDirection: "row", justifyContent: "space-around", marginTop: 20, marginBottom: 10 }}>
+                            <Image source={icon4} style={{ transform: [{ scale: getScale(Image.resolveAssetSource(icon4)) }] }} />
+                            <Image source={icon5} style={{ transform: [{ scale: getScale(Image.resolveAssetSource(icon5)) }] }} />
+                            <Image source={icon4} style={{ transform: [{ scale: getScale(Image.resolveAssetSource(icon4)) }] }} />
+                            <Image source={icon6} style={{ transform: [{ scale: getScale(Image.resolveAssetSource(icon6)) }] }} />
+                            <Image source={icon5} style={{ transform: [{ scale: getScale(Image.resolveAssetSource(icon5)) }] }} />
+                        </View>
+                    </View>
+
+                </ScrollView>
+
+            </View>
+        )
     }
-    if (-(Math.tan(theta)) * x < y)
-        return false;
-    return true;
 }
-const unify = (radian) => {
-    let unifiedRadian = radian % (Math.PI * 2)
-    if (unifiedRadian < 0)
-        unifiedRadian += Math.PI * 2
-    return unifiedRadian;
-}
+
 class D extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            pos: { x: 200, y: 200 },
-            storedPos: { x: 200, y: 200 },
-            size: { height: 100, width: 100 },
-            scale: 1,
-            storedScale: 1,
-            rotate: 0,
-            storedRotate: 0
-        };
-
-        this.getStyle = this.getStyle.bind(this);
+            open: false,
+            stickersOnStage: []
+        }
+        this.addSticker = this.addSticker.bind(this)
         this.dragResponder = PanResponder.create({
             onMoveShouldSetPanResponder: () => true,
             onMoveShouldSetPanResponderCapture: () => true,
             onPanResponderMove: (e, gestureState) =>
                 this.setState({
-                    pos: { x: this.state.storedPos.x + gestureState.dx, y: this.state.storedPos.y + gestureState.dy }
+                    open: true
                 }),
-            onPanResponderRelease: () => this.setState({ storedPos: this.state.pos })
-        });
-
-        this.scaleResponder = PanResponder.create({
-            onMoveShouldSetPanResponder: () => true,
-            onMoveShouldSetPanResponderCapture: () => true,
-            onPanResponderMove: (e, gestureState) => {
-                const scaleX = (this.state.storedScale * this.state.size.width + gestureState.dx) / this.state.size.width;
-                const scaleY = (this.state.storedScale * this.state.size.height + gestureState.dy) / this.state.size.height;
-                this.setState({
-                    scale: scaleX < scaleY ? scaleX : scaleY
-                })
-            },
-            onPanResponderRelease: () => this.setState({ storedScale: this.state.scale })
-        });
-
-        this.rotateResponder = PanResponder.create({
-            onMoveShouldSetPanResponder: () => true,
-            onMoveShouldSetPanResponderCapture: () => true,
-            onPanResponderMove: (e, gestureState) => {
-                const { height, width } = this.state.size;
-                const { dx, dy } = gestureState;
-                const before = rt(height * this.state.storedScale / 2, width * this.state.storedScale / 2);
-                const theta = unify(Math.atan(height / width) - this.state.storedRotate);
-                const after = rt(before * Math.cos(theta) + dx, -before * Math.sin(theta) + dy);
-                const link = rt(dx, dy);
-                const isClockWise = judgeClockWise(before * Math.cos(theta) + dx, -before * Math.sin(theta) + dy, theta);
-                const absRotate = Math.acos((before * before + after * after - link * link) / (2 * before * after));
-                const rotate = isClockWise ? absRotate : -absRotate;
-                this.setState({ rotate: unify(this.state.storedRotate + rotate) })
-            },
-            onPanResponderRelease: () => this.setState({ storedRotate: this.state.rotate })
         });
     }
 
-    getStyle() {
-        return {
-            position: "absolute",
-            top: this.state.pos.y,
-            left: this.state.pos.x,
-            height: this.state.size.height * this.state.scale,
-            width: this.state.size.width * this.state.scale,
-            borderWidth: 1,
-            transform: [{ rotate: `${this.state.rotate * 180 / Math.PI}deg` }]
-        }
+    addSticker(id) {
+        console.log(id)
+        let stickersOnStage = this.state.stickersOnStage;
+        stickersOnStage.push(id);
+        this.setState({ stickersOnStage })
     }
 
     render() {
         return (
             <React.Fragment>
-                <View style={{ flex: 1, flexDirection: "column" }}>
 
-                    <View style={this.getStyle()}>
-                        <View style={{ width: "100%", flexDirection: "row" }}>
-                            <View style={{ flexDirection: "row-reverse", flex: 1 }} {...this.rotateResponder.panHandlers}>
-                                <TouchableOpacity style={{ backgroundColor: "violet", height: 30, width: 30 }} />
-                            </View>
-                        </View>
-
-                        <View style={{ borderWidth: 1, marginLeft: 30, marginRight: 30, flex: 1 }} {...this.dragResponder.panHandlers}>
-                            <TouchableOpacity>
-                                <Text>
-                                    TBC
-                                </Text>
-                            </TouchableOpacity>
-                        </View>
-
-                        <View style={{ width: "100%", flexDirection: "row" }}>
-                            <View style={{ flex: 1 }}>
-                                <TouchableOpacity style={{ backgroundColor: "red", height: 30, width: 30 }} />
-                            </View>
-                            <View style={{ flexDirection: "row-reverse" }} {...this.scaleResponder.panHandlers}>
-                                <TouchableOpacity style={{ backgroundColor: "cyan", height: 30, width: 30 }} />
-                            </View>
-                        </View>
-
+                <Drawer
+                    type="overlay"
+                    content={<ControlPanel addSticker={(id) => this.addSticker(id)} />}
+                    open={this.state.open}
+                    openDrawerOffset={100}
+                    styles={styles.drawer}
+                    side="bottom"
+                    tapToClose
+                    openDrawerOffset={540}
+                >
+                    <View style={{ flex: 1 }}>
+                        <Text>123</Text>
+                        {this.state.stickersOnStage.map(id => (
+                            <Sticker
+                                key={id}
+                                width={Image.resolveAssetSource(icon4).width}
+                                height={Image.resolveAssetSource(icon4).height}
+                                source={icon4}
+                                zIndex={id}
+                            />
+                        ))}
+                        <Sticker
+                            width={Image.resolveAssetSource(icon4).width}
+                            height={Image.resolveAssetSource(icon4).height}
+                            source={icon4}
+                            zIndex={3}
+                        />
+                        <Sticker
+                            width={Image.resolveAssetSource(icon5).width}
+                            height={Image.resolveAssetSource(icon5).height}
+                            source={icon5}
+                            zIndex={2}
+                        />
                     </View>
-                </View>
+
+                    <View style={{ alignItems: "center" }} {...this.dragResponder.panHandlers} >
+                        <TouchableOpacity
+                            style={{ backgroundColor: "cyan", height: 30, width: 100, alignItems: "center", justifyContent: "center" }}
+                        >
+                            <Text style={{}}>open</Text>
+                        </TouchableOpacity>
+                    </View>
+                </Drawer>
+
             </React.Fragment>
         )
     }

@@ -1,5 +1,8 @@
 import React from 'react';
-import { Button, View, Text, PanResponder, Animated, TouchableOpacity, Image } from 'react-native';
+import { Button, View, Text, PanResponder, Animated, TouchableOpacity, Image, StyleSheet } from 'react-native';
+import AntDesign from 'react-native-vector-icons/AntDesign'
+import FontAwesome from 'react-native-vector-icons/FontAwesome'
+import FontAwesome5 from 'react-native-vector-icons/FontAwesome5'
 
 const rt = (a, b) => Math.sqrt(a * a + b * b)
 
@@ -28,19 +31,22 @@ class Sticker extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            pos: { x: 200, y: 200 },
-            storedPos: { x: 200, y: 200 },
+            pos: { x: 0, y: 0 },
+            storedPos: { x: 0, y: 0 },
             scale: 1,
             storedScale: 1,
             rotate: 0,
-            storedRotate: 0
+            storedRotate: 0,
+            onFocused: false,
+            isDeleted: false,
         };
 
         this.getContainerStyle = this.getContainerStyle.bind(this);
         this.getContentStyle = this.getContentStyle.bind(this);
+        this.getControlStyle = this.getControlStyle.bind(this);
         this.dragResponder = PanResponder.create({
-            onMoveShouldSetPanResponder: () => true,
-            onMoveShouldSetPanResponderCapture: () => true,
+            onMoveShouldSetPanResponder: () => this.state.onFocused ? true : false,
+            onMoveShouldSetPanResponderCapture: () => this.state.onFocused ? true : false,
             onPanResponderMove: (e, gestureState) =>
                 this.setState({
                     pos: { x: this.state.storedPos.x + gestureState.dx, y: this.state.storedPos.y + gestureState.dy }
@@ -82,63 +88,115 @@ class Sticker extends React.Component {
 
     getContainerStyle() {
         return {
-            position: "absolute",
+            position: this.state.isDeleted?"relative":"absolute",
             top: this.state.pos.y - (this.state.scale - 1) / 2 * this.props.height,
             left: this.state.pos.x - (this.state.scale - 1) / 2 * this.props.width,
-            borderWidth: 1,
-            transform: [{ rotate: `${this.state.rotate * 180 / Math.PI}deg` }]
+            //borderWidth: 1,
+            transform: [{ rotate: `${this.state.rotate * 180 / Math.PI}deg` }],
+            zIndex: this.props.zIndex,
+            display: this.state.isDeleted ? "none" : "flex"
         }
     }
     getContentStyle() {
         return {
-            borderWidth: 1,
+            borderWidth: this.state.onFocused ? 1 : 0,
+            borderStyle: "dotted",
             marginLeft: 30,
             marginRight: 30,
             flex: 1,
-            justifyContent: "center",
+            //justifyContent: "center",
             height: this.props.height * this.state.scale,
             width: this.props.width * this.state.scale,
+        }
+    }
+
+    getControlStyle(field) {
+        let color;
+        switch (field) {
+            case "group":
+                return {
+                    width: "100%",
+                    flexDirection: "row",
+                    //display: this.state.onFocused ? "flex" : "none"
+                    opacity: this.state.onFocused ? 1 : 0
+                }
+            case "delete":
+                color = "red"; break;
+            case "rotate":
+                color = "violet"; break;
+            case "save":
+                color = "green"; break;
+            case "scale":
+                color = "cyan"; break;
+        }
+        return {
+            backgroundColor: color,
+            height: 30,
+            width: 30,
+            borderRadius: 30,
+            justifyContent: "center",
+            alignItems: "center"
         }
     }
 
     render() {
         return (
             <React.Fragment>
-                <View style={{ flex: 1, flexDirection: "column" }}>
-
-                    <View style={this.getContainerStyle()}>
-                        <View style={{ width: "100%", flexDirection: "row" }}>
-                            <View style={{ flexDirection: "row-reverse", flex: 1 }} {...this.rotateResponder.panHandlers}>
-                                <TouchableOpacity style={{ backgroundColor: "violet", height: 30, width: 30 }} />
-                            </View>
-                        </View>
-
-                        <View style={this.getContentStyle()} {...this.dragResponder.panHandlers}>
-                            <TouchableOpacity>
-                                {this.props.source ?
-                                    <Image source={this.props.source} style={[{
-                                        //position: "relative",
-                                        top: (this.state.scale - 1) * this.props.height / 2,
-                                        left: (this.state.scale - 1) * this.props.width / 2,
-                                        transform: [{ scale: this.state.scale }]
-                                    }]} /> :
-                                    <View style={{ justifyContent: "center", alignItems: "center"}}>
-                                        <Text>{this.props.text}</Text>
-                                    </View>
-                                }
+                <View style={[this.getContainerStyle()]}>
+                    <View style={this.getControlStyle("group")}>
+                        <View style={{ flex: 1 }}>
+                            <TouchableOpacity
+                                style={this.getControlStyle("delete")}
+                                onPress={() => this.setState({ isDeleted: true })}
+                                disabled={this.state.onFocused ? false : true}
+                            >
+                                <FontAwesome name={"trash"} size={16} color={"white"} />
                             </TouchableOpacity>
                         </View>
-
-                        <View style={{ width: "100%", flexDirection: "row" }}>
-                            <View style={{ flex: 1 }}>
-                                <TouchableOpacity style={{ backgroundColor: "red", height: 30, width: 30 }} />
-                            </View>
-                            <View style={{ flexDirection: "row-reverse" }} {...this.scaleResponder.panHandlers}>
-                                <TouchableOpacity style={{ backgroundColor: "cyan", height: 30, width: 30 }} />
-                            </View>
+                        <View style={{ flexDirection: "row-reverse" }} {...this.rotateResponder.panHandlers}>
+                            <TouchableOpacity style={this.getControlStyle("rotate")} disabled={this.state.onFocused ? false : true}>
+                                <FontAwesome name={"repeat"} size={16} color={"white"} />
+                            </TouchableOpacity>
                         </View>
-
                     </View>
+
+                    <View style={[this.getContentStyle()]} {...this.dragResponder.panHandlers}>
+                        <TouchableOpacity
+                            style={{ flex: 1, justifyContent: "center" }}
+                            onPress={() => this.setState({ onFocused: !this.state.onFocused })}
+                        >
+                            {this.props.source ?
+                                <Image source={this.props.source} style={[{
+                                    position: "absolute",
+                                    top: (this.state.scale - 1) * this.props.height / 2,
+                                    left: (this.state.scale - 1) * this.props.width / 2,
+                                    transform: [{ scale: this.state.scale }],
+                                    //zIndex: this.state.onFocused ? 9999 : 0
+                                }]} /> :
+                                <View style={{ justifyContent: "center", alignItems: "center", transform: [{ scale: this.state.scale }] }}>
+                                    <Text>{this.props.text}</Text>
+                                </View>
+                            }
+                        </TouchableOpacity>
+                    </View>
+
+                    <View style={this.getControlStyle("group")}>
+                        <View style={{ flex: 1 }}>
+                            <TouchableOpacity
+                                style={this.getControlStyle("save")}
+                                onPress={() => this.setState({ onFocused: false })}
+                                disabled={this.state.onFocused ? false : true}
+                            >
+                                <FontAwesome name={"check"} size={16} color={"white"} />
+                            </TouchableOpacity>
+                        </View>
+                        <View style={{ flexDirection: "row-reverse" }} {...this.scaleResponder.panHandlers}>
+                            <TouchableOpacity style={this.getControlStyle("scale")} disabled={this.state.onFocused ? false : true}>
+                                <FontAwesome5 name={"expand-arrows-alt"} size={16} color={"white"} />
+                            </TouchableOpacity>
+                        </View>
+                    </View>
+
                 </View>
             </React.Fragment>
         )
