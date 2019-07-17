@@ -21,5 +21,3 @@ class D extends React.Component {
         )
     }
 }
-
-export default D;
