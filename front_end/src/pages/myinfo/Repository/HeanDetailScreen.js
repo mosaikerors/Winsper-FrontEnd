@@ -261,7 +261,6 @@ class HeanDetailScreen extends Component {
             commentObject: 0
         });
         this.refs.input.focus();
-
     }
 
     commentToComment(commentId){
