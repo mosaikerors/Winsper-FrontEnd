@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import Comment from '../../../components/myinfo/Comment'
 import {Avatar} from 'react-native-elements';
-import {ScrollView, View, Text, TextInput, Alert, Button} from 'react-native';
+import {StyleSheet, KeyboardAvoidingView, View, Text, TextInput, Alert, ScrollView, TouchableOpacity} from 'react-native';
 import ImageGroup from '../../../components/hean/ImageGroup';
 import AntDesign from 'react-native-vector-icons/AntDesign'
 import FontAwesome from "react-native-vector-icons/FontAwesome";
@@ -185,77 +185,208 @@ class HeanDetailScreen extends Component {
     static navigationOptions = {
         title: "函"
     };
+    
     constructor(props) {
         super(props);
         this.state={
-            comment:""
+            comment:"",
+            commentObject:0, // 0 : comment hean, 1: comment to comment
+            commentToCommentId:0,
+            likeCount: hean.likeCount,
+            starCount: hean.likeCount,
+            hasLiked: hean.hasLiked,
+            hasStarred: hean.hasStarred,
+            commentCount:hean.commentCount
         };
         this.changeText=this.changeText.bind(this);
         this.submitComment=this.submitComment.bind(this);
+        this.changeLike=this.changeLike.bind(this);
+        this.changeStar=this.changeStar.bind(this);
+        this.commentHean=this.commentHean.bind(this);
+        this.commentToComment = this.commentToComment.bind(this);
     };
-    
+
+    changeLike(){
+        const {likeCount, hasLiked} = this.state;
+        if(hasLiked){
+            this.setState({
+                likeCount:likeCount-1,
+                hasLiked:!hasLiked
+            })
+        }
+        else{
+            this.setState({
+                likeCount:likeCount+1,
+                hasLiked:!hasLiked
+            })
+        }
+    }
+
+    changeStar(){
+        const {starCount, hasStarred} = this.state;
+        if(hasStarred){
+            this.setState({
+                starCount:starCount-1,
+                hasStarred:!hasStarred
+            })
+        }
+        else{
+            this.setState({
+                starCount:starCount+1,
+                hasStarred:!hasStarred
+            })
+        }
+    }
+
     changeText(comment){
         this.setState({
             comment
         })
     }
-    
+
     submitComment(){
-        Alert.alert("submit: "+this.state.comment);
+        if(this.state.comment!==""){
+            if(this.state.commentObject===1){
+                Alert.alert("comment to comment, comment ID = "+this.state.commentToCommentId
+                    +" content: "+this.state.comment);
+            }
+            else{
+                Alert.alert("comment to hean "+hean.hId+" content: "+this.state.comment);
+            }
+        }
     }
-    
-    
+
+    commentHean(){
+        this.setState({
+            commentObject: 0
+        });
+        this.refs.input.focus();
+
+    }
+
+    commentToComment(commentId){
+        this.setState({
+            commentObject: 1,
+            commentToCommentId:commentId
+        });
+        this.refs.input.focus();
+    }
+
     render() {
         //const hean = this.props.navigation.getParam("hean", {});
         return (
-            <ScrollView style={{paddingLeft:10, paddingRight:10,}}>
-                <View style={{flexDirection: "row", alignItems: "center" }}>
-                    <Avatar
-                        rounded
-                        size={"medium"}
-                        source={{ uri: hean.avatar }}
-                    />
-                    <View style={{ marginLeft: 10,flexDirection:"column"}}>
-                        <Text >{hean.username}</Text>
-                        <Text>{hean.createdTime}</Text>
-                    </View>
-                </View>
-                <Text style={{lineHeight:20}}>{hean.text}</Text>
-                <ImageGroup length={hean.pics.length} images={hean.pics} />
-                <View style={{flexDirection:"row", justifyContent:"space-around",marginBottom:5, marginTop:5}}>
-                    <View style={{flexDirection:"row",alignItems:"center"}}>
-                        <AntDesign
-                            name={"like2"}
-                            size={20}
-                            color={hean.hasLiked ?"red":"black"}
+            <KeyboardAvoidingView>
+                <ScrollView style={css.view}>
+                    <View style={css.Icon}>
+                        <Avatar
+                            rounded
+                            size={"medium"}
+                            source={{ uri: hean.avatar }}
                         />
-                        <Text>{hean.likeCount}</Text>
+                        <View style={css.username}>
+                            <Text >{hean.username}</Text>
+                            <Text>{hean.createdTime}</Text>
+                        </View>
                     </View>
-                    <View style={{flexDirection:"row",alignItems:"center"}}>
-                        <Feather
-                            name={"star"}
-                            size={20}
-                            color={hean.hasStarred ?"red":"black"}
+                    <Text style={css.font}>{hean.text}</Text>
+                    <ImageGroup length={hean.pics.length} images={hean.pics} />
+                    <View style={css.IconGroup}>
+                        <View style={css.Icon}>
+                            <TouchableOpacity onPress={this.changeLike}>
+                                <AntDesign
+                                    name={"like2"}
+                                    size={20}
+                                    color={this.state.hasLiked ?"red":"black"}
+                                />
+                            </TouchableOpacity>
+                            <Text>{this.state.likeCount}</Text>
+                        </View>
+                        <View style={css.Icon}>
+                            <TouchableOpacity onPress={this.changeStar}>
+                                <Feather
+                                    name={"star"}
+                                    size={20}
+                                    color={this.state.hasStarred ?"red":"black"}
+                                />
+                            </TouchableOpacity>
+                            <Text>{this.state.starCount}</Text>
+                        </View>
+                        <View style={css.Icon}>
+                            <TouchableOpacity onPress={this.commentHean}>
+                                <FontAwesome
+                                    name={"comment-o"}
+                                    size={20}
+                                />
+                            </TouchableOpacity>
+                            <Text>{this.state.commentCount}</Text>
+                        </View>
+                    </View>
+                    {
+                        hean.comments.map((item, index) => (
+                            <TouchableOpacity onPress={()=>this.commentToComment(item.commentId)}>
+                                <Comment comment={item}/>
+                            </TouchableOpacity>
+                        ))
+                    }
+                    <View style={css.bottomBlank}/>
+                </ScrollView>
+                <View style={css.commentBox}>
+                    <TextInput
+                        ref="input"
+                        placeholder={'说说你的想法'}
+                        onChangeText={this.changeText}
                         />
-                        <Text>{hean.starCount}</Text>
-                    </View>
-                    <View style={{flexDirection:"row",alignItems:"center"}}>
+                    <TouchableOpacity onPress={this.submitComment} style={css.sendIcon}>
                         <FontAwesome
-                            name={"comment-o"}
+                            name={"send"}
+                            color={this.state.comment===""?"grey":"blue"}
                             size={20}
                         />
-                        <Text>{hean.commentCount}</Text>
-                    </View>
+                    </TouchableOpacity>
                 </View>
-                <TextInput placeholder={"说说你的看法"} onChangeText={this.changeText}/>
-                <Button onPress={this.submitComment} title={"评论"}/>
-                {
-                    hean.comments.map((item, index) => (
-                        <Comment comment={item}/>
-                    ))
-                }
-            </ScrollView>
+            </KeyboardAvoidingView>
         );
     }
 }
 export default HeanDetailScreen;
+const css = StyleSheet.create({
+    bottomBlank:{
+      height:40,
+      backgroundColor: "#ffffff",
+    },
+    username:{
+        marginLeft: 10,
+        flexDirection:"column"
+    },
+    font:{
+        lineHeight:20
+    },
+    IconGroup:{
+        flexDirection:"row",
+        justifyContent:"space-around",
+        marginBottom:5,
+        marginTop:5
+    },
+    view:{
+        paddingLeft:10,
+        paddingRight:10
+    },
+    Icon:{
+        flexDirection:"row",
+        alignItems:"center"
+    },
+    commentBox: {
+        position: 'absolute',
+        height:40,
+        left: 0,
+        right: 0,
+        bottom: 0,
+        backgroundColor:"#ffffff",
+        flexDirection:"row",
+        alignItems:"center",
+    },
+    sendIcon:{
+        position:'absolute',
+        right:20
+    }
+});
