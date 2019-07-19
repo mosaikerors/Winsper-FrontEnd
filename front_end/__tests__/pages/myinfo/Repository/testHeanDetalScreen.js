@@ -107,7 +107,6 @@ const hean = {
     ]
 };
 
-
 test('renders HeanDetailScreen correctly', () => {
     const tree = renderer.create(
         <HeanDetailScreen hean={hean}/>).toJSON();

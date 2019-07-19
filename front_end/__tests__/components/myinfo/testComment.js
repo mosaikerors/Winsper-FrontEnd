@@ -36,14 +36,14 @@ const comment2 = {
 };
 
 
-test('render comment with commented ', () => {
+test('renders comment with commented ', () => {
     const tree = renderer.create(
         <Comment comment={comment1}  />
     ).toJSON();
     expect(tree).toMatchSnapshot();
 });
 
-test('render comment without commented', () => {
+test('renders comment without commented', () => {
     const tree = renderer.create(
         <Comment comment={comment2}  />
     ).toJSON();
