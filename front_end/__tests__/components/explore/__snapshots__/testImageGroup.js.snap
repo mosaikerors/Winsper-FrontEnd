@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`renders FilterItem correctly 1`] = `
+exports[`render ImageGroup1 1`] = `
 <View
   style={
     Object {
@@ -107,7 +107,7 @@ exports[`renders FilterItem correctly 1`] = `
 </View>
 `;
 
-exports[`renders FilterItem correctly 2`] = `
+exports[`render ImageGroup2 1`] = `
 <View
   style={
     Object {
@@ -299,7 +299,7 @@ exports[`renders FilterItem correctly 2`] = `
 </View>
 `;
 
-exports[`renders FilterItem correctly 3`] = `
+exports[`render ImageGroup3 1`] = `
 <View
   style={
     Object {
@@ -576,7 +576,7 @@ exports[`renders FilterItem correctly 3`] = `
 </View>
 `;
 
-exports[`renders FilterItem correctly 4`] = `
+exports[`render ImageGroup4 1`] = `
 <View
   style={
     Object {
