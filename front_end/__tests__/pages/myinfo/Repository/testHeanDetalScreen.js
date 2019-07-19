@@ -1,6 +1,10 @@
-import renderer from "react-test-renderer";
 import React from "react";
+import renderer from "react-test-renderer";
 import HeanDetailScreen from "../../../../src/pages/myinfo/Repository/HeanDetailScreen";
+import Adapter from 'enzyme-adapter-react-16'
+import {shallow,configure,mount} from 'enzyme'
+
+configure({adapter: new Adapter()});
 
 const avatar = "../../../assets/images/p1.jpg";
 const hean = {
@@ -22,7 +26,7 @@ const hean = {
     "commentCount": 100,
     "comments":[
         {
-            "commentId": "111",
+            "commentId": 111,
             "commenter": {
                 "uId":1,
                 "username":"username1",
@@ -37,7 +41,7 @@ const hean = {
             "content": "nishuodedui"
         },
         {
-            "commentId": "111",
+            "commentId": 112,
             "commenter": {
                 "uId":1,
                 "username":"username1",
@@ -54,7 +58,7 @@ const hean = {
                 "安静些，三月的鬼雨，我要翻箱倒箧，再裂一条无汗则拭泪的巾帕。"
         },
         {
-            "commentId": "111",
+            "commentId": 113,
             "commenter": {
                 "uId":1,
                 "username":"username1",
@@ -69,7 +73,7 @@ const hean = {
             "content": "nishuodedui"
         },
         {
-            "commentId": "111",
+            "commentId": 114,
             "commenter": {
                 "uId":1,
                 "username":"username1",
@@ -86,82 +90,7 @@ const hean = {
                 "安静些，三月的鬼雨，我要翻箱倒箧，再裂一条无汗则拭泪的巾帕。"
         },
         {
-            "commentId": "111",
-            "commenter": {
-                "uId":1,
-                "username":"username1",
-                "avatar":avatar
-            },
-            "commented": {
-                "uId":1,
-                "username":"username1",
-                "avatar":avatar
-            },
-            "time": 20191214,
-            "content": "nishuodedui"
-        },
-        {
-            "commentId": "111",
-            "commenter": {
-                "uId":1,
-                "username":"username1",
-                "avatar":avatar
-            },
-            "commented": {
-                "uId":1,
-                "username":"username1",
-                "avatar":avatar
-            },
-            "time": 20191214,
-            "content": "nishuodedui"
-        },
-        {
-            "commentId": "111",
-            "commenter": {
-                "uId":1,
-                "username":"username1",
-                "avatar":avatar
-            },
-            "commented": {
-                "uId":1,
-                "username":"username1",
-                "avatar":avatar
-            },
-            "time": 20191214,
-            "content": "nishuodedui"
-        },
-        {
-            "commentId": "111",
-            "commenter": {
-                "uId":1,
-                "username":"username1",
-                "avatar":avatar
-            },
-            "commented": {
-                "uId":1,
-                "username":"username1",
-                "avatar":avatar
-            },
-            "time": 20191214,
-            "content": "nishuodedui"
-        },
-        {
-            "commentId": "111",
-            "commenter": {
-                "uId":1,
-                "username":"username1",
-                "avatar":avatar
-            },
-            "commented": {
-                "uId":1,
-                "username":"username1",
-                "avatar":avatar
-            },
-            "time": 20191214,
-            "content": "nishuodedui"
-        },
-        {
-            "commentId": "111",
+            "commentId": 115,
             "commenter": {
                 "uId":1,
                 "username":"username1",
@@ -178,9 +107,49 @@ const hean = {
     ]
 };
 
-test('render hean detail', () => {
+
+test('renders HeanDetailScreen correctly', () => {
     const tree = renderer.create(
-        <HeanDetailScreen hean={hean} />
-    ).toJSON();
+        <HeanDetailScreen hean={hean}/>).toJSON();
     expect(tree).toMatchSnapshot();
+});
+
+test('test function changeLike',()=>{
+    let wrapper = shallow(<HeanDetailScreen hean={hean} />);
+    wrapper.find('TouchableOpacity').first().prop('onPress')();
+    expect(wrapper.state().likeCount).toBe(99);
+    expect(wrapper.state().hasLiked).toBe(false);
+    wrapper.find('TouchableOpacity').first().prop('onPress')();
+    expect(wrapper.state().likeCount).toBe(100);
+    expect(wrapper.state().hasLiked).toBe(true);
+});
+
+test('test function changeStar',()=>{
+    let wrapper = shallow(<HeanDetailScreen hean={hean} />);
+    wrapper.find('TouchableOpacity').at(1).prop('onPress')();
+    expect(wrapper.state().starCount).toBe(101);
+    expect(wrapper.state().hasStarred).toBe(true);
+    wrapper.find('TouchableOpacity').at(1).prop('onPress')();
+    expect(wrapper.state().starCount).toBe(100);
+    expect(wrapper.state().hasStarred).toBe(false);
+});
+
+test('test function changeText',()=>{
+    let wrapper = shallow(<HeanDetailScreen hean={hean} />);
+    let comment = "I have something to say";
+    wrapper.find('TextInput').prop('onChangeText')(comment);
+    expect(wrapper.state().comment).toBe(comment);
+});
+
+test('test function commentHean',()=>{
+    let wrapper = mount(<HeanDetailScreen hean={hean} />);
+    wrapper.find('TouchableOpacity').at(2).prop('onPress')();
+    expect(wrapper.state().commentObject).toBe(0);
+});
+
+test('test function commentToComment',()=> {
+    let wrapper = mount(<HeanDetailScreen hean={hean}/>);
+    wrapper.find('TouchableOpacity').at(3).prop('onPress')();
+    expect(wrapper.state().commentObject).toBe(1);
+    expect(wrapper.state().commentToCommentId).toBe(111);
 });

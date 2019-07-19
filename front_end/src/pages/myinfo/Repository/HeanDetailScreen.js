@@ -17,7 +17,7 @@ const hean = {
         "裁成放心事的暗袋，你娴熟的三行连韵与商簌体，到我手上变为缝缝补补的百衲图。" +
         "安静些，三月的鬼雨，我要翻箱倒箧，再裂一条无汗则拭泪的巾帕。",
     "pics": [
-    avatar,avatar,avatar,avatar
+        avatar,avatar,avatar,avatar
     ],
     "hasLiked": true,
     "hasStarred": false,
@@ -26,7 +26,7 @@ const hean = {
     "commentCount": 100,
     "comments":[
         {
-            "commentId": "111",
+            "commentId": 111,
             "commenter": {
                 "uId":1,
                 "username":"username1",
@@ -41,7 +41,7 @@ const hean = {
             "content": "nishuodedui"
         },
         {
-            "commentId": "111",
+            "commentId": 112,
             "commenter": {
                 "uId":1,
                 "username":"username1",
@@ -58,7 +58,7 @@ const hean = {
                 "安静些，三月的鬼雨，我要翻箱倒箧，再裂一条无汗则拭泪的巾帕。"
         },
         {
-            "commentId": "111",
+            "commentId": 113,
             "commenter": {
                 "uId":1,
                 "username":"username1",
@@ -73,7 +73,7 @@ const hean = {
             "content": "nishuodedui"
         },
         {
-            "commentId": "111",
+            "commentId": 114,
             "commenter": {
                 "uId":1,
                 "username":"username1",
@@ -90,82 +90,7 @@ const hean = {
                 "安静些，三月的鬼雨，我要翻箱倒箧，再裂一条无汗则拭泪的巾帕。"
         },
         {
-            "commentId": "111",
-            "commenter": {
-                "uId":1,
-                "username":"username1",
-                "avatar":avatar
-            },
-            "commented": {
-                "uId":1,
-                "username":"username1",
-                "avatar":avatar
-            },
-            "time": 20191214,
-            "content": "nishuodedui"
-        },
-        {
-            "commentId": "111",
-            "commenter": {
-                "uId":1,
-                "username":"username1",
-                "avatar":avatar
-            },
-            "commented": {
-                "uId":1,
-                "username":"username1",
-                "avatar":avatar
-            },
-            "time": 20191214,
-            "content": "nishuodedui"
-        },
-        {
-            "commentId": "111",
-            "commenter": {
-                "uId":1,
-                "username":"username1",
-                "avatar":avatar
-            },
-            "commented": {
-                "uId":1,
-                "username":"username1",
-                "avatar":avatar
-            },
-            "time": 20191214,
-            "content": "nishuodedui"
-        },
-        {
-            "commentId": "111",
-            "commenter": {
-                "uId":1,
-                "username":"username1",
-                "avatar":avatar
-            },
-            "commented": {
-                "uId":1,
-                "username":"username1",
-                "avatar":avatar
-            },
-            "time": 20191214,
-            "content": "nishuodedui"
-        },
-        {
-            "commentId": "111",
-            "commenter": {
-                "uId":1,
-                "username":"username1",
-                "avatar":avatar
-            },
-            "commented": {
-                "uId":1,
-                "username":"username1",
-                "avatar":avatar
-            },
-            "time": 20191214,
-            "content": "nishuodedui"
-        },
-        {
-            "commentId": "111",
+            "commentId": 115,
             "commenter": {
                 "uId":1,
                 "username":"username1",
@@ -289,7 +214,7 @@ class HeanDetailScreen extends Component {
                     </View>
                     <Text style={css.font}>{hean.text}</Text>
                     <ImageGroup length={hean.pics.length} images={hean.pics} />
-                    <View style={css.IconGroup}>
+                    <View style={css.IconGroup} >
                         <View style={css.Icon}>
                             <TouchableOpacity onPress={this.changeLike}>
                                 <AntDesign
