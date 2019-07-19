@@ -1,6 +1,6 @@
 import React from 'react';
 import { Button, View, Text, PanResponder, Animated, TouchableOpacity, Image } from 'react-native';
-import Sticker from './src/components/journal/sticker';
+import Sticker from './src/components/journal/Sticker';
 
 const icon4 = require("./images/sticker/icon4.png")
 const icon5 = require("./images/sticker/icon5.png")
@@ -15,9 +15,11 @@ class D extends React.Component {
             <React.Fragment>
                 <Sticker width={info4.width} height={info4.height} source={icon4} />
                 <Sticker width={info5.width} height={info5.height} source={icon5} />
-                <Sticker width={info5.width} height={info5.height} text="12345" />
+                <Sticker width={200} height={200} text="123455456465" />
                 {/*<Image source={icon6} style={{ position: "absolute", top: 100, left: 100,transform:[{scale:2}] }} />*/}
             </React.Fragment>
         )
     }
 }
+
+export default D
