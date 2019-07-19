@@ -38,20 +38,12 @@ const MyInfoScreenNavigator = createStackNavigator(
     {
         initialRouteName: "LoggedOut",
         headerMode: 'none',   //是否显示页眉
+        navigationOptions: ({ navigation }) => {
+            const topScreen = navigation.state.routes[navigation.state.routes.length - 1].routeName;
+            const tabBarVisible = (topScreen === "LoggedIn") ? true : false;
+            return { tabBarVisible };
+        }
     }
 );
-
-MyInfoScreenNavigator.navigationOptions = ({ navigation }) => {
-    let tabBarVisible = true;
-    //console.log(navigation.state);
-    const topScreen = navigation.state.routes[navigation.state.routes.length - 1].routeName;
-    if (topScreen === "LoggedOut") {
-        tabBarVisible = false;
-    }
-
-    return {
-        tabBarVisible,
-    };
-}
 
 export default (MyInfoScreenNavigator);
