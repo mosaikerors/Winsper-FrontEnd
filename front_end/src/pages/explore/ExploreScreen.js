@@ -8,7 +8,7 @@ const list = [
     {
         title: '手账',
         icon: 'av-timer',
-        pagename: 'CreateHean'
+        pagename: 'CreateJournal'
     },
     {
         title: '函',

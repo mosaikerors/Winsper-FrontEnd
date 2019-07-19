@@ -1,5 +1,5 @@
 import React from 'react';
-import { Button, View, Text, PanResponder, Animated, TouchableOpacity, Image, StyleSheet } from 'react-native';
+import { Button, View, Text, PanResponder, Animated, TouchableOpacity, Image, StyleSheet, TextInput } from 'react-native';
 import AntDesign from 'react-native-vector-icons/AntDesign'
 import FontAwesome from 'react-native-vector-icons/FontAwesome'
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5'
@@ -33,8 +33,8 @@ class Sticker extends React.Component {
         this.state = {
             pos: { x: 0, y: 0 },
             storedPos: { x: 0, y: 0 },
-            scale: 1,
-            storedScale: 1,
+            scale: { x: 1, y: 1 },
+            storedScale: { x: 1, y: 1 },
             rotate: 0,
             storedRotate: 0,
             onFocused: false,
@@ -58,11 +58,12 @@ class Sticker extends React.Component {
             onMoveShouldSetPanResponder: () => true,
             onMoveShouldSetPanResponderCapture: () => true,
             onPanResponderMove: (e, gestureState) => {
-                const scaleX = (this.state.storedScale * this.props.width + gestureState.dx) / this.props.width;
-                const scaleY = (this.state.storedScale * this.props.height + gestureState.dy) / this.props.height;
-                this.setState({
-                    scale: scaleX < scaleY ? scaleX : scaleY
-                })
+                const scaleX = (this.state.storedScale.x * this.props.width + gestureState.dx) / this.props.width;
+                const scaleY = (this.state.storedScale.y * this.props.height + gestureState.dy) / this.props.height;
+                if (this.props.source)
+                    this.setState({ scale: { x: Math.min(scaleX, scaleY), y: Math.min(scaleX, scaleY) } })
+                else
+                    this.setState({ scale: { x: scaleX, y: scaleY } })
             },
             onPanResponderRelease: () => this.setState({ storedScale: this.state.scale })
         });
@@ -73,7 +74,7 @@ class Sticker extends React.Component {
             onPanResponderMove: (e, gestureState) => {
                 const { height, width } = this.props;
                 const { dx, dy } = gestureState;
-                const before = rt(height * this.state.storedScale / 2, width * this.state.storedScale / 2);
+                const before = rt(height * this.state.storedScale.y / 2, width * this.state.storedScale.x / 2);
                 const theta = unify(Math.atan(height / width) - this.state.storedRotate);
                 const after = rt(before * Math.cos(theta) + dx, -before * Math.sin(theta) + dy);
                 const link = rt(dx, dy);
@@ -88,9 +89,9 @@ class Sticker extends React.Component {
 
     getContainerStyle() {
         return {
-            position: this.state.isDeleted?"relative":"absolute",
-            top: this.state.pos.y - (this.state.scale - 1) / 2 * this.props.height,
-            left: this.state.pos.x - (this.state.scale - 1) / 2 * this.props.width,
+            position: this.state.isDeleted ? "relative" : "absolute",
+            top: this.state.pos.y - (this.state.scale.y - 1) / 2 * this.props.height,
+            left: this.state.pos.x - (this.state.scale.x - 1) / 2 * this.props.width,
             //borderWidth: 1,
             transform: [{ rotate: `${this.state.rotate * 180 / Math.PI}deg` }],
             zIndex: this.props.zIndex,
@@ -105,8 +106,8 @@ class Sticker extends React.Component {
             marginRight: 30,
             flex: 1,
             //justifyContent: "center",
-            height: this.props.height * this.state.scale,
-            width: this.props.width * this.state.scale,
+            height: this.props.height * this.state.scale.y,
+            width: this.props.width * this.state.scale.x,
         }
     }
 
@@ -168,14 +169,18 @@ class Sticker extends React.Component {
                             {this.props.source ?
                                 <Image source={this.props.source} style={[{
                                     position: "absolute",
-                                    top: (this.state.scale - 1) * this.props.height / 2,
-                                    left: (this.state.scale - 1) * this.props.width / 2,
-                                    transform: [{ scale: this.state.scale }],
+                                    top: (this.state.scale.y - 1) * this.props.height / 2,
+                                    left: (this.state.scale.x - 1) * this.props.width / 2,
+                                    transform: [{ scale: this.state.scale.x }],
                                     //zIndex: this.state.onFocused ? 9999 : 0
                                 }]} /> :
-                                <View style={{ justifyContent: "center", alignItems: "center", transform: [{ scale: this.state.scale }] }}>
-                                    <Text>{this.props.text}</Text>
-                                </View>
+                                <Text style={{
+                                    //height: this.props.height * this.state.scale.y,
+                                    //width: this.props.width * this.state.scale.x,
+                                    fontSize:24
+                                }}>
+                                    {this.props.text}
+                                </Text>
                             }
                         </TouchableOpacity>
                     </View>
