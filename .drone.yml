@@ -7,4 +7,4 @@ steps:
     commands:
       - cd front_end
       - yarn install
-      - yarn test
+      - yarn test --coverage

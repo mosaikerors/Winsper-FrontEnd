@@ -9,8 +9,12 @@
   "dependencies": {
     "@ant-design/react-native": "^3.1.9",
     "@react-native-community/blur": "^3.3.1",
+    "antd": "^3.20.3",
+    "enzyme": "^3.10.0",
+    "enzyme-adapter-react-16": "^1.14.0",
     "prop-types": "latest",
     "react": "16.8.3",
+    "react-dom": "^16.8.6",
     "react-native": "0.59.9",
     "react-native-amap3d": "^1.1.1",
     "react-native-draggable": "^1.0.15",
@@ -50,6 +54,7 @@
     "react-test-renderer": "16.8.3"
   },
   "jest": {
-    "preset": "react-native"
+    "preset": "react-native",
+    "testEnvironment": "jsdom"
   }
 }
