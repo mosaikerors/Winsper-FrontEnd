@@ -1,19 +1,30 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`renders bottom banner 1`] = `
+exports[`renders detailed block correctly 1`] = `
 <View
   style={
     Object {
-      "flex": 1,
-      "flexDirection": "column-reverse",
+      "backgroundColor": "white",
+      "borderColor": "#e1e8ee",
+      "borderWidth": 1,
+      "flexDirection": "column",
+      "margin": 15,
+      "marginBottom": 0,
+      "padding": 15,
+      "shadowColor": "rgba(0,0,0, .2)",
+      "shadowOffset": Object {
+        "height": 0,
+        "width": 0,
+      },
+      "shadowOpacity": 1,
+      "shadowRadius": 1,
     }
   }
 >
   <View
     style={
       Object {
-        "flexDirection": "row",
-        "height": 40,
+        "backgroundColor": "transparent",
       }
     }
   >
@@ -21,13 +32,17 @@ exports[`renders bottom banner 1`] = `
       style={
         Object {
           "flexDirection": "row",
+          "height": 100,
         }
       }
     >
       <View
         style={
           Object {
-            "width": 60,
+            "borderRadius": 5,
+            "borderWidth": 1,
+            "flex": 1,
+            "margin": 5,
           }
         }
       >
@@ -50,14 +65,17 @@ exports[`renders bottom banner 1`] = `
           }
         >
           <Text>
-            设置
+            消息
           </Text>
         </View>
       </View>
       <View
         style={
           Object {
-            "width": 60,
+            "borderRadius": 5,
+            "borderWidth": 1,
+            "flex": 1,
+            "margin": 5,
           }
         }
       >
@@ -80,14 +98,17 @@ exports[`renders bottom banner 1`] = `
           }
         >
           <Text>
-            夜间
+            函
           </Text>
         </View>
       </View>
       <View
         style={
           Object {
-            "width": 60,
+            "borderRadius": 5,
+            "borderWidth": 1,
+            "flex": 1,
+            "margin": 5,
           }
         }
       >
@@ -110,83 +131,59 @@ exports[`renders bottom banner 1`] = `
           }
         >
           <Text>
-            东19
+            收藏
+          </Text>
+        </View>
+      </View>
+      <View
+        style={
+          Object {
+            "borderRadius": 5,
+            "borderWidth": 1,
+            "flex": 1,
+            "margin": 5,
+          }
+        }
+      >
+        <View
+          accessible={true}
+          isTVSelectable={true}
+          onResponderGrant={[Function]}
+          onResponderMove={[Function]}
+          onResponderRelease={[Function]}
+          onResponderTerminate={[Function]}
+          onResponderTerminationRequest={[Function]}
+          onStartShouldSetResponder={[Function]}
+          style={
+            Object {
+              "alignItems": "center",
+              "height": "100%",
+              "justifyContent": "center",
+              "opacity": 1,
+            }
+          }
+        >
+          <Text>
+            日记
           </Text>
         </View>
       </View>
     </View>
-    <View
-      style={
-        Object {
-          "flex": 1,
-          "flexDirection": "row-reverse",
-        }
-      }
-    >
-      <View
-        accessible={true}
-        isTVSelectable={true}
-        onResponderGrant={[Function]}
-        onResponderMove={[Function]}
-        onResponderRelease={[Function]}
-        onResponderTerminate={[Function]}
-        onResponderTerminationRequest={[Function]}
-        onStartShouldSetResponder={[Function]}
-        style={
-          Object {
-            "alignItems": "center",
-            "height": "100%",
-            "justifyContent": "center",
-            "marginRight": 10,
-            "opacity": 1,
-          }
-        }
-      >
-        <Text>
-          退出登录
-        </Text>
-      </View>
-    </View>
-  </View>
-  <View
-    style={
-      Object {
-        "backgroundColor": "#bcbbc1",
-        "height": 0.5,
-      }
-    }
-  />
-</View>
-`;
-
-exports[`renders bottom banner 2`] = `
-<View
-  style={
-    Object {
-      "flex": 1,
-      "flexDirection": "column-reverse",
-    }
-  }
->
-  <View
-    style={
-      Object {
-        "flexDirection": "row",
-        "height": 40,
-      }
-    }
-  >
     <View
       style={
         Object {
           "flexDirection": "row",
+          "height": 100,
         }
       }
     >
       <View
         style={
           Object {
-            "width": 60,
+            "borderRadius": 5,
+            "borderWidth": 1,
+            "flex": 1,
+            "margin": 5,
           }
         }
       >
@@ -209,14 +206,17 @@ exports[`renders bottom banner 2`] = `
           }
         >
           <Text>
-            设置
+            手账
           </Text>
         </View>
       </View>
       <View
         style={
           Object {
-            "width": 60,
+            "borderRadius": 5,
+            "borderWidth": 1,
+            "flex": 1,
+            "margin": 5,
           }
         }
       >
@@ -239,14 +239,17 @@ exports[`renders bottom banner 2`] = `
           }
         >
           <Text>
-            夜间
+            投稿
           </Text>
         </View>
       </View>
       <View
         style={
           Object {
-            "width": 60,
+            "borderRadius": 5,
+            "borderWidth": 1,
+            "flex": 1,
+            "margin": 5,
           }
         }
       >
@@ -269,51 +272,44 @@ exports[`renders bottom banner 2`] = `
           }
         >
           <Text>
-            东19
+            心情报表
           </Text>
         </View>
       </View>
-    </View>
-    <View
-      style={
-        Object {
-          "flex": 1,
-          "flexDirection": "row-reverse",
-        }
-      }
-    >
       <View
-        accessible={true}
-        isTVSelectable={true}
-        onResponderGrant={[Function]}
-        onResponderMove={[Function]}
-        onResponderRelease={[Function]}
-        onResponderTerminate={[Function]}
-        onResponderTerminationRequest={[Function]}
-        onStartShouldSetResponder={[Function]}
         style={
           Object {
-            "alignItems": "center",
-            "height": "100%",
-            "justifyContent": "center",
-            "marginRight": 10,
-            "opacity": 1,
+            "borderRadius": 5,
+            "borderWidth": 1,
+            "flex": 1,
+            "margin": 5,
           }
         }
       >
-        <Text>
-          退出登录
-        </Text>
+        <View
+          accessible={true}
+          isTVSelectable={true}
+          onResponderGrant={[Function]}
+          onResponderMove={[Function]}
+          onResponderRelease={[Function]}
+          onResponderTerminate={[Function]}
+          onResponderTerminationRequest={[Function]}
+          onStartShouldSetResponder={[Function]}
+          style={
+            Object {
+              "alignItems": "center",
+              "height": "100%",
+              "justifyContent": "center",
+              "opacity": 1,
+            }
+          }
+        >
+          <Text>
+            评论
+          </Text>
+        </View>
       </View>
     </View>
   </View>
-  <View
-    style={
-      Object {
-        "backgroundColor": "#bcbbc1",
-        "height": 0.5,
-      }
-    }
-  />
 </View>
 `;

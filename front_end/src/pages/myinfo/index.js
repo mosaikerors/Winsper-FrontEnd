@@ -1,4 +1,4 @@
-import { createStackNavigator, createAppContainer } from "react-navigation";
+import { createStackNavigator } from "react-navigation";
 import LoggedInScreen from "./LoggedInScreen"
 import FollowingScreen from "./Follow/FollowingScreen"
 import FollowersScreen from "./Follow/FollowersScreen"
@@ -36,14 +36,13 @@ const MyInfoScreenNavigator = createStackNavigator(
         HeanDetail: { screen: HeanDetailScreen }
     },
     {
-        initialRouteName: "LoggedOut",
-        headerMode: 'none',   //是否显示页眉
+        initialRouteName: "LoggedIn",
+        headerMode: 'none',
     }
 );
 
 MyInfoScreenNavigator.navigationOptions = ({ navigation }) => {
     let tabBarVisible = true;
-    //console.log(navigation.state);
     const topScreen = navigation.state.routes[navigation.state.routes.length - 1].routeName;
     if (topScreen === "LoggedOut") {
         tabBarVisible = false;
@@ -52,6 +51,6 @@ MyInfoScreenNavigator.navigationOptions = ({ navigation }) => {
     return {
         tabBarVisible,
     };
-}
+};
 
 export default (MyInfoScreenNavigator);

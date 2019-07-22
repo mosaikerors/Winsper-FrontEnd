@@ -1,7 +1,9 @@
 import React from 'react';
 import renderer from 'react-test-renderer';
-import Comment from '../../../src/components/myinfo/Comment'
-
+import Comment from '../../../src/components/myinfo/Comment';
+import {configure} from "enzyme/build";
+import Adapter from "enzyme-adapter-react-16/build";
+configure({adapter: new Adapter()});
 
 const avatar = '../../assets/images/p1.jpg';
 const comment1 = {

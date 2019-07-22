@@ -1061,9 +1061,7 @@ exports[`renders HeanDetailScreen correctly 1`] = `
                   },
                 }
               }
-            >
-              回复username1:
-            </Text>
+            />
             nishuodedui
           </Text>
         </View>

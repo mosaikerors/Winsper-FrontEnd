@@ -1,7 +1,6 @@
 import React from "react";
-import { Text, View, StyleSheet } from "react-native";
-import { Button, Avatar, Divider, Card } from 'react-native-elements'
-import { TouchableOpacity } from "react-native-gesture-handler";
+import { Text, View, StyleSheet, TouchableOpacity } from "react-native";
+import { Card } from 'react-native-elements'
 
 const styles = StyleSheet.create({
     border: {
@@ -12,15 +11,13 @@ const styles = StyleSheet.create({
         borderWidth: 1,
         margin: 5,
         borderRadius: 5,
-        //justifyContent: 'center',
-        //alignItems: 'center'
     },
     text: {
         justifyContent: 'center',
         alignItems: 'center',
         height: '100%'
     }
-})
+});
 
 class DetailedBlock extends React.Component {
     render() {
@@ -36,7 +33,11 @@ class DetailedBlock extends React.Component {
                             </TouchableOpacity>
                         </View>
                         <View style={styles.block}>
-                            <TouchableOpacity style={styles.text} onPress={() => { console.log(1); this.props.navigation.navigate('HeanList') }}>
+                            <TouchableOpacity style={styles.text} onPress={() => {
+                                console.log(this.props);
+                                this.props.navigation.navigate('HeanList');
+                                console.log(this.props);
+                            }}>
                                 <Text>
                                     函
                                 </Text>

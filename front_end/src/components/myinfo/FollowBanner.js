@@ -9,17 +9,14 @@ const styles = StyleSheet.create({
     },
     block: {
         flex: 1,
-        height: 80,
-        //flexDirection: 'column'
-        //borderWidth: 1,
-        //borderColor: "#bbdefb"
+        height: 80
     },
     text: {
         justifyContent: 'center',
         alignItems: 'center',
         height: '100%'
     }
-})
+});
 
 const mapStateToProps = state => ({
     uId: state.user.uId,
@@ -27,10 +24,10 @@ const mapStateToProps = state => ({
     mutualFollow: state.user.mutualFollow,
     following: state.user.following,
     followers: state.user.followers
-})
+});
 
 const mapDispatchToProps = dispatch => ({
-})
+});
 
 class FollowBanner extends React.Component {
     render() {

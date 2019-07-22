@@ -32,11 +32,7 @@ const hean = {
                 "username":"username1",
                 "avatar":avatar
             },
-            "commented": {
-                "uId":1,
-                "username":"username1",
-                "avatar":avatar
-            },
+            "commented": null,
             "time": 20191214,
             "content": "nishuodedui"
         },

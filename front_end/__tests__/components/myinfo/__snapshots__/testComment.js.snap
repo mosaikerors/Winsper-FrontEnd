@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`render comment with commented  1`] = `
+exports[`renders comment with commented  1`] = `
 <View
   style={
     Object {
@@ -347,7 +347,7 @@ exports[`render comment with commented  1`] = `
 </View>
 `;
 
-exports[`render comment without commented 1`] = `
+exports[`renders comment without commented 1`] = `
 <View
   style={
     Object {
