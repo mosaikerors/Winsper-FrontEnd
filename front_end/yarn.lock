@@ -6733,6 +6733,11 @@ react-native-video@^4.4.2:
     prop-types "^15.5.10"
     shaka-player "^2.4.4"
 
+react-native-view-shot@2.6.0:
+  version "2.6.0"
+  resolved "https://registry.npm.taobao.org/react-native-view-shot/download/react-native-view-shot-2.6.0.tgz#3b23675826f67658366352c4b97b59a6aded2f43"
+  integrity sha1-OyNnWCb2dlg2Y1LEuXtZpq3tL0M=
+
 react-native@0.59.9:
   version "0.59.9"
   resolved "https://registry.npm.taobao.org/react-native/download/react-native-0.59.9.tgz#c94ee4fa35121720c05235a2dd6cdd2784bf5177"

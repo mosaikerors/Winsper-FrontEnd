@@ -3,6 +3,7 @@ package com.front_end;
 import android.app.Application;
 
 import com.facebook.react.ReactApplication;
+import fr.greweb.reactnativeviewshot.RNViewShotPackage;
 import com.cmcewen.blurview.BlurViewPackage;
 import cn.qiuxiang.react.amap3d.AMap3DPackage;
 import com.brentvatne.react.ReactVideoPackage;
@@ -33,6 +34,7 @@ public class MainApplication extends Application implements ReactApplication {
     protected List<ReactPackage> getPackages() {
       return Arrays.<ReactPackage>asList(
           new MainReactPackage(),
+            new RNViewShotPackage(),
             new BlurViewPackage(),
             new AMap3DPackage(),
             new ReactVideoPackage(),
