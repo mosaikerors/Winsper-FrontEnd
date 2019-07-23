@@ -1,6 +1,6 @@
 const requests = require('superagent');
 
-const API_ROOT = "http://202.120.40.8:30525"
+const API_ROOT = "http://202.120.40.8:30525";
 
 const user = {
     sendCode: (phone) =>
@@ -16,8 +16,7 @@ const user = {
     firstSignin: (phone, password) =>
         requests.post(API_ROOT + "/user/login")
             .send({ phone, password })
-            //.then(res => res.body)
-            .then(res => ({ ...res.body, feather: 4, mutualFollow: 2, following: 2, followers: 2, hasChecked: false }))
+            .then(res => res.body)
             .catch(err => err.response.body),
     nextSignin: (uId, token) =>
         requests.post(API_ROOT + "/user/login")
@@ -37,7 +36,7 @@ const user = {
             .set('uId', uId)
             .then(res => res.body)
             .catch(err => err.response.body),
-}
+};
 
 const hean = {
     searchByUId: (uId, token, owner) =>
@@ -60,6 +59,6 @@ const hean = {
             .set('uId', uId)
             .then(res => res.body)
             .catch(err => err.response.body),
-}
+};
 
 export default { user, hean }

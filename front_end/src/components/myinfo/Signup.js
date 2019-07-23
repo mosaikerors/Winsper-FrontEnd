@@ -1,6 +1,6 @@
 import React from "react";
-import { Text, View, StyleSheet, TextInput } from "react-native";
-import { Button, Avatar, Divider, Card, Input } from 'react-native-elements'
+import { Text, View, StyleSheet } from "react-native";
+import { Button, Input } from 'react-native-elements'
 import agent from "../../agent"
 import Icon from "react-native-vector-icons/FontAwesome"
 
@@ -29,7 +29,7 @@ const styles = StyleSheet.create({
         marginTop: 20,
         borderRadius: 50,
     },
-})
+});
 
 export class Signup extends React.Component {
     constructor(props) {
@@ -43,9 +43,9 @@ export class Signup extends React.Component {
             sendCodeButton: { clickable: true, timeToClick: 0 },
             sigupOK: false,
             rescodeForSendCode: -1,
-            rescodeForSignup: -1,
-        }
-        //control how many seconds left before the sendCode button gets clickable again
+            rescodeForSignup: -1
+        };
+
         setInterval(() => this.updateSendCodeButton(), 1000);
 
         this.updateState = this.updateState.bind(this);
@@ -55,14 +55,13 @@ export class Signup extends React.Component {
     }
 
     updateSendCodeButton() {
-        //console.log(this.state)
         if (this.state.sendCodeButton.timeToClick === 1)
             this.setState({
                 sendCodeButton: {
                     clickable: true,
                     timeToClick: 0
                 }
-            })
+            });
         else this.setState(prevState => ({
             sendCodeButton: {
                 clickable: prevState.sendCodeButton.clickable,
@@ -73,7 +72,7 @@ export class Signup extends React.Component {
 
     async sendCode() {
         const response = await agent.user.sendCode(this.state.phone);
-        if (response.rescode === 0) {
+        if(response.rescode===0){
             this.setState({
                 rescodeForSendCode: 0,
                 token: response.token,
@@ -81,18 +80,18 @@ export class Signup extends React.Component {
                     clickable: false,
                     timeToClick: 5,  //can send code only once for each minute
                 }
-            })
+            });
         }
     }
 
     async submit() {
         const { token, phone, code, username, password } = this.state;
         const response = await agent.user.sigup(token, phone, code, username, password);
-        if (response.rescode === 0) {
+        if (response.rescode===0) {
             this.setState({
-                rescodeForSignup: 0,
-                signupOK: true
-            })
+                signupOK: true,
+                rescodeForSignup: 0
+            });
             this.props.updateInfo(phone, password)
         }
     }
@@ -102,7 +101,6 @@ export class Signup extends React.Component {
             [field]: text
         });
     }
-
 
     render() {
         return (

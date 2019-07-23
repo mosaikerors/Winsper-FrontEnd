@@ -1,6 +1,6 @@
 import React from "react";
-import { Text, View, StyleSheet, TextInput } from "react-native";
-import { Button, Avatar, Divider, Card, Input } from 'react-native-elements'
+import { Text, View, StyleSheet } from "react-native";
+import { Button, Input } from 'react-native-elements'
 import { StackActions, NavigationActions } from "react-navigation";
 import { connect } from "react-redux";
 import agent from "../../agent"
@@ -25,7 +25,7 @@ const styles = StyleSheet.create({
         marginTop: 20,
         borderRadius: 50,
     },
-})
+});
 
 const login = StackActions.reset({
     index: 0,
@@ -37,19 +37,11 @@ const login = StackActions.reset({
 const mapStateToProps = state => ({
     uId: state.user.uId,
     token: state.user.token,
-})
+});
 
 const mapDispatchToProps = dispatch => ({
     onSubmit: (response) =>
-        dispatch({ type: 'SIGN_IN', payload: response }),
-    onLoadHeans: (heans) => {
-        /*console.log("*************************response**********************")
-        console.log(response);*/
-        console.log("*************************heans**********************")
-        console.log(heans);
-        return dispatch({ type: "LOAD_ALL_HEANS", payload: heans })
-    }
-})
+        dispatch({ type: 'SIGN_IN', payload: response })});
 
 export class Signin extends React.Component {
     constructor(props) {
@@ -58,21 +50,22 @@ export class Signin extends React.Component {
             token: '',
             phone: '',
             password: '',
-            rescode: -1,
-        }
+            rescode: -1
+        };
         this.updateState = this.updateState.bind(this);
         this.submit = this.submit.bind(this);
     }
 
     async submit() {
         const { phone, password } = this.state;
-        const { uId, token } = this.props;
         try {
             const response = await agent.user.firstSignin(phone, password);
             console.log(response);
             if (response.rescode === 0) {
-                this.setState({ rescode: 0 })
-                this.props.navigation.dispatch(login)
+                this.setState({
+                    rescode: 0
+                });
+                this.props.navigation.dispatch(login);
                 this.props.onSubmit(response)
             }
         }
@@ -89,7 +82,6 @@ export class Signin extends React.Component {
 
     // 试图在注册完登录时默认填上注册的用户信息，但是可以通过注册完直接进入 loggedin 页面解决，待会删掉
     componentWillReceiveProps(nextProps) {
-        console.log(nextProps.phone)
         this.setState({
             phone: nextProps.phone,
             password: nextProps.password

@@ -141,6 +141,9 @@ class HeanDetailScreen extends Component {
         const hId = this.props.navigation.getParam("hId", 0);
         const {uId, token}=this.props;
         const response = await agent.hean.getDetailedHean(uId, token, hId);
+        this.setState({ 
+            
+        })
     }
 
     changeLike(){
