@@ -1,4 +1,4 @@
-import { createStackNavigator, createAppContainer } from "react-navigation";
+import { createStackNavigator } from "react-navigation";
 import LoggedInScreen from "./LoggedInScreen"
 import FollowingScreen from "./Follow/FollowingScreen"
 import FollowersScreen from "./Follow/FollowersScreen"

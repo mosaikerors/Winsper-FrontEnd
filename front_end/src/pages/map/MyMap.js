@@ -1,26 +1,13 @@
-import React, { Component } from 'react';
-//import { MapView, MapTypes, Overlay } from 'react-native-baidu-map';
+import React, {Component, Fragment} from 'react';
 import { MapView } from "react-native-amap3d"
 import { StyleSheet, Dimensions } from 'react-native';
-
-import Geolocation from 'Geolocation'
-
 export default class MyMap extends Component {
-    constructor() {
-        super();
+    constructor(props) {
+        super(props);
     }
-
     render() {
-        //Geolocation.requestAuthorization();
-        /*Geolocation.getCurrentPosition(data => {
-            console.log(data.coords)
-        }, e => {
-            console.log(e, 'error');
-        },
-            { enableHignAccuracy: false, timeout: 60 * 1000, maximumAge: 10000 }
-        );*/
         return (
-            <React.Fragment>
+            <Fragment>
                 <MapView
                     style={styles.map}
                     showsZoomControls={false}
@@ -29,20 +16,15 @@ export default class MyMap extends Component {
                         latitude: 31.0316825,
                         longitude: 121.4445179,
                     }}
-                    //onPress
                 >
                     <MapView.Marker
-                        draggable
-                        title='这是一个可拖拽的标记'
-                        onDragEnd={({ nativeEvent }) =>
-                            console.log(`${nativeEvent.latitude}, ${nativeEvent.longitude}`)}
                         coordinate={{
-                            latitude: 31.0316825,
-                            longitude: 121.4445179,
-                        }}
+                        latitude: 31.0316825,
+                        longitude: 121.4445179,
+                    }}
                     />
                 </MapView>
-            </React.Fragment>
+            </Fragment>
         );
     }
 }

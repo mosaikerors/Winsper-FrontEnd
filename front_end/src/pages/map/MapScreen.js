@@ -21,7 +21,6 @@ class MapScreen extends React.Component {
         }
     }
 
-    
     async componentWillReceiveProps(nextProps) {
         const { uId, token } = nextProps;
         const response = await agent.hean.getAll(uId, token);

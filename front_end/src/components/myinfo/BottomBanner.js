@@ -1,7 +1,6 @@
 import React from "react";
-import { Text, View, StyleSheet,Picker } from "react-native";
-import { Button, Avatar, Divider, Card } from 'react-native-elements'
-import { TouchableOpacity } from "react-native-gesture-handler";
+import { Text, View, StyleSheet,TouchableOpacity} from "react-native";
+import { Divider } from 'react-native-elements';
 import { StackActions, NavigationActions } from "react-navigation";
 
 const styles = StyleSheet.create({
@@ -19,7 +18,7 @@ const styles = StyleSheet.create({
     logout: {
         marginRight: 10,
     }
-})
+});
 
 const logout = StackActions.reset({
     index: 0,
@@ -29,6 +28,10 @@ const logout = StackActions.reset({
 });
 
 class BottomBanner extends React.Component {
+    constructor(props){
+        super(props);
+    }
+
     render() {
         return (
             <React.Fragment>

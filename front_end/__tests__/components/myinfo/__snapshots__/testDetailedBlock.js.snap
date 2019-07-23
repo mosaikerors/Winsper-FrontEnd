@@ -1,0 +1,315 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`renders detailed block correctly 1`] = `
+<View
+  style={
+    Object {
+      "backgroundColor": "white",
+      "borderColor": "#e1e8ee",
+      "borderWidth": 1,
+      "flexDirection": "column",
+      "margin": 15,
+      "marginBottom": 0,
+      "padding": 15,
+      "shadowColor": "rgba(0,0,0, .2)",
+      "shadowOffset": Object {
+        "height": 0,
+        "width": 0,
+      },
+      "shadowOpacity": 1,
+      "shadowRadius": 1,
+    }
+  }
+>
+  <View
+    style={
+      Object {
+        "backgroundColor": "transparent",
+      }
+    }
+  >
+    <View
+      style={
+        Object {
+          "flexDirection": "row",
+          "height": 100,
+        }
+      }
+    >
+      <View
+        style={
+          Object {
+            "borderRadius": 5,
+            "borderWidth": 1,
+            "flex": 1,
+            "margin": 5,
+          }
+        }
+      >
+        <View
+          accessible={true}
+          isTVSelectable={true}
+          onResponderGrant={[Function]}
+          onResponderMove={[Function]}
+          onResponderRelease={[Function]}
+          onResponderTerminate={[Function]}
+          onResponderTerminationRequest={[Function]}
+          onStartShouldSetResponder={[Function]}
+          style={
+            Object {
+              "alignItems": "center",
+              "height": "100%",
+              "justifyContent": "center",
+              "opacity": 1,
+            }
+          }
+        >
+          <Text>
+            消息
+          </Text>
+        </View>
+      </View>
+      <View
+        style={
+          Object {
+            "borderRadius": 5,
+            "borderWidth": 1,
+            "flex": 1,
+            "margin": 5,
+          }
+        }
+      >
+        <View
+          accessible={true}
+          isTVSelectable={true}
+          onResponderGrant={[Function]}
+          onResponderMove={[Function]}
+          onResponderRelease={[Function]}
+          onResponderTerminate={[Function]}
+          onResponderTerminationRequest={[Function]}
+          onStartShouldSetResponder={[Function]}
+          style={
+            Object {
+              "alignItems": "center",
+              "height": "100%",
+              "justifyContent": "center",
+              "opacity": 1,
+            }
+          }
+        >
+          <Text>
+            函
+          </Text>
+        </View>
+      </View>
+      <View
+        style={
+          Object {
+            "borderRadius": 5,
+            "borderWidth": 1,
+            "flex": 1,
+            "margin": 5,
+          }
+        }
+      >
+        <View
+          accessible={true}
+          isTVSelectable={true}
+          onResponderGrant={[Function]}
+          onResponderMove={[Function]}
+          onResponderRelease={[Function]}
+          onResponderTerminate={[Function]}
+          onResponderTerminationRequest={[Function]}
+          onStartShouldSetResponder={[Function]}
+          style={
+            Object {
+              "alignItems": "center",
+              "height": "100%",
+              "justifyContent": "center",
+              "opacity": 1,
+            }
+          }
+        >
+          <Text>
+            收藏
+          </Text>
+        </View>
+      </View>
+      <View
+        style={
+          Object {
+            "borderRadius": 5,
+            "borderWidth": 1,
+            "flex": 1,
+            "margin": 5,
+          }
+        }
+      >
+        <View
+          accessible={true}
+          isTVSelectable={true}
+          onResponderGrant={[Function]}
+          onResponderMove={[Function]}
+          onResponderRelease={[Function]}
+          onResponderTerminate={[Function]}
+          onResponderTerminationRequest={[Function]}
+          onStartShouldSetResponder={[Function]}
+          style={
+            Object {
+              "alignItems": "center",
+              "height": "100%",
+              "justifyContent": "center",
+              "opacity": 1,
+            }
+          }
+        >
+          <Text>
+            日记
+          </Text>
+        </View>
+      </View>
+    </View>
+    <View
+      style={
+        Object {
+          "flexDirection": "row",
+          "height": 100,
+        }
+      }
+    >
+      <View
+        style={
+          Object {
+            "borderRadius": 5,
+            "borderWidth": 1,
+            "flex": 1,
+            "margin": 5,
+          }
+        }
+      >
+        <View
+          accessible={true}
+          isTVSelectable={true}
+          onResponderGrant={[Function]}
+          onResponderMove={[Function]}
+          onResponderRelease={[Function]}
+          onResponderTerminate={[Function]}
+          onResponderTerminationRequest={[Function]}
+          onStartShouldSetResponder={[Function]}
+          style={
+            Object {
+              "alignItems": "center",
+              "height": "100%",
+              "justifyContent": "center",
+              "opacity": 1,
+            }
+          }
+        >
+          <Text>
+            手账
+          </Text>
+        </View>
+      </View>
+      <View
+        style={
+          Object {
+            "borderRadius": 5,
+            "borderWidth": 1,
+            "flex": 1,
+            "margin": 5,
+          }
+        }
+      >
+        <View
+          accessible={true}
+          isTVSelectable={true}
+          onResponderGrant={[Function]}
+          onResponderMove={[Function]}
+          onResponderRelease={[Function]}
+          onResponderTerminate={[Function]}
+          onResponderTerminationRequest={[Function]}
+          onStartShouldSetResponder={[Function]}
+          style={
+            Object {
+              "alignItems": "center",
+              "height": "100%",
+              "justifyContent": "center",
+              "opacity": 1,
+            }
+          }
+        >
+          <Text>
+            投稿
+          </Text>
+        </View>
+      </View>
+      <View
+        style={
+          Object {
+            "borderRadius": 5,
+            "borderWidth": 1,
+            "flex": 1,
+            "margin": 5,
+          }
+        }
+      >
+        <View
+          accessible={true}
+          isTVSelectable={true}
+          onResponderGrant={[Function]}
+          onResponderMove={[Function]}
+          onResponderRelease={[Function]}
+          onResponderTerminate={[Function]}
+          onResponderTerminationRequest={[Function]}
+          onStartShouldSetResponder={[Function]}
+          style={
+            Object {
+              "alignItems": "center",
+              "height": "100%",
+              "justifyContent": "center",
+              "opacity": 1,
+            }
+          }
+        >
+          <Text>
+            心情报表
+          </Text>
+        </View>
+      </View>
+      <View
+        style={
+          Object {
+            "borderRadius": 5,
+            "borderWidth": 1,
+            "flex": 1,
+            "margin": 5,
+          }
+        }
+      >
+        <View
+          accessible={true}
+          isTVSelectable={true}
+          onResponderGrant={[Function]}
+          onResponderMove={[Function]}
+          onResponderRelease={[Function]}
+          onResponderTerminate={[Function]}
+          onResponderTerminationRequest={[Function]}
+          onStartShouldSetResponder={[Function]}
+          style={
+            Object {
+              "alignItems": "center",
+              "height": "100%",
+              "justifyContent": "center",
+              "opacity": 1,
+            }
+          }
+        >
+          <Text>
+            评论
+          </Text>
+        </View>
+      </View>
+    </View>
+  </View>
+</View>
+`;

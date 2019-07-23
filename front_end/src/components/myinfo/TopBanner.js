@@ -5,9 +5,6 @@ import agent from "../../agent"
 import { connect } from "react-redux"
 
 const styles = StyleSheet.create({
-    border: {
-        //borderWidth:1,
-    },
     username: {
         marginTop: 22,
         marginLeft: 8,
@@ -16,18 +13,15 @@ const styles = StyleSheet.create({
         fontSize: 24,
         fontWeight: 'bold',
         borderStyle: 'solid',
-        //borderWidth: 1,
     },
     feather: {
         marginLeft: 12,
         padding: 10,
         paddingTop: 6,
-        //borderWidth:1
     },
     attendance: {
         marginTop: 46,
         marginRight: 34,
-        //width: 70,
         height: 40
     },
     checked: {
@@ -36,8 +30,7 @@ const styles = StyleSheet.create({
     unchecked: {
         width: 70
     }
-})
-
+});
 
 const mapStateToProps = state => ({
     uId: state.user.uId,
@@ -45,44 +38,36 @@ const mapStateToProps = state => ({
     username: state.user.username,
     feather: state.user.feather,
     hasChecked: state.user.hasChecked,
-})
+});
 
 const mapDispatchToProps = dispatch => ({
     onCheck: (newFeather) =>
         dispatch({ type: 'CHECK', payload: { newFeather } })
-})
+});
 
 class TopBanner extends React.Component {
     constructor(props) {
         super(props);
-        /*this.state = {
-            checked: this.props.hasChecked,  //是否签到
-        }*/
         this.check = this.check.bind(this);
     }
 
-    //签到
     async check() {
         const { uId, token } = this.props;
         const response = await agent.user.check(uId, token);
-        console.log(response)
         if (response.message === 'ok') {
             this.props.onCheck(response.newFeather);
         }
     }
 
     render() {
-        console.log("***this: " + this.props.feather)
         return (
             <React.Fragment>
                 <View style={{ flexDirection: "row", marginBottom: 12 }}>
                     <Avatar
                         rounded
-                        //source={{}}
                         size="large"
                         icon={{ name: 'user', color: 'orange', type: 'font-awesome' }}
                         overlayContainerStyle={{ backgroundColor: 'cyan', flex: 4, borderWidth: 1 }}
-                        //onPress={() => console.log("Works!")}
                         activeOpacity={0.7}
                         containerStyle={{ marginTop: 25, marginLeft: 25, borderWidth: 1 }}
                         showEditButton
@@ -105,7 +90,6 @@ class TopBanner extends React.Component {
                                 containerStyle={[styles.attendance, styles.border, styles.checked]}
                                 title="已签到"
                                 disabled
-                                //onPress={() => this.setState({ checked: false })}
                                 icon={{ name: "check" }}
                             />
                         ) : (
