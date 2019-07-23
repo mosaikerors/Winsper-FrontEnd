@@ -1,6 +1,6 @@
 import React from "react";
-import { Text, View, StyleSheet, TextInput } from "react-native";
-import { Button, Avatar, Divider, Card, Input } from 'react-native-elements'
+import { Text, View, StyleSheet } from "react-native";
+import { Button, Input } from 'react-native-elements'
 import { StackActions, NavigationActions } from "react-navigation";
 import { connect } from "react-redux";
 import agent from "../../agent"
@@ -25,7 +25,7 @@ const styles = StyleSheet.create({
         marginTop: 20,
         borderRadius: 50,
     },
-})
+});
 
 const login = StackActions.reset({
     index: 0,
@@ -37,41 +37,31 @@ const login = StackActions.reset({
 const mapStateToProps = state => ({
     uId: state.user.uId,
     token: state.user.token,
-})
+});
 
 const mapDispatchToProps = dispatch => ({
     onSubmit: (response) =>
-        dispatch({ type: 'SIGN_IN', payload: response }),
-    onLoadHeans: (heans) => {
-        /*console.log("*************************response**********************")
-        console.log(response);*/
-        console.log("*************************heans**********************")
-        console.log(heans);
-        return dispatch({ type: "LOAD_ALL_HEANS", payload: heans })
-    }
-})
+        dispatch({ type: 'SIGN_IN', payload: response })});
 
-class Signin extends React.Component {
+export class Signin extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
             token: '',
             phone: '',
             password: '',
-        }
+        };
         this.updateState = this.updateState.bind(this);
         this.submit = this.submit.bind(this);
     }
 
     async submit() {
         const { phone, password } = this.state;
-        const { uId, token } = this.props;
         try {
             const response = await agent.user.firstSignin(phone, password);
             console.log(response);
             if (response.message === "ok") {
-                this.props.navigation.dispatch(login)
-                const { token, uId, username, status, feather, mutualFollow, following, followers, hasChecked } = response;
+                this.props.navigation.dispatch(login);
                 this.props.onSubmit(response)
             }
         }
@@ -87,7 +77,6 @@ class Signin extends React.Component {
     }
 
     componentWillReceiveProps(nextProps) {
-        console.log(nextProps.phone)
         this.setState({
             phone: nextProps.phone,
             password: nextProps.password

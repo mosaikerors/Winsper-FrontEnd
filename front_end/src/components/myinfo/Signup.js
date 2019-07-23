@@ -1,6 +1,6 @@
 import React from "react";
-import { Text, View, StyleSheet, TextInput } from "react-native";
-import { Button, Avatar, Divider, Card, Input } from 'react-native-elements'
+import { Text, View, StyleSheet } from "react-native";
+import { Button, Input } from 'react-native-elements'
 import agent from "../../agent"
 import Icon from "react-native-vector-icons/FontAwesome"
 
@@ -42,15 +42,9 @@ class Signup extends React.Component {
             password: '',
             sendCodeButton: { clickable: true, timeToClick: 0 },
             sigupOK: false
-        }
-        //control how many seconds left before the sendCode button gets clickable again
+        };
+
         setInterval(() => this.updateSendCodeButton(), 1000);
-        /*setInterval(() => {
-            console.log(this.state.phone)
-            this.setState(previousState => {
-              return { phone: !previousState.phone };
-            });
-          }, 1000);*/
 
         this.updateState = this.updateState.bind(this);
         this.sendCode = this.sendCode.bind(this);
@@ -59,14 +53,13 @@ class Signup extends React.Component {
     }
 
     updateSendCodeButton() {
-        //console.log(this.state)
         if (this.state.sendCodeButton.timeToClick === 1)
             this.setState({
                 sendCodeButton: {
                     clickable: true,
                     timeToClick: 0
                 }
-            })
+            });
         else this.setState(prevState => ({
             sendCodeButton: {
                 clickable: prevState.sendCodeButton.clickable,
@@ -76,7 +69,6 @@ class Signup extends React.Component {
     }
 
     async sendCode() {
-        console.log(this.state.phone)
         const response = await agent.user.sendCode(this.state.phone);
         this.setState({
             token: response.token,
@@ -84,7 +76,7 @@ class Signup extends React.Component {
                 clickable: false,
                 timeToClick: 5,  //can send code only once for each minute
             }
-        })
+        });
         console.log(response)
     }
 
@@ -95,7 +87,7 @@ class Signup extends React.Component {
         if (response.message === "ok") {
             this.setState({
                 signupOK: true
-            })
+            });
             this.props.updateInfo(phone, password)
         }
     }
@@ -105,7 +97,6 @@ class Signup extends React.Component {
             [field]: text
         });
     }
-
 
     render() {
         return (
