@@ -34,9 +34,7 @@ class DetailedBlock extends React.Component {
                         </View>
                         <View style={styles.block}>
                             <TouchableOpacity style={styles.text} onPress={() => {
-                                console.log(this.props);
                                 this.props.navigation.navigate('HeanList');
-                                console.log(this.props);
                             }}>
                                 <Text>
                                     函

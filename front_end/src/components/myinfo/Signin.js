@@ -50,6 +50,7 @@ export class Signin extends React.Component {
             token: '',
             phone: '',
             password: '',
+            rescode: -1
         };
         this.updateState = this.updateState.bind(this);
         this.submit = this.submit.bind(this);
@@ -60,7 +61,10 @@ export class Signin extends React.Component {
         try {
             const response = await agent.user.firstSignin(phone, password);
             console.log(response);
-            if (response.message === "ok") {
+            if (response.rescode === 0) {
+                this.setState({
+                    rescode: 0
+                });
                 this.props.navigation.dispatch(login);
                 this.props.onSubmit(response)
             }

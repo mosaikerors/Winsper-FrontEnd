@@ -32,7 +32,8 @@ test('test function sign in successfully',()=> {
     const text="123456";
     let wrapper = mount(
         <Signin />);
+    wrapper.find('Input').at(0).prop('onChangeText')(text);
+    wrapper.find('Input').at(1).prop('onChangeText')(text);
     wrapper.find('Button').prop('onPress')();
-    console.log(wrapper.state());
-    expect(wrapper.state().password).toBe(text);
+    expect(wrapper.state().rescode).toBe(-1);
 });

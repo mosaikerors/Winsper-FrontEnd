@@ -29,7 +29,7 @@ const styles = StyleSheet.create({
         marginTop: 20,
         borderRadius: 50,
     },
-})
+});
 
 class Signup extends React.Component {
     constructor(props) {
@@ -41,7 +41,9 @@ class Signup extends React.Component {
             username: '',
             password: '',
             sendCodeButton: { clickable: true, timeToClick: 0 },
-            sigupOK: false
+            sigupOK: false,
+            rescodeForSendCode: -1,
+            rescodeForSignup: -1
         };
 
         setInterval(() => this.updateSendCodeButton(), 1000);
@@ -70,23 +72,25 @@ class Signup extends React.Component {
 
     async sendCode() {
         const response = await agent.user.sendCode(this.state.phone);
-        this.setState({
-            token: response.token,
-            sendCodeButton: {
-                clickable: false,
-                timeToClick: 5,  //can send code only once for each minute
-            }
-        });
-        console.log(response)
+        if(response.rescode===0){
+            this.setState({
+                rescodeForSendCode: 0,
+                token: response.token,
+                sendCodeButton: {
+                    clickable: false,
+                    timeToClick: 5,  //can send code only once for each minute
+                }
+            });
+        }
     }
 
     async submit() {
         const { token, phone, code, username, password } = this.state;
         const response = await agent.user.sigup(token, phone, code, username, password);
-        console.log(response);
-        if (response.message === "ok") {
+        if (response.rescode===0) {
             this.setState({
-                signupOK: true
+                signupOK: true,
+                rescodeForSignup: 0
             });
             this.props.updateInfo(phone, password)
         }
