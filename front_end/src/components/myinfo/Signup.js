@@ -31,7 +31,7 @@ const styles = StyleSheet.create({
     },
 })
 
-class Signup extends React.Component {
+export class Signup extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -41,16 +41,12 @@ class Signup extends React.Component {
             username: '',
             password: '',
             sendCodeButton: { clickable: true, timeToClick: 0 },
-            sigupOK: false
+            sigupOK: false,
+            rescodeForSendCode: -1,
+            rescodeForSignup: -1,
         }
         //control how many seconds left before the sendCode button gets clickable again
         setInterval(() => this.updateSendCodeButton(), 1000);
-        /*setInterval(() => {
-            console.log(this.state.phone)
-            this.setState(previousState => {
-              return { phone: !previousState.phone };
-            });
-          }, 1000);*/
 
         this.updateState = this.updateState.bind(this);
         this.sendCode = this.sendCode.bind(this);
@@ -76,24 +72,25 @@ class Signup extends React.Component {
     }
 
     async sendCode() {
-        console.log(this.state.phone)
         const response = await agent.user.sendCode(this.state.phone);
-        this.setState({
-            token: response.token,
-            sendCodeButton: {
-                clickable: false,
-                timeToClick: 5,  //can send code only once for each minute
-            }
-        })
-        console.log(response)
+        if (response.rescode === 0) {
+            this.setState({
+                rescodeForSendCode: 0,
+                token: response.token,
+                sendCodeButton: {
+                    clickable: false,
+                    timeToClick: 5,  //can send code only once for each minute
+                }
+            })
+        }
     }
 
     async submit() {
         const { token, phone, code, username, password } = this.state;
         const response = await agent.user.sigup(token, phone, code, username, password);
-        console.log(response);
-        if (response.message === "ok") {
+        if (response.rescode === 0) {
             this.setState({
+                rescodeForSignup: 0,
                 signupOK: true
             })
             this.props.updateInfo(phone, password)
@@ -164,6 +161,7 @@ class Signup extends React.Component {
                             leftIcon={<Icon name="user" size={18} style={{ marginRight: 8, marginLeft: 6 }} />}
                             inputContainerStyle={styles.input}
                             onChangeText={text => this.updateState('password', text)}
+                            secureTextEntry
                         />
                     </View>
                     {this.state.signupOK ? (

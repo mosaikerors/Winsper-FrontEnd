@@ -51,6 +51,7 @@ class TopBanner extends React.Component {
         this.check = this.check.bind(this);
     }
 
+    // 一个正确的 superagent + Redux 联动流程：await agent -> dispatch action -> Redux store changed -> rerender
     async check() {
         const { uId, token } = this.props;
         const response = await agent.user.check(uId, token);

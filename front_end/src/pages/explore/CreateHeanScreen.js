@@ -6,10 +6,18 @@ import RNFetchBlob from 'react-native-fetch-blob'
 import Geolocation from 'Geolocation';
 import ImageGroup from '../../components/hean/ImageGroup'
 import { AK, SHA1, packageName } from '../../config';
+import { connect } from "react-redux";
 
-const uId = "10";
-const token = "eyJhbGciOiJIUzUxMiJ9.eyJhdXRob3JpdGllcyI6IlVTRVIiLCJzdWIiOiIxMCIsImV4cCI6MTU2NDA0MTEwNH0.LA9iZG7Y4Um31ZV_uy7qj0FUw06IuddiYmtXpzWxRIxR_9JDMjHn7osuC8Gm0LPUhMssD5axN75u3s3Tx80hEQ";
 const ImagePicker = NativeModules.ImageCropPicker;
+
+const mapStateToProps = state => ({
+    token: state.user.token,
+    uId: state.user.uId
+});
+
+const mapDispatchToProps = dispatch => ({
+
+});
 
 class CreateHeanScreen extends Component {
     constructor(props) {
@@ -35,6 +43,7 @@ class CreateHeanScreen extends Component {
 
     upload() {
         let { images } = this.state;
+        const {uId, token} = this.props;
         let body = [];
         body.push({ name: 'uId', data: uId });
         body.push({ name: 'location', data: this.state.location + ",0" });
@@ -43,7 +52,8 @@ class CreateHeanScreen extends Component {
             body.push({ name: 'pictures', filename: 'picture' + i.toString(), type: images[i].mime, data: RNFetchBlob.wrap(images[i].uri) })
         }
 
-        RNFetchBlob.fetch('POST', 'http://47.103.0.246:7120/hean/upload', {
+        // 以后要统一到 agent 封装里去
+        RNFetchBlob.fetch('POST', 'http://202.120.40.8:30525/hean/upload', {
             Authorization: "Bearer " + token,
             uId: uId,
             token: token,
@@ -140,5 +150,5 @@ class CreateHeanScreen extends Component {
         );
     }
 }
-export default CreateHeanScreen;
+export default connect(mapStateToProps, mapDispatchToProps)(CreateHeanScreen);
 

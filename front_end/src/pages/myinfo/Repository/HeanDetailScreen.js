@@ -6,6 +6,16 @@ import ImageGroup from '../../../components/hean/ImageGroup';
 import AntDesign from 'react-native-vector-icons/AntDesign'
 import FontAwesome from "react-native-vector-icons/FontAwesome";
 import Feather from "react-native-vector-icons/Feather";
+import { connect } from "react-redux";
+
+const mapStateToProps = state => ({
+    token: state.user.token,
+    uId: state.user.uId
+});
+
+const mapDispatchToProps = dispatch => ({
+
+});
 const avatar = "https://images.pexels.com/photos/1374551/pexels-photo-1374551.jpeg?auto=compress&cs=tinysrgb&dpr=2&w=500";
 const hean = {
     "hId": 1,
@@ -126,6 +136,12 @@ class HeanDetailScreen extends Component {
         this.commentHean=this.commentHean.bind(this);
         this.commentToComment = this.commentToComment.bind(this);
     };
+
+    async componentWillMount() {
+        const hId = this.props.navigation.getParam("hId", 0);
+        const {uId, token}=this.props;
+        const response = await agent.hean.getDetailedHean(uId, token, hId);
+    }
 
     changeLike(){
         const {likeCount, hasLiked} = this.state;
@@ -268,7 +284,7 @@ class HeanDetailScreen extends Component {
         );
     }
 }
-export default HeanDetailScreen;
+export default connect(mapStateToProps, mapDispatchToProps)(HeanDetailScreen);
 const css = StyleSheet.create({
     bottomBlank:{
       height:40,

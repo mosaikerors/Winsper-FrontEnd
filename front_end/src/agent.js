@@ -1,6 +1,6 @@
 const requests = require('superagent');
 
-const API_ROOT = "http://47.103.0.246:7120"
+const API_ROOT = "http://202.120.40.8:30525"
 
 const user = {
     sendCode: (phone) =>
@@ -31,20 +31,27 @@ const user = {
             .send({ uId, username })
             .then(res => res.body)
             .catch(err => err.response.body),*/,
-    check: (uId, token) => ({ message: "ok", newFeather: 5 })
-    /*    requests.post(API_ROOT + "/user/check")
+    check: (uId, token) =>
+        requests.post(API_ROOT + "/user/check")
             .set('Authorization', 'Bearer ' + token)
             .set('uId', uId)
             .then(res => res.body)
-            .catch(err => err.response.body),*/
+            .catch(err => err.response.body),
 }
 
 const hean = {
-    searchByUId: (uId, token) =>
+    searchByUId: (uId, token, owner) =>
         requests.post(API_ROOT + "/hean/byUId")
             .set('Authorization', 'Bearer ' + token)
             .set('uId', uId)
-            .send({ uId })
+            .query({ owner })
+            .then(res => res.body)
+            .catch(err => err.response.body),
+    getDetailedHean: (uId, token, hId) =>
+        requests.post(API_ROOT + "/hean/detailed")
+            .set('Authorization', 'Bearer ' + token)
+            .set('uId', uId)
+            .query({ hId })
             .then(res => res.body)
             .catch(err => err.response.body),
     getAll: (uId, token) =>

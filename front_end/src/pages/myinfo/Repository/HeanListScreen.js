@@ -1,7 +1,6 @@
 import React from "react";
-import { Text,Dimensions} from "react-native";
+import { Text,Dimensions, TouchableOpacity, FlatList } from "react-native";
 import HeanCard from "../../../components/hean/HeanCard";
-import { TouchableOpacity, FlatList } from "react-native-gesture-handler";
 import agent from "../../../agent";
 import { connect } from "react-redux";
 const {width} = Dimensions.get("window");
@@ -30,9 +29,9 @@ class HeanListScreen extends React.Component {
     async componentWillMount() {
         const { uId, token } = this.props;
         try {
-            const response = await agent.hean.searchByUId(uId, token);
+            const response = await agent.hean.searchByUId(uId, token, uId);    // 看自己的函
             this.setState({
-                heans: response.heanArray
+                heans: response.heanCards
             })
         }
         catch (err) {
@@ -49,7 +48,7 @@ class HeanListScreen extends React.Component {
                     data={this.state.heans}
                     renderItem={({ item, index }) => (
                         <TouchableOpacity style={{margin: width / 18}}
-                                          onPress={() => this.props.navigation.navigate("HeanDetail", { hean: item })}>
+                                          onPress={() => this.props.navigation.navigate("HeanDetail", { hId: item.hId })}>
                                 <HeanCard hean={item}/>
                         </TouchableOpacity>
                     )}

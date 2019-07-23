@@ -51,13 +51,14 @@ const mapDispatchToProps = dispatch => ({
     }
 })
 
-class Signin extends React.Component {
+export class Signin extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
             token: '',
             phone: '',
             password: '',
+            rescode: -1,
         }
         this.updateState = this.updateState.bind(this);
         this.submit = this.submit.bind(this);
@@ -69,9 +70,9 @@ class Signin extends React.Component {
         try {
             const response = await agent.user.firstSignin(phone, password);
             console.log(response);
-            if (response.message === "ok") {
+            if (response.rescode === 0) {
+                this.setState({ rescode: 0 })
                 this.props.navigation.dispatch(login)
-                const { token, uId, username, status, feather, mutualFollow, following, followers, hasChecked } = response;
                 this.props.onSubmit(response)
             }
         }
@@ -86,6 +87,7 @@ class Signin extends React.Component {
         });
     }
 
+    // 试图在注册完登录时默认填上注册的用户信息，但是可以通过注册完直接进入 loggedin 页面解决，待会删掉
     componentWillReceiveProps(nextProps) {
         console.log(nextProps.phone)
         this.setState({
@@ -120,6 +122,7 @@ class Signin extends React.Component {
                             inputContainerStyle={styles.input}
                             value={this.state.password}
                             onChangeText={text => this.updateState('password', text)}
+                            secureTextEntry
                         />
                     </View>
                     <Button
