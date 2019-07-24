@@ -17,102 +17,6 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = dispatch => ({
 
 });
-const avatar = "https://images.pexels.com/photos/1374551/pexels-photo-1374551.jpeg?auto=compress&cs=tinysrgb&dpr=2&w=500";
-/*const hean = {
-    "hId": 1,
-    "uId": 1,
-    "avatar": avatar,
-    "username": "username",
-    "createdTime": 20191213,
-    "text": "原谅我把冷寂的清官朝服剪成合身的寻日布衣，把你的一品丝绣" +
-        "裁成放心事的暗袋，你娴熟的三行连韵与商簌体，到我手上变为缝缝补补的百衲图。" +
-        "安静些，三月的鬼雨，我要翻箱倒箧，再裂一条无汗则拭泪的巾帕。",
-    "pics": [
-        avatar, avatar, avatar, avatar
-    ],
-    "hasLiked": true,
-    "hasStarred": false,
-    "likeCount": 100,
-    "starCount": 100,
-    "commentCount": 100,
-    "comments": [
-        {
-            "commentId": 111,
-            "commenter": {
-                "uId": 1,
-                "username": "username1",
-                "avatar": avatar
-            },
-            "commented": null,
-            "time": 20191214,
-            "content": "nishuodedui"
-        },
-        {
-            "commentId": 112,
-            "commenter": {
-                "uId": 1,
-                "username": "username1",
-                "avatar": avatar
-            },
-            "commented": {
-                "uId": 1,
-                "username": "username1",
-                "avatar": avatar
-            },
-            "time": 20191214,
-            "content": "原谅我把冷寂的清官朝服剪成合身的寻日布衣，把你的一品丝绣" +
-                "裁成放心事的暗袋，你娴熟的三行连韵与商簌体，到我手上变为缝缝补补的百衲图。" +
-                "安静些，三月的鬼雨，我要翻箱倒箧，再裂一条无汗则拭泪的巾帕。"
-        },
-        {
-            "commentId": 113,
-            "commenter": {
-                "uId": 1,
-                "username": "username1",
-                "avatar": avatar
-            },
-            "commented": {
-                "uId": 1,
-                "username": "username1",
-                "avatar": avatar
-            },
-            "time": 20191214,
-            "content": "nishuodedui"
-        },
-        {
-            "commentId": 114,
-            "commenter": {
-                "uId": 1,
-                "username": "username1",
-                "avatar": avatar
-            },
-            "commented": {
-                "uId": 1,
-                "username": "username1",
-                "avatar": avatar
-            },
-            "time": 20191214,
-            "content": "原谅我把冷寂的清官朝服剪成合身的寻日布衣，把你的一品丝绣" +
-                "裁成放心事的暗袋，你娴熟的三行连韵与商簌体，到我手上变为缝缝补补的百衲图。" +
-                "安静些，三月的鬼雨，我要翻箱倒箧，再裂一条无汗则拭泪的巾帕。"
-        },
-        {
-            "commentId": 115,
-            "commenter": {
-                "uId": 1,
-                "username": "username1",
-                "avatar": avatar
-            },
-            "commented": {
-                "uId": 1,
-                "username": "username1",
-                "avatar": avatar
-            },
-            "time": 20191214,
-            "content": "nishuodedui"
-        }
-    ]
-};*/
 class HeanDetailScreen extends Component {
     static navigationOptions = {
         title: "函"
@@ -130,7 +34,7 @@ class HeanDetailScreen extends Component {
             hasStarred: null,
             commentCount: null,
             text: '',
-            hean: {}
+            hean: null
         };
         this.changeText = this.changeText.bind(this);
         this.submitComment = this.submitComment.bind(this);
@@ -144,7 +48,10 @@ class HeanDetailScreen extends Component {
         const hean = this.props.navigation.getParam("hean", {});
         const { uId, token } = this.props;
         const response = await agent.hean.getDetailedHean(uId, token, hean.hId);
-        console.log(response);
+        console.log("hean: " + hean);
+        console.log("response: " + response);
+        console.log("hean keys: " + Object.keys(hean))
+        console.log("response keys: " + Object.keys(response))
         this.setState({
             likeCount: hean.likeCount,
             starCount: hean.starCount,
@@ -222,7 +129,10 @@ class HeanDetailScreen extends Component {
     }
 
     render() {
+        console.log(this.state.hean)
         const { hean } = this.state;
+        if (!hean)
+            return null;
         return (
             <KeyboardAvoidingView>
                 <ScrollView style={css.view}>

@@ -43,8 +43,7 @@ const hean = {
         requests.get(API_ROOT + "/hean/cardlist")
             .set('Authorization', 'Bearer ' + token)
             .set('uId', viewer)
-            .query({viewer})
-            .query({owner})
+            .query({ viewer,owner })
             .then(res => res.body)
             .catch(err => err.response.body),
     getDetailedHean: (uId, token, hId) =>
