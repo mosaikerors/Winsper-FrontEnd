@@ -43,9 +43,9 @@ class CreateHeanScreen extends Component {
 
     upload() {
         let { images } = this.state;
-        const {uId, token} = this.props;
+        const { uId, token } = this.props;
         let body = [];
-        body.push({ name: 'uId', data: uId });
+        body.push({ name: 'uId', data: uId.toString() });
         body.push({ name: 'location', data: this.state.location + ",0" });
         body.push({ name: 'text', data: this.state.content });
         for (let i = 0; i < images.length; ++i) {
@@ -53,15 +53,19 @@ class CreateHeanScreen extends Component {
         }
 
         // 以后要统一到 agent 封装里去
+        console.log("uId: " + uId);
+        console.log("token: " + token)
+        console.log("text: " + body[2].data)
         RNFetchBlob.fetch('POST', 'http://202.120.40.8:30525/hean/upload', {
             Authorization: "Bearer " + token,
-            uId: uId,
+            uId: uId.toString(),
             token: token,
             'Content-Type': 'multipart/form-data',
         }, body
         ).then((resp) => {
-            if (resp["message"] === "ok") {
-
+            // resp.data is a string, to convert it it a object
+            if (JSON.parse(resp.data).rescode === 0) {
+                this.props.navigation.pop()
             }
         }).catch((err) => {
             console.log(err)
@@ -111,8 +115,8 @@ class CreateHeanScreen extends Component {
 
     render() {
         let imageURL = [];
-        let {images} = this.state;
-        for(let i=0; i<images.length; ++i){
+        let { images } = this.state;
+        for (let i = 0; i < images.length; ++i) {
             imageURL.push(images[i].uri)
         }
         return (
