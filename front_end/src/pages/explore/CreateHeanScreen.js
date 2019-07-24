@@ -51,12 +51,6 @@ class CreateHeanScreen extends Component {
         for (let i = 0; i < images.length; ++i) {
             body.push({ name: 'pictures', filename: 'picture' + i.toString(), type: images[i].mime, data: RNFetchBlob.wrap(images[i].uri) })
         }
-        console.log(body);
-
-        // 以后要统一到 agent 封装里去
-        console.log("uId: " + uId);
-        console.log("token: " + token)
-        console.log("text: " + body[2].data)
         RNFetchBlob.fetch('POST', 'http://202.120.40.8:30525/hean/upload', {
             Authorization: "Bearer " + token,
             uId: uId.toString(),

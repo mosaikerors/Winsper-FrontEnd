@@ -53,7 +53,7 @@ class HeanListScreen extends React.Component {
                                 <HeanCard hean={item}/>
                         </TouchableOpacity>
                     )}
-                />
+                 disableVirtualization/>
             </React.Fragment>
         );
     }

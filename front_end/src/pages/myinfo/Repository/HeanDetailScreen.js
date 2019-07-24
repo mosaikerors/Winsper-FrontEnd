@@ -7,6 +7,7 @@ import AntDesign from 'react-native-vector-icons/AntDesign'
 import FontAwesome from "react-native-vector-icons/FontAwesome";
 import Feather from "react-native-vector-icons/Feather";
 import { connect } from "react-redux";
+import agent from "../../../agent";
 
 const mapStateToProps = state => ({
     token: state.user.token,
@@ -142,7 +143,8 @@ class HeanDetailScreen extends Component {
     async componentWillMount() {
         const hean = this.props.navigation.getParam("hean", {});
         const { uId, token } = this.props;
-        const response = await agent.hean.getDetailedHean(uId, token, hId);
+        const response = await agent.hean.getDetailedHean(uId, token, hean.hId);
+        console.log(response);
         this.setState({
             likeCount: hean.likeCount,
             starCount: hean.starCount,

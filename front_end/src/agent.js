@@ -39,15 +39,16 @@ const user = {
 };
 
 const hean = {
-    searchByUId: (uId, token, owner) =>
-        requests.post(API_ROOT + "/hean/byUId")
+    searchByUId: (viewer, token, owner) =>
+        requests.get(API_ROOT + "/hean/cardlist")
             .set('Authorization', 'Bearer ' + token)
-            .set('uId', uId)
-            .query({ owner })
+            .set('uId', viewer)
+            .query({viewer})
+            .query({owner})
             .then(res => res.body)
             .catch(err => err.response.body),
     getDetailedHean: (uId, token, hId) =>
-        requests.post(API_ROOT + "/hean/detailed")
+        requests.get(API_ROOT + "/hean/detailed")
             .set('Authorization', 'Bearer ' + token)
             .set('uId', uId)
             .query({ hId })
