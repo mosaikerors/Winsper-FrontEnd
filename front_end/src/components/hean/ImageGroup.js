@@ -46,6 +46,8 @@ export default class App extends Component{
                             <Image source={{uri: this.props.images[3]}} style={styles.small}/>
                         </View>
                     </View>);
+            default:
+                return null;
         }
     }
 }

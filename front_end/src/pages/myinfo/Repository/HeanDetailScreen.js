@@ -48,7 +48,7 @@ class HeanDetailScreen extends Component {
         const hean = this.props.navigation.getParam("hean", {});
         const { uId, token } = this.props;
         const response = await agent.hean.getDetailedHean(uId, token, hean.hId);
-        console.log("hean: " + hean);
+        console.log("hean id: " + hean.hId);
         console.log("response: " + response);
         console.log("hean keys: " + Object.keys(hean))
         console.log("response keys: " + Object.keys(response))
@@ -59,7 +59,8 @@ class HeanDetailScreen extends Component {
             hasStarred: hean.hasStarred,
             commentCount: hean.commentCount,
             text: hean.text,
-            hean: response.hean
+            hean: response.hean,
+            comments: response.comments
         })
     }
 
@@ -181,7 +182,7 @@ class HeanDetailScreen extends Component {
                         </View>
                     </View>
                     {
-                        hean.comments.map((item, index) => (
+                        this.state.comments.map((item, index) => (
                             <TouchableOpacity onPress={() => this.commentToComment(item.commentId)}>
                                 <Comment comment={item} />
                             </TouchableOpacity>

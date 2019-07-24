@@ -50,7 +50,7 @@ const hean = {
         requests.get(API_ROOT + "/hean/detailed")
             .set('Authorization', 'Bearer ' + token)
             .set('uId', uId)
-            .query({ hId })
+            .query({ hId,uId })
             .then(res => res.body)
             .catch(err => err.response.body),
     getAll: (uId, token) =>
