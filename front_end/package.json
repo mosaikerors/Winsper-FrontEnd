@@ -12,6 +12,7 @@
     "antd": "^3.20.3",
     "enzyme": "^3.10.0",
     "enzyme-adapter-react-16": "^1.14.0",
+    "jest-html-reporter": "^2.5.0",
     "prop-types": "latest",
     "react": "16.8.3",
     "react-dom": "^16.8.6",

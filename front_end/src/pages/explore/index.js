@@ -13,7 +13,7 @@ const ExploreScreenNavigator = createStackNavigator(
         initialRouteName: "Explore",
         navigationOptions: ({ navigation }) => {
             const topScreen = navigation.state.routes[navigation.state.routes.length - 1].routeName;
-            const tabBarVisible = (topScreen === "Explore") ? true : false;
+            const tabBarVisible = (topScreen === "Explore");
             return { tabBarVisible };
         }
     }

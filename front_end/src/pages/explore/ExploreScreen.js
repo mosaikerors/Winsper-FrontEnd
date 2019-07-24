@@ -7,12 +7,12 @@ const { width, height } = Dimensions.get('window');
 const list = [
     {
         title: '手账',
-        icon: 'av-timer',
+        icon: 'star',
         pagename: 'CreateJournal'
     },
     {
         title: '函',
-        icon: 'flight-takeoff',
+        icon: 'info',
         pagename: 'CreateHean'
 
     },
@@ -23,7 +23,7 @@ const list = [
     },
     {
         title: '日记',
-        icon: 'flight-takeoff',
+        icon: 'rowing',
         pagename: 'CreateHean'
     }
 ];
@@ -40,15 +40,15 @@ class ExploreScreen extends React.Component {
             CarouselItem: [
                 {
                     key: 1,
-                    src: "https://500px.com/photo/311850945/rohrweihe-western-marsh-harrier-hunting-by-sigrun-br%C3%BCggenthies"
+                    src: "https://images.pexels.com/photos/1935220/pexels-photo-1935220.jpeg?auto=compress&cs=tinysrgb&dpr=2&w=500"
                 },
                 {
                     key: 2,
-                    src: "https://images.pexels.com/photos/1727200/pexels-photo-1727200.jpeg?auto=compress&cs=tinysrgb&dpr=2&w=500"
+                    src: "https://images.pexels.com/photos/2679542/pexels-photo-2679542.jpeg?auto=compress&cs=tinysrgb&dpr=2&w=500"
                 },
                 {
                     key: 3,
-                    src: "https://images.pexels.com/photos/1702624/pexels-photo-1702624.jpeg?auto=compress&cs=tinysrgb&dpr=2&w=500"
+                    src: "https://images.pexels.com/photos/2325505/pexels-photo-2325505.jpeg?auto=compress&cs=tinysrgb&dpr=2&w=500"
                 }
             ]
         }
@@ -87,5 +87,4 @@ class ExploreScreen extends React.Component {
         );
     }
 }
-
 export default ExploreScreen;

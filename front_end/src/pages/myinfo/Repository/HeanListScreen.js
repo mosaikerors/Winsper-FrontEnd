@@ -30,9 +30,10 @@ class HeanListScreen extends React.Component {
         const { uId, token } = this.props;
         try {
             const response = await agent.hean.searchByUId(uId, token, uId);    // 看自己的函
+            console.log(response);
             this.setState({
                 heans: response.heanCards
-            })
+            });
         }
         catch (err) {
             console.log(err)
