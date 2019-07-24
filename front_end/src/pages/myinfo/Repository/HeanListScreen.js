@@ -49,7 +49,7 @@ class HeanListScreen extends React.Component {
                     data={this.state.heans}
                     renderItem={({ item, index }) => (
                         <TouchableOpacity style={{margin: width / 18}}
-                                          onPress={() => this.props.navigation.navigate("HeanDetail", { hId: item.hId })}>
+                                          onPress={() => this.props.navigation.navigate("HeanDetail", { hean: item })}>
                                 <HeanCard hean={item}/>
                         </TouchableOpacity>
                     )}

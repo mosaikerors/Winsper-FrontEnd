@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import Comment from '../../../components/myinfo/Comment'
-import {Avatar} from 'react-native-elements';
-import {StyleSheet, KeyboardAvoidingView, View, Text, TextInput, Alert, ScrollView, TouchableOpacity} from 'react-native';
+import { Avatar } from 'react-native-elements';
+import { StyleSheet, KeyboardAvoidingView, View, Text, TextInput, Alert, ScrollView, TouchableOpacity } from 'react-native';
 import ImageGroup from '../../../components/hean/ImageGroup';
 import AntDesign from 'react-native-vector-icons/AntDesign'
 import FontAwesome from "react-native-vector-icons/FontAwesome";
@@ -17,30 +17,30 @@ const mapDispatchToProps = dispatch => ({
 
 });
 const avatar = "https://images.pexels.com/photos/1374551/pexels-photo-1374551.jpeg?auto=compress&cs=tinysrgb&dpr=2&w=500";
-const hean = {
+/*const hean = {
     "hId": 1,
     "uId": 1,
     "avatar": avatar,
     "username": "username",
     "createdTime": 20191213,
-    "text":"原谅我把冷寂的清官朝服剪成合身的寻日布衣，把你的一品丝绣" +
+    "text": "原谅我把冷寂的清官朝服剪成合身的寻日布衣，把你的一品丝绣" +
         "裁成放心事的暗袋，你娴熟的三行连韵与商簌体，到我手上变为缝缝补补的百衲图。" +
         "安静些，三月的鬼雨，我要翻箱倒箧，再裂一条无汗则拭泪的巾帕。",
     "pics": [
-        avatar,avatar,avatar,avatar
+        avatar, avatar, avatar, avatar
     ],
     "hasLiked": true,
     "hasStarred": false,
     "likeCount": 100,
     "starCount": 100,
     "commentCount": 100,
-    "comments":[
+    "comments": [
         {
             "commentId": 111,
             "commenter": {
-                "uId":1,
-                "username":"username1",
-                "avatar":avatar
+                "uId": 1,
+                "username": "username1",
+                "avatar": avatar
             },
             "commented": null,
             "time": 20191214,
@@ -49,14 +49,14 @@ const hean = {
         {
             "commentId": 112,
             "commenter": {
-                "uId":1,
-                "username":"username1",
-                "avatar":avatar
+                "uId": 1,
+                "username": "username1",
+                "avatar": avatar
             },
             "commented": {
-                "uId":1,
-                "username":"username1",
-                "avatar":avatar
+                "uId": 1,
+                "username": "username1",
+                "avatar": avatar
             },
             "time": 20191214,
             "content": "原谅我把冷寂的清官朝服剪成合身的寻日布衣，把你的一品丝绣" +
@@ -66,14 +66,14 @@ const hean = {
         {
             "commentId": 113,
             "commenter": {
-                "uId":1,
-                "username":"username1",
-                "avatar":avatar
+                "uId": 1,
+                "username": "username1",
+                "avatar": avatar
             },
             "commented": {
-                "uId":1,
-                "username":"username1",
-                "avatar":avatar
+                "uId": 1,
+                "username": "username1",
+                "avatar": avatar
             },
             "time": 20191214,
             "content": "nishuodedui"
@@ -81,14 +81,14 @@ const hean = {
         {
             "commentId": 114,
             "commenter": {
-                "uId":1,
-                "username":"username1",
-                "avatar":avatar
+                "uId": 1,
+                "username": "username1",
+                "avatar": avatar
             },
             "commented": {
-                "uId":1,
-                "username":"username1",
-                "avatar":avatar
+                "uId": 1,
+                "username": "username1",
+                "avatar": avatar
             },
             "time": 20191214,
             "content": "原谅我把冷寂的清官朝服剪成合身的寻日布衣，把你的一品丝绣" +
@@ -98,121 +98,129 @@ const hean = {
         {
             "commentId": 115,
             "commenter": {
-                "uId":1,
-                "username":"username1",
-                "avatar":avatar
+                "uId": 1,
+                "username": "username1",
+                "avatar": avatar
             },
             "commented": {
-                "uId":1,
-                "username":"username1",
-                "avatar":avatar
+                "uId": 1,
+                "username": "username1",
+                "avatar": avatar
             },
             "time": 20191214,
             "content": "nishuodedui"
         }
     ]
-};
+};*/
 class HeanDetailScreen extends Component {
     static navigationOptions = {
         title: "函"
     };
-    
+
     constructor(props) {
         super(props);
-        this.state={
-            comment:"",
-            commentObject:0, // 0 : comment hean, 1: comment to comment
-            commentToCommentId:0,
-            likeCount: hean.likeCount,
-            starCount: hean.likeCount,
-            hasLiked: hean.hasLiked,
-            hasStarred: hean.hasStarred,
-            commentCount:hean.commentCount
+        this.state = {
+            comment: "",
+            commentObject: 0, // 0 : comment hean, 1: comment to comment
+            commentToCommentId: 0,
+            likeCount: null,
+            starCount: null,
+            hasLiked: null,
+            hasStarred: null,
+            commentCount: null,
+            text: '',
+            hean: {}
         };
-        this.changeText=this.changeText.bind(this);
-        this.submitComment=this.submitComment.bind(this);
-        this.changeLike=this.changeLike.bind(this);
-        this.changeStar=this.changeStar.bind(this);
-        this.commentHean=this.commentHean.bind(this);
+        this.changeText = this.changeText.bind(this);
+        this.submitComment = this.submitComment.bind(this);
+        this.changeLike = this.changeLike.bind(this);
+        this.changeStar = this.changeStar.bind(this);
+        this.commentHean = this.commentHean.bind(this);
         this.commentToComment = this.commentToComment.bind(this);
     };
 
     async componentWillMount() {
-        const hId = this.props.navigation.getParam("hId", 0);
-        const {uId, token}=this.props;
+        const hean = this.props.navigation.getParam("hean", {});
+        const { uId, token } = this.props;
         const response = await agent.hean.getDetailedHean(uId, token, hId);
-        this.setState({ 
-            
+        this.setState({
+            likeCount: hean.likeCount,
+            starCount: hean.starCount,
+            hasLiked: hean.hasLiked,
+            hasStarred: hean.hasStarred,
+            commentCount: hean.commentCount,
+            text: hean.text,
+            hean: response.hean
         })
     }
 
-    changeLike(){
-        const {likeCount, hasLiked} = this.state;
-        if(hasLiked){
+    changeLike() {
+        const { likeCount, hasLiked } = this.state;
+        if (hasLiked) {
             this.setState({
-                likeCount:likeCount-1,
-                hasLiked:!hasLiked
+                likeCount: likeCount - 1,
+                hasLiked: !hasLiked
             })
         }
-        else{
+        else {
             this.setState({
-                likeCount:likeCount+1,
-                hasLiked:!hasLiked
-            })
-        }
-    }
-
-    changeStar(){
-        const {starCount, hasStarred} = this.state;
-        if(hasStarred){
-            this.setState({
-                starCount:starCount-1,
-                hasStarred:!hasStarred
-            })
-        }
-        else{
-            this.setState({
-                starCount:starCount+1,
-                hasStarred:!hasStarred
+                likeCount: likeCount + 1,
+                hasLiked: !hasLiked
             })
         }
     }
 
-    changeText(comment){
+    changeStar() {
+        const { starCount, hasStarred } = this.state;
+        if (hasStarred) {
+            this.setState({
+                starCount: starCount - 1,
+                hasStarred: !hasStarred
+            })
+        }
+        else {
+            this.setState({
+                starCount: starCount + 1,
+                hasStarred: !hasStarred
+            })
+        }
+    }
+
+    changeText(comment) {
         this.setState({
             comment
         })
     }
 
-    submitComment(){
-        if(this.state.comment!==""){
-            if(this.state.commentObject===1){
-                Alert.alert("comment to comment, comment ID = "+this.state.commentToCommentId
-                    +" content: "+this.state.comment);
+    submitComment() {
+        if (this.state.comment !== "") {
+            if (this.state.commentObject === 1) {
+                Alert.alert("comment to comment, comment ID = " + this.state.commentToCommentId
+                    + " content: " + this.state.comment);
             }
-            else{
-                Alert.alert("comment to hean "+hean.hId+" content: "+this.state.comment);
+            else {
+                Alert.alert("comment to hean " + hean.hId + " content: " + this.state.comment);
             }
         }
     }
 
-    commentHean(){
+    commentHean() {
         this.setState({
             commentObject: 0
         });
         this.refs.input.focus();
     }
 
-    commentToComment(commentId){
+    commentToComment(commentId) {
         this.setState({
             commentObject: 1,
-            commentToCommentId:commentId
+            commentToCommentId: commentId
         });
         this.refs.input.focus();
     }
 
     render() {
-        //const hean = this.props.navigation.getParam("hean", {});
+        const { hean } = this.state;
         return (
             <KeyboardAvoidingView>
                 <ScrollView style={css.view}>
@@ -227,7 +235,7 @@ class HeanDetailScreen extends Component {
                             <Text>{hean.createdTime}</Text>
                         </View>
                     </View>
-                    <Text style={css.font}>{hean.text}</Text>
+                    <Text style={css.font}>{this.state.text}</Text>
                     <ImageGroup length={hean.pics.length} images={hean.pics} />
                     <View style={css.IconGroup} >
                         <View style={css.Icon}>
@@ -235,7 +243,7 @@ class HeanDetailScreen extends Component {
                                 <AntDesign
                                     name={"like2"}
                                     size={20}
-                                    color={this.state.hasLiked ?"red":"black"}
+                                    color={this.state.hasLiked ? "red" : "black"}
                                 />
                             </TouchableOpacity>
                             <Text>{this.state.likeCount}</Text>
@@ -245,7 +253,7 @@ class HeanDetailScreen extends Component {
                                 <Feather
                                     name={"star"}
                                     size={20}
-                                    color={this.state.hasStarred ?"red":"black"}
+                                    color={this.state.hasStarred ? "red" : "black"}
                                 />
                             </TouchableOpacity>
                             <Text>{this.state.starCount}</Text>
@@ -262,23 +270,23 @@ class HeanDetailScreen extends Component {
                     </View>
                     {
                         hean.comments.map((item, index) => (
-                            <TouchableOpacity onPress={()=>this.commentToComment(item.commentId)}>
-                                <Comment comment={item}/>
+                            <TouchableOpacity onPress={() => this.commentToComment(item.commentId)}>
+                                <Comment comment={item} />
                             </TouchableOpacity>
                         ))
                     }
-                    <View style={css.bottomBlank}/>
+                    <View style={css.bottomBlank} />
                 </ScrollView>
                 <View style={css.commentBox}>
                     <TextInput
                         ref="input"
                         placeholder={'说说你的想法'}
                         onChangeText={this.changeText}
-                        />
+                    />
                     <TouchableOpacity onPress={this.submitComment} style={css.sendIcon}>
                         <FontAwesome
                             name={"send"}
-                            color={this.state.comment===""?"grey":"blue"}
+                            color={this.state.comment === "" ? "grey" : "blue"}
                             size={20}
                         />
                     </TouchableOpacity>
@@ -289,43 +297,43 @@ class HeanDetailScreen extends Component {
 }
 export default connect(mapStateToProps, mapDispatchToProps)(HeanDetailScreen);
 const css = StyleSheet.create({
-    bottomBlank:{
-      height:40,
-      backgroundColor: "#ffffff",
+    bottomBlank: {
+        height: 40,
+        backgroundColor: "#ffffff",
     },
-    username:{
+    username: {
         marginLeft: 10,
-        flexDirection:"column"
+        flexDirection: "column"
     },
-    font:{
-        lineHeight:20
+    font: {
+        lineHeight: 20
     },
-    IconGroup:{
-        flexDirection:"row",
-        justifyContent:"space-around",
-        marginBottom:5,
-        marginTop:5
+    IconGroup: {
+        flexDirection: "row",
+        justifyContent: "space-around",
+        marginBottom: 5,
+        marginTop: 5
     },
-    view:{
-        paddingLeft:10,
-        paddingRight:10
+    view: {
+        paddingLeft: 10,
+        paddingRight: 10
     },
-    Icon:{
-        flexDirection:"row",
-        alignItems:"center"
+    Icon: {
+        flexDirection: "row",
+        alignItems: "center"
     },
     commentBox: {
         position: 'absolute',
-        height:40,
+        height: 40,
         left: 0,
         right: 0,
         bottom: 0,
-        backgroundColor:"#ffffff",
-        flexDirection:"row",
-        alignItems:"center",
+        backgroundColor: "#ffffff",
+        flexDirection: "row",
+        alignItems: "center",
     },
-    sendIcon:{
-        position:'absolute',
-        right:20
+    sendIcon: {
+        position: 'absolute',
+        right: 20
     }
 });
