@@ -80,14 +80,6 @@ export class Signin extends React.Component {
         });
     }
 
-    // 试图在注册完登录时默认填上注册的用户信息，但是可以通过注册完直接进入 loggedin 页面解决，待会删掉
-    componentWillReceiveProps(nextProps) {
-        this.setState({
-            phone: nextProps.phone,
-            password: nextProps.password
-        })
-    }
-
     render() {
         return (
             <React.Fragment>

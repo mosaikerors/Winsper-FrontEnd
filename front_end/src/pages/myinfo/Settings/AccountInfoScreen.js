@@ -38,7 +38,7 @@ const mapDispatchToProps = dispatch => ({
         dispatch({ type: "UPDATE_INFO", payload: { newUsername } })
 })
 
-class AccountSafetyScreen extends React.Component {
+class AccountInfoScreen extends React.Component {
     static navigationOptions = {
         title: '设置',
     };
@@ -85,4 +85,4 @@ class AccountSafetyScreen extends React.Component {
         );
     }
 }
-export default connect(mapStateToProps, mapDispatchToProps)(AccountSafetyScreen);
+export default connect(mapStateToProps, mapDispatchToProps)(AccountInfoScreen);

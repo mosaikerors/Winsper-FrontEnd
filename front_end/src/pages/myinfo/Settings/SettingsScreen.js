@@ -9,18 +9,17 @@ import { TouchableOpacity } from "react-native-gesture-handler";
 const styles = StyleSheet.create({
 })
 
-const list = ["账号与安全", "消息提醒"]
+const titlelist = ["账号信息", "隐私与安全", "消息提醒"]
+
+const navigationlist = ["AccountInfo", "PrivacySafety"]
 
 class SettingsScreen extends React.Component {
-    static navigationOptions = {
-        title: '设置',
-    };
     render() {
         return (
             <React.Fragment>
                 <View>
-                    {list.map((listItem, index) => (
-                        <TouchableOpacity onPress={()=>this.props.navigation.navigate("AccountSafety")}>
+                    {titlelist.map((listItem, index) => (
+                        <TouchableOpacity onPress={() => this.props.navigation.navigate(navigationlist[index])}>
                             <ListItem
                                 key={index}
                                 title={listItem}

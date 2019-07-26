@@ -1,18 +1,17 @@
+import React from 'react';
+import { Dimensions } from 'react-native'
+import { createBottomTabNavigator, createAppContainer } from 'react-navigation';
+import Ionicons from 'react-native-vector-icons/Ionicons'
+import FontAwesome from "react-native-vector-icons/FontAwesome"
 import ExploreScreenNavigator from './explore/index';
 import MyInfoScreenNavigator from './myinfo/index';
 import MapScreen from './map/MapScreen';
-import React from 'react';
-import Ionicons from 'react-native-vector-icons/Ionicons'
-import FontAwesome from "react-native-vector-icons/FontAwesome"
-import { createBottomTabNavigator, createAppContainer } from 'react-navigation';
-import { Dimensions } from 'react-native'
 
 const deviceW = Dimensions.get('window').width;
+
 const basePx = 375;
 
-function px2dp(px) {
-    return px * deviceW / basePx
-}
+const px2dp = px => px * deviceW / basePx;
 
 const Home = createBottomTabNavigator(
     {
@@ -33,10 +32,7 @@ const Home = createBottomTabNavigator(
                 else
                     return <FontAwesome name={"user"} size={px2dp(22)} color={color} />;
             },
-        }),
-        tabBarOptions: {
-            style: { backgroundColor: 'rgba(255,255,255,0)', /*display: "flex" */},
-        }
+        })
     }
 );
 

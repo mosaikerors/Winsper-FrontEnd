@@ -1,4 +1,13 @@
-import { requests, API_ROOT } from "./index";
+import requests from "superagent";
+import { API_ROOT } from "./index";
+
+const togglePrivacy = (uId, token, toBePublic, uri) =>
+    requests.put(API_ROOT + `/user/privacy/${uri}`)
+        .set('Authorization', 'Bearer ' + token)
+        .set('uId', uId)
+        .send({ toBePublic })
+        .then(res => res.body)
+        .catch(err => err.response.body)
 
 const user = {
     sendCode: (phone) =>
@@ -34,6 +43,14 @@ const user = {
             .set('uId', uId)
             .then(res => res.body)
             .catch(err => err.response.body),
+    toggleMessagePrivacy: (uId, token, toBePublic) => togglePrivacy(uId, token, toBePublic, "message"),
+    toggleHeanPrivacy: (uId, token, toBePublic) => togglePrivacy(uId, token, toBePublic, "hean"),
+    toggleCollectionPrivacy: (uId, token, toBePublic) => togglePrivacy(uId, token, toBePublic, "collection"),
+    toggleDiaryPrivacy: (uId, token, toBePublic) => togglePrivacy(uId, token, toBePublic, "diary"),
+    toggleJournalPrivacy: (uId, token, toBePublic) => togglePrivacy(uId, token, toBePublic, "journal"),
+    toggleSubmissionPrivacy: (uId, token, toBePublic) => togglePrivacy(uId, token, toBePublic, "submission"),
+    toggleMoodReportPrivacy: (uId, token, toBePublic) => togglePrivacy(uId, token, toBePublic, "moodReport"),
+    toggleCommentPrivacy: (uId, token, toBePublic) => togglePrivacy(uId, token, toBePublic, "comment"),
 };
 
 export default user;

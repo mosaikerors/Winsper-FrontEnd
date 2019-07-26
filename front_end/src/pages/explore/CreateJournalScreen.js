@@ -1,20 +1,17 @@
 import React from 'react';
-import { View, Text, PanResponder, Animated, TouchableOpacity, TextInput, ImageBackground } from 'react-native';
-import { StyleSheet, Dimensions, Image, ScrollView } from 'react-native';
-import { Button, Divider } from "react-native-elements"
-import Drawer from "react-native-drawer"
-import Sticker from "../../components/journal/Sticker"
+import { View, TouchableOpacity, TextInput, ImageBackground, Image } from 'react-native';
 import FontAwesome from 'react-native-vector-icons/FontAwesome'
+import Sticker from "../../components/journal/Sticker"
 import PicturePanel from "../../components/journal/PicturePanel"
 
 const icon4 = require("../../../images/sticker/icon4.png")
+
 const defaultBackgroundImage = require("../../../images/p3.jpg")
 
 class CreateJournal extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            //open: false,
             backgroundImage: defaultBackgroundImage,
             stickersOnStage: [],  // each element is like {id: 1, stickerId: 1, zIndex: 1}
             textsOnStage: [],   // each element is like {id: 2, text: "ahh", zIndex: 3}

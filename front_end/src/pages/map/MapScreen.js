@@ -1,7 +1,7 @@
 import React from "react";
+import { connect } from "react-redux"
 import MyMap from "./MyMap";
 import agent from "../../agent/index";
-import { connect } from "react-redux"
 
 const mapStateToProps = state => ({
     token: state.user.token,

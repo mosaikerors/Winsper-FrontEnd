@@ -1,9 +1,10 @@
 import React, { Fragment } from "react";
-import { Image, ListItem } from "react-native-elements";
 import { Dimensions } from 'react-native'
+import { Image, ListItem } from "react-native-elements";
 import Carousel from 'react-native-looped-carousel';
 
 const { width, height } = Dimensions.get('window');
+
 const list = [
     {
         title: '手账',

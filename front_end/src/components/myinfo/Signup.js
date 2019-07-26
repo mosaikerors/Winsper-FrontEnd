@@ -92,7 +92,6 @@ export class Signup extends React.Component {
                 signupOK: true,
                 rescodeForSignup: 0
             });
-            this.props.updateInfo(phone, password)
         }
     }
 

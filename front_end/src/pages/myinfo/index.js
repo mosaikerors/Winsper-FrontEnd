@@ -14,7 +14,8 @@ import CommentScreen from "./Repository/CommentScreen";
 import LoggedOutScreen from "./LoggedOutScreen"
 import SettingsScreen from "./Settings/SettingsScreen"
 import HeanDetailScreen from "./Repository/HeanDetailScreen"
-import AccountSafetyScreen from "./Settings/AccountSafetyScreen"
+import AccountInfoScreen from "./Settings/AccountInfoScreen"
+import PrivacySafetyScreen from "./Settings/PrivacySafetyScreen"
 
 const MyInfoScreenNavigator = createStackNavigator(
     {
@@ -25,22 +26,26 @@ const MyInfoScreenNavigator = createStackNavigator(
         MutualFollow: { screen: MutualFollowScreen },
         Message: { screen: MessageScreen },
         HeanList: { screen: HeanListScreen },
+        HeanDetail: { screen: HeanDetailScreen },
         Collection: { screen: CollectionScreen },
         Diary: { screen: DiaryScreen },
         Journal: { screen: JournalScreen },
         Submission: { screen: SubmissionScreen },
         MoodReport: { screen: MoodReportScreen },
         Comment: { screen: CommentScreen },
-        Settings: { screen: SettingsScreen },
-        AccountSafety: { screen: AccountSafetyScreen },
-        HeanDetail: { screen: HeanDetailScreen }
+        Settings: { screen: SettingsScreen, navigationOptions: { title: '设置' } },
+        AccountInfo: { screen: AccountInfoScreen, navigationOptions: { title: '账号信息' } },
+        PrivacySafety: { screen: PrivacySafetyScreen, navigationOptions: { title: '隐私与安全' } }
     },
     {
-        initialRouteName: "LoggedOut",
-        headerMode: 'none',   //是否显示页眉
+        //initialRouteName: "LoggedOut",
+        initialRouteName: "LoggedIn",
+        //headerMode: 'none',   // 是否显示页眉
         navigationOptions: ({ navigation }) => {
+            // topScreen: 当前页面
             const topScreen = navigation.state.routes[navigation.state.routes.length - 1].routeName;
-            const tabBarVisible = (topScreen === "LoggedIn") ? true : false;
+            // 只有当前页面为 LoggedIn 时，才显示底部导航栏
+            const tabBarVisible = (topScreen === "LoggedIn");
             return { tabBarVisible };
         }
     }
