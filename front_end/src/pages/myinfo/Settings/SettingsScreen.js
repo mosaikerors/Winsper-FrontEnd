@@ -1,7 +1,6 @@
 import React from "react";
 import { Text, View, StyleSheet, TextInput } from "react-native";
 import { Button, Avatar, Divider, Card } from 'react-native-elements'
-import agent from "../../../agent";
 import { connect } from "react-redux";
 import AntDesign from "react-native-vector-icons/AntDesign"
 import { ListItem } from 'react-native-elements'

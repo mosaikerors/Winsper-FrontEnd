@@ -1,7 +1,7 @@
 import React from "react";
 import { Text, View, StyleSheet } from "react-native";
 import { Button, Avatar } from 'react-native-elements'
-import agent from "../../agent"
+import agent from "../../agent/index"
 import { connect } from "react-redux"
 
 const styles = StyleSheet.create({

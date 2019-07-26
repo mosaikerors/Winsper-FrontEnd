@@ -1,7 +1,7 @@
 import React from "react";
 import { Text, View, StyleSheet } from "react-native";
 import { Button, Input } from 'react-native-elements'
-import agent from "../../agent"
+import agent from "../../agent/index"
 import Icon from "react-native-vector-icons/FontAwesome"
 
 const styles = StyleSheet.create({

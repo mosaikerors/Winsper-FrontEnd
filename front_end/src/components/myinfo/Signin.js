@@ -3,7 +3,7 @@ import { Text, View, StyleSheet } from "react-native";
 import { Button, Input } from 'react-native-elements'
 import { StackActions, NavigationActions } from "react-navigation";
 import { connect } from "react-redux";
-import agent from "../../agent"
+import agent from "../../agent/index"
 import Icon from "react-native-vector-icons/FontAwesome"
 
 const styles = StyleSheet.create({

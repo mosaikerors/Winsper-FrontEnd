@@ -1,6 +1,6 @@
 import React from "react";
 import MyMap from "./MyMap";
-import agent from "../../agent";
+import agent from "../../agent/index";
 import { connect } from "react-redux"
 
 const mapStateToProps = state => ({

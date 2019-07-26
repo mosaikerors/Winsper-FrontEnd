@@ -7,7 +7,7 @@ import AntDesign from 'react-native-vector-icons/AntDesign'
 import FontAwesome from "react-native-vector-icons/FontAwesome";
 import Feather from "react-native-vector-icons/Feather";
 import { connect } from "react-redux";
-import agent from "../../../agent";
+import agent from "../../../agent/index";
 
 const mapStateToProps = state => ({
     token: state.user.token,

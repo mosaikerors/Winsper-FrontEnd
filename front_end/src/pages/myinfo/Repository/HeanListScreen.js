@@ -1,7 +1,7 @@
 import React from "react";
 import { Text,Dimensions, TouchableOpacity, FlatList } from "react-native";
 import HeanCard from "../../../components/hean/HeanCard";
-import agent from "../../../agent";
+import agent from "../../../agent/index";
 import { connect } from "react-redux";
 const {width} = Dimensions.get("window");
 
