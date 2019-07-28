@@ -5,7 +5,7 @@ import Ionicons from 'react-native-vector-icons/Ionicons'
 import FontAwesome from "react-native-vector-icons/FontAwesome"
 import ExploreScreenNavigator from './explore/index';
 import MyInfoScreenNavigator from './myinfo/index';
-import MapScreen from './map/MapScreen';
+import MapScreen from './map/index';
 
 const deviceW = Dimensions.get('window').width;
 

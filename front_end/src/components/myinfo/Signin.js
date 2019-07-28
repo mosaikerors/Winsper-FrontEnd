@@ -41,7 +41,8 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = dispatch => ({
     onSubmit: (response) =>
-        dispatch({ type: 'SIGN_IN', payload: response })});
+        dispatch({ type: 'SIGN_IN', payload: response })
+});
 
 export class Signin extends React.Component {
     constructor(props) {

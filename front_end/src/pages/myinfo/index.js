@@ -19,14 +19,14 @@ import PrivacySafetyScreen from "./Settings/PrivacySafetyScreen"
 
 const MyInfoScreenNavigator = createStackNavigator(
     {
-        LoggedOut: { screen: LoggedOutScreen },
+        LoggedOut: { screen: LoggedOutScreen, navigationOptions: { header: null } },
         LoggedIn: { screen: LoggedInScreen },
         Following: { screen: FollowingScreen },
         Followers: { screen: FollowersScreen },
         MutualFollow: { screen: MutualFollowScreen },
         Message: { screen: MessageScreen },
-        HeanList: { screen: HeanListScreen },
-        HeanDetail: { screen: HeanDetailScreen },
+        HeanList: { screen: HeanListScreen, navigationOptions: { title: '我的函' } },
+        HeanDetail: { screen: HeanDetailScreen, navigationOptions: { title: '函' }  },
         Collection: { screen: CollectionScreen },
         Diary: { screen: DiaryScreen },
         Journal: { screen: JournalScreen },

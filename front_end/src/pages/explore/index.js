@@ -15,7 +15,7 @@ const ExploreScreenNavigator = createStackNavigator(
         navigationOptions: ({ navigation }) => {
             // topScreen: 当前页面
             const topScreen = navigation.state.routes[navigation.state.routes.length - 1].routeName;
-            // 只有当前页面为 LoggedIn 时，才显示底部导航栏
+            // 只有当前页面为 Explore 时，才显示底部导航栏
             const tabBarVisible = (topScreen === "Explore");
             return { tabBarVisible };
         }

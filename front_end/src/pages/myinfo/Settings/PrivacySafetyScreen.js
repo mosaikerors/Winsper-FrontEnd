@@ -29,7 +29,6 @@ class PrivacySafetyScreen extends React.Component {
         const { uId, token } = this.props;
         let switches = this.state.switches
         const toBePublic = !switches[index];
-        console.log(switches)
         switches[index] = toBePublic;
         this.setState({ switches });
         let response;

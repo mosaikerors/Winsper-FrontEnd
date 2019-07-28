@@ -9,206 +9,7 @@ import Feather from "react-native-vector-icons/Feather";
 import { connect } from "react-redux";
 import agent from "../../../agent/index";
 
-const mapStateToProps = state => ({
-    token: state.user.token,
-    uId: state.user.uId
-});
 
-const mapDispatchToProps = dispatch => ({
-
-});
-class HeanDetailScreen extends Component {
-    static navigationOptions = {
-        title: "函"
-    };
-
-    constructor(props) {
-        super(props);
-        this.state = {
-            comment: "",
-            commentObject: 0, // 0 : comment hean, 1: comment to comment
-            commentToCommentId: 0,
-            likeCount: null,
-            starCount: null,
-            hasLiked: null,
-            hasStarred: null,
-            commentCount: null,
-            text: '',
-            hean: null
-        };
-        this.changeText = this.changeText.bind(this);
-        this.submitComment = this.submitComment.bind(this);
-        this.changeLike = this.changeLike.bind(this);
-        this.changeStar = this.changeStar.bind(this);
-        this.commentHean = this.commentHean.bind(this);
-        this.commentToComment = this.commentToComment.bind(this);
-    };
-
-    async componentWillMount() {
-        const hean = this.props.navigation.getParam("hean", {});
-        const { uId, token } = this.props;
-        const response = await agent.hean.getDetailedHean(uId, token, hean.hId);
-        console.log("hean id: " + hean.hId);
-        console.log("response: " + response);
-        console.log("hean keys: " + Object.keys(hean))
-        console.log("response keys: " + Object.keys(response))
-        this.setState({
-            likeCount: hean.likeCount,
-            starCount: hean.starCount,
-            hasLiked: hean.hasLiked,
-            hasStarred: hean.hasStarred,
-            commentCount: hean.commentCount,
-            text: hean.text,
-            hean: response.hean,
-            comments: response.comments
-        })
-    }
-
-    changeLike() {
-        const { likeCount, hasLiked } = this.state;
-        if (hasLiked) {
-            this.setState({
-                likeCount: likeCount - 1,
-                hasLiked: !hasLiked
-            })
-        }
-        else {
-            this.setState({
-                likeCount: likeCount + 1,
-                hasLiked: !hasLiked
-            })
-        }
-    }
-
-    changeStar() {
-        const { starCount, hasStarred } = this.state;
-        if (hasStarred) {
-            this.setState({
-                starCount: starCount - 1,
-                hasStarred: !hasStarred
-            })
-        }
-        else {
-            this.setState({
-                starCount: starCount + 1,
-                hasStarred: !hasStarred
-            })
-        }
-    }
-
-    changeText(comment) {
-        this.setState({
-            comment
-        })
-    }
-
-    submitComment() {
-        if (this.state.comment !== "") {
-            if (this.state.commentObject === 1) {
-                Alert.alert("comment to comment, comment ID = " + this.state.commentToCommentId
-                    + " content: " + this.state.comment);
-            }
-            else {
-                Alert.alert("comment to hean " + hean.hId + " content: " + this.state.comment);
-            }
-        }
-    }
-
-    commentHean() {
-        this.setState({
-            commentObject: 0
-        });
-        this.refs.input.focus();
-    }
-
-    commentToComment(commentId) {
-        this.setState({
-            commentObject: 1,
-            commentToCommentId: commentId
-        });
-        this.refs.input.focus();
-    }
-
-    render() {
-        console.log(this.state.hean)
-        const { hean } = this.state;
-        if (!hean)
-            return null;
-        return (
-            <KeyboardAvoidingView>
-                <ScrollView style={css.view}>
-                    <View style={css.Icon}>
-                        <Avatar
-                            rounded
-                            size={"medium"}
-                            source={{ uri: hean.avatar }}
-                        />
-                        <View style={css.username}>
-                            <Text >{hean.username}</Text>
-                            <Text>{hean.createdTime}</Text>
-                        </View>
-                    </View>
-                    <Text style={css.font}>{this.state.text}</Text>
-                    <ImageGroup length={hean.pics.length} images={hean.pics} />
-                    <View style={css.IconGroup} >
-                        <View style={css.Icon}>
-                            <TouchableOpacity onPress={this.changeLike}>
-                                <AntDesign
-                                    name={"like2"}
-                                    size={20}
-                                    color={this.state.hasLiked ? "red" : "black"}
-                                />
-                            </TouchableOpacity>
-                            <Text>{this.state.likeCount}</Text>
-                        </View>
-                        <View style={css.Icon}>
-                            <TouchableOpacity onPress={this.changeStar}>
-                                <Feather
-                                    name={"star"}
-                                    size={20}
-                                    color={this.state.hasStarred ? "red" : "black"}
-                                />
-                            </TouchableOpacity>
-                            <Text>{this.state.starCount}</Text>
-                        </View>
-                        <View style={css.Icon}>
-                            <TouchableOpacity onPress={this.commentHean}>
-                                <FontAwesome
-                                    name={"comment-o"}
-                                    size={20}
-                                />
-                            </TouchableOpacity>
-                            <Text>{this.state.commentCount}</Text>
-                        </View>
-                    </View>
-                    {
-                        this.state.comments.map((item, index) => (
-                            <TouchableOpacity onPress={() => this.commentToComment(item.commentId)}>
-                                <Comment comment={item} />
-                            </TouchableOpacity>
-                        ))
-                    }
-                    <View style={css.bottomBlank} />
-                </ScrollView>
-                <View style={css.commentBox}>
-                    <TextInput
-                        ref="input"
-                        placeholder={'说说你的想法'}
-                        onChangeText={this.changeText}
-                    />
-                    <TouchableOpacity onPress={this.submitComment} style={css.sendIcon}>
-                        <FontAwesome
-                            name={"send"}
-                            color={this.state.comment === "" ? "grey" : "blue"}
-                            size={20}
-                        />
-                    </TouchableOpacity>
-                </View>
-            </KeyboardAvoidingView>
-        );
-    }
-}
-export default connect(mapStateToProps, mapDispatchToProps)(HeanDetailScreen);
 const css = StyleSheet.create({
     bottomBlank: {
         height: 40,
@@ -250,3 +51,172 @@ const css = StyleSheet.create({
         right: 20
     }
 });
+
+const mapStateToProps = state => ({
+    token: state.user.token,
+    uId: state.user.uId
+});
+
+const mapDispatchToProps = dispatch => ({
+
+});
+class HeanDetailScreen extends Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            // heanDetailed 是请求函的详细信息后得到的响应
+            heanDetailed: {
+                hId: null,
+                uId: null,
+                avater: null,
+                username: '',
+                createdTime: null,
+                pictures: [],
+                comments: [],
+            },
+            // heanCard 是请求卡片形式的函后得到的响应
+            // 以 navagation params 的形式传递进来，然后在 willMount 钩子中以其中的 hId 去请求详细信息
+            heanCard: this.props.navigation.getParam("heanCard", {}),
+            comment: {
+                content: null,   // 你的评论内容
+                targetCommentId: null,  // 你的评论对象，为 null 表示评论的是函
+            }
+        };
+        this.submitComment = this.submitComment.bind(this);
+        this.changeLike = this.changeLike.bind(this);
+        this.changeStar = this.changeStar.bind(this);
+        this.commentToComment = this.commentToComment.bind(this);
+    };
+
+    async componentWillMount() {
+        const { uId, token } = this.props;
+        const response = await agent.hean.getDetailedHean(uId, token, this.state.heanCard.hId);
+        if (response.rescode === 0)
+            this.setState({ heanDetailed: response.hean })
+    }
+
+    changeLike() {
+        const { hasLiked, likeCount } = this.state.heanCard;
+        if (hasLiked)
+            this.setState({ heanCard: Object.assign({}, this.state.heanCard, { hasLiked: !hasLiked, likeCount: likeCount - 1 }) })
+        else
+            this.setState({ heanCard: Object.assign({}, this.state.heanCard, { hasLiked: !hasLiked, likeCount: likeCount + 1 }) })
+    }
+
+    changeStar() {
+        const { hasStarred, starCount } = this.state.heanCard;
+        if (hasStarred)
+            this.setState({ heanCard: Object.assign({}, this.state.heanCard, { hasStarred: !hasStarred, starCount: starCount - 1 }) })
+        else
+            this.setState({ heanCard: Object.assign({}, this.state.heanCard, { hasStarred: !hasStarred, starCount: starCount + 1 }) })
+    }
+
+    submitComment() {
+        if (this.state.comment.content) {
+            if (this.state.comment.targetCommentId) {
+                Alert.alert("comment to comment, comment ID = " + this.state.comment.targetCommentId
+                    + " content: " + this.state.comment.content);
+            }
+            else {
+                Alert.alert("comment to hean " + this.state.heanDetailed.hId + " content: " + this.state.comment.content);
+            }
+        }
+    }
+
+    commentToComment(targetCommentId) {
+        this.setState({ comment: Object.assign({}, this.state.comment, { targetCommentId }) })
+        this.refs.input.focus();
+    }
+
+    render() {
+        const { hId, uId, avatar, username, createdTime, pictures, comments } = this.state.heanDetailed;
+        const { text, likeCount, starCount, commentCount, hasLiked, hasStarred } = this.state.heanCard;
+        if (!hId)
+            return null;
+        return (
+            <React.Fragment>
+                <KeyboardAvoidingView>
+                    <ScrollView style={css.view}>
+
+                        {/* avatar, username, createdTime */}
+                        <View style={css.Icon}>
+                            <Avatar
+                                rounded
+                                size={"medium"}
+                                source={{ uri: avatar }}
+                            />
+                            <View style={css.username}>
+                                <Text >{username}</Text>
+                                <Text>{createdTime}</Text>
+                            </View>
+                        </View>
+
+                        {/* content */}
+                        <Text style={css.font}>{text}</Text>
+
+                        {/* pictures */}
+                        <ImageGroup length={pictures.length} images={pictures} />
+
+                        {/* like, star and comment */}
+                        <View style={css.IconGroup} >
+                            <View style={css.Icon}>
+                                <TouchableOpacity onPress={this.changeLike}>
+                                    <AntDesign
+                                        name={"like2"}
+                                        size={20}
+                                        color={hasLiked ? "red" : "black"}
+                                    />
+                                </TouchableOpacity>
+                                <Text>{likeCount}</Text>
+                            </View>
+                            <View style={css.Icon}>
+                                <TouchableOpacity onPress={this.changeStar}>
+                                    <Feather
+                                        name={"star"}
+                                        size={20}
+                                        color={hasStarred ? "red" : "black"}
+                                    />
+                                </TouchableOpacity>
+                                <Text>{starCount}</Text>
+                            </View>
+                            <View style={css.Icon}>
+                                <TouchableOpacity onPress={() => this.refs.input.focus()}>
+                                    <FontAwesome
+                                        name={"comment-o"}
+                                        size={20}
+                                    />
+                                </TouchableOpacity>
+                                <Text>{commentCount}</Text>
+                            </View>
+                        </View>
+
+                        {/* detailed comments */}
+                        {comments.map((item, index) => (
+                            <TouchableOpacity onPress={() => this.commentToComment(item.commentId)}>
+                                <Comment comment={item} />
+                            </TouchableOpacity>
+                        ))}
+                        <View style={css.bottomBlank} />
+                    </ScrollView>
+
+                    {/* comment input bar */}
+                    <View style={css.commentBox}>
+                        <TextInput
+                            ref="input"
+                            placeholder={'说说你的想法'}
+                            onChangeText={content => this.setState({ comment: Object.assign({}, this.state.comment, { content }) })}
+                        />
+                        <TouchableOpacity onPress={this.submitComment} style={css.sendIcon}>
+                            <FontAwesome
+                                name={"send"}
+                                color={this.state.comment.content ? "blue" : "grey"}
+                                size={20}
+                            />
+                        </TouchableOpacity>
+                    </View>
+                </KeyboardAvoidingView>
+            </React.Fragment>
+        );
+    }
+}
+export default connect(mapStateToProps, mapDispatchToProps)(HeanDetailScreen);

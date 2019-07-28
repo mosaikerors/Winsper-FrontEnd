@@ -3,20 +3,61 @@ import RNFetchBlob from 'react-native-fetch-blob'
 import { API_ROOT } from "./index";
 
 const hean = {
-    searchByUId: (viewer, token, owner) =>
-        requests.get(API_ROOT + "/hean/cardlist")
+    getPoints: (uId, token, latitude, longitude) => ({
+        rescode: 0,
+        heans: [{ hId: 1, latitude: 31.025, longitude: 121.43, height: 0 }, { hId: 2, latitude: 31.024, longitude: 121.44, height: 0 }]
+    })
+        /*requests.get(API_ROOT + "/hean/point/all")
+            .set('Authorization', 'Bearer ' + token)
+            .set('uId', uId)
+            .query({ latitude, longitude })
+            .then(res => res.body)
+            .catch(err => err.response.body)*/,
+    getHeanCard: (uId, token, hId) => ({
+        rescode: 0,
+        heanCard: {
+            hId: 1, cover: "https://images.pexels.com/photos/1935220/pexels-photo-1935220.jpeg?auto=compress&cs=tinysrgb&dpr=2&w=500",
+            text: "hello, world!", hasLiked: true, hasStarred: false, likeCount: 5, starCount: 2, commentCount: 1
+        }
+    })
+        /*requests.get(API_ROOT + "/hean/card")
+            .set('Authorization', 'Bearer ' + token)
+            .set('uId', uId)
+            .query({ hId })
+            .then(res => res.body)
+            .catch(err => err.response.body)*/,
+    getHeanCardList: (viewer, token, owner) => ({ 
+        rescode: 0,
+        heanCards: [{
+            hId: 1, cover: "https://images.pexels.com/photos/1935220/pexels-photo-1935220.jpeg?auto=compress&cs=tinysrgb&dpr=2&w=500",
+            text: "hello, world!", hasLiked: true, hasStarred: false, likeCount: 5, starCount: 2, commentCount: 1
+        }, {
+            hId: 2, cover: "https://images.pexels.com/photos/1935220/pexels-photo-1935220.jpeg?auto=compress&cs=tinysrgb&dpr=2&w=500",
+            text: "hello, world!", hasLiked: true, hasStarred: false, likeCount: 5, starCount: 2, commentCount: 1
+        }]
+    })
+       /* requests.get(API_ROOT + "/hean/cardlist")
             .set('Authorization', 'Bearer ' + token)
             .set('uId', viewer)
             .query({ viewer, owner })
             .then(res => res.body)
-            .catch(err => err.response.body),
-    getDetailedHean: (uId, token, hId) =>
-        requests.get(API_ROOT + "/hean/detailed")
+            .catch(err => err.response.body)*/,
+    getDetailedHean: (uId, token, hId) => ({
+        rescode: 0,
+        hean: {
+            hId: 1, uId: 2, avatar: "https://images.pexels.com/photos/1935220/pexels-photo-1935220.jpeg?auto=compress&cs=tinysrgb&dpr=2&w=500",
+            username: "tbc", createdTime: 2222222,
+            pictures: ["https://images.pexels.com/photos/1935220/pexels-photo-1935220.jpeg?auto=compress&cs=tinysrgb&dpr=2&w=500"],
+            comments: [{ commentId: 1, commenter: "tbc", commented: "qwer", time: 333333, content: "great" },
+            { commentId: 2, commenter: "tbc", commented: "qwer2", time: 345333, content: "great2" }]
+        }
+    })
+        /*requests.get(API_ROOT + "/hean/detailed")
             .set('Authorization', 'Bearer ' + token)
             .set('uId', uId)
             .query({ hId, uId })
             .then(res => res.body)
-            .catch(err => err.response.body),
+            .catch(err => err.response.body)*/,
     getAll: (uId, token) =>
         requests.get(API_ROOT + "/hean/all")
             .set('Authorization', 'Bearer ' + token)
