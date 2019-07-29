@@ -30,7 +30,7 @@ class DetailedBlock extends React.Component {
                         <View style={styles.block}>
                             <TouchableOpacity
                                 disabled={!isMe && !privacy.isMessagePublic}
-                                style={styles.text} onPress={() => this.props.navigation.push('Message')}
+                                style={styles.text} onPress={() => this.props.navigation.push('MessageList')}
                             >
                                 <Text>
                                     消息

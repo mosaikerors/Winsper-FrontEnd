@@ -2,7 +2,8 @@ import { createStackNavigator } from "react-navigation";
 import LoggedInScreen from "./LoggedInScreen"
 import PersonPageScreen from "./PersonPageScreen"
 import FollowScreen from "./FollowScreen";
-import MessageScreen from "./Repository/MessageScreen";
+import MessageListScreen from "./Repository/MessageListScreen";
+import MessageDetailScreen from "./Repository/MessageDetailScreen";
 import HeanListScreen from "./Repository/HeanListScreen";
 import CollectionScreen from "./Repository/CollectionScreen";
 import DiaryScreen from "./Repository/DiaryScreen";
@@ -22,7 +23,8 @@ const MyInfoScreenNavigator = createStackNavigator(
         LoggedIn: { screen: LoggedInScreen, navigationOptions: { title: '我的' } },
         PersonPage: { screen: PersonPageScreen, navigationOptions: { title: '个人主页' } },
         Follow: { screen: FollowScreen, navigationOptions: { title: '关注列表' } },
-        Message: { screen: MessageScreen },
+        MessageList: { screen: MessageListScreen, navigationOptions: { title: '消息列表' } },
+        MessageDetail: { screen: MessageDetailScreen, navigationOptions: { title: '消息' } },
         HeanList: { screen: HeanListScreen, navigationOptions: { title: '我的函' } },
         HeanDetail: { screen: HeanDetailScreen, navigationOptions: { title: '函' } },
         Collection: { screen: CollectionScreen },
