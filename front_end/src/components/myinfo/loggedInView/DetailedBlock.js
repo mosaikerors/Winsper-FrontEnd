@@ -21,35 +21,47 @@ const styles = StyleSheet.create({
 
 class DetailedBlock extends React.Component {
     render() {
+        const { isMe, privacy } = this.props;
+        console.log("privacy: "+privacy)
         return (
             <React.Fragment>
                 <Card containerStyle={{ flexDirection: 'column' }}>
                     <View style={{ height: 100, flexDirection: 'row' }}>
                         <View style={styles.block}>
-                            <TouchableOpacity style={styles.text} onPress={() => this.props.navigation.navigate('Message')}>
+                            <TouchableOpacity
+                                disabled={!isMe && !privacy.isMessagePublic}
+                                style={styles.text} onPress={() => this.props.navigation.push('Message')}
+                            >
                                 <Text>
                                     消息
                                 </Text>
                             </TouchableOpacity>
                         </View>
                         <View style={styles.block}>
-                            <TouchableOpacity style={styles.text} onPress={() => {
-                                this.props.navigation.navigate('HeanList');
-                            }}>
+                            <TouchableOpacity
+                                disabled={!isMe && !privacy.isHeanPublic}
+                                style={styles.text} onPress={() => this.props.navigation.push('HeanList')}
+                            >
                                 <Text>
                                     函
                                 </Text>
                             </TouchableOpacity>
                         </View>
                         <View style={styles.block}>
-                            <TouchableOpacity style={styles.text} onPress={() => this.props.navigation.navigate('Collection')}>
+                            <TouchableOpacity
+                                disabled={!isMe && !privacy.isCollectionPublic}
+                                style={styles.text} onPress={() => this.props.navigation.push('Collection')}
+                            >
                                 <Text>
                                     收藏
                                 </Text>
                             </TouchableOpacity>
                         </View>
                         <View style={styles.block}>
-                            <TouchableOpacity style={styles.text} onPress={() => this.props.navigation.navigate('Diary')}>
+                            <TouchableOpacity
+                                disabled={!isMe && !privacy.isDiaryPublic}
+                                style={styles.text} onPress={() => this.props.navigation.push('Diary')}
+                            >
                                 <Text>
                                     日记
                                 </Text>
@@ -58,28 +70,40 @@ class DetailedBlock extends React.Component {
                     </View>
                     <View style={{ height: 100, flexDirection: 'row' }}>
                         <View style={styles.block}>
-                            <TouchableOpacity style={styles.text} onPress={() => this.props.navigation.navigate('Journal')}>
+                            <TouchableOpacity
+                                disabled={!isMe && !privacy.isJournalPublic}
+                                style={styles.text} onPress={() => this.props.navigation.push('Journal')}
+                            >
                                 <Text>
                                     手账
                                 </Text>
                             </TouchableOpacity>
                         </View>
                         <View style={styles.block}>
-                            <TouchableOpacity style={styles.text} onPress={() => this.props.navigation.navigate('Submission')}>
+                            <TouchableOpacity
+                                disabled={!isMe && !privacy.isSubmissionPublic}
+                                style={styles.text} onPress={() => this.props.navigation.push('Submission')}
+                            >
                                 <Text>
                                     投稿
                                 </Text>
                             </TouchableOpacity>
                         </View>
                         <View style={styles.block}>
-                            <TouchableOpacity style={styles.text} onPress={() => this.props.navigation.navigate('MoodReport')}>
+                            <TouchableOpacity
+                                disabled={!isMe && !privacy.isMoodReportPublic}
+                                style={styles.text} onPress={() => this.props.navigation.push('MoodReport')}
+                            >
                                 <Text>
                                     心情报表
                                 </Text>
                             </TouchableOpacity>
                         </View>
                         <View style={styles.block}>
-                            <TouchableOpacity style={styles.text} onPress={() => this.props.navigation.navigate('Comment')}>
+                            <TouchableOpacity
+                                disabled={!isMe && !privacy.isCommentPublic}
+                                style={styles.text} onPress={() => this.props.navigation.push('Comment')}
+                            >
                                 <Text>
                                     评论
                                 </Text>

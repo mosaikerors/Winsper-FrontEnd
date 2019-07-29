@@ -30,6 +30,13 @@ const user = {
             .send({ uId, token })
             .then(res => res.body)
             .catch(err => err.response.body),
+    getOthersInfo: (uId, token, otherUId) =>
+        requests.get(API_ROOT + "/user/info")
+            .set('Authorization', 'Bearer ' + token)
+            .set('uId', uId)
+            .query({ uId: otherUId })
+            .then(res => res.body)
+            .catch(err => err.response.body),
     updateInfo: (uId, username, token) => ({ message: "ok", newUsername: username })
     /*    requests.put(API_ROOT + "/user/updateInfo")
             .set('Authorization', 'Bearer ' + token)
@@ -51,6 +58,27 @@ const user = {
     toggleSubmissionPrivacy: (uId, token, toBePublic) => togglePrivacy(uId, token, toBePublic, "submission"),
     toggleMoodReportPrivacy: (uId, token, toBePublic) => togglePrivacy(uId, token, toBePublic, "moodReport"),
     toggleCommentPrivacy: (uId, token, toBePublic) => togglePrivacy(uId, token, toBePublic, "comment"),
+    getMutualFollow: (uId, token) => ({ rescode: 0, followlist: [{ uId: 1, username: "tbc", "avatar": null }] })
+        /*requests.get(API_ROOT + "/user/follow/mutual")
+            .set('Authorization', 'Bearer ' + token)
+            .set('uId', uId)
+            .then(res => res.body)
+            .catch(err => err.response.body)*/,
+    getFollowings: (uId, token) => ({ rescode: 0, followlist: [{ uId: 1, username: "tbc", "avatar": null }] })
+        /*requests.get(API_ROOT + "/user/follow/followings")
+            .set('Authorization', 'Bearer ' + token)
+            .set('uId', uId)
+            .then(res => res.body)
+            .catch(err => err.response.body)*/,
+    getFollowers: (uId, token) => ({
+        rescode: 0, followlist: [{ uId: 1, username: "tbc", "avatar": null, "isMutualFollow": true },
+        { uId: 2, username: "zzz", "avatar": null, "isMutualFollow": false }]
+    })
+        /*requests.get(API_ROOT + "/user/follow/followers")
+            .set('Authorization', 'Bearer ' + token)
+            .set('uId', uId)
+            .then(res => res.body)
+            .catch(err => err.response.body)*/,
 };
 
 export default user;

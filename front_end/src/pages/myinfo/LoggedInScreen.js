@@ -1,10 +1,10 @@
 import React from "react";
 import { Divider } from 'react-native-elements'
 import { connect } from "react-redux"
-import TopBanner from "../../components/myinfo/TopBanner";
-import FollowBanner from "../../components/myinfo/FollowBanner";
-import DetailedBlock from "../../components/myinfo/DetailedBlock";
-import BottomBanner from "../../components/myinfo/BottomBanner";
+import TopBanner from "../../components/myinfo/loggedInView/TopBanner";
+import FollowBanner from "../../components/myinfo/loggedInView/FollowBanner";
+import DetailedBlock from "../../components/myinfo/loggedInView/DetailedBlock";
+import BottomBanner from "../../components/myinfo/loggedInView/BottomBanner";
 
 const mapStateToProps = state => ({
     uId: state.user.uId,
@@ -24,11 +24,11 @@ class LoggedInScreen extends React.Component {
     render() {
         return (
             <React.Fragment>
-                <TopBanner />
+                <TopBanner isMe={true} />
                 <Divider />
                 <FollowBanner navigation={this.props.navigation} />
                 <Divider />
-                <DetailedBlock navigation={this.props.navigation} />
+                <DetailedBlock navigation={this.props.navigation} isMe={true} />
                 <BottomBanner navigation={this.props.navigation} />
             </React.Fragment>
         );

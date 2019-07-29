@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import Comment from '../../../components/myinfo/Comment'
+import Comment from '../../../components/hean/Comment'
 import { Avatar } from 'react-native-elements';
 import { StyleSheet, KeyboardAvoidingView, View, Text, TextInput, Alert, ScrollView, TouchableOpacity } from 'react-native';
 import ImageGroup from '../../../components/hean/ImageGroup';

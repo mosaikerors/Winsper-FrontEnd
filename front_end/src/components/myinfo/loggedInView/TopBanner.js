@@ -1,7 +1,7 @@
 import React from "react";
 import { Text, View, StyleSheet } from "react-native";
 import { Button, Avatar } from 'react-native-elements'
-import agent from "../../agent/index"
+import agent from "../../../agent/index"
 import { connect } from "react-redux"
 
 const styles = StyleSheet.create({
@@ -85,22 +85,24 @@ class TopBanner extends React.Component {
                             羽毛：{this.props.feather}
                         </Text>
                     </View>
-                    <View style={{ flexDirection: 'row-reverse', flex: 1 }}>
-                        {this.props.hasChecked ? (
-                            <Button
-                                containerStyle={[styles.attendance, styles.border, styles.checked]}
-                                title="已签到"
-                                disabled
-                                icon={{ name: "check" }}
-                            />
-                        ) : (
-                                <Button containerStyle={[styles.attendance, styles.border, styles.unchecked]}
-                                    title="签到"
-                                    onPress={this.check}
+                    {this.props.isMe && (
+                        <View style={{ flexDirection: 'row-reverse', flex: 1 }}>
+                            {this.props.hasChecked ? (
+                                <Button
+                                    containerStyle={[styles.attendance, styles.border, styles.checked]}
+                                    title="已签到"
+                                    disabled
+                                    icon={{ name: "check" }}
                                 />
-                            )
-                        }
-                    </View>
+                            ) : (
+                                    <Button containerStyle={[styles.attendance, styles.border, styles.unchecked]}
+                                        title="签到"
+                                        onPress={this.check}
+                                    />
+                                )
+                            }
+                        </View>
+                    )}
                 </View>
             </React.Fragment>
         );

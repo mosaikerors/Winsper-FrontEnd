@@ -49,7 +49,7 @@ class HeanCard extends React.Component {
         return (
             <React.Fragment>
                 <View style={[theme.cardStyle, { borderRadius: 25 }]}>
-                    <TouchableOpacity onPress={() => { console.log(this.props.navigation); this.props.navigation.navigate("HeanDetail", { heanCard: this.state.heanCard }) }}>
+                    <TouchableOpacity onPress={() => this.props.navigation.navigate("HeanDetail", { heanCard: this.state.heanCard }) }>
                         <View style={{ padding: 10 }}>
                             <Image source={{ uri: cover }} style={theme.cardImageStyle} />
                         </View>
