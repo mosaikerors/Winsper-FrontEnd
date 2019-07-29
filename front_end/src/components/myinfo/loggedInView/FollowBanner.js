@@ -20,35 +20,41 @@ const styles = StyleSheet.create({
 
 const mapStateToProps = state => ({
     uId: state.user.uId,
-    token: state.user.token,
-    mutualFollow: state.user.mutualFollow,
-    following: state.user.following,
-    followers: state.user.followers
+    token: state.user.token
 });
 
 const mapDispatchToProps = dispatch => ({
 });
 
 class FollowBanner extends React.Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            mutualFollow: this.props.mutualFollow,
+            following: this.props.following,
+            followers: this.props.followers
+        }
+    }
     render() {
+        const { mutualFollow, following, followers } = this.state;
         return (
             <React.Fragment>
                 <View style={{ flexDirection: 'row' }}>
                     <View style={styles.block}>
                         <TouchableOpacity style={styles.text} onPress={() => this.props.navigation.push('Follow', { tab: 0 })}>
-                            <Text>{this.props.mutualFollow}</Text>
+                            <Text>{mutualFollow}</Text>
                             <Text>互相关注</Text>
                         </TouchableOpacity>
                     </View>
                     <View style={styles.block}>
                         <TouchableOpacity style={styles.text} onPress={() => this.props.navigation.push('Follow', { tab: 1 })}>
-                            <Text>{this.props.following}</Text>
+                            <Text>{following}</Text>
                             <Text>关注</Text>
                         </TouchableOpacity>
                     </View>
                     <View style={styles.block}>
                         <TouchableOpacity style={styles.text} onPress={() => this.props.navigation.push('Follow', { tab: 2 })}>
-                            <Text>{this.props.followers}</Text>
+                            <Text>{followers}</Text>
                             <Text>粉丝</Text>
                         </TouchableOpacity>
                     </View>

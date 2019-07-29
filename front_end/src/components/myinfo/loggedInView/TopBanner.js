@@ -35,32 +35,36 @@ const styles = StyleSheet.create({
 const mapStateToProps = state => ({
     uId: state.user.uId,
     token: state.user.token,
-    username: state.user.username,
-    feather: state.user.feather,
-    hasChecked: state.user.hasChecked,
 });
 
 const mapDispatchToProps = dispatch => ({
-    onCheck: (newFeather) =>
-        dispatch({ type: 'CHECK', payload: { newFeather } })
 });
 
 class TopBanner extends React.Component {
     constructor(props) {
         super(props);
+        this.state = {
+            avatar: this.props.avatar,
+            username: this.props.username,
+            feather: this.props.feather,
+            hasChecked: this.props.hasChecked,
+        }
         this.check = this.check.bind(this);
     }
 
     // 一个正确的 superagent + Redux 联动流程：await agent -> dispatch action -> Redux store changed -> rerender
+    // 现在莫得了 因为把那么多状态都放在 Redux store 好像没啥必要
     async check() {
         const { uId, token } = this.props;
         const response = await agent.user.check(uId, token);
-        if (response.message === 'ok') {
-            this.props.onCheck(response.newFeather);
+        if (response.rescode === 0) {
+            this.setState({ feather: response.newFeather })
         }
     }
 
     render() {
+        const { avatar, username, feather, hasChecked } = this.state;
+        const { isMe } = this.props;
         return (
             <React.Fragment>
                 <View style={{ flexDirection: "row", marginBottom: 12 }}>
@@ -77,17 +81,17 @@ class TopBanner extends React.Component {
                         <Text
                             style={[styles.username, styles.border]}
                         >
-                            {this.props.username}
+                            {username}
                         </Text>
                         <Text
                             style={[styles.feather, styles.border]}
                         >
-                            羽毛：{this.props.feather}
+                            羽毛：{feather}
                         </Text>
                     </View>
-                    {this.props.isMe && (
+                    {isMe && (
                         <View style={{ flexDirection: 'row-reverse', flex: 1 }}>
-                            {this.props.hasChecked ? (
+                            {hasChecked ? (
                                 <Button
                                     containerStyle={[styles.attendance, styles.border, styles.checked]}
                                     title="已签到"

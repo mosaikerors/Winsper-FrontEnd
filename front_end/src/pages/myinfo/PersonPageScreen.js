@@ -22,6 +22,7 @@ class PersonPageScreen extends React.Component {
             userInfo: {}
         }
     }
+    
     async componentWillMount() {
         const otherUId = this.props.navigation.getParam("uId", 0);
         const { uId, token } = this.props;

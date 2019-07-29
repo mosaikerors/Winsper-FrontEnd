@@ -7,26 +7,32 @@ import DetailedBlock from "../../components/myinfo/loggedInView/DetailedBlock";
 import BottomBanner from "../../components/myinfo/loggedInView/BottomBanner";
 
 const mapStateToProps = state => ({
-    uId: state.user.uId,
-    token: state.user.token,
-    mutualFollow: state.user.mutualFollow,
-    following: state.user.following,
-    followers: state.user.followers
 })
 
 const mapDispatchToProps = dispatch => ({
 })
 
 class LoggedInScreen extends React.Component {
-    static navigationOptions = {
-        title: '我的',
-    };
+    constructor(props) {
+        super(props);
+        this.state = {
+            myinfo: {}
+        }
+    }
+
+    async componentWillMount() {
+        const response = await agent.user.getMyInfo(uId, token)
+        if (response.rescode === 0)
+            this.setState({ myinfo: response })
+    }
+
     render() {
+        const { avatar, username, feather, mutualFollow, following, followers, hasChecked } = this.state.myinfo;
         return (
             <React.Fragment>
-                <TopBanner isMe={true} />
+                <TopBanner isMe={true} avatar={avatar} username={username} feather={feather} hasChecked={hasChecked} />
                 <Divider />
-                <FollowBanner navigation={this.props.navigation} />
+                <FollowBanner navigation={this.props.navigation} mutualFollow={mutualFollow} following={following} followers={followers} />
                 <Divider />
                 <DetailedBlock navigation={this.props.navigation} isMe={true} />
                 <BottomBanner navigation={this.props.navigation} />

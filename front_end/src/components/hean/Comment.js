@@ -2,6 +2,29 @@ import {View, StyleSheet} from "react-native";
 import {Avatar, Text} from "react-native-elements";
 import React, {Component} from "react";
 
+const styles = StyleSheet.create({
+    background:
+    {
+        paddingLeft:10,
+        paddingRight:10,
+        marginTop:5,
+        marginBottom:5,
+        backgroundColor:"#f5f5f5"
+    },
+    top:
+    {
+        flexDirection:"row",
+        alignItems:"center"
+    },
+    commenterInfo:
+    {
+        flexDirection:"column",
+        marginLeft:10
+    },
+    text: {lineHeight:20},
+    reply:{color:"#2979ff"}
+});
+
 class Comment extends Component {
     constructor(props){
         super(props);
@@ -26,28 +49,5 @@ class Comment extends Component {
         )
     }
 }
-
-const styles = StyleSheet.create({
-    background:
-    {
-        paddingLeft:10,
-        paddingRight:10,
-        marginTop:5,
-        marginBottom:5,
-        backgroundColor:"#f5f5f5"
-    },
-    top:
-    {
-        flexDirection:"row",
-        alignItems:"center"
-    },
-    commenterInfo:
-    {
-        flexDirection:"column",
-        marginLeft:10
-    },
-    text: {lineHeight:20},
-    reply:{color:"#2979ff"}
-});
 
 export default Comment;

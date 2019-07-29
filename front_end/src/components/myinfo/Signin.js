@@ -35,8 +35,6 @@ const login = StackActions.reset({
 });
 
 const mapStateToProps = state => ({
-    uId: state.user.uId,
-    token: state.user.token,
 });
 
 const mapDispatchToProps = dispatch => ({
@@ -48,7 +46,6 @@ export class Signin extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            token: '',
             phone: '',
             password: '',
             rescode: -1
@@ -59,19 +56,14 @@ export class Signin extends React.Component {
 
     async submit() {
         const { phone, password } = this.state;
-        try {
-            const response = await agent.user.firstSignin(phone, password);
-            console.log(response);
-            if (response.rescode === 0) {
-                this.setState({
-                    rescode: 0
-                });
-                this.props.navigation.dispatch(login);
-                this.props.onSubmit(response)
-            }
-        }
-        catch (error) {
-            console.log(error)
+        const response = await agent.user.firstSignin(phone, password);
+        if (response.rescode === 0) {
+            // for test
+            this.setState({ rescode: 0 });
+            // 这两行代码位置不能对调，因为要先改 Redux store 再跳转页面，这样在 loggedIn 的 willMount钩子中才能获取到更改后的 stored
+            // 注：这里没有经过中间件的 dispatch 看上去是同步的
+            this.props.onSubmit(response)
+            this.props.navigation.dispatch(login);
         }
     }
 

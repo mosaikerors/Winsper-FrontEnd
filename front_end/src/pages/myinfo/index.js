@@ -19,7 +19,7 @@ import PrivacySafetyScreen from "./Settings/PrivacySafetyScreen"
 const MyInfoScreenNavigator = createStackNavigator(
     {
         LoggedOut: { screen: LoggedOutScreen, navigationOptions: { header: null } },
-        LoggedIn: { screen: LoggedInScreen },
+        LoggedIn: { screen: LoggedInScreen, navigationOptions: { title: '我的' } },
         PersonPage: { screen: PersonPageScreen, navigationOptions: { title: '个人主页' } },
         Follow: { screen: FollowScreen, navigationOptions: { title: '关注列表' } },
         Message: { screen: MessageScreen },

@@ -72,7 +72,7 @@ export class Signup extends React.Component {
 
     async sendCode() {
         const response = await agent.user.sendCode(this.state.phone);
-        if(response.rescode===0){
+        if (response.rescode === 0) {
             this.setState({
                 rescodeForSendCode: 0,
                 token: response.token,
@@ -87,7 +87,7 @@ export class Signup extends React.Component {
     async submit() {
         const { token, phone, code, username, password } = this.state;
         const response = await agent.user.sigup(token, phone, code, username, password);
-        if (response.rescode===0) {
+        if (response.rescode === 0) {
             this.setState({
                 signupOK: true,
                 rescodeForSignup: 0
