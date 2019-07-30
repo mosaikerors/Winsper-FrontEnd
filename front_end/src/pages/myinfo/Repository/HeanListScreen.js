@@ -43,7 +43,8 @@ class HeanListScreen extends React.Component {
                             <Divider />
                         </View>
                     )}
-                    disableVirtualization />
+                    disableVirtualization
+                />
             </React.Fragment>
         );
     }

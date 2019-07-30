@@ -26,7 +26,7 @@ const hean = {
             .query({ hId })
             .then(res => res.body)
             .catch(err => err.response.body)*/,
-    getHeanCardList: (viewer, token, owner) => ({ 
+    getHeanCardList: (viewer, token, owner) => ({
         rescode: 0,
         heanCards: [{
             hId: 1, cover: "https://images.pexels.com/photos/1935220/pexels-photo-1935220.jpeg?auto=compress&cs=tinysrgb&dpr=2&w=500",
@@ -73,6 +73,24 @@ const hean = {
             // res.data is a string, to convert it it a object
             .then(res => JSON.parse(res.data))
             .catch(err => err),
+    getCollection: (uId, token, owner) => hean.getHeanCardList(1, 2, 3)
+        /*requests.get(API_ROOT + "/hean/collection")
+            .set('Authorization', 'Bearer ' + token)
+            .set('uId', uId)
+            .query({ owner })
+            .then(res => res.body)
+            .catch(err => err.response.body)*/,
+    getComment: (uId, token, owner) => ({
+        rescode: 0, comments: [
+            { isComment: true, username: "tbc", content: "nb", time: 1233, hId: 1 },            
+            { isComment: false, username: "tbc", content: "nbaaa", time: 12331, hId: 1 },
+    ]})
+        /*requests.get(API_ROOT + "/hean/comment")
+            .set('Authorization', 'Bearer ' + token)
+            .set('uId', uId)
+            .query({ owner })
+            .then(res => res.body)
+            .catch(err => err.response.body)*/
 };
 
 export default hean;

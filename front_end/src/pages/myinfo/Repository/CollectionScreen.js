@@ -1,45 +1,54 @@
 import React from "react";
-import { Text, View, StyleSheet } from "react-native";
+import { Text, Dimensions, TouchableOpacity, FlatList, View } from "react-native";
 import { ListItem } from 'react-native-elements'
+import { Divider } from 'react-native-elements'
+import { connect } from "react-redux";
+import HeanCard from "../../../components/hean/HeanCard";
+import agent from "../../../agent/index";
 
-const styles = StyleSheet.create({
-    border: {
-        borderWidth: 1,
-    },
-})
+const mapStateToProps = state => ({
+    token: state.user.token,
+    uId: state.user.uId
+});
 
-const list = [
-    {
-        name: 'Amy Farha',
-        avatar_url: 'https://s3.amazonaws.com/uifaces/faces/twitter/ladylexy/128.jpg',
-        subtitle: 'Vice President'
-    },
-    {
-        name: 'Chris Jackson',
-        avatar_url: 'https://s3.amazonaws.com/uifaces/faces/twitter/adhamdannaway/128.jpg',
-        subtitle: 'Vice Chairman'
-    }
-];
+const mapDispatchToProps = dispatch => ({
+
+});
+
 
 class CollectionScreen extends React.Component {
-    static navigationOptions = {
-        title: "我的收藏"
-    };
+    constructor(props) {
+        super(props);
+        this.state = {
+            heans: [],
+        }
+    }
+
+    async componentWillMount() {
+        const { uId, token } = this.props;
+        const response = await agent.hean.getCollection(uId, token, uId);    // 看自己的函
+        console.log("response: " + response)
+        if (response.rescode === 0)
+            this.setState({ heans: response.heanCards });
+    }
+
     render() {
+        if (!this.state.heans)
+            return <Text>No heans yet!</Text>;
         return (
             <React.Fragment>
-                <View>
-                    {list.map((listItem, index) => (
-                        <ListItem
-                            key={index}
-                            leftAvatar={{ source: { uri: listItem.avatar_url } }}
-                            title={listItem.name}
-                            subtitle={listItem.subtitle}
-                        />
-                    ))}
-                </View>
+                <FlatList
+                    data={this.state.heans}
+                    renderItem={({ item, index }) => (
+                        <View>
+                            <HeanCard hId={item.hId} navigation={this.props.navigation} />
+                            <Divider />
+                        </View>
+                    )}
+                    disableVirtualization
+                />
             </React.Fragment>
         );
     }
 }
-export default CollectionScreen;
+export default connect(mapStateToProps, mapDispatchToProps)(CollectionScreen);
