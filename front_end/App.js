@@ -1,5 +1,5 @@
 import React from 'react'
-import { View, Text, Image } from "react-native"
+import { View, Text, Image, CameraRoll } from "react-native"
 import ViewShot, { captureRef, captureScreen } from 'react-native-view-shot';
 import { Button } from 'react-native-elements';
 const requests = require('superagent');
@@ -15,14 +15,22 @@ export default class Root extends React.Component {
         /*this.refs.A.capture().then(uri => {
             console.log("do something with A: ", uri);
         });*/
-        captureRef(this.refs.A, { format: "jpg", result: "data-uri" }).
-            then(uri => requests.post("http://localhost:8080/save").attach('image', uri).catch(err=>console.log(err)))
+        console.log("@@@@@@")
+        captureRef(this.refs.A, { format: "jpg", result: "tmpfile" }).
+            then(uri => {
+                requests.post("https://api.cloudinary.com/v1_1/dxm8ocsto/image/upload").field('image', uri)
+                    .then(res => console.log(res.body.secure_url))
+                    .catch(err => console.log(err))
+            })
+        //then(uri => { tmp = uri;console.log(tmp); CameraRoll.saveToCameraRoll(tmp)})
+
+
     }
     clickB() {
         /*this.refs.B.capture().then(uri => {
             console.log("do something with B: ", uri);
         });*/
-        captureScreen({ format: "jpg" }).then(uri => console.log("Image saved to", uri))
+        captureScreen({ format: "jpg" }).then(uri => CameraRoll.saveToCameraRoll(uri))
     }
 
     render() {
