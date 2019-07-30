@@ -3,10 +3,25 @@ import { View, TouchableOpacity, TextInput, ImageBackground, Image } from 'react
 import FontAwesome from 'react-native-vector-icons/FontAwesome'
 import Sticker from "../../components/journal/Sticker"
 import PicturePanel from "../../components/journal/PicturePanel"
+import ViewShot, { captureRef, captureScreen } from 'react-native-view-shot';
+const requests = require('superagent');
+
+//连接cloudinary的东西
+const CLOUDINARY_UPLOAD_PRESET = 'tklfxr2k';
+const CLOUDINARY_UPLOAD_URL = 'https://api.cloudinary.com/v1_1/dxm8ocsto/image/upload';
 
 const icon4 = require("../../../images/sticker/icon4.png")
 
 const defaultBackgroundImage = require("../../../images/p3.jpg")
+
+const viewShot = () =>
+    captureScreen({ format: "jpg", result: "data-uri" }).then(uri =>
+        requests.post(CLOUDINARY_UPLOAD_URL)
+            .field('upload_preset', CLOUDINARY_UPLOAD_PRESET)
+            .field('file', uri)
+            .then(res => res.body.secure_url)
+            .catch(err => err.response.xhr)
+    )
 
 class CreateJournal extends React.Component {
     constructor(props) {
@@ -22,7 +37,8 @@ class CreateJournal extends React.Component {
         }
         this.addSticker = this.addSticker.bind(this)
         this.addText = this.addText.bind(this);
-        this.changeBackground = this.changeBackground.bind(this)
+        this.changeBackground = this.changeBackground.bind(this);
+        this.submit = this.submit.bind(this);
     }
 
     addSticker(stickerId) {
@@ -53,6 +69,18 @@ class CreateJournal extends React.Component {
 
     changeBackground(backgroundImage) {
         this.setState({ backgroundImage })
+    }
+
+    async submit() {
+        // 隐藏按钮
+        this.refs.ok.setOpacityTo(0, 0);
+        this.refs.cancel.setOpacityTo(0, 0);
+        this.refs.add.setOpacityTo(0, 0);
+        this.refs.image.setOpacityTo(0, 0);
+        this.refs.text.setOpacityTo(0, 0);
+        let journalUrl;
+        setTimeout(() => journalUrl = viewShot(), 500);    // 等待按钮完全隐藏再截图
+        const response = await agent.record.createJournal(1, 1, 1, 1);
     }
 
     render() {
@@ -87,7 +115,7 @@ class CreateJournal extends React.Component {
                                 marginRight: 40
                             }}
                             onPress={() => this.setState({ status: 2 })}
-
+                            ref="image"
                         >
                             <FontAwesome name="image" size={24} color="white" />
                         </TouchableOpacity>
@@ -98,23 +126,55 @@ class CreateJournal extends React.Component {
                                 alignItems: "center", justifyContent: "center"
                             }}
                             onPress={() => this.setState({ status: 3 })}
+                            ref="text"
                         >
                             <FontAwesome name="font" size={24} color="white" />
                         </TouchableOpacity>
                     </View>
 
-                    {/* 底部中心主按钮 */}
-                    <View style={{ flexDirection: "row", justifyContent: "center", display: status === 3 ? "none" : "flex", marginTop: -30 }}>
+                    {/* 底部按钮 */}
+                    <View style={{ flexDirection: "row", justifyContent: "space-between", display: status === 3 ? "none" : "flex", marginTop: -30 }}>
+
+                        {/* cancel */}
+                        <TouchableOpacity
+                            style={{
+                                backgroundColor: "cyan",
+                                height: 100, width: 100, borderRadius: 50,
+                                position: "relative", top: 50, right: 50,
+                                alignItems: "center",
+                            }}
+                            ref="cancel"
+                            onPress={() => this.props.navigation.pop()}
+                        >
+                            <FontAwesome name={"remove"} size={24} color="white" style={{ marginTop: 15, marginLeft: 35 }} />
+                        </TouchableOpacity>
+
+                        {/* add */}
                         <TouchableOpacity
                             style={{
                                 backgroundColor: "cyan",
                                 height: 80, width: 80, borderRadius: 40,
-                                position: "relative", top: 40,
+                                position: "relative", top: 60,
                                 alignItems: "center",
                             }}
+                            ref="add"
                             onPress={() => this.setState({ status: status === 0 ? 1 : 0 })}
                         >
                             <FontAwesome name={status === 2 ? "chevron-down" : "plus"} size={24} color="white" style={{ marginTop: 10 }} />
+                        </TouchableOpacity>
+
+                        {/* ok */}
+                        <TouchableOpacity
+                            style={{
+                                backgroundColor: "cyan",
+                                height: 100, width: 100, borderRadius: 50,
+                                position: "relative", top: 50, left: 50,
+                                alignItems: "center",
+                            }}
+                            ref="ok"
+                            onPress={this.submit}
+                        >
+                            <FontAwesome name={"check"} size={24} color="white" style={{ marginTop: 15, marginRight: 35 }} />
                         </TouchableOpacity>
                     </View>
 

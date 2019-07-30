@@ -6684,6 +6684,13 @@ react-native-status-bar-height@^2.2.0:
   resolved "https://registry.npm.taobao.org/react-native-status-bar-height/download/react-native-status-bar-height-2.3.1.tgz#b92ce9112c2367290847ac11284d9d84a6330169"
   integrity sha1-uSzpESwjZykIR6wRKE2dhKYzAWk=
 
+react-native-step-indicator@^0.0.11:
+  version "0.0.11"
+  resolved "https://registry.npm.taobao.org/react-native-step-indicator/download/react-native-step-indicator-0.0.11.tgz#18c53692f63c5e6812f80e8f6cc580cf4097e127"
+  integrity sha1-GMU2kvY8XmgS+A6PbMWAz0CX4Sc=
+  dependencies:
+    prop-types "^15.6.0"
+
 react-native-swipeout@^2.3.6:
   version "2.3.6"
   resolved "https://registry.npm.taobao.org/react-native-swipeout/download/react-native-swipeout-2.3.6.tgz#47dac8a835825cf3f2eef9e495574a3d9ab6d3fa"

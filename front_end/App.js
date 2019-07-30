@@ -4,6 +4,11 @@ import ViewShot, { captureRef, captureScreen } from 'react-native-view-shot';
 import { Button } from 'react-native-elements';
 const requests = require('superagent');
 
+
+//连接cloudinary的东西
+const CLOUDINARY_UPLOAD_PRESET = 'tklfxr2k';
+const CLOUDINARY_UPLOAD_URL = 'https://api.cloudinary.com/v1_1/dxm8ocsto/image/upload';
+
 export default class Root extends React.Component {
     constructor(props) {
         super(props);
@@ -16,13 +21,14 @@ export default class Root extends React.Component {
             console.log("do something with A: ", uri);
         });*/
         console.log("@@@@@@")
-        captureRef(this.refs.A, { format: "jpg", result: "tmpfile" }).
+        captureRef(this.refs.A, { format: "jpg", result: "data-uri" }).
             then(uri => {
-                requests.post("https://api.cloudinary.com/v1_1/dxm8ocsto/image/upload").field('image', uri)
+                requests.post(CLOUDINARY_UPLOAD_URL)
+                    .field('upload_preset', CLOUDINARY_UPLOAD_PRESET)
+                    .field('file', uri)
                     .then(res => console.log(res.body.secure_url))
-                    .catch(err => console.log(err))
+                    .catch(err => console.log(err.response.xhr))
             })
-        //then(uri => { tmp = uri;console.log(tmp); CameraRoll.saveToCameraRoll(tmp)})
 
 
     }
