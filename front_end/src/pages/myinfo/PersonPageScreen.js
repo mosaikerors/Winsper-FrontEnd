@@ -22,8 +22,9 @@ class PersonPageScreen extends React.Component {
             userInfo: {}
         }
     }
-    
+
     async componentWillMount() {
+        // 需要传进来一个 uId
         const otherUId = this.props.navigation.getParam("uId", 0);
         const { uId, token } = this.props;
         const response = await agent.user.getOthersInfo(uId, token, otherUId);
@@ -31,7 +32,6 @@ class PersonPageScreen extends React.Component {
             this.setState({ userInfo: response });
     }
 
-    // todo: 他人主页
     render() {
         return (
             <React.Fragment>

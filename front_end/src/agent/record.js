@@ -18,7 +18,7 @@ const record = {
             .catch(err => err.response.body)*/,
     getMessageDetail: (uId, token, type) => ({
         rescode: 0, messages: [{ messageId: 12, uId: 1, username: "tbc", hasRead: true, time: "2019-7-29" }
-            , { messageId: 11, uId: 1, username: "tbc", hasRead: false, time: "2019-7-29" }]
+            , { messageId: 11, uId: 1, username: "tbc", hasRead: false, time: "2019-7-29",text:"werwr" }]
     })
 };
 
