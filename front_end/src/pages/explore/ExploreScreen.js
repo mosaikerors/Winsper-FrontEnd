@@ -25,7 +25,7 @@ const list = [
     {
         title: '日记',
         icon: 'rowing',
-        pagename: 'CreateHean'
+        pagename: 'CreateDiary'
     }
 ];
 

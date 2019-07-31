@@ -2,13 +2,15 @@ import { createStackNavigator } from "react-navigation";
 import ExploreScreen from "./ExploreScreen"
 import CreateHeanScreen from "./CreateHeanScreen"
 import CreateJournalScreen from "./CreateJournalScreen"
+import CreateDiaryScreen from "./CreateDiaryScreen"
 
 const ExploreScreenNavigator = createStackNavigator(
     {
         Explore: { screen: ExploreScreen },
         CreateHean: { screen: CreateHeanScreen, navigationOptions: { title: '写函' } },
         // CreateJournal 页面不显示页眉
-        CreateJournal: { screen: CreateJournalScreen, navigationOptions: { header: null } }
+        CreateJournal: { screen: CreateJournalScreen, navigationOptions: { header: null } },
+        CreateDiary: { screen: CreateDiaryScreen, navigationOptions: { title: '写日记' } }
     },
     {
         initialRouteName: "Explore",
