@@ -6,7 +6,8 @@ import MessageListScreen from "./Repository/MessageListScreen";
 import MessageDetailScreen from "./Repository/MessageDetailScreen";
 import HeanListScreen from "./Repository/HeanListScreen";
 import CollectionScreen from "./Repository/CollectionScreen";
-import DiaryScreen from "./Repository/DiaryScreen";
+import DiaryListScreen from "./Repository/DiaryListScreen";
+import DiaryDetailScreen from "./Repository/DiaryDetailScreen";
 import JournalScreen from "./Repository/JournalScreen";
 import SubmissionScreen from "./Repository/SubmissionScreen";
 import MoodReportScreen from "./Repository/MoodReportScreen";
@@ -28,7 +29,8 @@ const MyInfoScreenNavigator = createStackNavigator(
         HeanList: { screen: HeanListScreen, navigationOptions: { title: '函' } },
         HeanDetail: { screen: HeanDetailScreen, navigationOptions: { title: '函' } },
         Collection: { screen: CollectionScreen, navigationOptions: { title: '收藏' } },
-        Diary: { screen: DiaryScreen },
+        DiaryList: { screen: DiaryListScreen, navigationOptions: { title: '日记' } },
+        DiaryDetail: { screen: DiaryDetailScreen, navigationOptions: { title: '日记' } },
         Journal: { screen: JournalScreen },
         Submission: { screen: SubmissionScreen },
         MoodReport: { screen: MoodReportScreen },
