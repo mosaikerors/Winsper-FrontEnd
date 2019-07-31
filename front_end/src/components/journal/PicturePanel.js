@@ -1,15 +1,8 @@
 import React from 'react';
 import { View, Text, PanResponder, Animated, TouchableOpacity } from 'react-native';
 import { StyleSheet, Dimensions, Image, ScrollView } from 'react-native';
-import { Button, Divider } from "react-native-elements"
-import Drawer from "react-native-drawer"
-import Sticker from "./Sticker"
-import FontAwesome from 'react-native-vector-icons/FontAwesome'
 import ScrollableTabView, { DefaultTabBar } from "react-native-scrollable-tab-view";
-
-const icon4 = require("../../../images/sticker/icon4.png")
-const icon5 = require("../../../images/sticker/icon5.png")
-const icon6 = require("../../../images/sticker/icon6.png")
+import stickers from "./stickers"
 
 const getScale = ({ width, height }) => {
     const maxSize = width > height ? width : height;
@@ -40,6 +33,10 @@ const bi1 = require("../../../images/p1.jpg")
 const bi2 = require("../../../images/p2.jpg")
 const bi3 = require("../../../images/p5.jpg")
 
+const stickerGroug1 = stickers.slice(0, 5);
+const stickerGroug2 = stickers.slice(5, 10);
+const stickerGroug3 = stickers.slice(10, 15);
+
 class PicturePanel extends React.Component {
     render() {
         return (
@@ -48,66 +45,45 @@ class PicturePanel extends React.Component {
                     <ScrollView tabLabel="贴纸">
                         <View style={{ justifyContent: "space-between" }}>
                             <View style={{ flexDirection: "row", justifyContent: "space-around" }}>
-                                <TouchableOpacity onPress={() => this.props.addSticker(1)} >
-                                    <Image source={icon4} style={{ transform: [{ scale: getScale(Image.resolveAssetSource(icon4)) }] }} />
-                                </TouchableOpacity>
-                                <TouchableOpacity onPress={() => this.props.addSticker(2)} >
-                                    <Image source={icon4} style={{ transform: [{ scale: getScale(Image.resolveAssetSource(icon4)) }] }} />
-                                </TouchableOpacity>
-                                <TouchableOpacity onPress={() => this.props.addSticker(3)} >
-                                    <Image source={icon5} style={{ transform: [{ scale: getScale(Image.resolveAssetSource(icon5)) }] }} />
-                                </TouchableOpacity>
-                                <TouchableOpacity onPress={() => this.props.addSticker(4)} >
-                                    <Image source={icon4} style={{ transform: [{ scale: getScale(Image.resolveAssetSource(icon4)) }] }} />
-                                </TouchableOpacity>
-                                <TouchableOpacity onPress={() => this.props.addSticker(5)} >
-                                    <Image source={icon6} style={{ transform: [{ scale: getScale(Image.resolveAssetSource(icon6)) }] }} />
-                                </TouchableOpacity>
+                                {stickerGroug1.map((sticker, index) => (
+                                    <TouchableOpacity onPress={() => this.props.addSticker(index)} >
+                                        <Image
+                                            source={sticker}
+                                            style={{ transform: [{ scale: getScale(Image.resolveAssetSource(sticker)) }] }}
+                                        />
+                                    </TouchableOpacity>
+                                ))}
                             </View>
                             <View style={{ flexDirection: "row", justifyContent: "space-around" }}>
-                                <TouchableOpacity onPress={() => this.props.addSticker(6)} >
-                                    <Image source={icon5} style={{ transform: [{ scale: getScale(Image.resolveAssetSource(icon5)) }] }} />
-                                </TouchableOpacity>
-                                <TouchableOpacity onPress={() => this.props.addSticker(7)} >
-                                    <Image source={icon6} style={{ transform: [{ scale: getScale(Image.resolveAssetSource(icon6)) }] }} />
-                                </TouchableOpacity>
-                                <TouchableOpacity onPress={() => this.props.addSticker(8)} >
-                                    <Image source={icon4} style={{ transform: [{ scale: getScale(Image.resolveAssetSource(icon4)) }] }} />
-                                </TouchableOpacity>
-                                <TouchableOpacity onPress={() => this.props.addSticker(9)} >
-                                    <Image source={icon4} style={{ transform: [{ scale: getScale(Image.resolveAssetSource(icon4)) }] }} />
-                                </TouchableOpacity>
-                                <TouchableOpacity onPress={() => this.props.addSticker(10)} >
-                                    <Image source={icon5} style={{ transform: [{ scale: getScale(Image.resolveAssetSource(icon5)) }] }} />
-                                </TouchableOpacity>
+                                {stickerGroug2.map((sticker, index) => (
+                                    <TouchableOpacity onPress={() => this.props.addSticker(index + 5)} >
+                                        <Image
+                                            source={sticker}
+                                            style={{ transform: [{ scale: getScale(Image.resolveAssetSource(sticker)) }] }}
+                                        />
+                                    </TouchableOpacity>
+                                ))}
                             </View>
                             <View style={{ flexDirection: "row", justifyContent: "space-around" }}>
-                                <TouchableOpacity onPress={() => this.props.addSticker(11)} >
-                                    <Image source={icon4} style={{ transform: [{ scale: getScale(Image.resolveAssetSource(icon4)) }] }} />
-                                </TouchableOpacity>
-                                <TouchableOpacity onPress={() => this.props.addSticker(12)} >
-                                    <Image source={icon4} style={{ transform: [{ scale: getScale(Image.resolveAssetSource(icon4)) }] }} />
-                                </TouchableOpacity>
-                                <TouchableOpacity onPress={() => this.props.addSticker(13)} >
-                                    <Image source={icon5} style={{ transform: [{ scale: getScale(Image.resolveAssetSource(icon5)) }] }} />
-                                </TouchableOpacity>
-                                <TouchableOpacity onPress={() => this.props.addSticker(14)} >
-                                    <Image source={icon4} style={{ transform: [{ scale: getScale(Image.resolveAssetSource(icon4)) }] }} />
-                                </TouchableOpacity>
-                                <TouchableOpacity onPress={() => this.props.addSticker(15)} >
-                                    <Image source={icon6} style={{ transform: [{ scale: getScale(Image.resolveAssetSource(icon6)) }] }} />
-                                </TouchableOpacity>
+                                {stickerGroug3.map((sticker, index) => (
+                                    <TouchableOpacity onPress={() => this.props.addSticker(index + 10)} >
+                                        <Image
+                                            source={sticker}
+                                            style={{ transform: [{ scale: getScale(Image.resolveAssetSource(sticker)) }] }}
+                                        />
+                                    </TouchableOpacity>
+                                ))}
                             </View>
                         </View>
                     </ScrollView>
                     <View tabLabel="背景" style={{ flexDirection: "row" }}>
-                        <TouchableOpacity style={{ flex: 1 }} onPress={()=>this.props.changeBackground(bi1)}>
+                        <TouchableOpacity style={{ flex: 1 }} onPress={() => this.props.changeBackground(bi1)}>
                             <Image source={bi1} style={{ height: 200, width: "100%" }} />
                         </TouchableOpacity>
-                        <TouchableOpacity style={{ flex: 1 }} onPress={()=>this.props.changeBackground(bi2)}>
+                        <TouchableOpacity style={{ flex: 1 }} onPress={() => this.props.changeBackground(bi2)}>
                             <Image source={bi2} style={{ height: 200, width: "100%" }} />
                         </TouchableOpacity>
-                        <TouchableOpacity style={{ flex: 1 }} onPress={()=>this.props.changeBackground(bi3)}>
+                        <TouchableOpacity style={{ flex: 1 }} onPress={() => this.props.changeBackground(bi3)}>
                             <Image source={bi3} style={{ height: 200, width: "100%" }} />
                         </TouchableOpacity>
                     </View>

@@ -31,6 +31,7 @@
     "react-native-material-design": "^0.3.7",
     "react-native-material-kit": "^0.5.1",
     "react-native-paper": "^2.16.0",
+    "react-native-root-toast": "^3.1.2",
     "react-native-scrollable-tab-view": "^0.10.0",
     "react-native-snap-carousel": "^3.8.0",
     "react-native-step-indicator": "^0.0.11",

@@ -1,27 +1,21 @@
 import React from 'react';
-import { View, TouchableOpacity, TextInput, ImageBackground, Image } from 'react-native';
+import { View, TouchableOpacity, TextInput, ImageBackground, Image, ActivityIndicator } from 'react-native';
+import { Overlay } from "react-native-elements"
 import FontAwesome from 'react-native-vector-icons/FontAwesome'
 import Sticker from "../../components/journal/Sticker"
 import PicturePanel from "../../components/journal/PicturePanel"
 import ViewShot, { captureRef, captureScreen } from 'react-native-view-shot';
+import agent from "../../agent/index"
+import Toast from "react-native-root-toast"
+import stickers from "../../components/journal/stickers"
+
 const requests = require('superagent');
 
 //连接cloudinary的东西
 const CLOUDINARY_UPLOAD_PRESET = 'tklfxr2k';
 const CLOUDINARY_UPLOAD_URL = 'https://api.cloudinary.com/v1_1/dxm8ocsto/image/upload';
 
-const icon4 = require("../../../images/sticker/icon4.png")
-
 const defaultBackgroundImage = require("../../../images/p3.jpg")
-
-const viewShot = () =>
-    captureScreen({ format: "jpg", result: "data-uri" }).then(uri =>
-        requests.post(CLOUDINARY_UPLOAD_URL)
-            .field('upload_preset', CLOUDINARY_UPLOAD_PRESET)
-            .field('file', uri)
-            .then(res => res.body.secure_url)
-            .catch(err => err.response.xhr)
-    )
 
 class CreateJournal extends React.Component {
     constructor(props) {
@@ -30,7 +24,7 @@ class CreateJournal extends React.Component {
             backgroundImage: defaultBackgroundImage,
             stickersOnStage: [],  // each element is like {id: 1, stickerId: 1, zIndex: 1}
             textsOnStage: [],   // each element is like {id: 2, text: "ahh", zIndex: 3}
-            status: 0,    // 0: 正常, 1: 点了+，弹出图片和文本状态, 2: 图片抽屉弹出状态, 3: 文本抽屉弹出状态    
+            status: 0,    // 0: 正常, 1: 点了+，弹出图片和文本状态, 2: 图片抽屉弹出状态, 3: 文本抽屉弹出状态, 4: Loading, 5: Toast  
             text: '',
             cntId: 0,
             cntZIndex: 0,
@@ -39,6 +33,7 @@ class CreateJournal extends React.Component {
         this.addText = this.addText.bind(this);
         this.changeBackground = this.changeBackground.bind(this);
         this.submit = this.submit.bind(this);
+        this.viewShot = this.viewShot.bind(this);
     }
 
     addSticker(stickerId) {
@@ -78,25 +73,42 @@ class CreateJournal extends React.Component {
         this.refs.add.setOpacityTo(0, 0);
         this.refs.image.setOpacityTo(0, 0);
         this.refs.text.setOpacityTo(0, 0);
-        let journalUrl;
-        setTimeout(() => journalUrl = viewShot(), 500);    // 等待按钮完全隐藏再截图
+        this.setState({ status: 4 })
+        setTimeout(this.viewShot, 500);    // 等待按钮完全隐藏再截图 
+    }
+
+    async viewShot() {
+        const journalUrl = await captureScreen({ format: "jpg", result: "data-uri" }).then(uri =>
+            requests.post(CLOUDINARY_UPLOAD_URL)
+                .field('upload_preset', CLOUDINARY_UPLOAD_PRESET)
+                .field('file', uri)
+                .then(res => res.body.secure_url)
+                .catch(err => err.response.xhr)
+        )
         const response = await agent.record.createJournal(1, 1, 1, 1);
+        if (response.rescode === 0)
+            this.setState({ status: 5 })
     }
 
     render() {
-        console.log(this.state.status)
-        const { status } = this.state;
+        const { status, isLoading } = this.state;
         return (
             <React.Fragment>
+                <Overlay overlayBackgroundColor="transparent" fullScreen isVisible={status === 4}>
+                    <ActivityIndicator size="large" color="#0000ff" />
+                </Overlay>
+                <Toast visible={status === 5} position={-100} hideOnPress onHidden={() => this.props.navigation.pop()}>
+                    上传成功
+                </Toast>
                 <ImageBackground source={this.state.backgroundImage} style={{ width: '100%', height: '100%', opacity: 1 }}>
                     {/* 画布 */}
                     <View style={{ flex: 1 }}>
                         {this.state.stickersOnStage.map(sticker => (
                             <Sticker
                                 key={sticker.id}
-                                width={Image.resolveAssetSource(icon4).width}
-                                height={Image.resolveAssetSource(icon4).height}
-                                source={icon4}
+                                width={Image.resolveAssetSource(stickers[sticker.stickerId]).width}
+                                height={Image.resolveAssetSource(stickers[sticker.stickerId]).height}
+                                source={stickers[sticker.stickerId]}
                                 zIndex={sticker.zIndex}
                             />
                         ))}
@@ -106,13 +118,13 @@ class CreateJournal extends React.Component {
                     </View>
 
                     {/* 底部两个次按钮 */}
-                    <View style={{ flexDirection: "row", justifyContent: "center", display: status === 1 ? "flex" : "none" }}>
+                    <View style={{ flexDirection: "row", justifyContent: "center", display: status === 1 ? "flex" : "none"}}>
                         <TouchableOpacity
                             style={{
                                 backgroundColor: "cyan",
                                 height: 50, width: 50, borderRadius: 25,
                                 alignItems: "center", justifyContent: "center",
-                                marginRight: 40
+                                marginRight: 40, zIndex: 999,
                             }}
                             onPress={() => this.setState({ status: 2 })}
                             ref="image"
@@ -123,7 +135,7 @@ class CreateJournal extends React.Component {
                             style={{
                                 backgroundColor: "cyan",
                                 height: 50, width: 50, borderRadius: 25,
-                                alignItems: "center", justifyContent: "center"
+                                alignItems: "center", justifyContent: "center", zIndex: 999,
                             }}
                             onPress={() => this.setState({ status: 3 })}
                             ref="text"
@@ -133,15 +145,19 @@ class CreateJournal extends React.Component {
                     </View>
 
                     {/* 底部按钮 */}
-                    <View style={{ flexDirection: "row", justifyContent: "space-between", display: status === 3 ? "none" : "flex", marginTop: -30 }}>
+                    <View
+                        style={{
+                            flexDirection: "row", justifyContent: "space-between",
+                            display: status === 3 ? "none" : "flex", marginTop: -30, position:"relative",top:30
+                        }}>
 
                         {/* cancel */}
                         <TouchableOpacity
                             style={{
                                 backgroundColor: "cyan",
                                 height: 100, width: 100, borderRadius: 50,
-                                position: "relative", top: 50, right: 50,
-                                alignItems: "center",
+                                position: "relative", top: 20, right: 50,
+                                alignItems: "center", zIndex: 999,
                             }}
                             ref="cancel"
                             onPress={() => this.props.navigation.pop()}
@@ -154,8 +170,8 @@ class CreateJournal extends React.Component {
                             style={{
                                 backgroundColor: "cyan",
                                 height: 80, width: 80, borderRadius: 40,
-                                position: "relative", top: 60,
-                                alignItems: "center",
+                                position: "relative", top: 30,
+                                alignItems: "center", zIndex: 999
                             }}
                             ref="add"
                             onPress={() => this.setState({ status: status === 0 ? 1 : 0 })}
@@ -168,8 +184,8 @@ class CreateJournal extends React.Component {
                             style={{
                                 backgroundColor: "cyan",
                                 height: 100, width: 100, borderRadius: 50,
-                                position: "relative", top: 50, left: 50,
-                                alignItems: "center",
+                                position: "relative", top: 20, left: 50,
+                                alignItems: "center", zIndex: 999,
                             }}
                             ref="ok"
                             onPress={this.submit}
@@ -179,12 +195,12 @@ class CreateJournal extends React.Component {
                     </View>
 
                     {/* 添加图片的 panel */}
-                    <View style={{ display: status === 2 ? "flex" : "none", height: 250 }}>
+                    <View style={{ display: status === 2 ? "flex" : "none", height: 250, zIndex: 999 }}>
                         <PicturePanel addSticker={(id) => this.addSticker(id)} changeBackground={(i) => this.changeBackground(i)} />
                     </View>
 
                     {/* 添加文本的 panel */}
-                    <View style={{ display: status === 3 ? "flex" : "none", height: 250 }}>
+                    <View style={{ display: status === 3 ? "flex" : "none", height: 250, zIndex: 999 }}>
                         <View style={{ flexDirection: "row", width: "100%" }}>
                             <View>
                                 <TouchableOpacity onPress={() => this.setState({ status: 0 })}>
