@@ -1,6 +1,6 @@
 import React from 'react';
-import { View, TouchableOpacity, TextInput, ImageBackground, Image, ActivityIndicator } from 'react-native';
-import { Overlay } from "react-native-elements"
+import { View, TouchableOpacity, TextInput, ImageBackground, Image, ActivityIndicator, Text } from 'react-native';
+import { Overlay, Divider } from "react-native-elements"
 import FontAwesome from 'react-native-vector-icons/FontAwesome'
 import Sticker from "../../components/journal/Sticker"
 import PicturePanel from "../../components/journal/PicturePanel"
@@ -8,6 +8,7 @@ import ViewShot, { captureRef, captureScreen } from 'react-native-view-shot';
 import agent from "../../agent/index"
 import Toast from "react-native-root-toast"
 import stickers from "../../components/journal/stickers"
+import JournalBookSelector from '../../components/journal/JournalBookSelector';
 
 const requests = require('superagent');
 
@@ -24,7 +25,7 @@ class CreateJournal extends React.Component {
             backgroundImage: defaultBackgroundImage,
             stickersOnStage: [],  // each element is like {id: 1, stickerId: 1, zIndex: 1}
             textsOnStage: [],   // each element is like {id: 2, text: "ahh", zIndex: 3}
-            status: 0,    // 0: 正常, 1: 点了+，弹出图片和文本状态, 2: 图片抽屉弹出状态, 3: 文本抽屉弹出状态, 4: Loading, 5: Toast  
+            status: 0,    // 0: 正常, 1: 点了+，弹出图片和文本状态, 2: 图片抽屉弹出状态, 3: 文本抽屉弹出状态, 4: Overlay, 5: Loading, 6: Toast  
             text: '',
             cntId: 0,
             cntZIndex: 0,
@@ -33,7 +34,9 @@ class CreateJournal extends React.Component {
         this.addText = this.addText.bind(this);
         this.changeBackground = this.changeBackground.bind(this);
         this.submit = this.submit.bind(this);
+        this.submit2 = this.submit2.bind(this);
         this.viewShot = this.viewShot.bind(this);
+        this.cancel = this.cancel.bind(this);
     }
 
     addSticker(stickerId) {
@@ -66,7 +69,8 @@ class CreateJournal extends React.Component {
         this.setState({ backgroundImage })
     }
 
-    async submit() {
+    // 点击确认按钮，弹出选择手账本界面
+    submit() {
         // 隐藏按钮
         this.refs.ok.setOpacityTo(0, 0);
         this.refs.cancel.setOpacityTo(0, 0);
@@ -74,10 +78,25 @@ class CreateJournal extends React.Component {
         this.refs.image.setOpacityTo(0, 0);
         this.refs.text.setOpacityTo(0, 0);
         this.setState({ status: 4 })
-        setTimeout(this.viewShot, 500);    // 等待按钮完全隐藏再截图 
     }
 
-    async viewShot() {
+    cancel() {
+        this.refs.ok.setOpacityTo(1, 0);
+        this.refs.cancel.setOpacityTo(1, 0);
+        this.refs.add.setOpacityTo(1, 0);
+        this.refs.image.setOpacityTo(1, 0);
+        this.refs.text.setOpacityTo(1, 0);
+        this.setState({ status: 0 })
+    }
+
+    // 完成手账本的选择
+    submit2(journalBookId) {
+        this.setState({ status: 5 })
+        setTimeout(() => this.viewShot(journalBookId), 500);    // 等待按钮完全隐藏再截图 
+    }
+
+    async viewShot(journalBookId) {
+        const { uId, token } = this.props;
         const journalUrl = await captureScreen({ format: "jpg", result: "data-uri" }).then(uri =>
             requests.post(CLOUDINARY_UPLOAD_URL)
                 .field('upload_preset', CLOUDINARY_UPLOAD_PRESET)
@@ -85,19 +104,26 @@ class CreateJournal extends React.Component {
                 .then(res => res.body.secure_url)
                 .catch(err => err.response.xhr)
         )
-        const response = await agent.record.createJournal(1, 1, 1, 1);
+        const response = await agent.record.createJournal(uId, token, journalBookId, journalUrl);
         if (response.rescode === 0)
-            this.setState({ status: 5 })
+            this.setState({ status: 6 })
     }
 
     render() {
-        const { status, isLoading } = this.state;
+        const { status } = this.state;
         return (
             <React.Fragment>
-                <Overlay overlayBackgroundColor="transparent" fullScreen isVisible={status === 4}>
-                    <ActivityIndicator size="large" color="#0000ff" />
+                <JournalBookSelector isVisible={status === 4}
+                    handleOk={(journalBookId) => this.submit2(journalBookId)}
+                    handleCancel={this.cancel}
+                />
+                <Overlay overlayBackgroundColor="transparent" fullScreen isVisible={status === 5}
+                    overlayStyle={{ justifyContent: "center", alignItems: "center" }}
+                >
+                    <ActivityIndicator size={60} color="blue" />
+                    <Text style={{ marginTop: 10, color: "blue", fontSize: 24 }}>正在上传...</Text>
                 </Overlay>
-                <Toast visible={status === 5} position={-100} hideOnPress onHidden={() => this.props.navigation.pop()}>
+                <Toast visible={status === 6} position={-100} hideOnPress onHidden={() => this.props.navigation.pop()}>
                     上传成功
                 </Toast>
                 <ImageBackground source={this.state.backgroundImage} style={{ width: '100%', height: '100%', opacity: 1 }}>
@@ -118,7 +144,7 @@ class CreateJournal extends React.Component {
                     </View>
 
                     {/* 底部两个次按钮 */}
-                    <View style={{ flexDirection: "row", justifyContent: "center", display: status === 1 ? "flex" : "none"}}>
+                    <View style={{ flexDirection: "row", justifyContent: "center", display: status === 1 ? "flex" : "none" }}>
                         <TouchableOpacity
                             style={{
                                 backgroundColor: "cyan",
@@ -148,7 +174,7 @@ class CreateJournal extends React.Component {
                     <View
                         style={{
                             flexDirection: "row", justifyContent: "space-between",
-                            display: status === 3 ? "none" : "flex", marginTop: -30, position:"relative",top:30
+                            display: status === 3 ? "none" : "flex", marginTop: -30, position: "relative", top: 30
                         }}>
 
                         {/* cancel */}

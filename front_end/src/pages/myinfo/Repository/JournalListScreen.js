@@ -4,13 +4,7 @@ import { Card, Divider } from "react-native-elements"
 import { connect } from "react-redux"
 import agent from "../../../agent/index";
 import journalBookCovers from "../../../components/journal/journalBookCovers"
-
-const styles = StyleSheet.create({
-    border: {
-        borderWidth: 1,
-    },
-})
-
+import JournalBooks from "../../../components/journal/JournalBooks"
 
 const mapStateToProps = state => ({
     uId: state.user.uId,
@@ -23,16 +17,16 @@ class JournalListScreen extends React.Component {
         this.state = {
             journalBooks: null,   // each element is like { journalBookId: 1, name: "vacation", coverId: 1 }
             journals: null,   // each element is like { journalBookId: 1, journals: [{ journalId: 1, journalUrl: ${url} }, ...] }
-            cntJournalBookName: '',
+            cntJournalBookIndex: 0,
         }
-        this.getJournalsByJournalBookName = this.getJournalsByJournalBookName.bind(this);
+        this.getJournalsByJournalBookIndex = this.getJournalsByJournalBookIndex.bind(this);
     }
 
     async componentWillMount() {
         const { uId, token } = this.props;
         const response = await agent.record.getJournalBooks(uId, token, uId);
         if (response.rescode === 0) {
-            await this.setState({ journalBooks: response.journalBooks, cntJournalBookName: response.journalBooks[0].name })
+            await this.setState({ journalBooks: response.journalBooks })
             let journals = [];
             await this.state.journalBooks.forEach(async journalBook => {
                 const tmp = await agent.record.getJournals(uId, token, journalBook.journalBookId);
@@ -43,22 +37,21 @@ class JournalListScreen extends React.Component {
         }
     }
 
-    getJournalsByJournalBookName() {
-        let journalBookId;
-        this.state.journalBooks.forEach(journalBook => {
-            if (journalBook.name === this.state.cntJournalBookName)
-                journalBookId = journalBook.journalBookId;
-        })
-        let journals;
-        this.state.journals.forEach(journal => {
+    getJournalsByJournalBookIndex() {
+        const { journalBooks, journals, cntJournalBookIndex } = this.state;
+        const journalBookId = journalBooks[cntJournalBookIndex].journalBookId;
+        console.log("journalBookId: " + journalBookId)
+        let targetJournals;
+        journals.forEach(journal => {
+            console.log("journal.journalBookId: " + journal.journalBookId)
             if (journal.journalBookId === journalBookId)
-                journals = journal.journals;
+                targetJournals = journal.journals;
         })
-        return journals;
+        return targetJournals;
     }
 
     render() {
-        const { journalBooks, journals, cntJournalBookName } = this.state;
+        const { journalBooks, journals, cntJournalBookIndex } = this.state;
         if (!journalBooks)
             return null;
         if (journalBooks.length === 0)
@@ -66,20 +59,15 @@ class JournalListScreen extends React.Component {
         return (
             <React.Fragment>
                 <View style={{ borderWidth: 0 }}>
-                    <View style={{ flexDirection: "row", justifyContent: "space-around" }}>
-                        {journalBooks.map(journalBook => (
-                            <TouchableOpacity onPress={() => this.setState({ cntJournalBookName: journalBook.name })}>
-                                <Image source={journalBookCovers[journalBook.coverId]} style={{ width: 140, height: 190, margin: 10 }} />
-                            </TouchableOpacity>
-                        ))}
-                    </View>
-                    <View style={{ borderWidth: 0, alignItems: "center" }}>
-                        <Text style={{ fontSize: 20 }}>--{cntJournalBookName}--</Text>
-                    </View>
+                    <JournalBooks
+                        journalBooks={journalBooks}
+                        cntJournalBookIndex={cntJournalBookIndex}
+                        handleCntIndexChange={(index) => this.setState({ cntJournalBookIndex: index })}
+                    />
                     <Card>
                         {journals &&
                             <View style={{ flexDirection: "row" }}>
-                                {this.getJournalsByJournalBookName().map(journal => (
+                                {this.getJournalsByJournalBookIndex().map(journal => (
                                     <TouchableOpacity
                                         onPress={() => this.props.navigation.push("JournalDetail", { journalUrl: journal.journalUrl })}
                                     >
