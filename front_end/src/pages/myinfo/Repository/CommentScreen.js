@@ -1,15 +1,23 @@
 import React from "react";
 import { Text, View, StyleSheet, TouchableOpacity } from "react-native";
+import { Divider } from "react-native-elements"
 import { connect } from "react-redux"
 import agent from "../../../agent/index"
 
 const renderCommentBubble = comment => (
     <View>
-        {comment.isComment ?
-            <Text style={{ fontSize: 24 }}>评论<Text>{comment.username}</Text>的函</Text> :
-            <Text style={{ fontSize: 24 }}>回复<Text>{comment.username}</Text>的评论</Text>
-        }
-        <Text>{comment.time}</Text>
+        <View style={{ flexDirection: "row" }}>
+            <View style={{ flex: 1 }}>
+                {comment.isComment ?
+                    <Text style={{ fontSize: 24 }}>评论 <Text>{comment.username}</Text> 的函</Text> :
+                    <Text style={{ fontSize: 24 }}>回复 <Text>{comment.username}</Text> 的评论</Text>
+                }
+            </View>
+            <View style={{ justifyContent: "flex-end" }}>
+                <Text>{comment.time}</Text>
+            </View>
+        </View>
+        <Divider style={{ margin: 10, width: "100%", position: "relative", right: 10 }} />
         <Text style={{ fontSize: 16 }}>{comment.content}</Text>
     </View>
 )
@@ -53,10 +61,10 @@ class CommentScreen extends React.Component {
             <React.Fragment>
                 <View>
                     {comments.map((comment) => (
-                        <View style={{ height: 220, margin: 20, marginBottom: 10 }}>
+                        <View style={{ margin: 40, marginBottom: 0, borderWidth: 1, borderRadius: 50, padding: 20 }}>
                             {/* comment content */}
                             <TouchableOpacity onPress={() => this.props.navigation.push("HeanDetail", { heanCard: comment.heanCard })} >
-                                <View style={{ height: 200, borderWidth: 1 }}>
+                                <View>
                                     {renderCommentBubble(comment)}
                                 </View>
                             </TouchableOpacity>

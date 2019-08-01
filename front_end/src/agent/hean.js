@@ -82,8 +82,8 @@ const hean = {
             .catch(err => err.response.body)*/,
     getComment: (uId, token, owner) => ({
         rescode: 0, comments: [
-            { isComment: true, username: "tbc", content: "nb", time: 1233, hId: 1 },            
-            { isComment: false, username: "tbc", content: "nbaaa", time: 12331, hId: 1 },
+            { isComment: true, username: "tbc", content: "nb", time: "2019-8-1", hId: 1 },            
+            { isComment: false, username: "tbc", content: "nbaaa", time: "2019-7-31", hId: 1 },
     ]})
         /*requests.get(API_ROOT + "/hean/comment")
             .set('Authorization', 'Bearer ' + token)
