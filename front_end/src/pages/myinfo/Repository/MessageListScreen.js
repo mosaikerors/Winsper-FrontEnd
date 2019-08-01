@@ -1,6 +1,6 @@
 import React from "react";
 import { Text, View, StyleSheet, TouchableOpacity } from "react-native";
-import { ListItem, Badge } from 'react-native-elements'
+import { ListItem, Badge, Divider } from 'react-native-elements'
 import { connect } from "react-redux"
 import FontAwesome from "react-native-vector-icons/FontAwesome";
 import agent from "../../../agent/index";
@@ -45,7 +45,19 @@ class MessageListScreen extends React.Component {
         this.state = {
             messages: []
         }
+        this.readAll = this.readAll.bind(this)
+    }
 
+    async readAll() {
+        const { uId, token } = this.props;
+        const response = await agent.record.readAll(uId, token);
+        if (response.rescode === 0) {
+            let messages = this.state.messages;
+            messages.forEach(message => {
+                message.hasRead = true
+            });
+            this.setState({ messages })
+        }
     }
 
     async componentWillMount() {
@@ -60,7 +72,16 @@ class MessageListScreen extends React.Component {
         const { messages } = this.state;
         return (
             <React.Fragment>
-                <View>
+                <View style={{ borderWidth: 0, margin: 5, flexDirection: "row-reverse" }}>
+                    <TouchableOpacity style={{ borderWidth: 0, flexDirection: "row" }}
+                        onPress={this.readAll}
+                    >
+                        <FontAwesome name={"check"} size={24} color="green" />
+                        <Text style={{ fontSize: 20 }}>全部已读</Text>
+                    </TouchableOpacity>
+                </View>
+                <Divider />
+                <View style={{ borderWidth: 0 }}>
                     {messages.map((message, index) => (
                         <TouchableOpacity onPress={() => this.props.navigation.push("MessageDetail", { type: message.type })}>
                             <ListItem
@@ -70,7 +91,7 @@ class MessageListScreen extends React.Component {
                                 titleStyle={{ fontSize: 20 }}
                                 subtitle={message.time}
                                 subtitleStyle={{ fontSize: 12 }}
-                                rightIcon={<Badge />}
+                                rightIcon={message.hasRead || <Badge />}
                             />
                         </TouchableOpacity>
                     ))}
