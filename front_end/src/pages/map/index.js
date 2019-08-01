@@ -5,7 +5,7 @@ import HeanDetailScreen from "../myinfo/Repository/HeanDetailScreen"
 const MapScreenNavigator = createStackNavigator(
     {
         Map: { screen: MapScreen, navigationOptions: { header: null } },
-        HeanDetail: { screen: HeanDetailScreen },
+        HeanDetail: { screen: HeanDetailScreen, navigationOptions: { title: "函" } },
     },
     {
         initialRouteName: "Map",

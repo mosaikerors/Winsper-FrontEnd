@@ -29,8 +29,8 @@ const record = {
     }),
     readAll: (uId,token)=> ({rescode:0}),
     getDiaryList: (uId, token, owner) => ({
-        rescode: 0, diaries: [{ diaryId: 1, title: "哈哈", time: 123 }, {
-            diaryId: 2, title: "hahaha", time: 234
+        rescode: 0, diaries: [{ diaryId: 1, title: "哈哈", time: "2019-8-1" }, {
+            diaryId: 2, title: "hahaha", time: "2019-7-31"
         }]
     }),
     getDiaryDetail: (uId, token, diaryId) => ({ rescode: 0, title: "hahaha", username: "tbc", time: 123, text: "123456" }),
