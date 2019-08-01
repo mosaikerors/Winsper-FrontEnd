@@ -19,24 +19,24 @@ const renderHean = (navigation, heanCard, type) => (
 )
 
 const getDetailedMessage = (type, message, navigation) => {
-    console.log("message: "+Object.keys(message))
+    console.log("message: " + Object.keys(message))
     if (type === 1)
         return (
             <Text style={{ fontSize: 24 }}>
-                {renderUsername(navigation, message.uId, message.username)}关注了你
+                {renderUsername(navigation, message.uId, message.username)} 关注了你
             </Text>
         );
     if (type === 2)
         return (
             <Text style={{ fontSize: 24 }}>
-                {renderUsername(navigation, message.uId, message.username)}觉得你的
+                {renderUsername(navigation, message.uId, message.username)} 觉得你的
                 {renderHean(navigation, message.heanCard, type)}很赞
             </Text>
         );
     if (type === 3)
         return (
             <Text style={{ fontSize: 24 }}>
-                {renderUsername(navigation, message.uId, message.username)}收藏了你的
+                {renderUsername(navigation, message.uId, message.username)} 收藏了你的
                 {renderHean(navigation, message.heanCard, type)}
             </Text>
         );
@@ -45,7 +45,7 @@ const getDetailedMessage = (type, message, navigation) => {
         return (
             <View>
                 <Text style={{ fontSize: 24 }}>
-                    {renderUsername(navigation, message.uId, message.username)}评论了你的
+                    {renderUsername(navigation, message.uId, message.username)} 评论了你的
                     {renderHean(navigation, message.heanCard, type)}
                 </Text>
                 <Text>
@@ -58,7 +58,7 @@ const getDetailedMessage = (type, message, navigation) => {
         return (
             <View>
                 <Text style={{ fontSize: 24 }}>
-                    {renderUsername(navigation, message.uId, message.username)}回复了你的
+                    {renderUsername(navigation, message.uId, message.username)} 回复了你的
                     {renderHean(navigation, message.heanCard, type)}
                 </Text>
                 <Text>
@@ -69,7 +69,7 @@ const getDetailedMessage = (type, message, navigation) => {
     if (type === 6)
         return (
             <Text style={{ fontSize: 24 }}>
-                你的{renderHean(navigation, message.heanCard, type)}被选中了
+                你的 {renderHean(navigation, message.heanCard, type)} 被选中了
             </Text>
         );
 }
@@ -117,14 +117,14 @@ class MessageDetailScreen extends React.Component {
             <React.Fragment>
                 <View>
                     {messages.map((message) => (
-                        <View style={{ height: 220, margin: 20, marginBottom: 10 }}>
+                        <View style={{ margin: 20, marginBottom: 10 }}>
                             {/* timestamp */}
                             <View style={{ alignSelf: "center" }}>
                                 <Text>{message.time}</Text>
                             </View>
 
                             {/* message content */}
-                            <View style={{ height: 200, borderWidth: 1 }}>
+                            <View style={{ padding: 15, borderWidth: 1, borderRadius: 50}}>
                                 {getDetailedMessage(type, message, this.props.navigation)}
                             </View>
                         </View>
