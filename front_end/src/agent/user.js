@@ -20,7 +20,7 @@ const user = {
             .send({ token, phone, code, username, password })
             .then(res => res.body)
             .catch(err => err.response.body),
-    firstSignin: (phone, password) =>({ rescode:0})
+    firstSignin: (phone, password) => ({ rescode: 0 })
         /*requests.post(API_ROOT + "/user/login")
             .send({ phone, password })
             .then(res => res.body)
@@ -31,7 +31,7 @@ const user = {
             .then(res => res.body)
             .catch(err => err.response.body),
     getMyInfo: (uId, token) =>
-        ({ rescode: 0,avatar:null, username: "tbc", feather: 5, mutualFollow: 1, following: 1, followers: 1, hasChecked: false }),
+        ({ rescode: 0, avatar: null, username: "tbc", feather: 5, mutualFollow: 1, following: 1, followers: 1, hasChecked: false }),
     getOthersInfo: (uId, token, otherUId) =>
         requests.get(API_ROOT + "/user/info")
             .set('Authorization', 'Bearer ' + token)
@@ -81,6 +81,8 @@ const user = {
             .set('uId', uId)
             .then(res => res.body)
             .catch(err => err.response.body)*/,
+    follow: (uId, token, targetUId) => ({ rescode: 0 }),
+    unfollow: (uId, token, targetUId) => ({ rescode: 0 })
 };
 
 export default user;

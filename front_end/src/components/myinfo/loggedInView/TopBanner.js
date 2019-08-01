@@ -48,8 +48,10 @@ class TopBanner extends React.Component {
             username: this.props.username,
             feather: this.props.feather,
             hasChecked: this.props.hasChecked,
+            hasFollowed: this.props.hasFollowed,
         }
         this.check = this.check.bind(this);
+        this.toggleFollow = this.toggleFollow.bind(this);
     }
 
     // 一个正确的 superagent + Redux 联动流程：await agent -> dispatch action -> Redux store changed -> rerender
@@ -62,8 +64,16 @@ class TopBanner extends React.Component {
         }
     }
 
+    async toggleFollow() {
+        const { uId, token, otherUId } = this.props;
+        const { hasFollowed } = this.state;
+        const response = hasFollowed ? await agent.user.unfollow(uId, token, otherUId) : await agent.user.follow(uId, token, otherUId);
+        if (response.rescode === 0)
+            this.setState({ hasFollowed: !hasFollowed })
+    }
+
     render() {
-        const { avatar, username, feather, hasChecked } = this.state;
+        const { avatar, username, feather, hasChecked, hasFollowed } = this.state;
         const { isMe } = this.props;
         return (
             <React.Fragment>
@@ -89,7 +99,7 @@ class TopBanner extends React.Component {
                             羽毛：{feather}
                         </Text>
                     </View>
-                    {isMe && (
+                    {isMe ? (
                         <View style={{ flexDirection: 'row-reverse', flex: 1 }}>
                             {hasChecked ? (
                                 <Button
@@ -106,7 +116,24 @@ class TopBanner extends React.Component {
                                 )
                             }
                         </View>
-                    )}
+                    ) : (
+                            <View style={{ flexDirection: 'row-reverse', flex: 1 }}>
+                                {hasFollowed ? (
+                                    <Button
+                                        containerStyle={[styles.attendance, styles.border, styles.checked]}
+                                        title="已关注"
+                                        onPress={this.toggleFollow}
+                                        icon={{ name: "check" }}
+                                    />
+                                ) : (
+                                        <Button containerStyle={[styles.attendance, styles.border, styles.unchecked]}
+                                            title="关注"
+                                            onPress={this.toggleFollow}
+                                        />
+                                    )
+                                }
+                            </View>
+                        )}
                 </View>
             </React.Fragment>
         );

@@ -3,6 +3,9 @@ import { Text, View, StyleSheet, TouchableOpacity } from "react-native";
 import { ListItem, Badge, Divider } from 'react-native-elements'
 import { connect } from "react-redux"
 import FontAwesome from "react-native-vector-icons/FontAwesome";
+import AntDesign from "react-native-vector-icons/AntDesign";
+import Feather from "react-native-vector-icons/Feather";
+import SimpleLineIcons from "react-native-vector-icons/SimpleLineIcons";
 import agent from "../../../agent/index";
 
 const styles = StyleSheet.create({
@@ -12,24 +15,25 @@ const styles = StyleSheet.create({
 })
 
 const messageIcons = [
+    <SimpleLineIcons name={"user-follow"} size={20} />,
+    <AntDesign name={"like2"} size={20} />,
+    <Feather name={"star"} size={20} />,
     <FontAwesome name={"comment-o"} size={20} />,
-    <FontAwesome name={"comment-o"} size={20} />,
-    <FontAwesome name={"comment-o"} size={20} />,
-    <FontAwesome name={"comment-o"} size={20} />,
-    <FontAwesome name={"comment-o"} size={20} />
+    <FontAwesome name={"commenting-o"} size={20} />,
+    <FontAwesome name={"envelope-o"} size={20} />
 ]
 
 const getBriefMessage = (message) => {
     if (message.type === 1)
-        return `${message.username}关注了你`;
+        return `${message.username} 关注了你`;
     if (message.type === 2)
-        return `${message.username}觉得你的函很赞`;
+        return `${message.username} 觉得你的函很赞`;
     if (message.type === 3)
-        return `${message.username}收藏了你的函`;
+        return `${message.username} 收藏了你的函`;
     if (message.type === 4)
-        return `${message.username}评论了你的函`;
+        return `${message.username} 评论了你的函`;
     if (message.type === 5)
-        return `${message.username}回复了你的评论`;
+        return `${message.username} 回复了你的评论`;
     if (message.type === 6)
         return `你的投稿被选中了`;
 }
@@ -83,17 +87,22 @@ class MessageListScreen extends React.Component {
                 <Divider />
                 <View style={{ borderWidth: 0 }}>
                     {messages.map((message, index) => (
-                        <TouchableOpacity onPress={() => this.props.navigation.push("MessageDetail", { type: message.type })}>
-                            <ListItem
-                                key={index}
-                                leftIcon={messageIcons[message.type - 1]}
-                                title={getBriefMessage(message)}
-                                titleStyle={{ fontSize: 20 }}
-                                subtitle={message.time}
-                                subtitleStyle={{ fontSize: 12 }}
-                                rightIcon={message.hasRead || <Badge />}
-                            />
-                        </TouchableOpacity>
+                        <View>
+                            <TouchableOpacity onPress={() => this.props.navigation.push("MessageDetail", { type: message.type })}>
+                                <ListItem
+                                    key={index}
+                                    leftIcon={messageIcons[message.type - 1]}
+                                    title={getBriefMessage(message)}
+                                    titleStyle={{ fontSize: 20 }}
+                                    subtitle={message.time}
+                                    subtitleStyle={{ fontSize: 12 }}
+                                    rightIcon={message.hasRead || <Badge />}
+                                />
+                            </TouchableOpacity>
+                            <Divider />
+                            <Divider />
+                            <Divider />
+                        </View>
                     ))}
                 </View>
             </React.Fragment>

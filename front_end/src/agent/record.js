@@ -16,7 +16,11 @@ const record = {
     createJournal: (uId, token, journalBookId, journalUrl) => ({ rescode: 0 }),
     getMessageList: (uId, token) => ({
         rescode: 0, messages: [{ type: 1, uId: 1, username: "tbc", hasRead: false, time: "2019-7-29 6=4:13 p.m." },
-        { type: 4, uId: 1, username: "tbc", hId: "1", text: "123", hasRead: true, time: "2019-7-29 6:53 p.m." }]
+            { type: 2, uId: 1, username: "tbc", hasRead: false, time: "2019-7-29 6=4:13 p.m." },
+            { type: 3, uId: 1, username: "tbc", hasRead: false, time: "2019-7-29 6=4:13 p.m." },
+            { type: 4, uId: 1, username: "tbc", hasRead: false, time: "2019-7-29 6=4:13 p.m." },
+            { type: 5, uId: 1, username: "tbc", hasRead: false, time: "2019-7-29 6=4:13 p.m." },
+        { type: 6, uId: 1, username: "tbc", hId: "1", text: "123", hasRead: true, time: "2019-7-29 6:53 p.m." }]
     })
         /*requests.get(API_ROOT + "/record/message")
             .set('Authorization', 'Bearer ' + token)
