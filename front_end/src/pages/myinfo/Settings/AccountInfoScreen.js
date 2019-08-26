@@ -53,7 +53,7 @@ class AccountInfoScreen extends React.Component {
     async submit() {
         const { uId, token } = this.props;
         const newUsername = this.state.username;
-        const response = await agent.user.updateInfo(uId, newUsername, token)
+        const response = await agent.user.updateUsername(uId, newUsername, token)
         this.props.onSubmit(response.newUsername);
         console.log(response)
         //this.props.navigation.pop()

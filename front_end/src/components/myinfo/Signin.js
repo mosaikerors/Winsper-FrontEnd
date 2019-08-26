@@ -39,7 +39,9 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = dispatch => ({
     onSubmit: (response) =>
-        dispatch({ type: 'SIGN_IN', payload: response })
+        dispatch({ type: 'SIGN_IN', payload: response }),
+    onReceiveMessage: (message) =>
+        dispatch({ type: "RECEIVE_MESSAGE", payload: message })
 });
 
 export class Signin extends React.Component {
@@ -64,6 +66,33 @@ export class Signin extends React.Component {
             // 注：这里没有经过中间件的 dispatch 看上去是同步的
             this.props.onSubmit(response)
             this.props.navigation.dispatch(login);
+            // websocket
+            agent.ws1 = new WebSocket("ws://202.120.40.8:30525/websocket?senderUId=1");
+            
+            agent.ws1.onopen = function () {
+                console.log('open1');
+            };
+            agent.ws1.onmessage = (e) => {
+                const message = eval("(" + e.data + ")");
+                console.log("ws1: " + message.senderUsername); 
+                agent.ws.send('{ "type": 1, "receiverUId": 2, "senderUsername": "B" }');
+            };
+            agent.ws1.onclose = function () {
+                console.log('close1');
+            };
+
+            agent.ws = new WebSocket("ws://202.120.40.8:30525/websocket?senderUId=2");
+            agent.ws.onopen = function () {
+                console.log('open2');
+            };
+            agent.ws.onmessage = (e) => {
+                const message = eval("(" + e.data + ")");
+                console.log("ws2: "+message.senderUsername);
+                this.props.onReceiveMessage(message)
+            };
+            agent.ws.onclose = function () {
+                console.log('close2');
+            };
         }
     }
 

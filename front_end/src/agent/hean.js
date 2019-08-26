@@ -5,7 +5,7 @@ import { API_ROOT } from "./index";
 const hean = {
     getPoints: (uId, token, latitude, longitude) => ({
         rescode: 0,
-        heans: [{ hId: 1, latitude: 31.025, longitude: 121.43, height: 0 }, { hId: 2, latitude: 31.024, longitude: 121.44, height: 0 }]
+        //heans: fake.heans
     })
         /*requests.get(API_ROOT + "/hean/point/all")
             .set('Authorization', 'Bearer ' + token)
@@ -42,6 +42,13 @@ const hean = {
             .query({ viewer, owner })
             .then(res => res.body)
             .catch(err => err.response.body)*/,
+    getCollection: (uId, token, owner) => hean.getHeanCardList(1, 2, 3)
+            /*requests.get(API_ROOT + "/hean/collection")
+                .set('Authorization', 'Bearer ' + token)
+                .set('uId', uId)
+                .query({ owner })
+                .then(res => res.body)
+                .catch(err => err.response.body)*/,
     getDetailedHean: (uId, token, hId) => ({
         rescode: 0,
         hean: {
@@ -58,12 +65,6 @@ const hean = {
             .query({ hId, uId })
             .then(res => res.body)
             .catch(err => err.response.body)*/,
-    getAll: (uId, token) =>
-        requests.get(API_ROOT + "/hean/all")
-            .set('Authorization', 'Bearer ' + token)
-            .set('uId', uId)
-            .then(res => res.body)
-            .catch(err => err.response.body),
     upload: (uId, token, body) =>
         RNFetchBlob.fetch('POST', API_ROOT + '/hean/upload', {
             Authorization: "Bearer " + token,
@@ -73,24 +74,27 @@ const hean = {
             // res.data is a string, to convert it it a object
             .then(res => JSON.parse(res.data))
             .catch(err => err),
-    getCollection: (uId, token, owner) => hean.getHeanCardList(1, 2, 3)
-        /*requests.get(API_ROOT + "/hean/collection")
-            .set('Authorization', 'Bearer ' + token)
-            .set('uId', uId)
-            .query({ owner })
-            .then(res => res.body)
-            .catch(err => err.response.body)*/,
+    deleteHean: (uId, token, hId) => ({ rescode: 0 }),
+    like: (uId, token, hId) => ({ rescode: 0 }),
+    dislike: (uId, token, hId) => ({ rescode: 0 }),
+    comment: (uId, token, hId, targetCommentId, content) => ({ rescode: 0 }),
     getComment: (uId, token, owner) => ({
         rescode: 0, comments: [
-            { isComment: true, username: "tbc", content: "nb", time: "2019-8-1", hId: 1 },            
-            { isComment: false, username: "tbc", content: "nbaaa", time: "2019-7-31", hId: 1 },
-    ]})
-        /*requests.get(API_ROOT + "/hean/comment")
-            .set('Authorization', 'Bearer ' + token)
-            .set('uId', uId)
-            .query({ owner })
-            .then(res => res.body)
-            .catch(err => err.response.body)*/
+            { isComment: true, username: "tbc", content: "nb", time: "2019-8-1", hId: 1 },
+            { isComment: false, username: "tbc", content: "great", time: "2019-7-31", hId: 1 },
+        ]
+    }),
+    /*requests.get(API_ROOT + "/hean/comment")
+        .set('Authorization', 'Bearer ' + token)
+        .set('uId', uId)
+        .query({ owner })
+        .then(res => res.body)
+        .catch(err => err.response.body)*/
+    collect: (uId, token, hId) => ({ rescode: 0 }),
+    uncollect: (uId, token, hId) => ({ rescode: 0 }),
+    getSelectedSubmissions: (uId, token) => ({ rescode: 0 }),
+    getSubmissionsById: (uId, token, owner) => ({ rescode: 0 }),
+    postSubmissions: (uId, token, hId, reason) => ({ rescode: 0 })
 };
 
 export default hean;

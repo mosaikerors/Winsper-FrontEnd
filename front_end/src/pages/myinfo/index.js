@@ -42,8 +42,8 @@ const MyInfoScreenNavigator = createStackNavigator(
         PrivacySafety: { screen: PrivacySafetyScreen, navigationOptions: { title: '隐私与安全' } }
     },
     {
-        //initialRouteName: "LoggedOut",
-        initialRouteName: "LoggedIn",
+        initialRouteName: "LoggedOut",
+        //initialRouteName: "LoggedIn",
         //headerMode: 'none',   // 是否显示页眉
         navigationOptions: ({ navigation }) => {
             // topScreen: 当前页面

@@ -1,21 +1,20 @@
 import { combineReducers, createStore } from 'redux'
 import user from "./reducers/user"
-import hean from "./reducers/hean"
-import common from "./reducers/common"
+import message from "./reducers/message"
 import { persistStore, persistReducer } from "redux-persist"
 import storage from "redux-persist/lib/storage"
 import autoMergeLevel2 from "redux-persist/lib/stateReconciler/autoMergeLevel2"
 
 const reducer = combineReducers({
-    common,
     user,
-    hean
+    message
 });
 
 const persistConfig = {
     key: "root",
     storage,
-    stateReconciler: autoMergeLevel2
+    stateReconciler: autoMergeLevel2,
+    blacklist: ['message']
 };
 
 const persistedReducer = persistReducer(persistConfig, reducer);

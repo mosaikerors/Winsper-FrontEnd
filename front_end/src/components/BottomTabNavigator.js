@@ -21,7 +21,6 @@ class BottomTabNavigator extends React.Component {
 
     render() {
         const { cntTab } = this.state;
-        console.log("cntTab: " + cntTab)
         return (
             <React.Fragment>
                 <View style={{ flexDirection: "row", justifyContent: "space-around", height: 50 }}>

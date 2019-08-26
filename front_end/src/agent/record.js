@@ -10,16 +10,17 @@ const record = {
         ({
             rescode: 0, journals: [
                 { journalId: 1, journalUrl: "https://res.cloudinary.com/dxm8ocsto/image/upload/v1564538927/tuplmj8gqjdw3j8p2gd0.jpg" },
-                { journalId: 2, journalUrl: "https://res.cloudinary.com/dxm8ocsto/image/upload/v1564537902/klvnxpi6369t2lluilzi.jpg" }
+                { journalId: 2, journalUrl: "https://res.cloudinary.com/dxm8ocsto/image/upload/v1564727124/g2wva9qxpy9quiviljar.jpg" }
             ]
         }),
     createJournal: (uId, token, journalBookId, journalUrl) => ({ rescode: 0 }),
+    deleteJournal: (uId, token, journalId) => ({ rescode: 0 }),
     getMessageList: (uId, token) => ({
-        rescode: 0, messages: [{ type: 1, uId: 1, username: "tbc", hasRead: false, time: "2019-7-29 6=4:13 p.m." },
-            { type: 2, uId: 1, username: "tbc", hasRead: false, time: "2019-7-29 6=4:13 p.m." },
-            { type: 3, uId: 1, username: "tbc", hasRead: false, time: "2019-7-29 6=4:13 p.m." },
-            { type: 4, uId: 1, username: "tbc", hasRead: false, time: "2019-7-29 6=4:13 p.m." },
-            { type: 5, uId: 1, username: "tbc", hasRead: false, time: "2019-7-29 6=4:13 p.m." },
+        rescode: 0, messages: [{ type: 1, uId: 1, username: "tbc", hasRead: false, time: "2019-7-29 4:13 p.m." },
+        { type: 2, uId: 1, username: "tbc", hasRead: false, time: "2019-7-29 4:13 p.m." },
+        { type: 3, uId: 1, username: "tbc", hasRead: false, time: "2019-7-29 4:13 p.m." },
+        { type: 4, uId: 1, username: "tbc", hasRead: false, time: "2019-7-29 4:13 p.m." },
+        { type: 5, uId: 1, username: "tbc", hasRead: false, time: "2019-7-29 4:13 p.m." },
         { type: 6, uId: 1, username: "tbc", hId: "1", text: "123", hasRead: true, time: "2019-7-29 6:53 p.m." }]
     })
         /*requests.get(API_ROOT + "/record/message")
@@ -31,14 +32,19 @@ const record = {
         rescode: 0, messages: [{ messageId: 12, uId: 1, username: "tbc", hasRead: true, time: "2019-7-29" }
             , { messageId: 11, uId: 1, username: "tbc", hasRead: false, time: "2019-7-29", text: "werwr" }]
     }),
-    readAll: (uId,token)=> ({rescode:0}),
+    readSingleMessage: (uId, token, messageId) => ({ rescode: 0 }),
+    readAll: (uId, token) => ({ rescode: 0 }),
+    deleteMessage: (uId, token, type) => ({ rescode: 0 }),
     getDiaryList: (uId, token, owner) => ({
         rescode: 0, diaries: [{ diaryId: 1, title: "哈哈", time: "2019-8-1" }, {
             diaryId: 2, title: "hahaha", time: "2019-7-31"
         }]
     }),
     getDiaryDetail: (uId, token, diaryId) => ({ rescode: 0, title: "hahaha", username: "tbc", time: 123, text: "123456" }),
-    createDiary: (uId, token, title, text) => ({ rescode: 0 })
+    createDiary: (uId, token, title, text) => ({ rescode: 0 }),
+    deleteDiary: (uId, token, diaryId) => ({ rescode: 0 }),
+    getMoodReportList: (uId, token, owner) => ({ rescode: 0 }),
+    getMoodReportDetail: (uId, token, moodReportId) => ({ rescode: 0 })
 };
 
 export default record;
