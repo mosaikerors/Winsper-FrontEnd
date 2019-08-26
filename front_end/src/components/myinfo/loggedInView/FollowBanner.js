@@ -27,16 +27,8 @@ const mapDispatchToProps = dispatch => ({
 });
 
 class FollowBanner extends React.Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            mutualFollow: this.props.mutualFollow,
-            following: this.props.following,
-            followers: this.props.followers
-        }
-    }
     render() {
-        const { mutualFollow, following, followers } = this.state;
+        const { mutualFollow, following, followers } = this.props;
         return (
             <React.Fragment>
                 <View style={{ flexDirection: 'row' }}>

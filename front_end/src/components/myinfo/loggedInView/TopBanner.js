@@ -44,8 +44,6 @@ class TopBanner extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            avatar: this.props.avatar,
-            username: this.props.username,
             feather: this.props.feather,
             hasChecked: this.props.hasChecked,
             hasFollowed: this.props.hasFollowed,
@@ -60,7 +58,7 @@ class TopBanner extends React.Component {
         const { uId, token } = this.props;
         const response = await agent.user.check(uId, token);
         if (response.rescode === 0) {
-            this.setState({ feather: response.newFeather })
+            this.setState({ feather: response.newFeather, hasChecked: true })
         }
     }
 
@@ -73,8 +71,8 @@ class TopBanner extends React.Component {
     }
 
     render() {
-        const { avatar, username, feather, hasChecked, hasFollowed } = this.state;
-        const { isMe } = this.props;
+        const { username, avatar, isMe } = this.props;
+        const { feather, hasChecked, hasFollowed } = this.state;
         return (
             <React.Fragment>
                 <View style={{ flexDirection: "row", marginBottom: 12 }}>

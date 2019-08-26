@@ -35,28 +35,8 @@ const mapDispatchToProps = dispatch => ({
 });
 
 class FollowList extends React.Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            followlist: null,
-        }
-
-    }
-    async componentWillMount() {
-        let response;
-        const { uId, token, tabLabel } = this.props;
-        if (tabLabel === "互相关注")
-            response = await agent.user.getMutualFollow(uId, token)
-        if (tabLabel === "我的关注")
-            response = await agent.user.getFollowings(uId, token)
-        if (tabLabel === "我的粉丝")
-            response = await agent.user.getFollowers(uId, token)
-        console.log(response)
-        if (response.rescode === 0)
-            this.setState({ followlist: response.followlist })
-    }
     render() {
-        const { followlist } = this.state;
+        const { followlist } = this.props;
         if (!followlist)
             return (<Loading />);
         if (followlist.length === 0)
@@ -70,11 +50,13 @@ class FollowList extends React.Component {
                                 key={index}
                                 leftAvatar={{ source: { uri: listItem.avatar } }}
                                 title={listItem.username}
-                                rightIcon={listItem.isMutualFollow && <FontAwesome
-                                    name={"heart"}
-                                    color={"pink"}
-                                    size={20}
-                                />}
+                                rightIcon={listItem.isMutualFollow && (
+                                    <FontAwesome
+                                        name={"heart"}
+                                        color={"pink"}
+                                        size={20}
+                                    />
+                                )}
                             />
                         </TouchableOpacity>
                     ))}

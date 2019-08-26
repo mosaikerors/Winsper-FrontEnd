@@ -6,6 +6,7 @@ import FollowBanner from "../../components/myinfo/loggedInView/FollowBanner";
 import DetailedBlock from "../../components/myinfo/loggedInView/DetailedBlock";
 import BottomBanner from "../../components/myinfo/loggedInView/BottomBanner";
 import agent from "../../agent/index";
+import { NavigationEvents, withNavigationFocus } from 'react-navigation';
 
 const mapStateToProps = state => ({
     uId: state.user.uId,
@@ -19,11 +20,12 @@ class PersonPageScreen extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            userInfo: {}
+            userInfo: null
         }
+        this.updateState = this.updateState.bind(this);
     }
 
-    async componentWillMount() {
+    async updateState() {
         // 需要传进来一个 uId
         const otherUId = this.props.navigation.getParam("uId", 0);
         const { uId, token } = this.props;
@@ -32,7 +34,20 @@ class PersonPageScreen extends React.Component {
             this.setState({ userInfo: Object.assign({}, response, { otherUId }) });
     }
 
+    componentWillMount() {
+        this.updateState();
+    }
+
+    componentWillReceiveProps(nextProps) {
+        // if you will leave this page, grab newest data
+        if (!nextProps.isFocused) {
+            this.updateState();
+        }
+    }
+
     render() {
+        if (!this.state.userInfo)
+            return null;
         const { avatar, username, feather, mutualFollow, following, followers, hasFollowed, otherUId } = this.state.userInfo;
         return (
             <React.Fragment>
@@ -46,4 +61,4 @@ class PersonPageScreen extends React.Component {
         );
     }
 }
-export default connect(mapStateToProps, mapDispatchToProps)(PersonPageScreen);
+export default withNavigationFocus(connect(mapStateToProps, mapDispatchToProps)(PersonPageScreen));
