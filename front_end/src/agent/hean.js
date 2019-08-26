@@ -5,7 +5,7 @@ import { API_ROOT } from "./index";
 const hean = {
     getPoints: (uId, token, latitude, longitude) => ({
         rescode: 0,
-        //heans: fake.heans
+        heans: []
     })
         /*requests.get(API_ROOT + "/hean/point/all")
             .set('Authorization', 'Bearer ' + token)

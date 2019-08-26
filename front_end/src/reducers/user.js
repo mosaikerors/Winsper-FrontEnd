@@ -6,11 +6,15 @@ const defaultState = {
 const user = (state = defaultState, action) => {
     switch (action.type) {
         case 'SIGN_IN':
-                console.log("P6")
             return {
                 ...state,
                 token: action.payload.token,
                 uId: action.payload.uId,
+            }
+        case 'UPDATE_TOKEN':
+            return {
+                ...state,
+                token: action.payload.token,
             }
         default:
             return state;

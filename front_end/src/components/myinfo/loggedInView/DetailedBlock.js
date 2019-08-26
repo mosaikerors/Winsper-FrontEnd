@@ -22,7 +22,6 @@ const styles = StyleSheet.create({
 class DetailedBlock extends React.Component {
     render() {
         const { isMe, privacy } = this.props;
-        console.log("privacy: "+privacy)
         return (
             <React.Fragment>
                 <Card containerStyle={{ flexDirection: 'column' }}>

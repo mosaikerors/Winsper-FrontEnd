@@ -79,11 +79,10 @@ class TopBanner extends React.Component {
                     <Avatar
                         rounded
                         size="large"
-                        icon={{ name: 'user', color: 'orange', type: 'font-awesome' }}
-                        overlayContainerStyle={{ backgroundColor: 'cyan', flex: 4, borderWidth: 1 }}
+                        source={{ uri: avatar }}
+                        overlayContainerStyle={{ backgroundColor: 'white', flex: 4, borderWidth: 1 }}
                         activeOpacity={0.7}
                         containerStyle={{ marginTop: 25, marginLeft: 25, borderWidth: 1 }}
-                        showEditButton
                     />
                     <View style={{ flexDirection: 'column' }}>
                         <Text

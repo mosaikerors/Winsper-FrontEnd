@@ -43,38 +43,50 @@ const user = {
             .query({ uId: otherUId })
             .then(res => res.body)
             .catch(err => err.response.body),
-    updateUsername: (uId, username, token) => ({ message: "ok", newUsername: username })
-    /*    requests.put(API_ROOT + "/user/updateInfo")
+    updateAvatar: (uId, token, avatar) =>
+        requests.put(API_ROOT + "/user/avatar/update")
             .set('Authorization', 'Bearer ' + token)
             .set('uId', uId)
-            .send({ uId, username })
+            .send({ avatar })
             .then(res => res.body)
-            .catch(err => err.response.body),*/,
-    updateAvatar: (uId, token, avatar) => ({ rescode: 0 }),
-    modifyPassword: (uId, token, password) => ({ rescode: 0 }),
+            .catch(err => err.response.body),
+    updateUsername: (uId, token, username) =>
+        requests.put(API_ROOT + "/user/username/update")
+            .set('Authorization', 'Bearer ' + token)
+            .set('uId', uId)
+            .send({ username })
+            .then(res => res.body)
+            .catch(err => err.response.body),
+    modifyPassword: (uId, token, password) =>
+        requests.put(API_ROOT + "/user/password/update")
+            .set('Authorization', 'Bearer ' + token)
+            .set('uId', uId)
+            .send({ password })
+            .then(res => res.body)
+            .catch(err => err.response.body),
     sendCodeWhenForget: (phone) => ({ rescode: 0 }),
     modifyPasswordWhenForget: (token, phone, code, password) => ({ rescode: 0 }),
-    check: (uId, token) => 
-     requests.post(API_ROOT + "/user/check")
-         .set('Authorization', 'Bearer ' + token)
-         .set('uId', uId)
-         .then(res => res.body)
-         .catch(err => err.response.body),
+    check: (uId, token) =>
+        requests.post(API_ROOT + "/user/check")
+            .set('Authorization', 'Bearer ' + token)
+            .set('uId', uId)
+            .then(res => res.body)
+            .catch(err => err.response.body),
     follow: (uId, token, targetUId) => ({ rescode: 0 }),
     unfollow: (uId, token, targetUId) => ({ rescode: 0 }),
-    getMutualFollow: (uId, token) => 
+    getMutualFollow: (uId, token) =>
         requests.get(API_ROOT + "/user/followlist/mutual")
             .set('Authorization', 'Bearer ' + token)
             .set('uId', uId)
             .then(res => res.body)
             .catch(err => err.response.body),
-    getFollowings: (uId, token) => 
+    getFollowings: (uId, token) =>
         requests.get(API_ROOT + "/user/followlist/followings")
             .set('Authorization', 'Bearer ' + token)
             .set('uId', uId)
             .then(res => res.body)
             .catch(err => err.response.body),
-    getFollowers: (uId, token) => 
+    getFollowers: (uId, token) =>
         requests.get(API_ROOT + "/user/followlist/followers")
             .set('Authorization', 'Bearer ' + token)
             .set('uId', uId)

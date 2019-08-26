@@ -30,8 +30,9 @@ class LoggedInScreen extends React.Component {
     async updateState() {
         const { uId, token } = this.props;
         const response = await agent.user.getMyInfo(uId, token)
+        console.log("respionse", response)
         if (response.rescode === 0)
-            this.setState({ myinfo: response })
+            this.setState({ myinfo: Object.assign({}, response, { avatar: response.avater }) })
     }
 
     componentWillMount() {
@@ -39,8 +40,8 @@ class LoggedInScreen extends React.Component {
     }
 
     componentWillReceiveProps(nextProps) {
-        // if you will leave this page, grab newest data
-        if (!nextProps.isFocused) {
+        // if you will reach this page, grab newest data
+        if (nextProps.isFocused) {
             this.updateState();
         }
     }
