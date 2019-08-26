@@ -32,7 +32,6 @@ class FollowScreen extends React.Component {
         const { uId, token } = this.props;
         let response;
         response = await agent.user.getMutualFollow(uId, token)
-        console.log("111111111: ", response)
         if (response.rescode === 0)
             this.setState({ mutualFollow: response.followlist })
         response = await agent.user.getFollowings(uId, token)
@@ -57,7 +56,6 @@ class FollowScreen extends React.Component {
     render() {
         const initTab = this.props.navigation.getParam("tab", 0);
         const { mutualFollow, followings, followers } = this.state;
-        console.log(mutualFollow, followings, followers)
         return (
             <React.Fragment>
                 <ScrollableTabView renderTabBar={() => <DefaultTabBar />} initialPage={initTab} style={{ marginTop: 0 }}>

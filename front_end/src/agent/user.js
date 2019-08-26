@@ -72,8 +72,20 @@ const user = {
             .set('uId', uId)
             .then(res => res.body)
             .catch(err => err.response.body),
-    follow: (uId, token, targetUId) => ({ rescode: 0 }),
-    unfollow: (uId, token, targetUId) => ({ rescode: 0 }),
+    follow: (uId, token, targetUId) =>
+        requests.post(API_ROOT + "/user/follow")
+            .set('Authorization', 'Bearer ' + token)
+            .set('uId', uId)
+            .send({ targetUId })
+            .then(res => res.body)
+            .catch(err => err.response.body),
+    unfollow: (uId, token, targetUId) =>
+        requests.post(API_ROOT + "/user/unfollow")
+            .set('Authorization', 'Bearer ' + token)
+            .set('uId', uId)
+            .send({ targetUId })
+            .then(res => res.body)
+            .catch(err => err.response.body),
     getMutualFollow: (uId, token) =>
         requests.get(API_ROOT + "/user/followlist/mutual")
             .set('Authorization', 'Bearer ' + token)

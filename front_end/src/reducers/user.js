@@ -1,6 +1,7 @@
 const defaultState = {
     token: '',
     uId: 0,
+    privacy: [true, true, true, true, true, true, true]
 }
 
 const user = (state = defaultState, action) => {
@@ -15,6 +16,11 @@ const user = (state = defaultState, action) => {
             return {
                 ...state,
                 token: action.payload.token,
+            }
+        case 'UPDATE_PRIVACY':
+            return { 
+                ...state,
+                privacy: action.payload.privacy,
             }
         default:
             return state;

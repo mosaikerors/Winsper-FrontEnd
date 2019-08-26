@@ -7,12 +7,15 @@ import { connect } from "react-redux";
 const mapStateToProps = state => ({
     token: state.user.token,
     uId: state.user.uId,
+    privacy: state.user.privacy
 })
 
 const mapDispatchToProps = dispatch => ({
+    onUpdate: (privacy) =>
+        dispatch({ type: 'UPDATE_PRIVACY', payload: { privacy } })
 })
 
-const fieldlist = ['消息', '函', '收藏', '日记', '手账', '投稿', '心情报表', '评论'];
+const fieldlist = ['函', '收藏', '日记', '手账', '投稿', '心情报表', '评论'];
 
 const suffix = "对于他人是否可见";
 
@@ -20,41 +23,40 @@ class PrivacySafetyScreen extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            switches: [false, true, false, false, true, true, false, true]
+            privacy: this.props.privacy
         }
         this.toggleSwitch = this.toggleSwitch.bind(this);
     }
 
     async toggleSwitch(index) {
+        // state, Redux store, datebase 全部更新
         const { uId, token } = this.props;
-        let switches = this.state.switches
-        const toBePublic = !switches[index];
-        switches[index] = toBePublic;
-        this.setState({ switches });
+        let privacy = this.props.privacy
+        const toBePublic = !privacy[index];
+        privacy[index] = toBePublic;
+        this.props.onUpdate(privacy)
+        this.setState({ privacy })
         let response;
         switch (index) {
             case 0:
-                response = await agent.user.toggleMessagePrivacy(uId, token, toBePublic)
-                break;
-            case 1:
                 response = await agent.user.toggleHeanPrivacy(uId, token, toBePublic)
                 break;
-            case 2:
+            case 1:
                 response = await agent.user.toggleCollectionPrivacy(uId, token, toBePublic)
                 break;
-            case 3:
+            case 2:
                 response = await agent.user.toggleDiaryPrivacy(uId, token, toBePublic)
                 break;
-            case 4:
+            case 3:
                 response = await agent.user.toggleJournalPrivacy(uId, token, toBePublic)
                 break;
-            case 5:
+            case 4:
                 response = await agent.user.toggleSubmissionPrivacy(uId, token, toBePublic)
                 break;
-            case 6:
+            case 5:
                 response = await agent.user.toggleMoodReportPrivacy(uId, token, toBePublic)
                 break;
-            case 7:
+            case 6:
                 response = await agent.user.toggleCommentPrivacy(uId, token, toBePublic)
                 break;
             default:
@@ -62,7 +64,9 @@ class PrivacySafetyScreen extends React.Component {
         }
     }
 
+    // 尽管 render 中用的仍然是 props 数据，但是因为有了 setState，所以 render 会被触发
     render() {
+        console.log("INRENDER", this.props.privacy)
         return (
             <React.Fragment>
                 <View>
@@ -71,7 +75,7 @@ class PrivacySafetyScreen extends React.Component {
                             <ListItem
                                 key={index}
                                 title={listItem + suffix}
-                                rightIcon={<Switch onValueChange={() => this.toggleSwitch(index)} value={this.state.switches[index]} />}
+                                rightIcon={<Switch onValueChange={() => this.toggleSwitch(index)} value={this.props.privacy[index]} />}
                             />
                         ))}
                     </View>
