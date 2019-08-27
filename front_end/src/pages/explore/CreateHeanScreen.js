@@ -97,13 +97,13 @@ class CreateHeanScreen extends Component {
                 <ImageGroup images={imageURL} length={this.state.images.length} />
                 <View>
                     <ListItem
-                        title={"添加图片"}
+                        title={"选择图片"}
                         onPress={this.addImage}
                         leftIcon={{ name: "image" }}
                         chevronColor="white"
                         chevron
                     />
-                    <Button title={"提交"} onPress={this.upload} />
+                    <Button title={"确认"} onPress={this.upload} />
                 </View>
             </Fragment>
         );

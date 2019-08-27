@@ -44,7 +44,6 @@ export class MapScreen extends React.Component {
     async updateState() {
         const { uId, token } = this.props;
         const response = await agent.hean.getPoints(uId, token, longitude, latitude, "all", "all");   // modify location to actual values
-        console.log(response)
         if (response.rescode === 0) {
             response.heans.forEach(hean => hean.longitude = hean.longtitude);
             this.setState({ heans: response.heans })

@@ -82,6 +82,7 @@ class HeanDetailScreen extends Component {
         this.changeLike = this.changeLike.bind(this);
         this.changeStar = this.changeStar.bind(this);
         this.updateState = this.updateState.bind(this);
+        this.deleteHean = this.deleteHean.bind(this);
     };
 
     async updateState() {
@@ -138,8 +139,16 @@ class HeanDetailScreen extends Component {
         }
     }
 
+    async deleteHean() {
+        const { uId, token } = this.props;
+        const { hId } = this.state.heanCard;
+        const response = await agent.hean.deleteHean(uId, token, hId);
+        console.log("delete", response)
+        this.props.navigation.pop();
+    }
+
     render() {
-        const { hId, uId, avatar, username, createdTime, pictures, comments } = this.state.heanDetailed;
+        const { hId, avatar, username, createdTime, pictures, comments } = this.state.heanDetailed;
         const { text, likeCount, starCount, commentCount, hasLiked, hasStarred } = this.state.heanCard;
         if (!hId)
             return null;
@@ -149,16 +158,24 @@ class HeanDetailScreen extends Component {
                     <ScrollView style={css.view}>
 
                         {/* avatar, username, createdTime */}
-                        <View style={css.Icon}>
+                        <View style={[css.Icon, { borderWidth: 0 }]}>
                             <Avatar
                                 rounded
                                 size={"medium"}
                                 source={{ uri: avatar }}
                             />
-                            <View style={css.username}>
+                            <View style={[css.username, { borderWidth: 0, flex: 1 }]}>
                                 <Text>{username}</Text>
                                 <Text>{createdTime}</Text>
                             </View>
+                            {this.props.uId === this.state.heanDetailed.uId &&
+                                <TouchableOpacity style={{ margin: 10,borderWidth:0,padding:5 }} onPress={this.deleteHean}>
+                                    <FontAwesome
+                                        name={"trash"}
+                                        size={20}
+                                    />
+                                </TouchableOpacity>
+                            }
                         </View>
 
                         {/* content */}
