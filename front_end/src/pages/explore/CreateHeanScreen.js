@@ -29,7 +29,6 @@ class CreateHeanScreen extends Component {
             place: "添加地点"  // display to user
         };
         this.addPlace = this.addPlace.bind(this);
-        this.addPrivacy = this.addPrivacy.bind(this);
         this.addImage = this.addImage.bind(this);
         this.upload = this.upload.bind(this);
     }
@@ -38,10 +37,12 @@ class CreateHeanScreen extends Component {
         const { images } = this.state;
         const { uId, token } = this.props;
 
+        const location = await Geolocation.getCurrentPosition(data => data.coords.latitude.toString() + "," + data.coords.longitude.toString())
+
         // construct request body
         let body = [];
         body.push({ name: 'uId', data: uId.toString() });
-        body.push({ name: 'location', data: this.state.location + ",0" });
+        body.push({ name: 'location', data: location + ",0" });
         body.push({ name: 'text', data: this.state.content });
         for (let i = 0; i < images.length; ++i) {
             body.push({ name: 'pictures', filename: 'picture' + i.toString(), type: images[i].mime, data: RNFetchBlob.wrap(images[i].uri) })
@@ -50,9 +51,6 @@ class CreateHeanScreen extends Component {
         const response = await agent.hean.upload(uId, token, body);
         if (response.rescode === 0)
             this.props.navigation.pop();
-    }
-
-    addPrivacy() {
     }
 
     addPlace() {
@@ -102,13 +100,6 @@ class CreateHeanScreen extends Component {
                         title={"添加图片"}
                         onPress={this.addImage}
                         leftIcon={{ name: "image" }}
-                        chevronColor="white"
-                        chevron
-                    />
-                    <ListItem
-                        title={this.state.place}
-                        onPress={this.addPlace}
-                        leftIcon={{ name: "map" }}
                         chevronColor="white"
                         chevron
                     />

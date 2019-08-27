@@ -37,14 +37,14 @@ class Comment extends Component {
                     <Avatar
                         rounded
                         size={"small"}
-                        source={{uri: comment.commenter.avatar}}
+                        source={{uri: comment.commenterAvatar}}
                     />
                     <View style={styles.commenterInfo}>
-                        <Text>{comment.commenter.username}</Text>
+                        <Text>{comment.commenterUsername}</Text>
                         <Text>{comment.time}</Text>
                     </View>
                 </View>
-                <Text style={styles.text}><Text style={styles.reply}>{comment.commented?"回复"+comment.commented.username+":":null}</Text>{comment.content}</Text>
+                <Text style={styles.text}>{comment.content}</Text>
             </View>
         )
     }

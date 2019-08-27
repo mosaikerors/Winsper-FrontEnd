@@ -47,8 +47,7 @@ const css = StyleSheet.create({
         alignItems: "center",
     },
     sendIcon: {
-        position: 'absolute',
-        right: 20
+        marginRight: 16
     }
 });
 
@@ -77,55 +76,66 @@ class HeanDetailScreen extends Component {
             // heanCard 是请求卡片形式的函后得到的响应
             // 以 navagation params 的形式传递进来，然后在 willMount 钩子中以其中的 hId 去请求详细信息
             heanCard: this.props.navigation.getParam("heanCard", {}),
-            comment: {
-                content: null,   // 你的评论内容
-                targetCommentId: null,  // 你的评论对象，为 null 表示评论的是函
-            }
+            myComment: null,
         };
         this.submitComment = this.submitComment.bind(this);
         this.changeLike = this.changeLike.bind(this);
         this.changeStar = this.changeStar.bind(this);
-        this.commentToComment = this.commentToComment.bind(this);
+        this.updateState = this.updateState.bind(this);
     };
 
-    async componentWillMount() {
+    async updateState() {
         const { uId, token } = this.props;
         const response = await agent.hean.getDetailedHean(uId, token, this.state.heanCard.hId);
         if (response.rescode === 0)
             this.setState({ heanDetailed: response.hean })
     }
 
+    async componentWillMount() {
+        this.updateState()
+    }
+
     changeLike() {
         const { hasLiked, likeCount } = this.state.heanCard;
-        if (hasLiked)
+        const { uId, token } = this.props;
+        const { hId } = this.state.heanCard;
+        if (hasLiked) {
+            agent.hean.dislike(uId, token, hId);
             this.setState({ heanCard: Object.assign({}, this.state.heanCard, { hasLiked: !hasLiked, likeCount: likeCount - 1 }) })
-        else
+        }
+        else {
+            agent.hean.like(uId, token, hId);
             this.setState({ heanCard: Object.assign({}, this.state.heanCard, { hasLiked: !hasLiked, likeCount: likeCount + 1 }) })
+        }
     }
 
     changeStar() {
         const { hasStarred, starCount } = this.state.heanCard;
-        if (hasStarred)
+        const { uId, token } = this.props;
+        const { hId } = this.state.heanCard;
+        if (hasStarred) {
+            agent.hean.uncollect(uId, token, hId);
             this.setState({ heanCard: Object.assign({}, this.state.heanCard, { hasStarred: !hasStarred, starCount: starCount - 1 }) })
-        else
+        }
+        else {
+            agent.hean.collect(uId, token, hId);
             this.setState({ heanCard: Object.assign({}, this.state.heanCard, { hasStarred: !hasStarred, starCount: starCount + 1 }) })
-    }
-
-    submitComment() {
-        if (this.state.comment.content) {
-            if (this.state.comment.targetCommentId) {
-                Alert.alert("comment to comment, comment ID = " + this.state.comment.targetCommentId
-                    + " content: " + this.state.comment.content);
-            }
-            else {
-                Alert.alert("comment to hean " + this.state.heanDetailed.hId + " content: " + this.state.comment.content);
-            }
         }
     }
 
-    commentToComment(targetCommentId) {
-        this.setState({ comment: Object.assign({}, this.state.comment, { targetCommentId }) })
-        this.refs.input.focus();
+    async submitComment() {
+        const { uId, token } = this.props;
+        const { hId, commentCount } = this.state.heanCard;
+        const { myComment } = this.state;
+        if (this.state.myComment) {
+            const response = await agent.hean.comment(uId, token, hId, myComment);
+            this.setState({
+                heanCard: Object.assign({}, this.state.heanCard, { commentCount: commentCount + 1 }),
+                myComment: null
+            })
+            this.updateState();
+            this.refs.input.blur()
+        }
     }
 
     render() {
@@ -146,7 +156,7 @@ class HeanDetailScreen extends Component {
                                 source={{ uri: avatar }}
                             />
                             <View style={css.username}>
-                                <Text >{username}</Text>
+                                <Text>{username}</Text>
                                 <Text>{createdTime}</Text>
                             </View>
                         </View>
@@ -192,9 +202,7 @@ class HeanDetailScreen extends Component {
 
                         {/* detailed comments */}
                         {comments.map((item, index) => (
-                            <TouchableOpacity onPress={() => this.commentToComment(item.commentId)}>
-                                <Comment comment={item} />
-                            </TouchableOpacity>
+                            <Comment comment={item} />
                         ))}
                         <View style={css.bottomBlank} />
                     </ScrollView>
@@ -204,12 +212,14 @@ class HeanDetailScreen extends Component {
                         <TextInput
                             ref="input"
                             placeholder={'说说你的想法'}
-                            onChangeText={content => this.setState({ comment: Object.assign({}, this.state.comment, { content }) })}
+                            onChangeText={myComment => this.setState({ myComment })}
+                            value={this.state.myComment}
+                            style={{ borderWidth: 0, flex: 1 }}
                         />
-                        <TouchableOpacity onPress={this.submitComment} style={css.sendIcon}>
+                        <TouchableOpacity onPress={this.submitComment} style={[css.sendIcon, { borderWidth: 0 }]}>
                             <FontAwesome
                                 name={"send"}
-                                color={this.state.comment.content ? "blue" : "grey"}
+                                color={this.state.myComment ? "blue" : "grey"}
                                 size={20}
                             />
                         </TouchableOpacity>

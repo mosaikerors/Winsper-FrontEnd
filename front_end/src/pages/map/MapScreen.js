@@ -4,6 +4,8 @@ import { StyleSheet, Dimensions, Text, View } from 'react-native';
 import HeanCard from '../../components/hean/HeanCard';
 import { connect } from "react-redux";
 import agent from "../../agent"
+import { NavigationEvents, withNavigationFocus } from 'react-navigation';
+import FontAwesome from "react-native-vector-icons/FontAwesome";
 
 const leftTop = { latitude: 31.02756, longitude: 121.42290 }
 const rightTop = { latitude: 31.03500, longitude: 121.44600 }
@@ -27,19 +29,36 @@ const mapDispatchToProps = dispatch => ({
 
 });
 
+const longitude = 121.436;
+const latitude = 31.022;
+
 export class MapScreen extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
             heans: []
         }
+        this.updateState = this.updateState.bind(this);
     }
 
-    async componentWillMount() {
+    async updateState() {
         const { uId, token } = this.props;
-        const response = await agent.hean.getPoints(uId, token, 1, 1);   // modify location to actual values
+        const response = await agent.hean.getPoints(uId, token, longitude, latitude, "all", "all");   // modify location to actual values
+        console.log(response)
         if (response.rescode === 0) {
+            response.heans.forEach(hean => hean.longitude = hean.longtitude);
             this.setState({ heans: response.heans })
+        }
+    }
+
+    componentWillMount() {
+        this.updateState();
+    }
+
+    componentWillReceiveProps(nextProps) {
+        // if you will reach this page, grab newest data
+        if (nextProps.isFocused) {
+            this.updateState();
         }
     }
 
@@ -59,12 +78,18 @@ export class MapScreen extends React.Component {
                     {this.state.heans.map(hean => (
                         <Marker
                             coordinate={{ latitude: hean.latitude, longitude: hean.longitude }}
+                            image='flag'
                         >
                             <View style={{ width: 300, height: 280, borderWidth: 0, borderRadius: 0 }}>
                                 <HeanCard hId={hean.hId} navigation={this.props.navigation} />
                             </View>
                         </Marker>
                     ))}
+                    <Marker
+                        coordinate={{ latitude: latitude, longitude: longitude }}
+                        color="red"
+                        image='flag'
+                    />
 
                     {/* border */}
                     <Polyline
@@ -79,4 +104,4 @@ export class MapScreen extends React.Component {
     }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(MapScreen);
+export default withNavigationFocus(connect(mapStateToProps, mapDispatchToProps)(MapScreen));

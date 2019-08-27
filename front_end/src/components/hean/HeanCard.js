@@ -42,6 +42,7 @@ class HeanCard extends React.Component {
         if (response.rescode === 0)
             this.setState({ heanCard: response.heanCard })
     }
+    
     render() {
         const { cover, text, hasLiked, hasStarred, likeCount, starCount, commentCount } = this.state.heanCard;
         if (!cover && !text)
