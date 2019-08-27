@@ -64,8 +64,16 @@ const user = {
             .send({ password })
             .then(res => res.body)
             .catch(err => err.response.body),
-    sendCodeWhenForget: (phone) => ({ rescode: 0 }),
-    modifyPasswordWhenForget: (token, phone, code, password) => ({ rescode: 0 }),
+    sendCodeWhenForget: (phone) =>
+        requests.post(API_ROOT + "/user/forget/sendCode")
+            .send({ phone })
+            .then(res => res.body)
+            .catch(err => err.response.body),
+    modifyPasswordWhenForget: (token, phone, code, password) =>
+        requests.post(API_ROOT + "/user/forget/update")
+            .send({ token, phone, code, password })
+            .then(res => res.body)
+            .catch(err => err.response.body),
     check: (uId, token) =>
         requests.post(API_ROOT + "/user/check")
             .set('Authorization', 'Bearer ' + token)
