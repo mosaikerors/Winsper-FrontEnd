@@ -39,8 +39,8 @@ class PersonPageScreen extends React.Component {
     }
 
     componentWillReceiveProps(nextProps) {
-        // if you will leave this page, grab newest data
-        if (!nextProps.isFocused) {
+        // if you will reach this page, grab newest data
+        if (nextProps.isFocused) {
             this.updateState();
         }
     }

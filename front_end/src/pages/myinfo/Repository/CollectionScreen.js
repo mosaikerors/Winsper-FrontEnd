@@ -5,6 +5,7 @@ import { Divider } from 'react-native-elements'
 import { connect } from "react-redux";
 import HeanCard from "../../../components/hean/HeanCard";
 import agent from "../../../agent/index";
+import { NavigationEvents, withNavigationFocus } from 'react-navigation';
 
 const mapStateToProps = state => ({
     token: state.user.token,
@@ -20,21 +21,34 @@ class CollectionScreen extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            heans: [],
+            heans: null,
+            otherUId: this.props.navigation.getParam("otherUId", this.props.uId)
         }
+        this.updateState = this.updateState.bind(this);
     }
 
-    async componentWillMount() {
+    async updateState() {
         const { uId, token } = this.props;
-        const response = await agent.hean.getCollection(uId, token, uId);    // 看自己的函
-        console.log("response: " + response)
+        const { otherUId } = this.state;
+        const response = await agent.hean.getCollection(uId, token, otherUId); 
         if (response.rescode === 0)
             this.setState({ heans: response.heanCards });
     }
 
+    componentWillMount() {
+        this.updateState();
+    }
+
+    componentWillReceiveProps(nextProps) {
+        // if you will reach this page, grab newest data
+        if (nextProps.isFocused) {
+            this.updateState();
+        }
+    }
+
     render() {
         if (!this.state.heans)
-            return <Text>No heans yet!</Text>;
+            return null;
         return (
             <React.Fragment>
                 <FlatList
@@ -51,4 +65,4 @@ class CollectionScreen extends React.Component {
         );
     }
 }
-export default connect(mapStateToProps, mapDispatchToProps)(CollectionScreen);
+export default withNavigationFocus(connect(mapStateToProps, mapDispatchToProps)(CollectionScreen));

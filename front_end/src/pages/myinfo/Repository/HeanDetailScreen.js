@@ -110,7 +110,7 @@ class HeanDetailScreen extends Component {
         }
     }
 
-    changeStar() {
+    async changeStar() {
         const { hasStarred, starCount } = this.state.heanCard;
         const { uId, token } = this.props;
         const { hId } = this.state.heanCard;
@@ -119,7 +119,8 @@ class HeanDetailScreen extends Component {
             this.setState({ heanCard: Object.assign({}, this.state.heanCard, { hasStarred: !hasStarred, starCount: starCount - 1 }) })
         }
         else {
-            agent.hean.collect(uId, token, hId);
+            const response = await agent.hean.collect(uId, token, hId);
+            console.log("collect", response)
             this.setState({ heanCard: Object.assign({}, this.state.heanCard, { hasStarred: !hasStarred, starCount: starCount + 1 }) })
         }
     }
