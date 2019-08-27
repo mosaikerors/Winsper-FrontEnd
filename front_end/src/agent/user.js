@@ -75,7 +75,7 @@ const user = {
             .then(res => res.body)
             .catch(err => err.response.body),
     check: (uId, token) =>
-        requests.post(API_ROOT + "/user/check")
+        requests.put(API_ROOT + "/user/check")
             .set('Authorization', 'Bearer ' + token)
             .set('uId', uId)
             .then(res => res.body)
