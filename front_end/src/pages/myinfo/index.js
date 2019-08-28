@@ -18,6 +18,8 @@ import SettingsScreen from "./Settings/SettingsScreen"
 import HeanDetailScreen from "./Repository/HeanDetailScreen"
 import AccountInfoScreen from "./Settings/AccountInfoScreen"
 import PrivacySafetyScreen from "./Settings/PrivacySafetyScreen"
+import PostSubmissionScreen from "../explore/PostSubmissionScreen"
+import SelectHeanScreen from "../explore/SelectHeanScreen"
 
 const MyInfoScreenNavigator = createStackNavigator(
     {
@@ -34,7 +36,9 @@ const MyInfoScreenNavigator = createStackNavigator(
         DiaryDetail: { screen: DiaryDetailScreen, navigationOptions: { title: '日记' } },
         JournalList: { screen: JournalListScreen, navigationOptions: { title: '手账' } },
         JournalDetail: { screen: JournalDetailScreen, navigationOptions: { header: null } },
-        Submission: { screen: SubmissionScreen },
+        Submission: { screen: SubmissionScreen, navigationOptions: { title: '投稿' } },
+        PostSubmission: { screen: PostSubmissionScreen, navigationOptions: { title: '投稿' } },
+        SelectHean: { screen: SelectHeanScreen, navigationOptions: { title: '选择函' } },
         MoodReport: { screen: MoodReportScreen },
         Comment: { screen: CommentScreen, navigationOptions: { title: '评论' } },
         Settings: { screen: SettingsScreen, navigationOptions: { title: '设置' } },

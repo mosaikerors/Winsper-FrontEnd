@@ -1,6 +1,7 @@
 import React from "react";
 import { Text, View, StyleSheet, TouchableOpacity } from "react-native";
 import { Card } from 'react-native-elements'
+import { connect } from "react-redux"
 
 const styles = StyleSheet.create({
     border: {
@@ -19,9 +20,14 @@ const styles = StyleSheet.create({
     }
 });
 
+const mapStateToProps = state => ({
+    uId: state.user.uId,
+})
+
 class DetailedBlock extends React.Component {
     render() {
         const { isMe, privacy } = this.props;
+        const otherUId = isMe ? this.props.uId : this.props.otherUId;
         return (
             <React.Fragment>
                 <Card containerStyle={{ flexDirection: 'column' }}>
@@ -39,7 +45,7 @@ class DetailedBlock extends React.Component {
                         <View style={styles.block}>
                             <TouchableOpacity
                                 disabled={!isMe && !privacy.isHeanPublic}
-                                style={styles.text} onPress={() => this.props.navigation.push('HeanList')}
+                                style={styles.text} onPress={() => this.props.navigation.push('HeanList', { otherUId })}
                             >
                                 <Text>
                                     函
@@ -49,7 +55,7 @@ class DetailedBlock extends React.Component {
                         <View style={styles.block}>
                             <TouchableOpacity
                                 disabled={!isMe && !privacy.isCollectionPublic}
-                                style={styles.text} onPress={() => this.props.navigation.push('Collection')}
+                                style={styles.text} onPress={() => this.props.navigation.push('Collection', { otherUId })}
                             >
                                 <Text>
                                     收藏
@@ -59,7 +65,7 @@ class DetailedBlock extends React.Component {
                         <View style={styles.block}>
                             <TouchableOpacity
                                 disabled={!isMe && !privacy.isDiaryPublic}
-                                style={styles.text} onPress={() => this.props.navigation.push('DiaryList')}
+                                style={styles.text} onPress={() => this.props.navigation.push('DiaryList', { otherUId })}
                             >
                                 <Text>
                                     日记
@@ -71,7 +77,7 @@ class DetailedBlock extends React.Component {
                         <View style={styles.block}>
                             <TouchableOpacity
                                 disabled={!isMe && !privacy.isJournalPublic}
-                                style={styles.text} onPress={() => this.props.navigation.push('JournalList')}
+                                style={styles.text} onPress={() => this.props.navigation.push('JournalList', { otherUId })}
                             >
                                 <Text>
                                     手账
@@ -81,7 +87,7 @@ class DetailedBlock extends React.Component {
                         <View style={styles.block}>
                             <TouchableOpacity
                                 disabled={!isMe && !privacy.isSubmissionPublic}
-                                style={styles.text} onPress={() => this.props.navigation.push('Submission')}
+                                style={styles.text} onPress={() => this.props.navigation.push('Submission', { otherUId })}
                             >
                                 <Text>
                                     投稿
@@ -91,7 +97,7 @@ class DetailedBlock extends React.Component {
                         <View style={styles.block}>
                             <TouchableOpacity
                                 disabled={!isMe && !privacy.isMoodReportPublic}
-                                style={styles.text} onPress={() => this.props.navigation.push('MoodReport')}
+                                style={styles.text} onPress={() => this.props.navigation.push('MoodReport', { otherUId })}
                             >
                                 <Text>
                                     心情报表
@@ -101,7 +107,7 @@ class DetailedBlock extends React.Component {
                         <View style={styles.block}>
                             <TouchableOpacity
                                 disabled={!isMe && !privacy.isCommentPublic}
-                                style={styles.text} onPress={() => this.props.navigation.push('Comment')}
+                                style={styles.text} onPress={() => this.props.navigation.push('Comment', { otherUId })}
                             >
                                 <Text>
                                     评论
@@ -114,4 +120,4 @@ class DetailedBlock extends React.Component {
         );
     }
 }
-export default DetailedBlock;
+export default connect(mapStateToProps)(DetailedBlock);

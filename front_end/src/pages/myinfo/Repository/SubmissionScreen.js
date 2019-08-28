@@ -1,45 +1,105 @@
 import React from "react";
-import { Text, View, StyleSheet } from "react-native";
+import { Text, Dimensions, TouchableOpacity, FlatList, View } from "react-native";
 import { ListItem } from 'react-native-elements'
+import { Divider } from 'react-native-elements'
+import { connect } from "react-redux";
+import HeanCard from "../../../components/hean/HeanCard";
+import agent from "../../../agent/index";
+import { NavigationEvents, withNavigationFocus } from 'react-navigation';
+import FontAwesome from "react-native-vector-icons/FontAwesome";
 
-const styles = StyleSheet.create({
-    border: {
-        borderWidth: 1,
-    },
-})
+const mapStateToProps = state => ({
+    token: state.user.token,
+    uId: state.user.uId
+});
 
-const list = [
-    {
-        name: 'Amy Farha',
-        avatar_url: 'https://s3.amazonaws.com/uifaces/faces/twitter/ladylexy/128.jpg',
-        subtitle: 'Vice President'
-    },
-    {
-        name: 'Chris Jackson',
-        avatar_url: 'https://s3.amazonaws.com/uifaces/faces/twitter/adhamdannaway/128.jpg',
-        subtitle: 'Vice Chairman'
+const mapDispatchToProps = dispatch => ({
+
+});
+
+
+class SubmissionScreen extends React.Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            heans: null,
+            otherUId: this.props.navigation.getParam("otherUId", this.props.uId)
+        }
+        this.updateState = this.updateState.bind(this);
     }
-];
 
-class MessageScreen extends React.Component {
-    static navigationOptions = {
-        title: "我的投稿"
-    };
+    async updateState() {
+        const { uId, token } = this.props;
+        const { otherUId } = this.state;
+        let response;
+        if (otherUId === 0)  // view selected submission
+            response = await agent.hean.getSelectedSubmissions(uId, token, 1);  // todo: date here!
+        else  // view someone's submission
+            response = await agent.hean.getSubmissionsById(uId, token, otherUId)
+        if (response.rescode === 0) {
+            let heans = [];
+            let tmp = {};
+            response.heanCards.forEach((heanCard, index) => {
+                if ((index + 1) % 2 !== 0) {
+                    tmp.left = heanCard;
+                }
+                else {
+                    tmp.right = heanCard;
+                    heans.push(JSON.parse(JSON.stringify(tmp)));  // for deep copy
+                }
+            });
+            if (response.heanCards.length % 2 !== 0) {
+                tmp.right = null;
+                heans.push(JSON.parse(JSON.stringify(tmp)));  // for deep copy
+            }
+            this.setState({ heans });
+        }
+    }
+
+    componentWillMount() {
+        this.updateState();
+    }
+
+    componentWillReceiveProps(nextProps) {
+        // if you will reach this page, grab newest data
+        if (nextProps.isFocused) {
+            this.updateState();
+        }
+    }
+
     render() {
+        if (!this.state.heans)
+            return null;
         return (
             <React.Fragment>
-                <View>
-                    {list.map((listItem, index) => (
-                        <ListItem
-                            key={index}
-                            leftAvatar={{ source: { uri: listItem.avatar_url } }}
-                            title={listItem.name}
-                            subtitle={listItem.subtitle}
-                        />
-                    ))}
+                <View style={{ height: 40, flexDirection: 'row-reverse' }}>
+                    <TouchableOpacity
+                        style={{ borderWidth: 0, width: 100, justifyContent: "center", alignItems: "center", flexDirection: "row" }}
+                        onPress={()=> this.props.navigation.push("PostSubmission")}
+                    >
+                        <FontAwesome name={"envelope-o"} size={20} />
+                        <Text style={{fontSize: 20, marginLeft:5 }}>去投稿</Text>
+                    </TouchableOpacity>
                 </View>
-            </React.Fragment>
+                <Divider />
+                <FlatList
+                    data={this.state.heans}
+                    renderItem={({ item, index }) => (
+                        <View style={{ flexDirection: "row" }}>
+                            <View style={{ width: "50%" }}>
+                                <HeanCard hId={item.left.hId} navigation={this.props.navigation} />
+                            </View>
+                            {item.right &&
+                                <View style={{ width: "50%" }}>
+                                    <HeanCard hId={item.right.hId} navigation={this.props.navigation} />
+                                </View>
+                            }
+                        </View>
+                    )}
+                    disableVirtualization
+                />
+            </React.Fragment >
         );
     }
 }
-export default MessageScreen;
+export default withNavigationFocus(connect(mapStateToProps, mapDispatchToProps)(SubmissionScreen));

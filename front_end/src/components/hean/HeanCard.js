@@ -42,7 +42,7 @@ class HeanCard extends React.Component {
         if (response.rescode === 0)
             this.setState({ heanCard: response.heanCard })
     }
-    
+
     render() {
         const { cover, text, hasLiked, hasStarred, likeCount, starCount, commentCount } = this.state.heanCard;
         if (!cover && !text)
@@ -50,7 +50,10 @@ class HeanCard extends React.Component {
         return (
             <React.Fragment>
                 <View style={[theme.cardStyle, { borderRadius: 25 }]}>
-                    <TouchableOpacity onPress={() => this.props.navigation.navigate("HeanDetail", { heanCard: this.state.heanCard }) }>
+                    <TouchableOpacity
+                        onPress={() => { console.log("1111"); this.props.navigation.push("HeanDetail", { heanCard: this.state.heanCard }) }}
+                        disabled={this.props.whenSubmission}
+                    >
                         <View style={{ padding: 10 }}>
                             <Image source={{ uri: cover }} style={theme.cardImageStyle} />
                         </View>

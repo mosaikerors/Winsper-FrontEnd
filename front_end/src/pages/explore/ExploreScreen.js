@@ -2,38 +2,39 @@ import React, { Fragment } from "react";
 import { Dimensions } from 'react-native'
 import { Image, ListItem } from "react-native-elements";
 import Carousel from 'react-native-looped-carousel';
+import Ionicons from "react-native-vector-icons/Ionicons";
 
 const { width, height } = Dimensions.get('window');
 
 const list = [
     {
         title: '手账',
-        icon: 'star',
-        pagename: 'CreateJournal'
+        icon: 'md-journal',
+        pagename: 'CreateJournal',
+        params: {}
     },
     {
         title: '函',
         icon: 'info',
-        pagename: 'CreateHean'
+        pagename: 'CreateHean',
+        params: {}
 
     },
     {
-        title: '心情报表',
+        title: '投稿',
         icon: 'av-timer',
-        pagename: 'CreateHean'
+        pagename: 'PostSubmission',
+        params: { otherUId: 0 }
     },
     {
         title: '日记',
-        icon: 'rowing',
-        pagename: 'CreateDiary'
+        icon: 'md-book',
+        pagename: 'CreateDiary',
+        params: {}
     }
 ];
 
 class ExploreScreen extends React.Component {
-    static navigationOptions = {
-        title: '发现',
-    };
-
     constructor(props) {
         super(props);
         this.state = {
@@ -79,8 +80,8 @@ class ExploreScreen extends React.Component {
                         <ListItem
                             key={i}
                             title={item.title}
-                            leftIcon={{ name: item.icon }}
-                            onPress={() => this.props.navigation.navigate(item.pagename)}
+                            leftIcon={<Ionicons name={item.icon} size={20} />}
+                            onPress={() => this.props.navigation.push(item.pagename, item.params)}
                         />
                     ))
                 }
