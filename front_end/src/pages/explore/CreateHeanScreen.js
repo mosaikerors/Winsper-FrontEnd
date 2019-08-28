@@ -7,6 +7,7 @@ import { TextareaItem } from '@ant-design/react-native'
 import Geolocation from 'Geolocation';
 import ImageGroup from '../../components/hean/ImageGroup'
 import { AK, SHA1, packageName } from '../../config';
+import agent from "../../agent/index"
 
 const ImagePicker = NativeModules.ImageCropPicker;
 
@@ -37,20 +38,21 @@ class CreateHeanScreen extends Component {
         const { images } = this.state;
         const { uId, token } = this.props;
 
-        const location = await Geolocation.getCurrentPosition(data => data.coords.latitude.toString() + "," + data.coords.longitude.toString())
+        Geolocation.getCurrentPosition(async data => {
+            const location = data.coords.longitude.toString() + "," + data.coords.latitude.toString()
+            // construct request body
+            let body = [];
+            body.push({ name: 'uId', data: uId.toString() });
+            body.push({ name: 'location', data: location + ",0" });
+            body.push({ name: 'text', data: this.state.content });
+            for (let i = 0; i < images.length; ++i) {
+                body.push({ name: 'pictures', filename: 'picture' + i.toString(), type: images[i].mime, data: RNFetchBlob.wrap(images[i].uri) })
+            }
 
-        // construct request body
-        let body = [];
-        body.push({ name: 'uId', data: uId.toString() });
-        body.push({ name: 'location', data: location + ",0" });
-        body.push({ name: 'text', data: this.state.content });
-        for (let i = 0; i < images.length; ++i) {
-            body.push({ name: 'pictures', filename: 'picture' + i.toString(), type: images[i].mime, data: RNFetchBlob.wrap(images[i].uri) })
-        }
-
-        const response = await agent.hean.upload(uId, token, body);
-        if (response.rescode === 0)
-            this.props.navigation.pop();
+            const response = await agent.hean.upload(uId, token, body);
+            if (response.rescode === 0)
+                this.props.navigation.pop();
+        })
     }
 
     addPlace() {
