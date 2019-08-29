@@ -40,7 +40,7 @@ class HeanCard extends React.Component {
         const { uId, token, hId } = this.props;
         const response = await agent.hean.getHeanCard(uId, token, hId);
         if (response.rescode === 0)
-            this.setState({ heanCard: response.heanCard })
+            this.setState({ heanCard: Object.assign({}, response.heanCard, { hasStarred: response.heanCard.hasStared }) })
     }
 
     render() {
