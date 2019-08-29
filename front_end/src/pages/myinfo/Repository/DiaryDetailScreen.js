@@ -3,6 +3,7 @@ import { StyleSheet, Text, View, ScrollView } from 'react-native';
 import { Divider } from "react-native-elements";
 import { connect } from "react-redux";
 import agent from "../../../agent/index";
+import { transformDate } from "../../../util"
 
 const styles = StyleSheet.create({
 
@@ -26,7 +27,7 @@ class DiaryDetailScreen extends React.Component {
         const { diaryId } = this.state;
         const response = await agent.record.getDiaryDetail(uId, token, diaryId);
         if (response.rescode === 0)
-            this.setState({ diary: response })
+            this.setState({ diary: Object.assign({}, response, { time: transformDate(response.time, true) }) })
 
     }
     render() {
@@ -46,11 +47,11 @@ class DiaryDetailScreen extends React.Component {
                                 <Text style={{ fontSize: 20 }}>{diary.username}</Text>
                             </View>
                             <View style={{ borderWidth: 0, flex: 2 }}>
-                                <Text style={{ fontSize: 20 }}>{"2019-7-31"}</Text>
+                                <Text style={{ fontSize: 20 }}>{diary.time}</Text>
                             </View>
                         </View>
                         <View style={{ marginTop: 10 }}>
-                            <Text style={{ fontSize: 18 }}>{tmp}</Text>
+                            <Text style={{ fontSize: 18 }}>{diary.text}</Text>
                         </View>
                     </View>
                 </ScrollView>

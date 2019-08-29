@@ -35,12 +35,20 @@ const record = {
     readSingleMessage: (uId, token, messageId) => ({ rescode: 0 }),
     readAll: (uId, token) => ({ rescode: 0 }),
     deleteMessage: (uId, token, type) => ({ rescode: 0 }),
-    getDiaryList: (uId, token, owner) => ({
-        rescode: 0, diaries: [{ diaryId: 1, title: "哈哈", time: "2019-8-1" }, {
-            diaryId: 2, title: "hahaha", time: "2019-7-31"
-        }]
-    }),
-    getDiaryDetail: (uId, token, diaryId) => ({ rescode: 0, title: "hahaha", username: "tbc", time: 123, text: "123456" }),
+    getDiaryList: (uId, token, owner) =>
+        requests.get(API_ROOT + "/record/diary/list")
+            .set('Authorization', 'Bearer ' + token)
+            .set('uId', uId)
+            .query({ owner })
+            .then(res => res.body)
+            .catch(err => err.response.body),
+    getDiaryDetail: (uId, token, diaryId) =>
+        requests.get(API_ROOT + "/record/diary/detailed")
+            .set('Authorization', 'Bearer ' + token)
+            .set('uId', uId)
+            .query({ diaryId })
+            .then(res => res.body)
+            .catch(err => err.response.body),
     createDiary: (uId, token, title, text) => ({ rescode: 0 }),
     deleteDiary: (uId, token, diaryId) => ({ rescode: 0 }),
     getMoodReportList: (uId, token, owner) => ({ rescode: 0 }),
