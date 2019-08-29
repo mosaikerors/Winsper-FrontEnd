@@ -1,20 +1,21 @@
 import React from "react";
-import { Text, View, StyleSheet, TouchableOpacity } from "react-native";
+import { Text, View, StyleSheet, TouchableOpacity, ScrollView } from "react-native";
 import { Divider } from "react-native-elements"
 import { connect } from "react-redux"
 import agent from "../../../agent/index"
+import { transformDate } from "../../../util"
 
 const renderCommentBubble = comment => (
     <View>
         <View style={{ flexDirection: "row" }}>
             <View style={{ flex: 1 }}>
                 {comment.isComment ?
-                    <Text style={{ fontSize: 24 }}>评论 <Text>{comment.username}</Text> 的函</Text> :
+                    <Text style={{ fontSize: 24 }}>评论了 <Text>{comment.username}</Text> 的函</Text> :
                     <Text style={{ fontSize: 24 }}>回复 <Text>{comment.username}</Text> 的评论</Text>
                 }
             </View>
             <View style={{ justifyContent: "flex-end" }}>
-                <Text>{comment.time}</Text>
+                <Text>{transformDate(comment.time, true)}</Text>
             </View>
         </View>
         <Divider style={{ margin: 10, width: "100%", position: "relative", right: 10 }} />
@@ -59,9 +60,12 @@ class CommentScreen extends React.Component {
         const { comments } = this.state;
         return (
             <React.Fragment>
-                <View>
+                <ScrollView>
                     {comments.map((comment) => (
-                        <View style={{ margin: 40, marginBottom: 0, borderWidth: 1, borderRadius: 50, padding: 20 }}>
+                        <View style={{
+                            marginLeft: 40, marginRight: 40, marginTop: 20, marginBottom: 20,
+                            borderWidth: 1, borderRadius: 50, padding: 20
+                        }}>
                             {/* comment content */}
                             <TouchableOpacity onPress={() => this.props.navigation.push("HeanDetail", { heanCard: comment.heanCard })} >
                                 <View>
@@ -70,7 +74,7 @@ class CommentScreen extends React.Component {
                             </TouchableOpacity>
                         </View>
                     ))}
-                </View>
+                </ScrollView>
             </React.Fragment>
         );
     }
