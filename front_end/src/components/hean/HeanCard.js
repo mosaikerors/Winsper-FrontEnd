@@ -33,14 +33,22 @@ class HeanCard extends React.Component {
                 commentCount: 0
             }
         }
+        this.updateState = this.updateState.bind(this);
     }
 
-    // 渲染 heanCard，只需要传递 hId 进来即可，在此钩子中发出请求，收到响应前显示 loading，收到后显示 heanCard
-    async componentWillMount() {
+    async updateState() {
         const { uId, token, hId } = this.props;
         const response = await agent.hean.getHeanCard(uId, token, hId);
         if (response.rescode === 0)
             this.setState({ heanCard: Object.assign({}, response.heanCard, { hasStarred: response.heanCard.hasStared }) })
+    }
+
+    componentWillMount() {
+        this.updateState();
+    }
+
+    componentWillReceiveProps() {
+        this.updateState();
     }
 
     render() {
@@ -51,7 +59,7 @@ class HeanCard extends React.Component {
             <React.Fragment>
                 <View style={[theme.cardStyle, { borderRadius: 25 }]}>
                     <TouchableOpacity
-                        onPress={() => { console.log("1111"); this.props.navigation.push("HeanDetail", { heanCard: this.state.heanCard }) }}
+                        onPress={() => this.props.navigation.push("HeanDetail", { heanCard: this.state.heanCard }) }
                         disabled={this.props.whenSubmission}
                     >
                         <View style={{ padding: 10 }}>

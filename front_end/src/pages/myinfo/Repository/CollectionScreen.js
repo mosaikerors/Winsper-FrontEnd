@@ -22,17 +22,18 @@ class CollectionScreen extends React.Component {
         super(props);
         this.state = {
             heans: null,
-            otherUId: this.props.navigation.getParam("otherUId", this.props.uId)
+            otherUId: this.props.navigation.getParam("otherUId", this.props.uId),
+            hackingTrigger: 0
         }
         this.updateState = this.updateState.bind(this);
     }
 
     async updateState() {
         const { uId, token } = this.props;
-        const { otherUId } = this.state;
-        const response = await agent.hean.getCollection(uId, token, otherUId); 
+        const { otherUId, hackingTrigger } = this.state;
+        const response = await agent.hean.getCollection(uId, token, otherUId);
         if (response.rescode === 0)
-            this.setState({ heans: response.heanCards });
+            this.setState({ heans: response.heanCards, hackingTrigger: hackingTrigger + 1 });
     }
 
     componentWillMount() {
@@ -47,6 +48,7 @@ class CollectionScreen extends React.Component {
     }
 
     render() {
+        const { hackingTrigger } = this.state;
         if (!this.state.heans)
             return null;
         return (
@@ -55,7 +57,7 @@ class CollectionScreen extends React.Component {
                     data={this.state.heans}
                     renderItem={({ item, index }) => (
                         <View>
-                            <HeanCard hId={item.hId} navigation={this.props.navigation} />
+                            <HeanCard hId={item.hId} navigation={this.props.navigation} hackingTrigger={hackingTrigger} />
                             <Divider />
                         </View>
                     )}

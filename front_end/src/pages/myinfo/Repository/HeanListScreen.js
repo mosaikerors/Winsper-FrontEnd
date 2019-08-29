@@ -21,17 +21,18 @@ class HeanListScreen extends React.Component {
         super(props);
         this.state = {
             heans: null,
-            otherUId: this.props.navigation.getParam("otherUId", this.props.uId)
+            otherUId: this.props.navigation.getParam("otherUId", this.props.uId),
+            hackingTrigger: 0
         }
         this.updateState = this.updateState.bind(this);
     }
 
     async updateState() {
         const { uId, token } = this.props;
-        const { otherUId } = this.state;
+        const { otherUId, hackingTrigger } = this.state;
         const response = await agent.hean.getHeanCardList(uId, token, otherUId);    // 看自己的函
         if (response.rescode === 0)
-            this.setState({ heans: response.heanCards });
+            this.setState({ heans: response.heanCards, hackingTrigger: hackingTrigger + 1 });
     }
 
     componentWillMount() {
@@ -40,12 +41,14 @@ class HeanListScreen extends React.Component {
 
     componentWillReceiveProps(nextProps) {
         // if you will reach this page, grab newest data
+
         if (nextProps.isFocused) {
             this.updateState();
         }
     }
 
     render() {
+        const { hackingTrigger } = this.state;
         if (!this.state.heans)
             return null;
         return (
@@ -54,7 +57,7 @@ class HeanListScreen extends React.Component {
                     data={this.state.heans}
                     renderItem={({ item, index }) => (
                         <View>
-                            <HeanCard hId={item.hId} navigation={this.props.navigation} />
+                            <HeanCard hId={item.hId} navigation={this.props.navigation} hackingTrigger={hackingTrigger} />
                             <Divider />
                         </View>
                     )}
