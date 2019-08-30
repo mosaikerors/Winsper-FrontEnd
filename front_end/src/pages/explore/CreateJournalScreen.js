@@ -9,6 +9,7 @@ import agent from "../../agent/index"
 import Toast from "react-native-root-toast"
 import stickers from "../../components/journal/stickers"
 import JournalBookSelector from '../../components/journal/JournalBookSelector';
+import { connect } from "react-redux"
 
 const requests = require('superagent');
 
@@ -17,6 +18,11 @@ const CLOUDINARY_UPLOAD_PRESET = 'tklfxr2k';
 const CLOUDINARY_UPLOAD_URL = 'https://api.cloudinary.com/v1_1/dxm8ocsto/image/upload';
 
 const defaultBackgroundImage = require("../../../images/p3.jpg")
+
+const mapStateToProps = state => ({
+    uId: state.user.uId,
+    token: state.user.token
+})
 
 class CreateJournal extends React.Component {
     constructor(props) {
@@ -97,6 +103,8 @@ class CreateJournal extends React.Component {
 
     async viewShot(journalBookId) {
         const { uId, token } = this.props;
+        console.log("got here")
+        console.log("journalBookId", journalBookId)
         const journalUrl = await captureScreen({ format: "jpg", result: "data-uri" }).then(uri =>
             requests.post(CLOUDINARY_UPLOAD_URL)
                 .field('upload_preset', CLOUDINARY_UPLOAD_PRESET)
@@ -104,7 +112,9 @@ class CreateJournal extends React.Component {
                 .then(res => res.body.secure_url)
                 .catch(err => err.response.xhr)
         )
+        console.log("jurl", journalUrl)
         const response = await agent.record.createJournal(uId, token, journalBookId, journalUrl);
+        console.log("jres", response)
         if (response.rescode === 0)
             this.setState({ status: 6 })
     }
@@ -253,4 +263,4 @@ class CreateJournal extends React.Component {
     }
 }
 
-export default CreateJournal;
+export default connect(mapStateToProps)(CreateJournal);

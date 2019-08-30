@@ -43,7 +43,8 @@ class JournalBookSelector extends React.Component {
                     <JournalBooks
                         journalBooks={journalBooks}
                         cntJournalBookIndex={cntJournalBookIndex}
-                        handleCntIndexChange={(index) => this.setState({ cntJournalBookIndex: index })}
+                        snapTo={(cntJournalBookIndex) => this.setState({ cntJournalBookIndex })}
+                        sliderWidth={325}
                     />
 
                     <View style={{ borderWidth: 0, flexDirection: "row" }}>
