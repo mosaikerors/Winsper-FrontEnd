@@ -5,6 +5,7 @@ import { StackActions, NavigationActions } from "react-navigation";
 import { connect } from "react-redux";
 import agent from "../../agent/index"
 import Icon from "react-native-vector-icons/FontAwesome"
+import AwesomeAlert from 'react-native-awesome-alerts';
 
 const styles = StyleSheet.create({
     border: {
@@ -44,13 +45,23 @@ const mapDispatchToProps = dispatch => ({
         dispatch({ type: "RECEIVE_MESSAGE" })
 });
 
+const getAlertTitle = alertType => {
+    if (alertType === 1)
+        return "该用户已被禁用"
+    if (alertType === 2)
+        return "手机号或密码不正确"
+    if (alertType === 3)
+        return "Oops... 发生了一个预期外的错误"
+}
+
 export class Signin extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
             phone: '',
             password: '',
-            rescode: -1
+            rescode: -1,
+            alertType: 0  // 0: hidden, 1: banned user, 2: wrong phone or password, 3: unexpected error
         };
         this.updateState = this.updateState.bind(this);
         this.submit = this.submit.bind(this);
@@ -80,6 +91,12 @@ export class Signin extends React.Component {
                 console.log('close');
             };
         }
+        else if (response.rescoed === 3)
+            this.setState({ alertType: 1 })
+        else if (response.rescoed === 4)
+            this.setState({ alertType: 2 })
+        else
+            this.setState({ alertType: 3 })
     }
 
     updateState(field, text) {
@@ -124,6 +141,15 @@ export class Signin extends React.Component {
                         titleStyle={{ fontSize: 20 }}
                     />
                 </View>
+                <AwesomeAlert
+                    show={this.state.alertType > 0}
+                    title={getAlertTitle(this.state.alertType)}
+                    showConfirmButton={true}
+                    confirmText="确认"
+                    onConfirmPressed={() => this.setState({ alertType: 0 })}
+                    closeOnTouchOutside={false}
+                    closeOnHardwareBackPress={false}
+                />
             </React.Fragment>
         );
     }

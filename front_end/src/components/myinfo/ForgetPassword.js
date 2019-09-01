@@ -4,6 +4,8 @@ import { Button, Input } from 'react-native-elements'
 import agent from "../../agent/index"
 import Icon from "react-native-vector-icons/FontAwesome"
 import { connect } from "react-redux";
+import AwesomeAlert from 'react-native-awesome-alerts';
+import { StackActions, NavigationActions } from "react-navigation";
 
 const styles = StyleSheet.create({
     border: {
@@ -32,13 +34,33 @@ const styles = StyleSheet.create({
     },
 });
 
+const login = StackActions.reset({
+    index: 0,
+    actions: [
+        NavigationActions.navigate({ routeName: 'LoggedIn' })
+    ]
+});
+
 const mapStateToProps = state => ({
 })
 
 const mapDispatchToProps = dispatch => ({
-    onSubmit: (token) => 
-        dispatch({type: 'UPDATE_TOKEN',payload:{token}})
+    onSubmit: (token) =>
+        dispatch({ type: 'UPDATE_TOKEN', payload: { token } }),
+    onSignIn: (response) =>
+        dispatch({ type: 'SIGN_IN', payload: response }),
+    onReceiveMessage: () =>
+        dispatch({ type: "RECEIVE_MESSAGE" })
 })
+
+const getAlertTitle = alertType => {
+    if (alertType === 1)
+        return "修改成功"
+    if (alertType === 2)
+        return "该手机号尚未注册"
+    if (alertType === 3)
+        return "Oops... 发生了一个预期外的错误"
+}
 
 class ForgetPassword extends React.Component {
     constructor(props) {
@@ -49,7 +71,7 @@ class ForgetPassword extends React.Component {
             code: '',
             password: '',
             sendCodeButton: { clickable: true, timeToClick: 0 },
-            modifyOK: false,
+            alertType: 0  // 0: hidden, 1: modifyOK, 2: phone doesn't existed, 3: unexpected error
         };
 
         setInterval(() => this.updateSendCodeButton(), 1000);
@@ -58,6 +80,7 @@ class ForgetPassword extends React.Component {
         this.sendCode = this.sendCode.bind(this);
         this.submit = this.submit.bind(this);
         this.updateSendCodeButton = this.updateSendCodeButton.bind(this);
+        this.handleComfirmPressed = this.handleComfirmPressed.bind(this);
     }
 
     updateSendCodeButton() {
@@ -87,15 +110,17 @@ class ForgetPassword extends React.Component {
                 }
             });
         }
+        else if (response.rescode === 3)
+            this.setState({ alertType: 2 })
+        else
+            this.setState({ alertType: 3 })
     }
 
     async submit() {
         const { token, phone, code, password } = this.state;
         const response = await agent.user.modifyPasswordWhenForget(token, phone, code, password);
         if (response.rescode === 0) {
-            this.setState({
-                modifyOK: true
-            });
+            this.setState({ alertType: 1 });
             this.props.onSubmit(response.token)
         }
     }
@@ -104,6 +129,29 @@ class ForgetPassword extends React.Component {
         this.setState({
             [field]: text
         });
+    }
+
+    async handleComfirmPressed() {
+        const { alertType, phone, password } = this.state;
+        if (alertType > 1) {
+            this.setState({ alertType: 0 })
+            return;
+        }
+        const response = await agent.user.firstSignin(phone, password);
+        this.props.onSignIn(response)
+        this.props.navigation.dispatch(login);
+        agent.ws = new WebSocket(`ws://202.120.40.8:30525/websocket?senderUId=${response.uId}`);
+        agent.ws.onopen = function () {
+            console.log('open');
+        };
+        agent.ws.onmessage = (e) => {
+            const message = eval("(" + e.data + ")");
+            console.log("ws: " + message);
+            this.props.onReceiveMessage()
+        };
+        agent.ws.onclose = function () {
+            console.log('close');
+        };
     }
 
     render() {
@@ -158,28 +206,24 @@ class ForgetPassword extends React.Component {
                             secureTextEntry
                         />
                     </View>
-                    {this.state.modifyOK ? (
-                        <View style={{ width: "100%", alignItems: "center" }}>
-                            <Button
-                                icon={<Icon name="check" size={15} color="white" style={{ margin: 5 }} />}
-                                title="修改成功"
-                                backgroundColor="#00e676"
-                                buttonStyle={[styles.submitButton, { width: 120, backgroundColor: "#64dd17" }]}
-                                titleStyle={{ fontSize: 20 }}
-                            />
-                        </View>
-                    ) : (
-                            <View style={{ width: "100%", alignItems: "center" }}>
-                                <Button
-                                    title="确认"
-                                    buttonStyle={styles.submitButton}
-                                    titleStyle={{ fontSize: 20 }}
-                                    onPress={this.submit}
-                                />
-                            </View>
-                        )
-                    }
+                    <View style={{ width: "100%", alignItems: "center" }}>
+                        <Button
+                            title="确认"
+                            buttonStyle={styles.submitButton}
+                            titleStyle={{ fontSize: 20 }}
+                            onPress={this.submit}
+                        />
+                    </View>
                 </View>
+                <AwesomeAlert
+                    show={this.state.alertType > 0}
+                    title={getAlertTitle(this.state.alertType)}
+                    showConfirmButton={true}
+                    confirmText="确认"
+                    onConfirmPressed={this.handleComfirmPressed}
+                    closeOnTouchOutside={false}
+                    closeOnHardwareBackPress={false}
+                />
             </React.Fragment>
         );
     }

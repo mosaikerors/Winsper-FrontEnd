@@ -4,6 +4,7 @@ import { Text, TextInput, View, TouchableOpacity } from "react-native"
 import { Divider } from "react-native-elements"
 import FontAwesome from 'react-native-vector-icons/FontAwesome'
 import agent from "../../agent/index"
+import AwesomeAlert from 'react-native-awesome-alerts';
 
 const mapStateToProps = state => ({
     token: state.user.token,
@@ -16,7 +17,8 @@ class CreateDiaryScreen extends React.Component {
         super(props);
         this.state = {
             title: '',
-            text: ''
+            text: '',
+            showAlert: false
         }
         this.handleOk = this.handleOk.bind(this)
     }
@@ -26,7 +28,8 @@ class CreateDiaryScreen extends React.Component {
         const { title, text } = this.state;
         const response = await agent.record.createDiary(uId, token, title, text)
         if (response.rescode === 0)
-            this.props.navigation.pop()
+            this.setState({ show: true })
+        //this.props.navigation.pop()
     }
     render() {
         return (
@@ -54,6 +57,15 @@ class CreateDiaryScreen extends React.Component {
                         onChangeText={(text) => this.setState({ text })}
                     />
                 </View>
+                <AwesomeAlert
+                    show={this.state.showAlert}
+                    title="创建成功"
+                    showConfirmButton={true}
+                    confirmText="确认"
+                    onConfirmPressed={() => this.props.navigation.pop()}
+                    closeOnTouchOutside={false}
+                    closeOnHardwareBackPress={false}
+                />
             </React.Fragment>
         )
     }

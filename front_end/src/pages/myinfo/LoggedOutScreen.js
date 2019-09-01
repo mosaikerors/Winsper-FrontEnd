@@ -13,9 +13,9 @@ class LoggedOutScreen extends React.Component {
             <React.Fragment>
                 <ImageBackground source={backgroundImage} style={{ width: '100%', height: '100%', opacity: 0.8 }}>
                     <ScrollableTabView renderTabBar={() => <DefaultTabBar />} style={{ marginTop: 40 }}>
-                        <Signup tabLabel="注册" />
+                        <Signup tabLabel="注册" navigation={this.props.navigation} />
                         <Signin tabLabel="登录" navigation={this.props.navigation} />
-                        <ForgetPassword tabLabel="忘记密码" />
+                        <ForgetPassword tabLabel="忘记密码" navigation={this.props.navigation} />
                     </ScrollableTabView>
                 </ImageBackground>
             </React.Fragment>

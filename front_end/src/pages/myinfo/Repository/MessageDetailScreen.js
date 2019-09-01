@@ -6,6 +6,7 @@ import agent from "../../../agent/index"
 import { NavigationEvents, withNavigationFocus } from 'react-navigation';
 import FontAwesome from "react-native-vector-icons/FontAwesome";
 import Loading from "../../../components/Loading"
+import EmptyList from "../../../components/EmptyList"
 
 // 渲染出 username 锚点，点击跳转到该用户个人主页
 const renderUsername = (navigation, uId, username) => (
@@ -79,7 +80,7 @@ class MessageDetailScreen extends React.Component {
         response.messages.forEach(message => agent.record.readSingleMessage(uId, token, message.messageId))
 
         this.setState({ messages: response.messages })
-        
+
     }
 
     async deleteMessage() {
@@ -105,15 +106,15 @@ class MessageDetailScreen extends React.Component {
         if (!messages)
             return <Loading />;
         if (messages.length === 0)
-            return <Text>no message</Text>
+            return <EmptyList field="消息列表" />
         return (
             <React.Fragment>
                 <View style={{ height: 40, borderWidth: 0, flexDirection: "row-reverse" }}>
-                    <TouchableOpacity style={{ borderWidth: 0, flexDirection: "row",alignItems: "center"}}
+                    <TouchableOpacity style={{ borderWidth: 0, flexDirection: "row", alignItems: "center" }}
                         onPress={this.deleteMessage}
                     >
                         <FontAwesome name={"trash"} size={24} color="red" />
-                        <Text style={{ fontSize: 24,marginHorizontal:5 }}>清空</Text>
+                        <Text style={{ fontSize: 24, marginHorizontal: 5 }}>清空</Text>
                     </TouchableOpacity>
                 </View>
                 <View>

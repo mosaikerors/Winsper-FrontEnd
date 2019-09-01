@@ -6,10 +6,10 @@ import Sticker from "../../components/journal/Sticker"
 import PicturePanel from "../../components/journal/PicturePanel"
 import ViewShot, { captureRef, captureScreen } from 'react-native-view-shot';
 import agent from "../../agent/index"
-import Toast from "react-native-root-toast"
 import stickers from "../../components/journal/stickers"
 import JournalBookSelector from '../../components/journal/JournalBookSelector';
 import { connect } from "react-redux"
+import AwesomeAlert from 'react-native-awesome-alerts';
 
 const requests = require('superagent');
 
@@ -133,9 +133,6 @@ class CreateJournal extends React.Component {
                     <ActivityIndicator size={60} color="blue" />
                     <Text style={{ marginTop: 10, color: "blue", fontSize: 24 }}>正在上传...</Text>
                 </Overlay>
-                <Toast visible={status === 6} position={-100} hideOnPress onHidden={() => this.props.navigation.pop()}>
-                    上传成功
-                </Toast>
                 <ImageBackground source={this.state.backgroundImage} style={{ width: '100%', height: '100%', opacity: 1 }}>
                     {/* 画布 */}
                     <View style={{ flex: 1 }}>
@@ -258,6 +255,15 @@ class CreateJournal extends React.Component {
                         />
                     </View>
                 </ImageBackground>
+                <AwesomeAlert
+                    show={status === 6}
+                    title="上传成功"
+                    showConfirmButton={true}
+                    confirmText="确认"
+                    onConfirmPressed={() => this.props.navigation.pop()}
+                    closeOnTouchOutside={false}
+                    closeOnHardwareBackPress={false}
+                />
             </React.Fragment>
         )
     }

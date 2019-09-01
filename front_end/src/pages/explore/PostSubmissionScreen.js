@@ -7,6 +7,7 @@ import agent from "../../agent/index"
 import AntDesign from "react-native-vector-icons/AntDesign"
 import { NavigationEvents, withNavigationFocus } from 'react-navigation';
 import HeanCard from "../../components/hean/HeanCard"
+import AwesomeAlert from 'react-native-awesome-alerts';
 
 const mapStateToProps = state => ({
     token: state.user.token,
@@ -20,7 +21,7 @@ class PostSubmissionScreen extends React.Component {
         this.state = {
             hId: null,
             reason: null,
-            submitOK: false
+            showAlert: false
         }
         this.submit = this.submit.bind(this)
     }
@@ -30,7 +31,7 @@ class PostSubmissionScreen extends React.Component {
         const { hId, reason } = this.state;
         const response = await agent.hean.postSubmissions(uId, token, hId, reason);
         if (response.rescode === 0)
-            this.setState({ submitOK: true })
+            this.setState({ showAlert: true })
     }
 
     componentWillReceiveProps(nextProps) {
@@ -69,23 +70,23 @@ class PostSubmissionScreen extends React.Component {
                         />
                     </View>
                     <View style={{ justifyContent: "center", alignItems: "center" }}>
-                        {!this.state.submitOK ?
-                            <Button
-                                title="确认"
-                                onPress={this.submit}
-                                buttonStyle={{ width: 90, height: 50, marginTop: 20, borderRadius: 50, }}
-                                titleStyle={{ fontSize: 20 }}
-                            />
-                            :
-                            <Button
-                                icon={<FontAwesome name="check" size={15} color="white" style={{ margin: 5 }} />}
-                                title="投稿成功"
-                                buttonStyle={{ width: 120, height: 50, marginTop: 20, borderRadius: 50, }}
-                                titleStyle={{ fontSize: 20 }}
-                            />
-                        }
+                        <Button
+                            title="确认"
+                            onPress={this.submit}
+                            buttonStyle={{ width: 90, height: 50, marginTop: 20, borderRadius: 50, }}
+                            titleStyle={{ fontSize: 20 }}
+                        />
                     </View>
                 </KeyboardAvoidingView>
+                <AwesomeAlert
+                    show={this.state.showAlert}
+                    title="投稿成功"
+                    showConfirmButton={true}
+                    confirmText="确认"
+                    onConfirmPressed={() => this.props.navigation.pop()}
+                    closeOnTouchOutside={false}
+                    closeOnHardwareBackPress={false}
+                />
             </React.Fragment>
         )
     }

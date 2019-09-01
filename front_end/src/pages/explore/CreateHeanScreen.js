@@ -8,6 +8,7 @@ import Geolocation from 'Geolocation';
 import ImageGroup from '../../components/hean/ImageGroup'
 import { AK, SHA1, packageName } from '../../config';
 import agent from "../../agent/index"
+import AwesomeAlert from 'react-native-awesome-alerts';
 
 const ImagePicker = NativeModules.ImageCropPicker;
 
@@ -27,7 +28,8 @@ class CreateHeanScreen extends Component {
             images: [],
             content: "",
             location: "",  // send to back end
-            place: "添加地点"  // display to user
+            place: "添加地点",  // display to user
+            showAlert: false
         };
         this.addPlace = this.addPlace.bind(this);
         this.addImage = this.addImage.bind(this);
@@ -51,7 +53,8 @@ class CreateHeanScreen extends Component {
 
             const response = await agent.hean.upload(uId, token, body);
             if (response.rescode === 0)
-                this.props.navigation.pop();
+                this.setState({ showAlert: true })
+            //this.props.navigation.pop();
         })
     }
 
@@ -107,6 +110,15 @@ class CreateHeanScreen extends Component {
                     />
                     <Button title={"确认"} onPress={this.upload} />
                 </View>
+                <AwesomeAlert
+                    show={this.state.showAlert}
+                    title="上传成功"
+                    showConfirmButton={true}
+                    confirmText="确认"
+                    onConfirmPressed={() => this.props.navigation.pop()}
+                    closeOnTouchOutside={false}
+                    closeOnHardwareBackPress={false}
+                />
             </Fragment>
         );
     }

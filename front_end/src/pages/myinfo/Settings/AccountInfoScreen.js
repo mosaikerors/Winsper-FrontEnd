@@ -8,6 +8,7 @@ import Accordion from 'react-native-collapsible/Accordion';
 import FontAwesome from "react-native-vector-icons/FontAwesome";
 import ImagePicker from 'react-native-image-crop-picker';
 import { CLOUDINARY_UPLOAD_PRESET, CLOUDINARY_UPLOAD_URL } from "../../../config"
+import AwesomeAlert from 'react-native-awesome-alerts';
 
 const titles = ['修改用户名', '修改头像', '修改密码'];
 const requests = require('superagent');
@@ -34,8 +35,8 @@ const mapStateToProps = state => ({
 })
 
 const mapDispatchToProps = dispatch => ({
-    onSubmit: (token) => 
-        dispatch({type: 'UPDATE_TOKEN',payload:{token}})
+    onSubmit: (token) =>
+        dispatch({ type: 'UPDATE_TOKEN', payload: { token } })
 })
 
 class AccountInfoScreen extends React.Component {
@@ -47,7 +48,8 @@ class AccountInfoScreen extends React.Component {
             password: '',
             activeSections: [],
             avatarData: null,
-            avatarMime: null
+            avatarMime: null,
+            showAlert: false
         }
         this.submitUsername = this.submitUsername.bind(this);
         this.submitAvatar = this.submitAvatar.bind(this);
@@ -59,18 +61,21 @@ class AccountInfoScreen extends React.Component {
     async submitUsername() {
         const { uId, token } = this.props;
         const response = await agent.user.updateUsername(uId, token, this.state.username)
+        this.setState({ activeSections: [], showAlert: true, username: '' })
     }
 
     async submitAvatar() {
         const { uId, token } = this.props;
         const response = await agent.user.updateAvatar(uId, token, this.state.avatarUrl);
+        this.setState({ activeSections: [], showAlert: true, avatarUrl: null, avatarData: null, avatarMime: null })
     }
 
     async submitPassword() {
         const { uId, token } = this.props;
-        const response = await agent.user.modifyPassword(uId, token, this.state.password) 
+        const response = await agent.user.modifyPassword(uId, token, this.state.password)
         if (response.rescode === 0) {
             this.props.onSubmit(response.token)
+            this.setState({ activeSections: [], showAlert: true, password: '' })
         }
     }
 
@@ -208,6 +213,15 @@ class AccountInfoScreen extends React.Component {
                     renderHeader={this.renderHeader}
                     renderContent={this.renderContent}
                     onChange={activeSections => this.setState({ activeSections })}
+                />
+                <AwesomeAlert
+                    show={this.state.showAlert}
+                    title="修改成功"
+                    showConfirmButton={true}
+                    confirmText="确认"
+                    onConfirmPressed={() => this.setState({ showAlert: false })}
+                    closeOnTouchOutside={false}
+                    closeOnHardwareBackPress={false}
                 />
             </React.Fragment>
         );

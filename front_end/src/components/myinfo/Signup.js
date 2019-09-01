@@ -4,6 +4,8 @@ import { Button, Input } from 'react-native-elements'
 import agent from "../../agent/index"
 import Icon from "react-native-vector-icons/FontAwesome"
 import AwesomeAlert from 'react-native-awesome-alerts';
+import { connect } from "react-redux";
+import { StackActions, NavigationActions } from "react-navigation";
 
 const styles = StyleSheet.create({
     border: {
@@ -32,7 +34,35 @@ const styles = StyleSheet.create({
     },
 });
 
-export class Signup extends React.Component {
+const getAlertTitle = alertType => {
+    if (alertType === 1)
+        return "注册成功"
+    if (alertType === 2)
+        return "手机号已注册"
+    if (alertType === 3)
+        return "验证码不正确"
+    if (alertType === 4)
+        return "Oops... 发生了一个预期外的错误"
+}
+
+const login = StackActions.reset({
+    index: 0,
+    actions: [
+        NavigationActions.navigate({ routeName: 'LoggedIn' })
+    ]
+});
+
+const mapStateToProps = state => ({
+})
+
+const mapDispatchToProps = dispatch => ({
+    onSignIn: (response) =>
+        dispatch({ type: 'SIGN_IN', payload: response }),
+    onReceiveMessage: () =>
+        dispatch({ type: "RECEIVE_MESSAGE" })
+})
+
+class Signup extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -42,9 +72,9 @@ export class Signup extends React.Component {
             username: '',
             password: '',
             sendCodeButton: { clickable: true, timeToClick: 0 },
-            sigupOK: false,
             rescodeForSendCode: -1,
-            rescodeForSignup: -1
+            rescodeForSignup: -1,
+            alertType: 0  // 0: hidden, 1: signupOK, 2: phone has existed, 3: code is wrong, 4: unexpected error
         };
 
         setInterval(() => this.updateSendCodeButton(), 1000);
@@ -53,6 +83,7 @@ export class Signup extends React.Component {
         this.sendCode = this.sendCode.bind(this);
         this.submit = this.submit.bind(this);
         this.updateSendCodeButton = this.updateSendCodeButton.bind(this);
+        this.handleComfirmPressed = this.handleComfirmPressed.bind(this);
     }
 
     updateSendCodeButton() {
@@ -83,6 +114,10 @@ export class Signup extends React.Component {
                 }
             });
         }
+        else if (response.rescode === 3) 
+            this.setState({ alertType: 2 })
+        else
+            this.setState({ alertType: 4 })
     }
 
     async submit() {
@@ -90,16 +125,43 @@ export class Signup extends React.Component {
         const response = await agent.user.sigup(token, phone, code, username, password);
         if (response.rescode === 0) {
             this.setState({
-                signupOK: true,
-                rescodeForSignup: 0
+                rescodeForSignup: 0,
+                alertType: 1
             });
         }
+        else if (response.rescode === 4) 
+            this.setState({ alertType: 3 })
+        else
+            this.setState({ alertType: 4 })
     }
 
     updateState(field, text) {
         this.setState({
             [field]: text
         });
+    }
+
+    async handleComfirmPressed() {
+        const { alertType, phone, password } = this.state;
+        if (alertType > 1) {
+            this.setState({ alertType: 0 })
+            return;
+        }
+        const response = await agent.user.firstSignin(phone, password);
+        this.props.onSignIn(response)
+        this.props.navigation.dispatch(login);
+        agent.ws = new WebSocket(`ws://202.120.40.8:30525/websocket?senderUId=${response.uId}`);
+        agent.ws.onopen = function () {
+            console.log('open');
+        };
+        agent.ws.onmessage = (e) => {
+            const message = eval("(" + e.data + ")");
+            console.log("ws: " + message);
+            this.props.onReceiveMessage()
+        };
+        agent.ws.onclose = function () {
+            console.log('close');
+        };
     }
 
     render() {
@@ -162,42 +224,27 @@ export class Signup extends React.Component {
                             secureTextEntry
                         />
                     </View>
-                    {this.state.signupOK ? (
-                        <View style={{ width: "100%", alignItems: "center" }}>
-                            <Button
-                                icon={<Icon name="check" size={15} color="white" style={{ margin: 5 }} />}
-                                title="注册成功"
-                                backgroundColor="#00e676"
-                                buttonStyle={[styles.submitButton, { width: 120, backgroundColor: "#64dd17" }]}
-                                titleStyle={{ fontSize: 20 }}
-                            />
-                        </View>
-                    ) : (
-                            <View style={{ width: "100%", alignItems: "center" }}>
-                                <Button
-                                    title="注册"
-                                    buttonStyle={styles.submitButton}
-                                    titleStyle={{ fontSize: 20 }}
-                                    onPress={this.submit}
-                                />
-                            </View>
-                        )
-                    }
+
+                    <View style={{ width: "100%", alignItems: "center" }}>
+                        <Button
+                            title="注册"
+                            buttonStyle={styles.submitButton}
+                            titleStyle={{ fontSize: 20 }}
+                            onPress={this.submit}
+                        />
+                    </View>
                 </View>
                 <AwesomeAlert
-                    show={this.state.signupOK}
-                    title="AwesomeAlert"
-                    message="I have a message for you!"
-                    closeOnTouchOutside={true}
-                    closeOnHardwareBackPress={false}
-                    showCancelButton={true}
+                    show={this.state.alertType > 0}
+                    title={getAlertTitle(this.state.alertType)}
                     showConfirmButton={true}
-                    cancelText="No, cancel"
-                    confirmText="Yes, delete it"
-                    confirmButtonColor="#DD6B55"
+                    confirmText="确认"
+                    onConfirmPressed={this.handleComfirmPressed}
+                    closeOnTouchOutside={false}
+                    closeOnHardwareBackPress={false}
                 />
             </React.Fragment>
         );
     }
 }
-export default Signup;
+export default connect(mapStateToProps, mapDispatchToProps)(Signup);
