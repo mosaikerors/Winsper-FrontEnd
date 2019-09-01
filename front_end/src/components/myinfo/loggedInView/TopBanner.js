@@ -3,6 +3,7 @@ import { Text, View, StyleSheet } from "react-native";
 import { Button, Avatar } from 'react-native-elements'
 import agent from "../../../agent/index"
 import { connect } from "react-redux"
+import FontAwesome from "react-native-vector-icons/FontAwesome";
 
 const styles = StyleSheet.create({
     username: {
@@ -76,17 +77,29 @@ class TopBanner extends React.Component {
     render() {
         const { username, avatar, isMe } = this.props;
         const { feather, hasChecked, hasFollowed } = this.state;
+        console.log("avatar", avatar !== "")
         return (
             <React.Fragment>
                 <View style={{ flexDirection: "row", marginBottom: 12 }}>
-                    <Avatar
-                        rounded
-                        size="large"
-                        source={{ uri: avatar }}
-                        overlayContainerStyle={{ backgroundColor: 'white', flex: 4, borderWidth: 1 }}
-                        activeOpacity={0.7}
-                        containerStyle={{ marginTop: 25, marginLeft: 25, borderWidth: 1 }}
-                    />
+                    {avatar !== "" ?
+                        <Avatar
+                            rounded
+                            size="large"
+                            source={{ uri: avatar }}
+                            overlayContainerStyle={{ backgroundColor: 'white', flex: 4, borderWidth: 1 }}
+                            activeOpacity={0.7}
+                            containerStyle={{ marginTop: 25, marginLeft: 25, borderWidth: 1 }}
+                        />
+                        :
+                        <Avatar
+                            rounded
+                            size="large"
+                            icon={{ name: "user", color: "cyan", type: "font-awesome" }}
+                            overlayContainerStyle={{ backgroundColor: 'white', flex: 4, borderWidth: 1 }}
+                            activeOpacity={0.7}
+                            containerStyle={{ marginTop: 25, marginLeft: 25, borderWidth: 1 }}
+                        />
+                    }
                     <View style={{ flexDirection: 'column' }}>
                         <Text
                             style={[styles.username, styles.border]}
