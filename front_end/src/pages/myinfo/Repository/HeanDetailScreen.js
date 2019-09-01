@@ -9,6 +9,7 @@ import Feather from "react-native-vector-icons/Feather";
 import { connect } from "react-redux";
 import agent from "../../../agent/index";
 import { transformDate } from "../../../util"
+import Loading from "../../../components/Loading"
 
 const css = StyleSheet.create({
     bottomBlank: {
@@ -158,7 +159,7 @@ class HeanDetailScreen extends Component {
         const { hId, avatar, username, createdTime, pictures, comments } = this.state.heanDetailed;
         const { text, likeCount, starCount, commentCount, hasLiked, hasStarred } = this.state.heanCard;
         if (!hId)
-            return null;
+            return <Loading />;
         return (
             <React.Fragment>
                 <KeyboardAvoidingView>

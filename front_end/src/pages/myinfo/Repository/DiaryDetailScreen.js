@@ -4,6 +4,7 @@ import { Divider } from "react-native-elements";
 import { connect } from "react-redux";
 import agent from "../../../agent/index";
 import { transformDate } from "../../../util"
+import Loading from "../../../components/Loading"
 
 const styles = StyleSheet.create({
 
@@ -33,7 +34,7 @@ class DiaryDetailScreen extends React.Component {
     render() {
         const { diary } = this.state;
         if (!diary)
-            return null;
+            return <Loading />;
         return (
             <React.Fragment>
                 <ScrollView style={{ padding: 5 }}>

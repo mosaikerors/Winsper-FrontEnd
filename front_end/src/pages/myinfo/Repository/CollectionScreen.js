@@ -6,6 +6,7 @@ import { connect } from "react-redux";
 import HeanCard from "../../../components/hean/HeanCard";
 import agent from "../../../agent/index";
 import { NavigationEvents, withNavigationFocus } from 'react-navigation';
+import Loading from "../../../components/Loading"
 
 const mapStateToProps = state => ({
     token: state.user.token,
@@ -50,7 +51,7 @@ class CollectionScreen extends React.Component {
     render() {
         const { hackingTrigger } = this.state;
         if (!this.state.heans)
-            return null;
+            return <Loading />;
         return (
             <React.Fragment>
                 <FlatList

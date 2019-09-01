@@ -7,6 +7,7 @@ import JournalBooks from "../../../components/journal/JournalBooks"
 import FontAwesome from 'react-native-vector-icons/FontAwesome'
 import journalBookCovers from "../../../components/journal/journalBookCovers"
 import Carousel from 'react-native-snap-carousel';
+import Loading from "../../../components/Loading"
 
 const { width: windowWidth, height: viewportHeight } = Dimensions.get('window');
 
@@ -93,7 +94,7 @@ class JournalListScreen extends React.Component {
         const { journalBooks, cntJournalBookIndex, journalToBeDeleted, isCreatingJournalBook, targetJournals, journalBookName } = this.state;
 
         if (!journalBooks)
-            return null;
+            return <Loading />;
         if (journalBooks.length === 0)
             return (<Text>No journals</Text>)
         return (

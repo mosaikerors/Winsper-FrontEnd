@@ -4,6 +4,7 @@ import { Divider } from "react-native-elements"
 import { connect } from "react-redux"
 import agent from "../../../agent/index"
 import { transformDate } from "../../../util"
+import Loading from "../../../components/Loading"
 
 const renderCommentBubble = comment => (
     <View>
@@ -32,7 +33,7 @@ class CommentScreen extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            comments: []
+            comments: null
         }
     }
 
@@ -58,6 +59,8 @@ class CommentScreen extends React.Component {
 
     render() {
         const { comments } = this.state;
+        if (!comments)
+            return <Loading />
         return (
             <React.Fragment>
                 <ScrollView>

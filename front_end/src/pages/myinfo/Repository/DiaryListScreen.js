@@ -7,6 +7,7 @@ import { connect } from "react-redux";
 import agent from "../../../agent/index";
 import Timeline from 'react-native-timeline-listview'
 import { transformDate } from "../../../util"
+import Loading from "../../../components/Loading"
 
 const mapStateToProps = state => ({
     token: state.user.token,
@@ -53,7 +54,7 @@ class DiaryListScreen extends React.Component {
     render() {
         const { diaries } = this.state;
         if (!diaries)
-            return null;
+            return <Loading />;
         return (
             <React.Fragment>
                 <ScrollView style={{ borderWidth: 0, paddingLeft: 0, paddingTop: 30 }}>

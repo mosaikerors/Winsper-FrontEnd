@@ -5,6 +5,7 @@ import { connect } from "react-redux"
 import agent from "../../../agent/index"
 import { NavigationEvents, withNavigationFocus } from 'react-navigation';
 import FontAwesome from "react-native-vector-icons/FontAwesome";
+import Loading from "../../../components/Loading"
 
 // 渲染出 username 锚点，点击跳转到该用户个人主页
 const renderUsername = (navigation, uId, username) => (
@@ -102,7 +103,7 @@ class MessageDetailScreen extends React.Component {
     render() {
         const { type, messages } = this.state;
         if (!messages)
-            return null;
+            return <Loading />;
         if (messages.length === 0)
             return <Text>no message</Text>
         return (

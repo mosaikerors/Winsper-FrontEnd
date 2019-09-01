@@ -7,6 +7,7 @@ import DetailedBlock from "../../components/myinfo/loggedInView/DetailedBlock";
 import BottomBanner from "../../components/myinfo/loggedInView/BottomBanner";
 import agent from "../../agent/index";
 import { NavigationEvents, withNavigationFocus } from 'react-navigation';
+import Loading from "../../components/Loading"
 
 const mapStateToProps = state => ({
     uId: state.user.uId,
@@ -47,7 +48,7 @@ class PersonPageScreen extends React.Component {
 
     render() {
         if (!this.state.userInfo)
-            return null;
+            return <Loading />;
         const { avatar, username, feather, mutualFollow, following, followers, hasFollowed, otherUId } = this.state.userInfo;
         return (
             <React.Fragment>

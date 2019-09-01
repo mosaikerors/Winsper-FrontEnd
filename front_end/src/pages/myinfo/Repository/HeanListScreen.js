@@ -5,6 +5,8 @@ import HeanCard from "../../../components/hean/HeanCard";
 import agent from "../../../agent/index";
 import { connect } from "react-redux";
 import { NavigationEvents, withNavigationFocus } from 'react-navigation';
+import Loading from "../../../components/Loading"
+
 const { width } = Dimensions.get("window");
 
 const mapStateToProps = state => ({
@@ -50,7 +52,7 @@ class HeanListScreen extends React.Component {
     render() {
         const { hackingTrigger } = this.state;
         if (!this.state.heans)
-            return null;
+            return <Loading />;
         return (
             <React.Fragment>
                 <FlatList

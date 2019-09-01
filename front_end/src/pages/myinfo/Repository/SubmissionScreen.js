@@ -7,6 +7,7 @@ import HeanCard from "../../../components/hean/HeanCard";
 import agent from "../../../agent/index";
 import { NavigationEvents, withNavigationFocus } from 'react-navigation';
 import FontAwesome from "react-native-vector-icons/FontAwesome";
+import Loading from "../../../components/Loading"
 
 const mapStateToProps = state => ({
     token: state.user.token,
@@ -69,7 +70,7 @@ class SubmissionScreen extends React.Component {
 
     render() {
         if (!this.state.heans)
-            return null;
+            return <Loading />;
         return (
             <React.Fragment>
                 <View style={{ height: 40, flexDirection: 'row-reverse' }}>

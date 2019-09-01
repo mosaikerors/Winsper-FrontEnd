@@ -66,7 +66,6 @@ class PrivacySafetyScreen extends React.Component {
 
     // 尽管 render 中用的仍然是 props 数据，但是因为有了 setState，所以 render 会被触发
     render() {
-        console.log("INRENDER", this.props.privacy)
         return (
             <React.Fragment>
                 <View>

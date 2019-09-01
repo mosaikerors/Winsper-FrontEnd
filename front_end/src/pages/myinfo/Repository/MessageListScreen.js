@@ -8,6 +8,7 @@ import Feather from "react-native-vector-icons/Feather";
 import { NavigationEvents, withNavigationFocus } from 'react-navigation';
 import SimpleLineIcons from "react-native-vector-icons/SimpleLineIcons";
 import agent from "../../../agent/index";
+import Loading from "../../../components/Loading"
 
 const styles = StyleSheet.create({
     border: {
@@ -51,7 +52,7 @@ class MessageListScreen extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            messages: []
+            messages: null
         }
         this.readAll = this.readAll.bind(this)
         this.updateState = this.updateState.bind(this)
@@ -91,6 +92,8 @@ class MessageListScreen extends React.Component {
 
     render() {
         const { messages } = this.state;
+        if (!messages)
+            return <Loading />;
         return (
             <React.Fragment>
                 <View style={{ borderWidth: 0, margin: 5, flexDirection: "row-reverse" }}>

@@ -8,6 +8,7 @@ import DetailedBlock from "../../components/myinfo/loggedInView/DetailedBlock";
 import BottomBanner from "../../components/myinfo/loggedInView/BottomBanner";
 import agent from "../../agent/index"
 import { NavigationEvents, withNavigationFocus } from 'react-navigation';
+import Loading from "../../components/Loading"
 
 const mapStateToProps = state => ({
     uId: state.user.uId,
@@ -47,7 +48,7 @@ class LoggedInScreen extends React.Component {
 
     render() {
         if (!this.state.myinfo)
-            return null;
+            return <Loading />
         const { avatar, username, feather, mutualFollow, following, followers, hasChecked } = this.state.myinfo;
         return (
             <React.Fragment>
