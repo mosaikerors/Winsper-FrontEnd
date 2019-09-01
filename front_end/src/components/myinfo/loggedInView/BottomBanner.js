@@ -43,16 +43,6 @@ class BottomBanner extends React.Component {
                                     <Text>设置</Text>
                                 </TouchableOpacity>
                             </View>
-                            <View style={styles.block}>
-                                <TouchableOpacity style={styles.text}>
-                                    <Text>夜间</Text>
-                                </TouchableOpacity>
-                            </View>
-                            <View style={styles.block}>
-                                <TouchableOpacity style={styles.text}>
-                                    <Text>东19</Text>
-                                </TouchableOpacity>
-                            </View>
                         </View>
                         <View style={{ flexDirection: 'row-reverse', flex: 1 }}>
                             <TouchableOpacity style={[styles.text, styles.logout]} onPress={() => this.props.navigation.dispatch(logout)}>
