@@ -8,7 +8,7 @@ import FontAwesome from "react-native-vector-icons/FontAwesome";
 import Feather from "react-native-vector-icons/Feather";
 import { connect } from "react-redux";
 import agent from "../../../agent/index";
-
+import { transformDate } from "../../../util"
 
 const css = StyleSheet.create({
     bottomBlank: {
@@ -107,7 +107,6 @@ class HeanDetailScreen extends Component {
             this.setState({ heanCard: Object.assign({}, this.state.heanCard, { hasLiked: !hasLiked, likeCount: likeCount - 1 }) })
         }
         else {
-            console.log("hererere")
             agent.ws.send(`{ "type": 2, "receiverUId": ${otherUId}, "senderUsername": "${myUsername}", "hId": "${hId}" }`);
             agent.hean.like(uId, token, hId);
             this.setState({ heanCard: Object.assign({}, this.state.heanCard, { hasLiked: !hasLiked, likeCount: likeCount + 1 }) })
@@ -174,7 +173,7 @@ class HeanDetailScreen extends Component {
                             />
                             <View style={[css.username, { borderWidth: 0, flex: 1 }]}>
                                 <Text>{username}</Text>
-                                <Text>{createdTime}</Text>
+                                <Text>{transformDate(createdTime,true)}</Text>
                             </View>
                             {this.props.uId === this.state.heanDetailed.uId &&
                                 <TouchableOpacity style={{ margin: 10, borderWidth: 0, padding: 5 }} onPress={this.deleteHean}>

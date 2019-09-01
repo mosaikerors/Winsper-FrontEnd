@@ -1,7 +1,7 @@
 import {View, StyleSheet} from "react-native";
 import {Avatar, Text} from "react-native-elements";
 import React, {Component} from "react";
-
+import {transformDate} from "../../util"
 const styles = StyleSheet.create({
     background:
     {
@@ -41,7 +41,7 @@ class Comment extends Component {
                     />
                     <View style={styles.commenterInfo}>
                         <Text>{comment.commenterUsername}</Text>
-                        <Text>{comment.time}</Text>
+                        <Text>{transformDate(comment.time,true)}</Text>
                     </View>
                 </View>
                 <Text style={styles.text}>{comment.content}</Text>
