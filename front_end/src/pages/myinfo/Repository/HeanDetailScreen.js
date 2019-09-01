@@ -151,7 +151,6 @@ class HeanDetailScreen extends Component {
         const { uId, token } = this.props;
         const { hId } = this.state.heanCard;
         const response = await agent.hean.deleteHean(uId, token, hId);
-        console.log("delete", response)
         this.props.navigation.pop();
     }
 

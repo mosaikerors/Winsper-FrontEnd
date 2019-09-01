@@ -1,10 +1,11 @@
 import React from 'react';
-import { StyleSheet, Text, View, ScrollView } from 'react-native';
+import { StyleSheet, Text, View, ScrollView, TouchableOpacity } from 'react-native';
 import { Divider } from "react-native-elements";
 import { connect } from "react-redux";
 import agent from "../../../agent/index";
 import { transformDate } from "../../../util"
 import Loading from "../../../components/Loading"
+import FontAwesome from "react-native-vector-icons/FontAwesome";
 
 const styles = StyleSheet.create({
 
@@ -21,8 +22,18 @@ class DiaryDetailScreen extends React.Component {
         this.state = {
             diaryId: this.props.navigation.getParam("diaryId", 0),
             diary: null,
+            isMe: this.props.navigation.getParam("isMe", false)
         }
+        this.deleteDiary = this.deleteDiary.bind(this)
     }
+
+    async deleteDiary() {
+        const { uId, token } = this.props;
+        const { diaryId } = this.state;
+        const response = await agent.record.deleteDiary(uId, token, diaryId);
+        this.props.navigation.pop();
+    }
+
     async componentWillMount() {
         const { uId, token } = this.props;
         const { diaryId } = this.state;
@@ -32,15 +43,23 @@ class DiaryDetailScreen extends React.Component {
 
     }
     render() {
-        const { diary } = this.state;
+        const { diary, isMe } = this.state;
         if (!diary)
             return <Loading />;
         return (
             <React.Fragment>
                 <ScrollView style={{ padding: 5 }}>
                     <View style={{ borderWidth: 0, margin: 15 }}>
-                        <View >
-                            <Text style={{ fontSize: 48 }}>{diary.title}</Text>
+                        <View style={{ flexDirection: 'row' }}>
+                            <Text style={{ fontSize: 48, flex: 1 }}>{diary.title}</Text>
+                            {isMe &&
+                                <TouchableOpacity style={{ margin: 10, borderWidth: 0, padding: 5 }} onPress={this.deleteDiary}>
+                                    <FontAwesome
+                                        name={"trash"}
+                                        size={20}
+                                    />
+                                </TouchableOpacity>
+                            }
                         </View>
                         <Divider />
                         <View style={{ flexDirection: "row", marginTop: 5 }}>
