@@ -5,6 +5,7 @@ import { connect } from "react-redux"
 import FontAwesome from "react-native-vector-icons/FontAwesome";
 import AntDesign from "react-native-vector-icons/AntDesign";
 import Feather from "react-native-vector-icons/Feather";
+import { NavigationEvents, withNavigationFocus } from 'react-navigation';
 import SimpleLineIcons from "react-native-vector-icons/SimpleLineIcons";
 import agent from "../../../agent/index";
 
@@ -25,22 +26,25 @@ const messageIcons = [
 
 const getBriefMessage = (message) => {
     if (message.type === 1)
-        return `${message.username} 关注了你`;
+        return `${message.senderUsername} 关注了你`;
     if (message.type === 2)
-        return `${message.username} 觉得你的函很赞`;
+        return `${message.senderUsername} 觉得你的函很赞`;
     if (message.type === 3)
-        return `${message.username} 收藏了你的函`;
+        return `${message.senderUsername} 收藏了你的函`;
     if (message.type === 4)
-        return `${message.username} 评论了你的函`;
+        return `${message.senderUsername} 评论了你的函`;
     if (message.type === 5)
-        return `${message.username} 回复了你的评论`;
-    if (message.type === 6)
         return `你的投稿被选中了`;
 }
 
 const mapStateToProps = state => ({
     uId: state.user.uId,
     token: state.user.token
+})
+
+const mapDispatchToProps = dispatch => ({
+    onReadMessage: () =>
+        dispatch({ type: "READ_MESSAGE" })
 })
 
 class MessageListScreen extends React.Component {
@@ -50,6 +54,16 @@ class MessageListScreen extends React.Component {
             messages: []
         }
         this.readAll = this.readAll.bind(this)
+        this.updateState = this.updateState.bind(this)
+    }
+
+    async updateState() {
+        const { uId, token } = this.props;
+        const response = await agent.record.getMessageList(uId, token);
+
+        if (response.rescode === 0)
+            this.setState({ messages: response.messages })
+        this.props.onReadMessage()
     }
 
     async readAll() {
@@ -64,12 +78,15 @@ class MessageListScreen extends React.Component {
         }
     }
 
-    async componentWillMount() {
-        const { uId, token } = this.props;
-        const response = await agent.record.getMessageList(uId, token);
-        console.log(response)
-        if (response.rescode === 0)
-            this.setState({ messages: response.messages })
+    componentWillMount() {
+        this.updateState()
+    }
+
+    componentWillReceiveProps(nextProps) {
+        // if you will reach this page, grab newest data
+        if (nextProps.isFocused) {
+            this.updateState();
+        }
     }
 
     render() {
@@ -94,8 +111,6 @@ class MessageListScreen extends React.Component {
                                     leftIcon={messageIcons[message.type - 1]}
                                     title={getBriefMessage(message)}
                                     titleStyle={{ fontSize: 20 }}
-                                    subtitle={message.time}
-                                    subtitleStyle={{ fontSize: 12 }}
                                     rightIcon={message.hasRead || <Badge />}
                                 />
                             </TouchableOpacity>
@@ -109,4 +124,4 @@ class MessageListScreen extends React.Component {
         );
     }
 }
-export default connect(mapStateToProps)(MessageListScreen);
+export default withNavigationFocus(connect(mapStateToProps, mapDispatchToProps)(MessageListScreen));

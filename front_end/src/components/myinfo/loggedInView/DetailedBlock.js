@@ -22,11 +22,12 @@ const styles = StyleSheet.create({
 
 const mapStateToProps = state => ({
     uId: state.user.uId,
+    hasNewMessage: state.message.hasNewMessage
 })
 
 class DetailedBlock extends React.Component {
     render() {
-        const { isMe, privacy } = this.props;
+        const { isMe, privacy, hasNewMessage } = this.props;
         const otherUId = isMe ? this.props.uId : this.props.otherUId;
         return (
             <React.Fragment>
@@ -35,7 +36,8 @@ class DetailedBlock extends React.Component {
                         <View style={styles.block}>
                             <TouchableOpacity
                                 disabled={!isMe && !privacy.isMessagePublic}
-                                style={styles.text} onPress={() => this.props.navigation.push('MessageList')}
+                                style={styles.text} 
+                                onPress={() => this.props.navigation.push('MessageList')}
                             >
                                 <Text>
                                     消息

@@ -35,6 +35,7 @@ const styles = StyleSheet.create({
 const mapStateToProps = state => ({
     uId: state.user.uId,
     token: state.user.token,
+    myUsername: state.user.username,
 });
 
 const mapDispatchToProps = dispatch => ({
@@ -63,8 +64,10 @@ class TopBanner extends React.Component {
     }
 
     async toggleFollow() {
-        const { uId, token, otherUId } = this.props;
+        const { uId, token, otherUId, myUsername } = this.props;
         const { hasFollowed } = this.state;
+        if (!hasFollowed)
+            agent.ws.send(`{ "type": 1, "receiverUId": ${otherUId}, "senderUsername": "${myUsername}" }`);
         const response = hasFollowed ? await agent.user.unfollow(uId, token, otherUId) : await agent.user.follow(uId, token, otherUId);
         if (response.rescode === 0)
             this.setState({ hasFollowed: !hasFollowed })

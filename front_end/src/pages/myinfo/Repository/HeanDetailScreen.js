@@ -53,7 +53,8 @@ const css = StyleSheet.create({
 
 const mapStateToProps = state => ({
     token: state.user.token,
-    uId: state.user.uId
+    uId: state.user.uId,
+    myUsername: state.user.username
 });
 
 const mapDispatchToProps = dispatch => ({
@@ -98,13 +99,16 @@ class HeanDetailScreen extends Component {
 
     changeLike() {
         const { hasLiked, likeCount } = this.state.heanCard;
-        const { uId, token } = this.props;
+        const { uId, token, myUsername } = this.props;
         const { hId } = this.state.heanCard;
+        const otherUId = this.state.heanDetailed.uId;
         if (hasLiked) {
             agent.hean.dislike(uId, token, hId);
             this.setState({ heanCard: Object.assign({}, this.state.heanCard, { hasLiked: !hasLiked, likeCount: likeCount - 1 }) })
         }
         else {
+            console.log("hererere")
+            agent.ws.send(`{ "type": 2, "receiverUId": ${otherUId}, "senderUsername": "${myUsername}", "hId": "${hId}" }`);
             agent.hean.like(uId, token, hId);
             this.setState({ heanCard: Object.assign({}, this.state.heanCard, { hasLiked: !hasLiked, likeCount: likeCount + 1 }) })
         }
@@ -112,24 +116,27 @@ class HeanDetailScreen extends Component {
 
     async changeStar() {
         const { hasStarred, starCount } = this.state.heanCard;
-        const { uId, token } = this.props;
+        const { uId, token, myUsername } = this.props;
         const { hId } = this.state.heanCard;
+        const otherUId = this.state.heanDetailed.uId;
         if (hasStarred) {
             agent.hean.uncollect(uId, token, hId);
             this.setState({ heanCard: Object.assign({}, this.state.heanCard, { hasStarred: !hasStarred, starCount: starCount - 1 }) })
         }
         else {
-            const response = await agent.hean.collect(uId, token, hId);
-            console.log("collect", response)
+            agent.ws.send(`{ "type": 3, "receiverUId": ${otherUId}, "senderUsername": "${myUsername}", "hId": "${hId}" }`);
+            agent.hean.collect(uId, token, hId);
             this.setState({ heanCard: Object.assign({}, this.state.heanCard, { hasStarred: !hasStarred, starCount: starCount + 1 }) })
         }
     }
 
     async submitComment() {
-        const { uId, token } = this.props;
+        const { uId, token, myUsername } = this.props;
         const { hId, commentCount } = this.state.heanCard;
         const { myComment } = this.state;
-        if (this.state.myComment) {
+        const otherUId = this.state.heanDetailed.uId;
+        if (myComment) {
+            agent.ws.send(`{ "type": 4, "receiverUId": ${otherUId}, "senderUsername": "${myUsername}", "hId": "${hId}", "text": "${myComment}" }`);
             const response = await agent.hean.comment(uId, token, hId, myComment);
             this.setState({
                 heanCard: Object.assign({}, this.state.heanCard, { commentCount: commentCount + 1 }),
@@ -170,7 +177,7 @@ class HeanDetailScreen extends Component {
                                 <Text>{createdTime}</Text>
                             </View>
                             {this.props.uId === this.state.heanDetailed.uId &&
-                                <TouchableOpacity style={{ margin: 10,borderWidth:0,padding:5 }} onPress={this.deleteHean}>
+                                <TouchableOpacity style={{ margin: 10, borderWidth: 0, padding: 5 }} onPress={this.deleteHean}>
                                     <FontAwesome
                                         name={"trash"}
                                         size={20}
