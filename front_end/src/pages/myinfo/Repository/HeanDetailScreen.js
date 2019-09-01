@@ -10,6 +10,7 @@ import { connect } from "react-redux";
 import agent from "../../../agent/index";
 import { transformDate } from "../../../util"
 import Loading from "../../../components/Loading"
+import AwesomeAlert from 'react-native-awesome-alerts';
 
 const css = StyleSheet.create({
     bottomBlank: {
@@ -79,6 +80,7 @@ class HeanDetailScreen extends Component {
             // 以 navagation params 的形式传递进来，然后在 willMount 钩子中以其中的 hId 去请求详细信息
             heanCard: this.props.navigation.getParam("heanCard", {}),
             myComment: null,
+            showDeleteAlert: false
         };
         this.submitComment = this.submitComment.bind(this);
         this.changeLike = this.changeLike.bind(this);
@@ -151,6 +153,7 @@ class HeanDetailScreen extends Component {
         const { uId, token } = this.props;
         const { hId } = this.state.heanCard;
         const response = await agent.hean.deleteHean(uId, token, hId);
+        this.setState({ showDeleteAlert: false })
         this.props.navigation.pop();
     }
 
@@ -173,10 +176,12 @@ class HeanDetailScreen extends Component {
                             />
                             <View style={[css.username, { borderWidth: 0, flex: 1 }]}>
                                 <Text>{username}</Text>
-                                <Text>{transformDate(createdTime,true)}</Text>
+                                <Text>{transformDate(createdTime, true)}</Text>
                             </View>
                             {this.props.uId === this.state.heanDetailed.uId &&
-                                <TouchableOpacity style={{ margin: 10, borderWidth: 0, padding: 5 }} onPress={this.deleteHean}>
+                                <TouchableOpacity style={{ margin: 10, borderWidth: 0, padding: 5 }}
+                                    onPress={() => this.setState({ showDeleteAlert: true })}
+                                >
                                     <FontAwesome
                                         name={"trash"}
                                         size={20}
@@ -249,6 +254,18 @@ class HeanDetailScreen extends Component {
                         </TouchableOpacity>
                     </View>
                 </KeyboardAvoidingView>
+                <AwesomeAlert
+                    show={this.state.showDeleteAlert}
+                    title="确认要删除吗？"
+                    showCancelButton={true}
+                    showConfirmButton={true}
+                    cancelText="取消"
+                    confirmText="确认"
+                    onCancelPressed={() => this.setState({ showDeleteAlert: false })}
+                    onConfirmPressed={this.deleteHean}
+                    cancelButtonStyle={{ marginRight: 30 }}
+                    confirmButtonColor="#DD6B55"
+                />
             </React.Fragment>
         );
     }

@@ -9,6 +9,7 @@ import BottomBanner from "../../components/myinfo/loggedInView/BottomBanner";
 import agent from "../../agent/index"
 import { NavigationEvents, withNavigationFocus } from 'react-navigation';
 import Loading from "../../components/Loading"
+import AwesomeAlert from 'react-native-awesome-alerts';
 
 const mapStateToProps = state => ({
     uId: state.user.uId,

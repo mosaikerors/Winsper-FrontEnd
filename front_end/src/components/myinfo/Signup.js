@@ -3,6 +3,7 @@ import { Text, View, StyleSheet } from "react-native";
 import { Button, Input } from 'react-native-elements'
 import agent from "../../agent/index"
 import Icon from "react-native-vector-icons/FontAwesome"
+import AwesomeAlert from 'react-native-awesome-alerts';
 
 const styles = StyleSheet.create({
     border: {
@@ -183,6 +184,18 @@ export class Signup extends React.Component {
                         )
                     }
                 </View>
+                <AwesomeAlert
+                    show={this.state.signupOK}
+                    title="AwesomeAlert"
+                    message="I have a message for you!"
+                    closeOnTouchOutside={true}
+                    closeOnHardwareBackPress={false}
+                    showCancelButton={true}
+                    showConfirmButton={true}
+                    cancelText="No, cancel"
+                    confirmText="Yes, delete it"
+                    confirmButtonColor="#DD6B55"
+                />
             </React.Fragment>
         );
     }

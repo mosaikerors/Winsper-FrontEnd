@@ -9,6 +9,7 @@ import journalBookCovers from "../../../components/journal/journalBookCovers"
 import Carousel from 'react-native-snap-carousel';
 import Loading from "../../../components/Loading"
 import EmptyList from "../../../components/EmptyList"
+import AwesomeAlert from 'react-native-awesome-alerts';
 
 const { width: windowWidth, height: viewportHeight } = Dimensions.get('window');
 
@@ -29,6 +30,7 @@ class JournalListScreen extends React.Component {
             targetJournals: null,
             journalBookCoverId: 0,
             journalBookName: null,
+            showDeleteAlert: false,
         }
         this.updateState = this.updateState.bind(this);
         this.deleteJournal = this.deleteJournal.bind(this)
@@ -42,7 +44,6 @@ class JournalListScreen extends React.Component {
         const { journalBookName, journalBookCoverId } = this.state;
 
         const response = await agent.record.createJournalBook(uId, token, journalBookName, journalBookCoverId)
-        console.log("response", response)
         if (response.rescode === 0) {
             this.setState({ isCreatingJournalBook: false })
             this.updateState()
@@ -54,6 +55,7 @@ class JournalListScreen extends React.Component {
         const { journalBooks, cntJournalBookIndex, journalToBeDeleted } = this.state;
         const journalBookId = journalBooks[cntJournalBookIndex].journalBookId;
         await agent.record.deleteJournal(uId, token, journalBookId, journalToBeDeleted)
+        this.setState({ showDeleteAlert: false })
         this.updateTargetJournals()
     }
 
@@ -138,7 +140,7 @@ class JournalListScreen extends React.Component {
                                             <FontAwesome name="close" size={28} style={{ margin: 10 }} color="red" />
                                         </TouchableOpacity>
                                     </View>
-                                    <TouchableOpacity onPress={this.deleteJournal}>
+                                    <TouchableOpacity onPress={() => this.setState({ showDeleteAlert: true })}>
                                         <FontAwesome name="trash" size={28} style={{ margin: 10 }} color="red" />
                                     </TouchableOpacity>
                                 </View>
@@ -192,6 +194,18 @@ class JournalListScreen extends React.Component {
                         </TouchableOpacity>
                     </View>
                 </Overlay>
+                <AwesomeAlert
+                    show={this.state.showDeleteAlert}
+                    title="确认要删除吗？"
+                    showCancelButton={true}
+                    showConfirmButton={true}
+                    cancelText="取消"
+                    confirmText="确认"
+                    onCancelPressed={() => this.setState({ showDeleteAlert: false })}
+                    onConfirmPressed={this.deleteJournal}
+                    cancelButtonStyle={{ marginRight: 30 }}
+                    confirmButtonColor="#DD6B55"
+                />
             </React.Fragment>
         );
     }

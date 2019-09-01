@@ -6500,6 +6500,13 @@ react-native-amap3d@^1.1.1:
   resolved "https://registry.yarnpkg.com/react-native-amap3d/-/react-native-amap3d-1.1.1.tgz#15f736907056a5ee451157cd7a948e0931bf8fe1"
   integrity sha512-5b8DAIGb0AUL/hDOEtrTrNCRZzub32j+0/Geyo9BOM7OiJ+Yar69HZTdsBpBVnw2lFNoHYLMbrmI+R2Fm5QZdQ==
 
+react-native-awesome-alerts@^1.2.0:
+  version "1.2.0"
+  resolved "https://registry.npm.taobao.org/react-native-awesome-alerts/download/react-native-awesome-alerts-1.2.0.tgz#a19b105d5133e92712d865795d532cd3f1e4de2d"
+  integrity sha1-oZsQXVEz6ScS2GV5XVMs0/Hk3i0=
+  dependencies:
+    prop-types "^15.5.10"
+
 react-native-collapsible@^1.4.0:
   version "1.4.0"
   resolved "https://registry.yarnpkg.com/react-native-collapsible/-/react-native-collapsible-1.4.0.tgz#ec03cac361178319b77bb9993b73677356dd89d2"

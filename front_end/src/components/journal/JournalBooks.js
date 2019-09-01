@@ -5,6 +5,7 @@ import FontAwesome from 'react-native-vector-icons/FontAwesome'
 import { connect } from "react-redux"
 import journalBookCovers from './journalBookCovers'
 import agent from "../../agent/index"
+import AwesomeAlert from 'react-native-awesome-alerts';
 
 const IS_IOS = Platform.OS === 'ios';
 
@@ -20,7 +21,8 @@ class JournalBooks extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            journalBookToBeDeleted: null
+            journalBookToBeDeleted: null,
+            showDeleteAlert: false,
         }
         this.renderJournalBook = this.renderJournalBook.bind(this)
         this.deleteJournalBook = this.deleteJournalBook.bind(this);
@@ -30,8 +32,7 @@ class JournalBooks extends React.Component {
         const { uId, token } = this.props;
         const { journalBookToBeDeleted } = this.state
         const response = await agent.record.deleteJournalBook(uId, token, journalBookToBeDeleted)
-        console.log("response", response)
-        this.setState({ journalBookToBeDeleted: null })
+        this.setState({ journalBookToBeDeleted: null, showDeleteAlert: false })
         this.props.updateState()
     }
 
@@ -87,10 +88,22 @@ class JournalBooks extends React.Component {
                     >
                         <FontAwesome name="close" size={28} style={{ margin: 5 }} color="red" />
                     </TouchableOpacity>
-                    <TouchableOpacity onPress={this.deleteJournalBook}>
+                    <TouchableOpacity onPress={() => this.setState({ showDeleteAlert: true })}>
                         <FontAwesome name="trash" size={28} style={{ margin: 5 }} color="red" />
                     </TouchableOpacity>
                 </View>
+                <AwesomeAlert
+                    show={this.state.showDeleteAlert}
+                    title="确认要删除吗？"
+                    showCancelButton={true}
+                    showConfirmButton={true}
+                    cancelText="取消"
+                    confirmText="确认"
+                    onCancelPressed={() => this.setState({ showDeleteAlert: false })}
+                    onConfirmPressed={this.deleteJournalBook}
+                    cancelButtonStyle={{ marginRight: 30 }}
+                    confirmButtonColor="#DD6B55"
+                />
             </React.Fragment>
         )
     }

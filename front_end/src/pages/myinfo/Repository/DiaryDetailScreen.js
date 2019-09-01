@@ -6,6 +6,7 @@ import agent from "../../../agent/index";
 import { transformDate } from "../../../util"
 import Loading from "../../../components/Loading"
 import FontAwesome from "react-native-vector-icons/FontAwesome";
+import AwesomeAlert from 'react-native-awesome-alerts';
 
 const styles = StyleSheet.create({
 
@@ -22,7 +23,8 @@ class DiaryDetailScreen extends React.Component {
         this.state = {
             diaryId: this.props.navigation.getParam("diaryId", 0),
             diary: null,
-            isMe: this.props.navigation.getParam("isMe", false)
+            isMe: this.props.navigation.getParam("isMe", false),
+            showDeleteAlert: false
         }
         this.deleteDiary = this.deleteDiary.bind(this)
     }
@@ -31,6 +33,7 @@ class DiaryDetailScreen extends React.Component {
         const { uId, token } = this.props;
         const { diaryId } = this.state;
         const response = await agent.record.deleteDiary(uId, token, diaryId);
+        this.setState({ showDeleteAlert: false })
         this.props.navigation.pop();
     }
 
@@ -53,7 +56,9 @@ class DiaryDetailScreen extends React.Component {
                         <View style={{ flexDirection: 'row' }}>
                             <Text style={{ fontSize: 48, flex: 1 }}>{diary.title}</Text>
                             {isMe &&
-                                <TouchableOpacity style={{ margin: 10, borderWidth: 0, padding: 5 }} onPress={this.deleteDiary}>
+                                <TouchableOpacity style={{ margin: 10, borderWidth: 0, padding: 5 }}
+                                    onPress={() => this.setState({ showDeleteAlert: true })}
+                                >
                                     <FontAwesome
                                         name={"trash"}
                                         size={20}
@@ -75,6 +80,18 @@ class DiaryDetailScreen extends React.Component {
                         </View>
                     </View>
                 </ScrollView>
+                <AwesomeAlert
+                    show={this.state.showDeleteAlert}
+                    title="确认要删除吗？"
+                    showCancelButton={true}
+                    showConfirmButton={true}
+                    cancelText="取消"
+                    confirmText="确认"
+                    onCancelPressed={() => this.setState({ showDeleteAlert: false })}
+                    onConfirmPressed={this.deleteDiary}
+                    cancelButtonStyle={{ marginRight: 30 }}
+                    confirmButtonColor="#DD6B55"
+                />
             </React.Fragment>
         )
     }
