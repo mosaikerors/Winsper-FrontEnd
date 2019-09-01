@@ -99,7 +99,20 @@ class JournalListScreen extends React.Component {
         if (!journalBooks)
             return <Loading />;
         if (journalBooks.length === 0)
-            return <EmptyList field="手账列表" />
+            return (
+                <React.Fragment>
+                    <View style={{ height: 40, flexDirection: 'row-reverse' }}>
+                        <TouchableOpacity
+                            style={{ borderWidth: 0, width: 120, justifyContent: "center", alignItems: "center", flexDirection: "row" }}
+                            onPress={() => this.setState({ isCreatingJournalBook: true, journalBooks: [0] })}
+                        >
+                            <FontAwesome name={"plus"} size={20} />
+                            <Text style={{ fontSize: 20, marginLeft: 5 }}>新建手账本</Text>
+                        </TouchableOpacity>
+                    </View>
+                    <EmptyList field="手账列表" />
+                </React.Fragment>
+            )
         return (
             <React.Fragment>
                 <View style={{ height: 40, flexDirection: 'row-reverse' }}>
