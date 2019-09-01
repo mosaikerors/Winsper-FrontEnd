@@ -8,6 +8,7 @@ import agent from "../../../agent/index";
 import { NavigationEvents, withNavigationFocus } from 'react-navigation';
 import FontAwesome from "react-native-vector-icons/FontAwesome";
 import Loading from "../../../components/Loading"
+import EmptyList from "../../../components/EmptyList"
 
 const mapStateToProps = state => ({
     token: state.user.token,
@@ -69,8 +70,11 @@ class SubmissionScreen extends React.Component {
     }
 
     render() {
-        if (!this.state.heans)
+        const {heans} = this.state
+        if (!heans)
             return <Loading />;
+        if (heans.length === 0) 
+            return <EmptyList field="投稿列表" />
         return (
             <React.Fragment>
                 <View style={{ height: 40, flexDirection: 'row-reverse' }}>

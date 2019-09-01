@@ -7,6 +7,7 @@ import HeanCard from "../../../components/hean/HeanCard";
 import agent from "../../../agent/index";
 import { NavigationEvents, withNavigationFocus } from 'react-navigation';
 import Loading from "../../../components/Loading"
+import EmptyList from "../../../components/EmptyList"
 
 const mapStateToProps = state => ({
     token: state.user.token,
@@ -49,9 +50,11 @@ class CollectionScreen extends React.Component {
     }
 
     render() {
-        const { hackingTrigger } = this.state;
-        if (!this.state.heans)
+        const { hackingTrigger,heans } = this.state;
+        if (!heans)
             return <Loading />;
+        if (heans.length === 0)
+            return <EmptyList field="收藏列表" />
         return (
             <React.Fragment>
                 <FlatList

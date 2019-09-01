@@ -5,6 +5,7 @@ import { connect } from "react-redux"
 import FontAwesome from "react-native-vector-icons/FontAwesome";
 import Loading from '../Loading'
 import agent from "../../agent/index"
+import EmptyList from "../EmptyList"
 
 const styles = StyleSheet.create({
     border: {
@@ -38,9 +39,9 @@ class FollowList extends React.Component {
     render() {
         const { followlist } = this.props;
         if (!followlist)
-            return (<Loading />);
+            return <Loading />;
         if (followlist.length === 0)
-            return (<Text>followlist is empty</Text>);
+            return <EmptyList field="关注列表" />;
         return (
             <React.Fragment>
                 <View>

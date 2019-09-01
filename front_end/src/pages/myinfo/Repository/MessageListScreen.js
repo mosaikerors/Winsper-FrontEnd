@@ -9,6 +9,7 @@ import { NavigationEvents, withNavigationFocus } from 'react-navigation';
 import SimpleLineIcons from "react-native-vector-icons/SimpleLineIcons";
 import agent from "../../../agent/index";
 import Loading from "../../../components/Loading"
+import EmptyList from "../../../components/EmptyList"
 
 const styles = StyleSheet.create({
     border: {
@@ -94,6 +95,8 @@ class MessageListScreen extends React.Component {
         const { messages } = this.state;
         if (!messages)
             return <Loading />;
+        if (messages.length === 0)
+            return <EmptyList field="消息列表" />
         return (
             <React.Fragment>
                 <View style={{ borderWidth: 0, margin: 5, flexDirection: "row-reverse" }}>

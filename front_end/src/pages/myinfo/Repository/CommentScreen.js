@@ -5,6 +5,7 @@ import { connect } from "react-redux"
 import agent from "../../../agent/index"
 import { transformDate } from "../../../util"
 import Loading from "../../../components/Loading"
+import EmptyList from "../../../components/EmptyList"
 
 const renderCommentBubble = comment => (
     <View>
@@ -61,6 +62,8 @@ class CommentScreen extends React.Component {
         const { comments } = this.state;
         if (!comments)
             return <Loading />
+        if (comments.length === 0)
+            return <EmptyList field="评论列表" />
         return (
             <React.Fragment>
                 <ScrollView>

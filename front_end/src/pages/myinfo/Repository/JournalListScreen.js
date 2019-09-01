@@ -8,6 +8,7 @@ import FontAwesome from 'react-native-vector-icons/FontAwesome'
 import journalBookCovers from "../../../components/journal/journalBookCovers"
 import Carousel from 'react-native-snap-carousel';
 import Loading from "../../../components/Loading"
+import EmptyList from "../../../components/EmptyList"
 
 const { width: windowWidth, height: viewportHeight } = Dimensions.get('window');
 
@@ -96,7 +97,7 @@ class JournalListScreen extends React.Component {
         if (!journalBooks)
             return <Loading />;
         if (journalBooks.length === 0)
-            return (<Text>No journals</Text>)
+            return <EmptyList field="手账列表" />
         return (
             <React.Fragment>
                 <View style={{ height: 40, flexDirection: 'row-reverse' }}>
@@ -118,7 +119,7 @@ class JournalListScreen extends React.Component {
                         sliderWidth={windowWidth}
                     />
                 </View>
-                {targetJournals &&
+                {(targetJournals && targetJournals.length !== 0) ?
                     <View style={{ flexDirection: "row", flexWrap: "wrap" }}>
                         {targetJournals.map(journal => (
                             <View style={{ borderWidth: 0, width: "33.3%" }}>
@@ -144,6 +145,8 @@ class JournalListScreen extends React.Component {
                             </View>
                         ))}
                     </View>
+                    :
+                    <EmptyList field="这个手账本" />
                 }
 
                 <Overlay overlayBackgroundColor="white" isVisible={isCreatingJournalBook}

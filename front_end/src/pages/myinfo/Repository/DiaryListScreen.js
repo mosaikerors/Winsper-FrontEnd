@@ -8,6 +8,7 @@ import agent from "../../../agent/index";
 import Timeline from 'react-native-timeline-listview'
 import { transformDate } from "../../../util"
 import Loading from "../../../components/Loading"
+import EmptyList from "../../../components/EmptyList"
 
 const mapStateToProps = state => ({
     token: state.user.token,
@@ -55,6 +56,8 @@ class DiaryListScreen extends React.Component {
         const { diaries } = this.state;
         if (!diaries)
             return <Loading />;
+        if (diaries.length === 0)
+            return <EmptyList field="日记列表" />
         return (
             <React.Fragment>
                 <ScrollView style={{ borderWidth: 0, paddingLeft: 0, paddingTop: 30 }}>
@@ -67,22 +70,6 @@ class DiaryListScreen extends React.Component {
                         timeStyle={{ width: 110, borderWidth: 0, fontSize: 20 }}
                     />
                 </ScrollView>
-                {/*
-                    <ScrollView>
-                        <View style={{ flexDirection: "row" }}>
-                            <TimeAxis num={diaries.length} />
-                            <View style={{ flex: 1 }}>
-                                {diaries.map((diary, index) => (
-                                    <View style={[styles.block, index === 0 && { marginTop: 62 }]}>
-                                        <TouchableOpacity onPress={() => this.props.navigation.push("DiaryDetail", { diaryId: diary.diaryId })}>
-                                            <Text style={{ fontSize: 24 }}>{diary.time}</Text>
-                                            <Text style={{ fontSize: 24 }}>{diary.title}</Text>
-                                        </TouchableOpacity>
-                                    </View>
-                                ))}
-                            </View>
-                        </View>
-                                </ScrollView>*/}
             </React.Fragment>
         );
     }
