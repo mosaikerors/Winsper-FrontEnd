@@ -2,6 +2,9 @@ import React from "react";
 import { Text, View, StyleSheet, TouchableOpacity } from "react-native";
 import { Card } from 'react-native-elements'
 import { connect } from "react-redux"
+import FontAwesome from "react-native-vector-icons/FontAwesome";
+import Ionicons from "react-native-vector-icons/Ionicons";
+import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 
 const styles = StyleSheet.create({
     border: {
@@ -9,7 +12,7 @@ const styles = StyleSheet.create({
     },
     block: {
         flex: 1,
-        borderWidth: 1,
+        //borderWidth: 1,
         margin: 5,
         borderRadius: 5,
     },
@@ -36,12 +39,11 @@ class DetailedBlock extends React.Component {
                         <View style={styles.block}>
                             <TouchableOpacity
                                 disabled={!isMe && !privacy.isMessagePublic}
-                                style={styles.text} 
+                                style={styles.text}
                                 onPress={() => this.props.navigation.push('MessageList')}
                             >
-                                <Text>
-                                    消息
-                                </Text>
+                                <FontAwesome name={"comment-o"} size={26} />
+                                <Text style={{ fontSize: 18, marginTop: 5 }}>消息</Text>
                             </TouchableOpacity>
                         </View>
                         <View style={styles.block}>
@@ -49,9 +51,8 @@ class DetailedBlock extends React.Component {
                                 disabled={!isMe && !privacy.isHeanPublic}
                                 style={styles.text} onPress={() => this.props.navigation.push('HeanList', { otherUId })}
                             >
-                                <Text>
-                                    函
-                                </Text>
+                                <FontAwesome name={"envelope-o"} size={26} />
+                                <Text style={{ fontSize: 18, marginTop: 5 }}>函</Text>
                             </TouchableOpacity>
                         </View>
                         <View style={styles.block}>
@@ -59,9 +60,8 @@ class DetailedBlock extends React.Component {
                                 disabled={!isMe && !privacy.isCollectionPublic}
                                 style={styles.text} onPress={() => this.props.navigation.push('Collection', { otherUId })}
                             >
-                                <Text>
-                                    收藏
-                                </Text>
+                                <FontAwesome name={"star-o"} size={26} />
+                                <Text style={{ fontSize: 18, marginTop: 5 }}>收藏</Text>
                             </TouchableOpacity>
                         </View>
                         <View style={styles.block}>
@@ -69,9 +69,8 @@ class DetailedBlock extends React.Component {
                                 disabled={!isMe && !privacy.isDiaryPublic}
                                 style={styles.text} onPress={() => this.props.navigation.push('DiaryList', { otherUId })}
                             >
-                                <Text>
-                                    日记
-                                </Text>
+                                <FontAwesome name={"calendar-o"} size={26} />
+                                <Text style={{ fontSize: 18, marginTop: 5 }}>日记</Text>
                             </TouchableOpacity>
                         </View>
                     </View>
@@ -81,9 +80,8 @@ class DetailedBlock extends React.Component {
                                 disabled={!isMe && !privacy.isJournalPublic}
                                 style={styles.text} onPress={() => this.props.navigation.push('JournalList', { otherUId })}
                             >
-                                <Text>
-                                    手账
-                                </Text>
+                                <Ionicons name={"ios-journal"} size={26} />
+                                <Text style={{ fontSize: 18, marginTop: 5 }}>手账</Text>
                             </TouchableOpacity>
                         </View>
                         <View style={styles.block}>
@@ -91,9 +89,8 @@ class DetailedBlock extends React.Component {
                                 disabled={!isMe && !privacy.isSubmissionPublic}
                                 style={styles.text} onPress={() => this.props.navigation.push('Submission', { otherUId })}
                             >
-                                <Text>
-                                    投稿
-                                </Text>
+                                <Ionicons name={"ios-paper-plane"} size={26} />
+                                <Text style={{ fontSize: 18, marginTop: 5 }}>投稿</Text>
                             </TouchableOpacity>
                         </View>
                         <View style={styles.block}>
@@ -101,9 +98,8 @@ class DetailedBlock extends React.Component {
                                 disabled={!isMe && !privacy.isMoodReportPublic}
                                 style={styles.text} onPress={() => this.props.navigation.push('MoodReport', { otherUId })}
                             >
-                                <Text>
-                                    心情报表
-                                </Text>
+                                <MaterialCommunityIcons name={"file"} size={26} />
+                                <Text style={{ fontSize: 18, marginTop: 5 }}>心情报表</Text>
                             </TouchableOpacity>
                         </View>
                         <View style={styles.block}>
@@ -111,9 +107,8 @@ class DetailedBlock extends React.Component {
                                 disabled={!isMe && !privacy.isCommentPublic}
                                 style={styles.text} onPress={() => this.props.navigation.push('Comment', { otherUId })}
                             >
-                                <Text>
-                                    评论
-                                </Text>
+                                <MaterialCommunityIcons name={"comment"} size={26} />
+                                <Text style={{ fontSize: 18, marginTop: 5 }}>评论</Text>
                             </TouchableOpacity>
                         </View>
                     </View>

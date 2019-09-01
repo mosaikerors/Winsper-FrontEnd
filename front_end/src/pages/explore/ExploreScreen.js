@@ -9,26 +9,25 @@ const { width, height } = Dimensions.get('window');
 const list = [
     {
         title: '手账',
-        icon: 'md-journal',
+        icon: 'ios-journal',
         pagename: 'CreateJournal',
         params: {}
     },
     {
         title: '函',
-        icon: 'info',
+        icon: 'ios-mail',
         pagename: 'CreateHean',
         params: {}
-
     },
     {
         title: '投稿',
-        icon: 'av-timer',
+        icon: 'ios-paper-plane',
         pagename: 'PostSubmission',
         params: { otherUId: 0 }
     },
     {
         title: '日记',
-        icon: 'md-book',
+        icon: 'ios-book',
         pagename: 'CreateDiary',
         params: {}
     }
