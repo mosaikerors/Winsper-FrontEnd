@@ -14,7 +14,7 @@ const Home = createBottomTabNavigator(
         CreateHean: CreateHeanNavigator,
     },
     {
-        initialRouteName: "Map",
+        initialRouteName: "MyInfo",
         tabBarComponent: (props) => (<BottomTabNavigator {...props} />)
     }
 );

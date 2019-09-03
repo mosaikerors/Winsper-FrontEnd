@@ -1,5 +1,6 @@
 const defaultState = {
-    hasNewMessage: false
+    hasNewMessage: false,
+    needsAutoLogin: true,
 }
 
 const message = (state = defaultState, action) => {
@@ -13,6 +14,11 @@ const message = (state = defaultState, action) => {
             return { 
                 ...state,
                 hasNewMessage: false
+            }
+        case 'AUTO_LOGIN':
+            return {
+                ...state,
+                needsAutoLogin: false
             }
         default:
             return state;

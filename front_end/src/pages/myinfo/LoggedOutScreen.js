@@ -4,10 +4,50 @@ import ScrollableTabView, { DefaultTabBar } from "react-native-scrollable-tab-vi
 import Signup from "../../components/myinfo/Signup";
 import Signin from "../../components/myinfo/Signin";
 import ForgetPassword from "../../components/myinfo/ForgetPassword"
+import { connect } from "react-redux"
+import agent from "../../agent/index"
+import { StackActions, NavigationActions } from "react-navigation";
 
 const backgroundImage = require("../../../images/p6.jpg")
 
+const login = StackActions.reset({
+    index: 0,
+    actions: [
+        NavigationActions.navigate({ routeName: 'LoggedIn' })
+    ]
+});
+
+const mapStateToProps = state => ({
+    uId: state.user.uId,
+    token: state.user.token,
+    needsAutoLogin: state.message.needsAutoLogin
+})
+
+const mapDispatchToProps = dispatch => ({
+    onLoggedIn: (response) =>
+        dispatch({ type: 'SIGN_IN', payload: response }),
+    onMount: () =>
+        dispatch({ type: 'AUTO_LOGIN' })
+});
+
 class LoggedOutScreen extends React.Component {
+    constructor(props) {
+        super(props)
+
+    }
+
+    async componentWillMount() {
+        const { uId, token, needsAutoLogin } = this.props;
+        if (needsAutoLogin) {
+            const response = await agent.user.nextSignin(uId, token)
+            if (response.rescode === 0) {
+                this.props.onLoggedIn(response)
+                this.props.navigation.dispatch(login);
+            }
+        }
+        this.props.onMount()
+    }
+
     render() {
         return (
             <React.Fragment>
@@ -22,4 +62,4 @@ class LoggedOutScreen extends React.Component {
         );
     }
 }
-export default LoggedOutScreen;
+export default connect(mapStateToProps, mapDispatchToProps)(LoggedOutScreen);

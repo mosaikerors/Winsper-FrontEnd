@@ -24,6 +24,12 @@ const user = (state = defaultState, action) => {
                 ...state,
                 privacy: action.payload.privacy,
             }
+        case 'LOGGED_OUT':
+            return {
+                ...state,
+                token: '',
+                uId: 0
+            }
         default:
             return state;
     }

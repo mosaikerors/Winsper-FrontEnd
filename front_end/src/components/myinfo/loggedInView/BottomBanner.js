@@ -1,7 +1,8 @@
 import React from "react";
-import { Text, View, StyleSheet,TouchableOpacity} from "react-native";
+import { Text, View, StyleSheet, TouchableOpacity } from "react-native";
 import { Divider } from 'react-native-elements';
 import { StackActions, NavigationActions } from "react-navigation";
+import { connect } from "react-redux";
 
 const styles = StyleSheet.create({
     border: {
@@ -27,9 +28,21 @@ const logout = StackActions.reset({
     ]
 });
 
+const mapStateToProps = state => ({})
+const mapDispatchToProps = dispatch => ({
+    onLoggedOut: () =>
+        dispatch({ type: 'LOGGED_OUT' })
+})
+
 class BottomBanner extends React.Component {
-    constructor(props){
+    constructor(props) {
         super(props);
+        this.logout = this.logout.bind(this);
+    }
+
+    logout() {
+        this.props.onLoggedOut();
+        this.props.navigation.dispatch(logout)
     }
 
     render() {
@@ -45,7 +58,7 @@ class BottomBanner extends React.Component {
                             </View>
                         </View>
                         <View style={{ flexDirection: 'row-reverse', flex: 1 }}>
-                            <TouchableOpacity style={[styles.text, styles.logout]} onPress={() => this.props.navigation.dispatch(logout)}>
+                            <TouchableOpacity style={[styles.text, styles.logout]} onPress={this.logout}>
                                 <Text>退出登录</Text>
                             </TouchableOpacity>
                         </View>
@@ -56,4 +69,4 @@ class BottomBanner extends React.Component {
         );
     }
 }
-export default BottomBanner;
+export default connect(mapStateToProps, mapDispatchToProps)(BottomBanner);
