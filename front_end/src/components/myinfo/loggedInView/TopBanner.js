@@ -77,7 +77,6 @@ class TopBanner extends React.Component {
     render() {
         const { username, avatar, isMe } = this.props;
         const { feather, hasChecked, hasFollowed } = this.state;
-        console.log("avatar", avatar !== "")
         return (
             <React.Fragment>
                 <View style={{ flexDirection: "row", marginBottom: 12 }}>

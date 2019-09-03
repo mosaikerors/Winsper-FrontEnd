@@ -16,7 +16,6 @@ const renderUsername = (navigation, uId, username) => (
 )
 
 const getDetailedMessage = (type, message, navigation) => {
-    console.log("message: " + Object.keys(message))
     if (type === 1)
         return (
             <Text style={{ fontSize: 24 }}>

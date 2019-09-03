@@ -1,6 +1,6 @@
 import React from "react";
 import { Text, View, StyleSheet, TouchableOpacity } from "react-native";
-import { Card } from 'react-native-elements'
+import { Card, Badge } from 'react-native-elements'
 import { connect } from "react-redux"
 import FontAwesome from "react-native-vector-icons/FontAwesome";
 import Ionicons from "react-native-vector-icons/Ionicons";
@@ -39,11 +39,20 @@ class DetailedBlock extends React.Component {
                         <View style={styles.block}>
                             <TouchableOpacity
                                 disabled={!isMe && !privacy.isMessagePublic}
-                                style={styles.text}
+                                style={[styles.text, { borderWidth: 0 }]}
                                 onPress={() => this.props.navigation.push('MessageList')}
                             >
-                                <FontAwesome name={"comment-o"} size={26} />
-                                <Text style={{ fontSize: 18, marginTop: 5 }}>消息</Text>
+                                <View style={[{ borderWidth: 0, alignItems: "center" }, hasNewMessage && { position: "relative", top: 5 }]}>
+                                    <FontAwesome name={"comment-o"} size={26} />
+                                    <Text style={{ fontSize: 18, marginTop: 5 }}>消息</Text>
+                                </View>
+                                <Badge
+                                    status="success"
+                                    containerStyle={{
+                                        position: 'relative', bottom: 50, left: 20,
+                                        display: hasNewMessage ? "flex" : "none"
+                                    }}
+                                />
                             </TouchableOpacity>
                         </View>
                         <View style={styles.block}>
