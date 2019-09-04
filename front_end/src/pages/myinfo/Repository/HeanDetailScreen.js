@@ -11,6 +11,7 @@ import agent from "../../../agent/index";
 import { transformDate } from "../../../util"
 import Loading from "../../../components/Loading"
 import AwesomeAlert from 'react-native-awesome-alerts';
+import theme from "../../../theme"
 
 const css = StyleSheet.create({
     bottomBlank: {
@@ -49,7 +50,7 @@ const css = StyleSheet.create({
         alignItems: "center",
     },
     sendIcon: {
-        marginRight: 16
+        marginRight: 10
     }
 });
 
@@ -164,18 +165,18 @@ class HeanDetailScreen extends Component {
             return <Loading />;
         return (
             <React.Fragment>
-                <KeyboardAvoidingView>
+                <KeyboardAvoidingView style={{ borderWidth: 0, backgroundColor: theme.palette.sky[0] }}>
                     <ScrollView style={css.view}>
 
                         {/* avatar, username, createdTime */}
-                        <View style={[css.Icon, { borderWidth: 0 }]}>
+                        <View style={[css.Icon, { borderWidth: 0, marginTop: 10 }]}>
                             <Avatar
                                 rounded
                                 size={"medium"}
                                 source={{ uri: avatar }}
                             />
                             <View style={[css.username, { borderWidth: 0, flex: 1 }]}>
-                                <Text>{username}</Text>
+                                <Text style={{ fontSize: 20 }}>{username}</Text>
                                 <Text>{transformDate(createdTime, true)}</Text>
                             </View>
                             {this.props.uId === this.state.heanDetailed.uId &&
@@ -191,7 +192,7 @@ class HeanDetailScreen extends Component {
                         </View>
 
                         {/* content */}
-                        <Text style={css.font}>{text}</Text>
+                        <Text style={[css.font, { marginTop: 10, marginBottom: 5 }]}>{text}</Text>
 
                         {/* pictures */}
                         <ImageGroup length={pictures.length} images={pictures} />
@@ -203,7 +204,7 @@ class HeanDetailScreen extends Component {
                                     <AntDesign
                                         name={"like2"}
                                         size={20}
-                                        color={hasLiked ? "red" : "black"}
+                                        color={hasLiked ? theme.palette.sky[2] : "black"}
                                     />
                                 </TouchableOpacity>
                                 <Text>{likeCount}</Text>
@@ -213,7 +214,7 @@ class HeanDetailScreen extends Component {
                                     <Feather
                                         name={"star"}
                                         size={20}
-                                        color={hasStarred ? "red" : "black"}
+                                        color={hasStarred ? theme.palette.sky[2] : "black"}
                                     />
                                 </TouchableOpacity>
                                 <Text>{starCount}</Text>
@@ -237,7 +238,7 @@ class HeanDetailScreen extends Component {
                     </ScrollView>
 
                     {/* comment input bar */}
-                    <View style={css.commentBox}>
+                    <View style={[css.commentBox, { backgroundColor: theme.palette.sky[0] }]}>
                         <TextInput
                             ref="input"
                             placeholder={'说说你的想法'}
@@ -245,10 +246,10 @@ class HeanDetailScreen extends Component {
                             value={this.state.myComment}
                             style={{ borderWidth: 0, flex: 1 }}
                         />
-                        <TouchableOpacity onPress={this.submitComment} style={[css.sendIcon, { borderWidth: 0 }]}>
+                        <TouchableOpacity onPress={this.submitComment} style={[css.sendIcon, { borderWidth: 0, padding: 5 }]}>
                             <FontAwesome
                                 name={"send"}
-                                color={this.state.myComment ? "blue" : "grey"}
+                                color={this.state.myComment ? theme.palette.sky[2] : "grey"}
                                 size={20}
                             />
                         </TouchableOpacity>

@@ -2,8 +2,9 @@ import React from 'react'
 import Ionicons from 'react-native-vector-icons/Ionicons'
 import FontAwesome from "react-native-vector-icons/FontAwesome"
 import { View, Text, TouchableOpacity } from "react-native"
+import theme from "../theme"
 
-const tabNames = ["Explore", "Map", "MyInfo","CreateHean"]
+const tabNames = ["Explore", "Map", "MyInfo", "CreateHean"]
 
 class BottomTabNavigator extends React.Component {
     constructor(props) {
@@ -23,47 +24,39 @@ class BottomTabNavigator extends React.Component {
         const { cntTab } = this.state;
         return (
             <React.Fragment>
-                <View style={{ flexDirection: "row", justifyContent: "space-around", height: 50 }}>
+                <View style={{
+                    flexDirection: "row", justifyContent: "space-around", height: 50,
+                    backgroundColor: cntTab === "Map" ? theme.palette.sky[0] : theme.palette.sky[1]
+                }}>
                     {/* Explore */}
                     <TouchableOpacity onPress={() => this.navigateTo("Explore")}
                         style={{ borderWidth: 0, padding: 5, alignItems: "center" }}
                     >
-                        <Ionicons name={"md-planet"} size={26} color={cntTab === "Explore" ? "cyan" : "grey"} />
-                        <Text style={{ color: cntTab === "Explore" ? "cyan" : "grey" }}>发现</Text>
+                        <Ionicons name={"md-planet"} size={26} color={cntTab === "Explore" ? theme.palette.sky[2] : "grey"} />
+                        <Text style={{ color: cntTab === "Explore" ? theme.palette.sky[2] : "grey" }}>发现</Text>
                     </TouchableOpacity>
-                    
-                    {cntTab === "Map" ?
-                        // Map
-                        <TouchableOpacity onPress={() => this.navigateTo("CreateHean")}
-                            style={{
-                                borderWidth: 0, height: 60, width: 60, borderRadius: 30, bottom: 20,
-                                backgroundColor: "cyan",
-                                justifyContent: "center", alignItems: "center"
-                            }}
-                        >
-                            <FontAwesome name={"plus"} size={36} color={"white"} />
-                        </TouchableOpacity> :
-                        // CreateHean
-                        <TouchableOpacity onPress={() => this.navigateTo("Map")}
-                            style={{
-                                borderWidth: 0, height: 60, width: 60, borderRadius: 30, bottom: 20,
-                                backgroundColor: "cyan",
-                                justifyContent: "center", alignItems: "center"
-                            }}
-                        >
-                            <FontAwesome name={"map-marker"} size={36} color={"white"} />
-                        </TouchableOpacity>
-                    }
+
+                    {/* Map */}
+                    <TouchableOpacity onPress={() => this.navigateTo("Map")}
+                        style={{
+                            borderWidth: 0, height: 60, width: 60, borderRadius: 30, bottom: 20,
+                            backgroundColor: cntTab === "Map" ? theme.palette.sky[1] : theme.palette.sky[2],
+                            justifyContent: "center", alignItems: "center"
+                        }}
+                    >
+                        <FontAwesome name={"map-marker"} size={36} color={"white"} />
+                    </TouchableOpacity>
+
                     {/* MyInfo */}
                     <TouchableOpacity onPress={() => this.navigateTo("MyInfo")}
                         style={{ borderWidth: 0, padding: 5, alignItems: "center" }}
                     >
-                        <FontAwesome name={"user"} size={26} color={cntTab === "MyInfo" ? "cyan" : "grey"} />
-                        <Text style={{ color: cntTab === "MyInfo" ? "cyan" : "grey" }}>我的</Text>
+                        <FontAwesome name={"user"} size={26} color={cntTab === "MyInfo" ? theme.palette.sky[2] : "grey"} />
+                        <Text style={{ color: cntTab === "MyInfo" ? theme.palette.sky[2] : "grey" }}>我的</Text>
                     </TouchableOpacity>
 
                 </View>
-            </React.Fragment>
+            </React.Fragment >
         )
     }
 }

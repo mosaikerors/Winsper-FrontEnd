@@ -1,6 +1,6 @@
 import React, { Component, Fragment } from 'react';
 import { View, NativeModules } from 'react-native';
-import { Button, ListItem } from 'react-native-elements'
+import { Button, ListItem,Divider } from 'react-native-elements'
 import { connect } from "react-redux";
 import RNFetchBlob from 'react-native-fetch-blob'
 import { TextareaItem } from '@ant-design/react-native'
@@ -9,6 +9,7 @@ import ImageGroup from '../../components/hean/ImageGroup'
 import { AK, SHA1, packageName } from '../../config';
 import agent from "../../agent/index"
 import AwesomeAlert from 'react-native-awesome-alerts';
+import theme from "../../theme"
 
 const ImagePicker = NativeModules.ImageCropPicker;
 
@@ -93,33 +94,45 @@ class CreateHeanScreen extends Component {
         }
         return (
             <Fragment>
-                <TextareaItem
-                    placeholder="记下此刻心情"
-                    value={this.state.content}
-                    rows={10}
-                    onChange={value => this.setState({ content: value })}
-                />
-                <ImageGroup images={imageURL} length={this.state.images.length} />
-                <View>
-                    <ListItem
-                        title={"选择图片"}
-                        onPress={this.addImage}
-                        leftIcon={{ name: "image" }}
-                        chevronColor="white"
-                        chevron
+                <View style={{ flex: 1, backgroundColor: theme.palette.sky[0] }}>
+                    <TextareaItem
+                        style={{ backgroundColor: theme.palette.sky[0] }}
+                        placeholder="记下此刻心情"
+                        value={this.state.content}
+                        rows={10}
+                        onChange={value => this.setState({ content: value })}
                     />
-                    <Button title={"确认"} onPress={this.upload} />
+                    <ImageGroup images={imageURL} length={this.state.images.length} />
+                    <View>
+                        <ListItem
+                            containerStyle={{ backgroundColor: theme.palette.sky[0] }}
+                            title={"选择图片"}
+                            onPress={this.addImage}
+                            leftIcon={{ name: "image" }}
+                            chevronColor="white"
+                            chevron
+                        />
+                    </View>
+                    <Divider />
+                    <View style={{ alignItems: "center" }}>
+                        <Button
+                            title="确认"
+                            onPress={this.upload}
+                            buttonStyle={{ width: 90, height: 50, marginTop: 20, borderRadius: 50, backgroundColor: theme.palette.sky[2] }}
+                            titleStyle={{ fontSize: 20 }}
+                        />
+                    </View>
+                    <AwesomeAlert
+                        show={this.state.showAlert}
+                        title="上传成功"
+                        showConfirmButton={true}
+                        confirmText="确认"
+                        onConfirmPressed={() => this.props.navigation.pop()}
+                        closeOnTouchOutside={false}
+                        closeOnHardwareBackPress={false}
+                    />
                 </View>
-                <AwesomeAlert
-                    show={this.state.showAlert}
-                    title="上传成功"
-                    showConfirmButton={true}
-                    confirmText="确认"
-                    onConfirmPressed={() => this.props.navigation.pop()}
-                    closeOnTouchOutside={false}
-                    closeOnHardwareBackPress={false}
-                />
-            </Fragment>
+            </Fragment >
         );
     }
 }

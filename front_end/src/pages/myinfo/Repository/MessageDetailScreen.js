@@ -1,5 +1,5 @@
 import React from "react";
-import { Text, View, StyleSheet, TouchableOpacity } from "react-native";
+import { Text, View, StyleSheet, TouchableOpacity,ScrollView } from "react-native";
 import { ListItem } from 'react-native-elements'
 import { connect } from "react-redux"
 import agent from "../../../agent/index"
@@ -7,6 +7,7 @@ import { NavigationEvents, withNavigationFocus } from 'react-navigation';
 import FontAwesome from "react-native-vector-icons/FontAwesome";
 import Loading from "../../../components/Loading"
 import EmptyList from "../../../components/EmptyList"
+import theme from "../../../theme"
 
 // 渲染出 username 锚点，点击跳转到该用户个人主页
 const renderUsername = (navigation, uId, username) => (
@@ -108,15 +109,15 @@ class MessageDetailScreen extends React.Component {
             return <EmptyList field="消息列表" />
         return (
             <React.Fragment>
-                <View style={{ height: 40, borderWidth: 0, flexDirection: "row-reverse" }}>
+                <View style={{ height: 40, borderWidth: 0, flexDirection: "row-reverse",backgroundColor: theme.palette.sky[0] }}>
                     <TouchableOpacity style={{ borderWidth: 0, flexDirection: "row", alignItems: "center" }}
                         onPress={this.deleteMessage}
                     >
-                        <FontAwesome name={"trash"} size={24} color="red" />
+                        <FontAwesome name={"trash"} size={24} />
                         <Text style={{ fontSize: 24, marginHorizontal: 5 }}>清空</Text>
                     </TouchableOpacity>
                 </View>
-                <View>
+                <ScrollView style={{backgroundColor: theme.palette.sky[0]}}>
                     {messages.map((message) => (
                         <View style={{ margin: 20, marginBottom: 10 }}>
                             {/* timestamp */}
@@ -130,7 +131,7 @@ class MessageDetailScreen extends React.Component {
                             </View>
                         </View>
                     ))}
-                </View>
+                </ScrollView>
             </React.Fragment>
         );
     }

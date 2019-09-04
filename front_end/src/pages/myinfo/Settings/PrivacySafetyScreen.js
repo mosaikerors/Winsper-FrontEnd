@@ -3,6 +3,7 @@ import { Text, View, StyleSheet, TextInput, Switch } from "react-native";
 import { ListItem } from 'react-native-elements'
 import agent from "../../../agent/index";
 import { connect } from "react-redux";
+import theme from "../../../theme"
 
 const mapStateToProps = state => ({
     token: state.user.token,
@@ -68,13 +69,19 @@ class PrivacySafetyScreen extends React.Component {
     render() {
         return (
             <React.Fragment>
-                <View>
+                <View style={{ borderWidth: 0, flex: 1, backgroundColor: theme.palette.sky[0] }}>
                     <View>
                         {fieldlist.map((listItem, index) => (
                             <ListItem
+                                containerStyle={{ backgroundColor: theme.palette.sky[0] }}
                                 key={index}
                                 title={listItem + suffix}
-                                rightIcon={<Switch onValueChange={() => this.toggleSwitch(index)} value={this.props.privacy[index]} />}
+                                rightIcon={
+                                    <Switch
+                                        onValueChange={() => this.toggleSwitch(index)}
+                                        value={this.props.privacy[index]}
+                                    />
+                                }
                             />
                         ))}
                     </View>

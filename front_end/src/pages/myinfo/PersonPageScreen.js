@@ -1,4 +1,5 @@
 import React from "react";
+import { View } from "react-native"
 import { Divider } from 'react-native-elements'
 import { connect } from "react-redux"
 import TopBanner from "../../components/myinfo/loggedInView/TopBanner";
@@ -8,6 +9,7 @@ import BottomBanner from "../../components/myinfo/loggedInView/BottomBanner";
 import agent from "../../agent/index";
 import { NavigationEvents, withNavigationFocus } from 'react-navigation';
 import Loading from "../../components/Loading"
+import theme from "../../theme"
 
 const mapStateToProps = state => ({
     uId: state.user.uId,
@@ -58,6 +60,8 @@ class PersonPageScreen extends React.Component {
                 <Divider />
                 {/* userInfo 里除了隐私设置还有其他一些信息比如 username，但是这里为了方便，选择将整个 userInfo 传进去，尽管只用到了其中的隐私设置 */}
                 <DetailedBlock navigation={this.props.navigation} privacy={this.state.userInfo} isMe={false} />
+                <Divider />
+                <View style={{ backgroundColor: theme.palette.sky[0], flex: 1 }}></View>
             </React.Fragment>
         );
     }

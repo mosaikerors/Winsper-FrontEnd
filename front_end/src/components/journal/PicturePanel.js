@@ -29,9 +29,9 @@ const styles = StyleSheet.create({
     },
 });
 
-const bi1 = require("../../../images/p1.jpg")
-const bi2 = require("../../../images/p2.jpg")
-const bi3 = require("../../../images/p5.jpg")
+const bi1 = require("../../../images/journal-background/b1.jpg")
+const bi2 = require("../../../images/journal-background/b2.jpg")
+const bi3 = require("../../../images/journal-background/b3.jpg")
 
 const stickerGroug1 = stickers.slice(0, 5);
 const stickerGroug2 = stickers.slice(5, 10);

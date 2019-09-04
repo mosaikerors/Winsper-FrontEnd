@@ -10,6 +10,7 @@ import Carousel from 'react-native-snap-carousel';
 import Loading from "../../../components/Loading"
 import EmptyList from "../../../components/EmptyList"
 import AwesomeAlert from 'react-native-awesome-alerts';
+import theme from "../../../theme"
 
 const { width: windowWidth, height: viewportHeight } = Dimensions.get('window');
 
@@ -101,7 +102,7 @@ class JournalListScreen extends React.Component {
         if (journalBooks.length === 0)
             return (
                 <React.Fragment>
-                    <View style={{ height: 40, flexDirection: 'row-reverse' }}>
+                    <View style={{ height: 40, flexDirection: 'row-reverse', backgroundColor: theme.palette.sky[0] }}>
                         <TouchableOpacity
                             style={{ borderWidth: 0, width: 120, justifyContent: "center", alignItems: "center", flexDirection: "row" }}
                             onPress={() => this.setState({ isCreatingJournalBook: true, journalBooks: [0] })}
@@ -115,7 +116,7 @@ class JournalListScreen extends React.Component {
             )
         return (
             <React.Fragment>
-                <View style={{ height: 40, flexDirection: 'row-reverse' }}>
+                <View style={{ height: 40, flexDirection: 'row-reverse', backgroundColor: theme.palette.sky[0] }}>
                     <TouchableOpacity
                         style={{ borderWidth: 0, width: 120, justifyContent: "center", alignItems: "center", flexDirection: "row" }}
                         onPress={() => this.setState({ isCreatingJournalBook: true })}
@@ -124,7 +125,7 @@ class JournalListScreen extends React.Component {
                         <Text style={{ fontSize: 20, marginLeft: 5 }}>新建手账本</Text>
                     </TouchableOpacity>
                 </View>
-                <View style={{ borderWidth: 0, height: 250 }}>
+                <View style={{ borderWidth: 0, height: 250, backgroundColor: theme.palette.sky[0] }}>
                     <JournalBooks
                         journalBooks={journalBooks}
                         cntJournalBookIndex={cntJournalBookIndex}
@@ -134,35 +135,37 @@ class JournalListScreen extends React.Component {
                         sliderWidth={windowWidth}
                     />
                 </View>
-                {(targetJournals && targetJournals.length !== 0) ?
-                    <View style={{ flexDirection: "row", flexWrap: "wrap" }}>
-                        {targetJournals.map(journal => (
-                            <View style={{ borderWidth: 0, width: "33.3%" }}>
-                                <TouchableOpacity
-                                    onPress={() => this.props.navigation.push("JournalDetail", { journalUrl: journal.journalUrl })}
-                                    onLongPress={() => this.setState({ journalToBeDeleted: journal.journalId })}
-                                    style={{ borderWidth: 0, alignItems: "center" }}
-                                >
-                                    <Image source={{ uri: journal.journalUrl }}
-                                        style={{ borderWidth: 1, width: "88%", height: 160, margin: 10 }}
-                                    />
-                                </TouchableOpacity>
-                                <View style={{ flexDirection: "row", display: journalToBeDeleted === journal.journalId ? "flex" : "none" }}>
-                                    <View style={{ flex: 1 }}>
-                                        <TouchableOpacity onPress={() => this.setState({ journalToBeDeleted: null })}>
-                                            <FontAwesome name="close" size={28} style={{ margin: 10 }} color="red" />
+                <View style={{ borderWidth: 0, flex: 1, backgroundColor: theme.palette.sky[0] }}>
+                    {(targetJournals && targetJournals.length !== 0) ?
+                        <View style={{ flexDirection: "row", flexWrap: "wrap" }}>
+                            {targetJournals.map(journal => (
+                                <View style={{ borderWidth: 0, width: "33.3%" }}>
+                                    <TouchableOpacity
+                                        onPress={() => this.props.navigation.push("JournalDetail", { journalUrl: journal.journalUrl })}
+                                        onLongPress={() => this.setState({ journalToBeDeleted: journal.journalId })}
+                                        style={{ borderWidth: 0, alignItems: "center" }}
+                                    >
+                                        <Image source={{ uri: journal.journalUrl }}
+                                            style={{ borderWidth: 1, width: "88%", height: 160, margin: 10 }}
+                                        />
+                                    </TouchableOpacity>
+                                    <View style={{ flexDirection: "row", display: journalToBeDeleted === journal.journalId ? "flex" : "none" }}>
+                                        <View style={{ flex: 1 }}>
+                                            <TouchableOpacity onPress={() => this.setState({ journalToBeDeleted: null })}>
+                                                <FontAwesome name="close" size={28} style={{ margin: 10 }} color="red" />
+                                            </TouchableOpacity>
+                                        </View>
+                                        <TouchableOpacity onPress={() => this.setState({ showDeleteAlert: true })}>
+                                            <FontAwesome name="trash" size={28} style={{ margin: 10 }} color="red" />
                                         </TouchableOpacity>
                                     </View>
-                                    <TouchableOpacity onPress={() => this.setState({ showDeleteAlert: true })}>
-                                        <FontAwesome name="trash" size={28} style={{ margin: 10 }} color="red" />
-                                    </TouchableOpacity>
                                 </View>
-                            </View>
-                        ))}
-                    </View>
-                    :
-                    <EmptyList field="这个手账本" />
-                }
+                            ))}
+                        </View>
+                        :
+                        <EmptyList field="这个手账本" />
+                    }
+                </View>
 
                 <Overlay overlayBackgroundColor="white" isVisible={isCreatingJournalBook}
                     overlayStyle={{ opacity: 0.8, height: 375 }}

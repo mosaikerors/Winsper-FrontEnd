@@ -8,6 +8,7 @@ import AntDesign from "react-native-vector-icons/AntDesign"
 import { NavigationEvents, withNavigationFocus } from 'react-navigation';
 import HeanCard from "../../components/hean/HeanCard"
 import AwesomeAlert from 'react-native-awesome-alerts';
+import theme from "../../theme"
 
 const mapStateToProps = state => ({
     token: state.user.token,
@@ -46,7 +47,7 @@ class PostSubmissionScreen extends React.Component {
         const { hId, reason } = this.state;
         return (
             <React.Fragment>
-                <KeyboardAvoidingView behavior="position">
+                <KeyboardAvoidingView behavior="position" style={{ borderWidth: 0, flex: 1, backgroundColor: theme.palette.sky[0] }}>
                     <View style={{ height: 280, borderWidth: 1, padding: 10, margin: 10, borderRadius: 20 }}>
                         {!hId ?
                             <TouchableOpacity
@@ -73,7 +74,7 @@ class PostSubmissionScreen extends React.Component {
                         <Button
                             title="确认"
                             onPress={this.submit}
-                            buttonStyle={{ width: 90, height: 50, marginTop: 20, borderRadius: 50, }}
+                            buttonStyle={{ width: 90, height: 50, marginTop: 20, borderRadius: 50,backgroundColor: theme.palette.sky[2] }}
                             titleStyle={{ fontSize: 20 }}
                         />
                     </View>

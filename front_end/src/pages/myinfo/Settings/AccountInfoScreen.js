@@ -9,9 +9,19 @@ import FontAwesome from "react-native-vector-icons/FontAwesome";
 import ImagePicker from 'react-native-image-crop-picker';
 import { CLOUDINARY_UPLOAD_PRESET, CLOUDINARY_UPLOAD_URL } from "../../../config"
 import AwesomeAlert from 'react-native-awesome-alerts';
+import theme from "../../../theme"
 
 const titles = ['修改用户名', '修改头像', '修改密码'];
 const requests = require('superagent');
+
+const getNullAlert = nullAlert => {
+    if (nullAlert === 1)
+        return "用户名不能为空";
+    if (nullAlert === 2)
+        return "头像不能为空";
+    if (nullAlert === 3)
+        return "密码不能为空";
+}
 
 const styles = StyleSheet.create({
     input: {
@@ -26,6 +36,7 @@ const styles = StyleSheet.create({
         width: 80,
         height: 40,
         borderRadius: 40,
+        backgroundColor: theme.palette.sky[2]
     },
 })
 
@@ -49,7 +60,8 @@ class AccountInfoScreen extends React.Component {
             activeSections: [],
             avatarData: null,
             avatarMime: null,
-            showAlert: false
+            showAlert: false,
+            nullAlert: 0,
         }
         this.submitUsername = this.submitUsername.bind(this);
         this.submitAvatar = this.submitAvatar.bind(this);
@@ -60,18 +72,30 @@ class AccountInfoScreen extends React.Component {
 
     async submitUsername() {
         const { uId, token } = this.props;
+        if (this.state.username === '') {
+            this.setState({ nullAlert: 1 })
+            return;
+        }
         const response = await agent.user.updateUsername(uId, token, this.state.username)
         this.setState({ activeSections: [], showAlert: true, username: '' })
     }
 
     async submitAvatar() {
         const { uId, token } = this.props;
+        if (!this.state.avatarUrl) {
+            this.setState({ nullAlert: 2 })
+            return;
+        }
         const response = await agent.user.updateAvatar(uId, token, this.state.avatarUrl);
         this.setState({ activeSections: [], showAlert: true, avatarUrl: null, avatarData: null, avatarMime: null })
     }
 
     async submitPassword() {
         const { uId, token } = this.props;
+        if (this.state.password === '') {
+            this.setState({ nullAlert: 3 })
+            return;
+        }
         const response = await agent.user.modifyPassword(uId, token, this.state.password)
         if (response.rescode === 0) {
             this.props.onSubmit(response.token)
@@ -102,8 +126,8 @@ class AccountInfoScreen extends React.Component {
 
     renderHeader = title => {
         return (
-            <View style={{ borderWidth: 0, height: 50, width: "100%", flexDirection: "row" }}>
-                <Text style={{ alignSelf: "center", marginLeft: 15, flex: 1 }}>
+            <View style={{ borderWidth: 0, height: 50, width: "100%", flexDirection: "row", backgroundColor: theme.palette.sky[0] }}>
+                <Text style={{ alignSelf: "center", marginLeft: 15, flex: 1, fontSize: 16 }}>
                     {title}
                 </Text>
                 <FontAwesome style={{ alignSelf: "center", marginRight: 15 }} name={"chevron-down"} size={14} />
@@ -206,23 +230,34 @@ class AccountInfoScreen extends React.Component {
     render() {
         return (
             <React.Fragment>
-                <Accordion
-                    sections={titles}
-                    underlayColor="white"
-                    activeSections={this.state.activeSections}
-                    renderHeader={this.renderHeader}
-                    renderContent={this.renderContent}
-                    onChange={activeSections => this.setState({ activeSections })}
-                />
-                <AwesomeAlert
-                    show={this.state.showAlert}
-                    title="修改成功"
-                    showConfirmButton={true}
-                    confirmText="确认"
-                    onConfirmPressed={() => this.setState({ showAlert: false })}
-                    closeOnTouchOutside={false}
-                    closeOnHardwareBackPress={false}
-                />
+                <View style={{ flex: 1, backgroundColor: theme.palette.sky[0] }}>
+                    <Accordion
+                        sections={titles}
+                        underlayColor={theme.palette.sky[0]}
+                        activeSections={this.state.activeSections}
+                        renderHeader={this.renderHeader}
+                        renderContent={this.renderContent}
+                        onChange={activeSections => this.setState({ activeSections })}
+                    />
+                    <AwesomeAlert
+                        show={this.state.showAlert}
+                        title="修改成功"
+                        showConfirmButton={true}
+                        confirmText="确认"
+                        onConfirmPressed={() => this.setState({ showAlert: false })}
+                        closeOnTouchOutside={false}
+                        closeOnHardwareBackPress={false}
+                    />
+                    <AwesomeAlert
+                        show={this.state.nullAlert > 0}
+                        title={getNullAlert(this.state.nullAlert)}
+                        showConfirmButton={true}
+                        confirmText="好"
+                        onConfirmPressed={() => this.setState({ nullAlert: 0 })}
+                        closeOnTouchOutside={false}
+                        closeOnHardwareBackPress={false}
+                    />
+                </View>
             </React.Fragment>
         );
     }

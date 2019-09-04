@@ -6,6 +6,7 @@ import CreateDiaryScreen from "./CreateDiaryScreen"
 import PostSubmissionScreen from "./PostSubmissionScreen"
 import SelectHeanScreen from "./SelectHeanScreen"
 import SubmissionScreen from "../../pages/myinfo/Repository/SubmissionScreen"
+import theme from "../../theme"
 
 const ExploreScreenNavigator = createStackNavigator(
     {
@@ -20,6 +21,10 @@ const ExploreScreenNavigator = createStackNavigator(
     },
     {
         initialRouteName: "Explore",
+        defaultNavigationOptions: {
+            headerStyle: { backgroundColor: theme.palette.sky[1], },
+            //headerTintColor: 'black',
+        },
         navigationOptions: ({ navigation }) => {
             // topScreen: 当前页面
             const topScreen = navigation.state.routes[navigation.state.routes.length - 1].routeName;

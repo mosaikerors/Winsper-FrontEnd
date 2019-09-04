@@ -6,6 +6,7 @@ import FontAwesome from "react-native-vector-icons/FontAwesome";
 import Loading from '../Loading'
 import agent from "../../agent/index"
 import EmptyList from "../EmptyList"
+import theme from "../../theme"
 
 const styles = StyleSheet.create({
     border: {
@@ -48,6 +49,7 @@ class FollowList extends React.Component {
                     {followlist.map((listItem, index) => (
                         <TouchableOpacity onPress={() => this.props.navigation.push("PersonPage", { uId: listItem.uId })}>
                             <ListItem
+                                containerStyle={{ backgroundColor: theme.palette.sky[0] }}
                                 key={index}
                                 leftAvatar={{ source: { uri: listItem.avatar } }}
                                 title={listItem.username}

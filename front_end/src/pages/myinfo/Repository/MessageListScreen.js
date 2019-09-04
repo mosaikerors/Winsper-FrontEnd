@@ -10,6 +10,7 @@ import SimpleLineIcons from "react-native-vector-icons/SimpleLineIcons";
 import agent from "../../../agent/index";
 import Loading from "../../../components/Loading"
 import EmptyList from "../../../components/EmptyList"
+import theme from "../../../theme"
 
 const styles = StyleSheet.create({
     border: {
@@ -99,32 +100,35 @@ class MessageListScreen extends React.Component {
             return <EmptyList field="消息列表" />
         return (
             <React.Fragment>
-                <View style={{ borderWidth: 0, margin: 5, flexDirection: "row-reverse" }}>
-                    <TouchableOpacity style={{ borderWidth: 0, flexDirection: "row" }}
-                        onPress={this.readAll}
-                    >
-                        <FontAwesome name={"check"} size={24} color="green" />
-                        <Text style={{ fontSize: 20 }}>全部已读</Text>
-                    </TouchableOpacity>
-                </View>
-                <Divider />
-                <View style={{ borderWidth: 0 }}>
-                    {messages.map((message, index) => (
-                        <View>
-                            <TouchableOpacity onPress={() => this.props.navigation.push("MessageDetail", { type: message.type })}>
-                                <ListItem
-                                    key={index}
-                                    leftIcon={messageIcons[message.type - 1]}
-                                    title={getBriefMessage(message)}
-                                    titleStyle={{ fontSize: 20 }}
-                                    rightIcon={message.hasRead || <Badge />}
-                                />
-                            </TouchableOpacity>
-                            <Divider />
-                            <Divider />
-                            <Divider />
-                        </View>
-                    ))}
+                <View style={{ backgroundColor: theme.palette.sky[0],flex:1 }}>
+                    <View style={{ borderWidth: 0, margin: 5, flexDirection: "row-reverse" }}>
+                        <TouchableOpacity style={{ borderWidth: 0, flexDirection: "row" }}
+                            onPress={this.readAll}
+                        >
+                            <FontAwesome name={"check"} size={24} color="green" />
+                            <Text style={{ fontSize: 20 }}>全部已读</Text>
+                        </TouchableOpacity>
+                    </View>
+                    <Divider />
+                    <View style={{ borderWidth: 0 }}>
+                        {messages.map((message, index) => (
+                            <View>
+                                <TouchableOpacity onPress={() => this.props.navigation.push("MessageDetail", { type: message.type })}>
+                                    <ListItem
+                                        containerStyle={{backgroundColor: theme.palette.sky[0]}}
+                                        key={index}
+                                        leftIcon={messageIcons[message.type - 1]}
+                                        title={getBriefMessage(message)}
+                                        titleStyle={{ fontSize: 20 }}
+                                        rightIcon={message.hasRead || <Badge />}
+                                    />
+                                </TouchableOpacity>
+                                <Divider />
+                                <Divider />
+                                <Divider />
+                            </View>
+                        ))}
+                    </View>
                 </View>
             </React.Fragment>
         );

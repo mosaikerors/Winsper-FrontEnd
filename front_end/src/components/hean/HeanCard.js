@@ -7,6 +7,7 @@ import Feather from "react-native-vector-icons/Feather";
 import { connect } from "react-redux";
 import agent from "../../agent"
 import { TouchableOpacity } from 'react-native-gesture-handler';
+import myTheme from "../../theme"
 
 const theme = getTheme();
 
@@ -57,9 +58,9 @@ class HeanCard extends React.Component {
             return null; // return loading... actually
         return (
             <React.Fragment>
-                <View style={[theme.cardStyle, { borderRadius: 25 }]}>
+                <View style={[theme.cardStyle, { borderRadius: 25, borderColor: myTheme.palette.sky[0], backgroundColor: myTheme.palette.sky[0] }]}>
                     <TouchableOpacity
-                        onPress={() => this.props.navigation.push("HeanDetail", { heanCard: this.state.heanCard }) }
+                        onPress={() => this.props.navigation.push("HeanDetail", { heanCard: this.state.heanCard })}
                         disabled={this.props.whenSubmission}
                     >
                         <View style={{ padding: 10 }}>
@@ -73,7 +74,7 @@ class HeanCard extends React.Component {
                                 <AntDesign
                                     name={"like2"}
                                     size={20}
-                                    color={hasLiked ? "red" : "black"}
+                                    color={hasLiked ? myTheme.palette.sky[2] : "black"}
                                 />
                                 <Text>{likeCount}</Text>
                             </View>
@@ -81,7 +82,7 @@ class HeanCard extends React.Component {
                                 <Feather
                                     name={"star"}
                                     size={20}
-                                    color={hasStarred ? "red" : "black"}
+                                    color={hasStarred ? myTheme.palette.sky[2] : "black"}
                                 />
                                 <Text>{starCount}</Text>
                             </View>

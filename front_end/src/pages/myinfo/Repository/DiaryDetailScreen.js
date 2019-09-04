@@ -7,6 +7,7 @@ import { transformDate } from "../../../util"
 import Loading from "../../../components/Loading"
 import FontAwesome from "react-native-vector-icons/FontAwesome";
 import AwesomeAlert from 'react-native-awesome-alerts';
+import theme from "../../../theme"
 
 const styles = StyleSheet.create({
 
@@ -51,7 +52,7 @@ class DiaryDetailScreen extends React.Component {
             return <Loading />;
         return (
             <React.Fragment>
-                <ScrollView style={{ padding: 5 }}>
+                <ScrollView style={{ padding: 5,backgroundColor: theme.palette.sky[0] }}>
                     <View style={{ borderWidth: 0, margin: 15 }}>
                         <View style={{ flexDirection: 'row' }}>
                             <Text style={{ fontSize: 48, flex: 1 }}>{diary.title}</Text>

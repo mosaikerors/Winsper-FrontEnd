@@ -2,6 +2,7 @@ import React from "react";
 import { Text, View, StyleSheet } from "react-native";
 import { TouchableOpacity } from "react-native-gesture-handler";
 import { connect } from "react-redux"
+import theme from "../../../theme"
 
 const styles = StyleSheet.create({
     border: {
@@ -31,7 +32,7 @@ class FollowBanner extends React.Component {
         const { mutualFollow, following, followers } = this.props;
         return (
             <React.Fragment>
-                <View style={{ flexDirection: 'row' }}>
+                <View style={{ flexDirection: 'row', backgroundColor:theme.palette.sky[0] }}>
                     <View style={styles.block}>
                         <TouchableOpacity style={styles.text} onPress={() => this.props.navigation.push('Follow', { tab: 0 })}>
                             <Text>{mutualFollow}</Text>

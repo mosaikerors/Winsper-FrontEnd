@@ -8,6 +8,7 @@ import agent from "../../../agent/index";
 import { NavigationEvents, withNavigationFocus } from 'react-navigation';
 import Loading from "../../../components/Loading"
 import EmptyList from "../../../components/EmptyList"
+import theme from "../../../theme"
 
 const mapStateToProps = state => ({
     token: state.user.token,
@@ -50,23 +51,25 @@ class CollectionScreen extends React.Component {
     }
 
     render() {
-        const { hackingTrigger,heans } = this.state;
+        const { hackingTrigger, heans } = this.state;
         if (!heans)
             return <Loading />;
         if (heans.length === 0)
             return <EmptyList field="收藏列表" />
         return (
             <React.Fragment>
-                <FlatList
-                    data={this.state.heans}
-                    renderItem={({ item, index }) => (
-                        <View>
-                            <HeanCard hId={item.hId} navigation={this.props.navigation} hackingTrigger={hackingTrigger} />
-                            <Divider />
-                        </View>
-                    )}
-                    disableVirtualization
-                />
+                <View style={{ flex: 1, backgroundColor: theme.palette.sky[0] }}>
+                    <FlatList
+                        data={this.state.heans}
+                        renderItem={({ item, index }) => (
+                            <View>
+                                <HeanCard hId={item.hId} navigation={this.props.navigation} hackingTrigger={hackingTrigger} />
+                                <Divider />
+                            </View>
+                        )}
+                        disableVirtualization
+                    />
+                </View>
             </React.Fragment>
         );
     }

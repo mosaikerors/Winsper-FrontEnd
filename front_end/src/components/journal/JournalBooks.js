@@ -6,6 +6,7 @@ import { connect } from "react-redux"
 import journalBookCovers from './journalBookCovers'
 import agent from "../../agent/index"
 import AwesomeAlert from 'react-native-awesome-alerts';
+import theme from "../../theme"
 
 const IS_IOS = Platform.OS === 'ios';
 
@@ -55,29 +56,31 @@ class JournalBooks extends React.Component {
                     />
                 </View>
                 <View style={[{
-                    height: 50, backgroundColor: 'white', borderBottomLeftRadius: 8, borderBottomRightRadius: 8,
-                    position: "relative", top: 10, opacity: 0.7
+                    height: '22%', backgroundColor: 'white', borderBottomLeftRadius: 8, borderBottomRightRadius: 8,
+                    position: "relative", top: 0, opacity: 0.7, width: 150, padding: 10
                 }, canLongPress || { top: 0, width: 150 }]}>
-                    <Text>{name}</Text>
+                    <Text style={{ fontSize: 20 }}>{name}</Text>
                 </View>
             </TouchableOpacity >
         );
     }
     render() {
-        const { journalBooks, cntJournalBookIndex, sliderWidth } = this.props;
+        const { journalBooks, cntJournalBookIndex, sliderWidth, canLongPress } = this.props;
         const { journalBookToBeDeleted } = this.state;
         return (
             <React.Fragment>
-                <Carousel
-                    data={journalBooks}
-                    renderItem={this.renderJournalBook}
-                    sliderWidth={sliderWidth}
-                    itemWidth={180}
-                    firstItem={cntJournalBookIndex}
-                    inactiveSlideScale={0.94}
-                    inactiveSlideOpacity={0.7}
-                    onSnapToItem={(index) => this.props.snapTo(index)}
-                />
+                <View style={[{ borderWidth: 0, }, canLongPress && { backgroundColor: theme.palette.sky[0] }]}>
+                    <Carousel
+                        data={journalBooks}
+                        renderItem={this.renderJournalBook}
+                        sliderWidth={sliderWidth}
+                        itemWidth={180}
+                        firstItem={cntJournalBookIndex}
+                        inactiveSlideScale={0.9}
+                        inactiveSlideOpacity={0.7}
+                        onSnapToItem={(index) => this.props.snapTo(index)}
+                    />
+                </View>
                 <View style={{
                     flexDirection: "row", display: journalBookToBeDeleted ? "flex" : "none",
                     borderWidth: 0, justifyContent: "center"
@@ -86,7 +89,7 @@ class JournalBooks extends React.Component {
                         onPress={() => this.setState({ journalBookToBeDeleted: null })}
                         style={{ position: "relative", right: 30, borderWidth: 0 }}
                     >
-                        <FontAwesome name="close" size={28} style={{ margin: 5 }} color="red" />
+                        <FontAwesome name="close" size={28} style={{ margin: 5 }} color={theme.palette.sky[2]} />
                     </TouchableOpacity>
                     <TouchableOpacity onPress={() => this.setState({ showDeleteAlert: true })}>
                         <FontAwesome name="trash" size={28} style={{ margin: 5 }} color="red" />

@@ -6,6 +6,7 @@ import agent from "../../../agent/index"
 import { transformDate } from "../../../util"
 import Loading from "../../../components/Loading"
 import EmptyList from "../../../components/EmptyList"
+import theme from "../../../theme"
 
 const renderCommentBubble = comment => (
     <View>
@@ -66,7 +67,7 @@ class CommentScreen extends React.Component {
             return <EmptyList field="评论列表" />
         return (
             <React.Fragment>
-                <ScrollView>
+                <ScrollView style={{backgroundColor: theme.palette.sky[0]}}>
                     {comments.map((comment) => (
                         <View style={{
                             marginLeft: 40, marginRight: 40, marginTop: 20, marginBottom: 20,

@@ -1,9 +1,9 @@
 import React, { Fragment } from "react";
-import { Dimensions } from 'react-native'
+import { Dimensions, View, Text, TouchableOpacity } from 'react-native'
 import { Image, ListItem } from "react-native-elements";
 import Carousel from 'react-native-looped-carousel';
 import Ionicons from "react-native-vector-icons/Ionicons";
-
+import theme from "../../theme"
 const { width, height } = Dimensions.get('window');
 
 const list = [
@@ -74,16 +74,48 @@ class ExploreScreen extends React.Component {
                     }
 
                 </Carousel>
-                {
-                    list.map((item, i) => (
-                        <ListItem
-                            key={i}
-                            title={item.title}
-                            leftIcon={<Ionicons name={item.icon} size={20} />}
-                            onPress={() => this.props.navigation.push(item.pagename, item.params)}
-                        />
-                    ))
-                }
+                <View style={{ borderWidth: 0, alignItems: "center", paddingTop: 40, flex: 1, backgroundColor: theme.palette.sky[0] }}>
+                    <View style={{ flexDirection: 'row' }}>
+                        <View style={{ borderTopLeftRadius: 30, borderWidth: 1, borderColor: theme.palette.sky[1] }}>
+                            <TouchableOpacity
+                                onPress={() => this.props.navigation.push("CreateJournal")}
+                                style={{ width: 180, height: 100, justifyContent: "center", alignItems: "center", flexDirection: "row" }}
+                            >
+                                <Ionicons name={"ios-journal"} size={30} color={theme.palette.sky[2]} />
+                                <Text style={{ fontSize: 26, marginLeft: 5 }}>制作手账</Text>
+                            </TouchableOpacity>
+                        </View>
+                        <View style={{ borderTopRightRadius: 30, borderWidth: 1, borderLeftWidth: 0, borderColor: theme.palette.sky[1] }}>
+                            <TouchableOpacity
+                                onPress={() => this.props.navigation.push("CreateHean")}
+                                style={{ width: 180, height: 100, justifyContent: "center", alignItems: "center", flexDirection: "row" }}
+                            >
+                                <Ionicons name={"ios-mail"} size={30} color={theme.palette.sky[2]} />
+                                <Text style={{ fontSize: 26, marginLeft: 5 }}>写函</Text>
+                            </TouchableOpacity>
+                        </View>
+                    </View>
+                    <View style={{ flexDirection: 'row' }}>
+                        <View style={{ borderBottomLeftRadius: 30, borderWidth: 1, borderTopWidth: 0, borderColor: theme.palette.sky[1] }}>
+                            <TouchableOpacity
+                                onPress={() => this.props.navigation.push("PostSubmission")}
+                                style={{ width: 180, height: 100, justifyContent: "center", alignItems: "center", flexDirection: "row" }}
+                            >
+                                <Ionicons name={"ios-paper-plane"} size={30} color={theme.palette.sky[2]} />
+                                <Text style={{ fontSize: 26, marginLeft: 5 }}>投稿</Text>
+                            </TouchableOpacity>
+                        </View>
+                        <View style={{ borderBottomRightRadius: 30, borderBottomWidth: 1, borderRightWidth: 1, borderColor: theme.palette.sky[1] }}>
+                            <TouchableOpacity
+                                onPress={() => this.props.navigation.push("CreateDiary")}
+                                style={{ width: 180, height: 100, justifyContent: "center", alignItems: "center", flexDirection: "row" }}
+                            >
+                                <Ionicons name={"ios-book"} size={30} color={theme.palette.sky[2]} />
+                                <Text style={{ fontSize: 26, marginLeft: 5 }}>写日记</Text>
+                            </TouchableOpacity>
+                        </View>
+                    </View>
+                </View>
             </Fragment>
         );
     }

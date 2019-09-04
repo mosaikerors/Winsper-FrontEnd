@@ -10,6 +10,7 @@ import { transformDate } from "../../../util"
 import Loading from "../../../components/Loading"
 import EmptyList from "../../../components/EmptyList"
 import { NavigationEvents, withNavigationFocus } from 'react-navigation';
+import theme from "../../../theme"
 
 const mapStateToProps = state => ({
     token: state.user.token,
@@ -74,12 +75,15 @@ class DiaryListScreen extends React.Component {
             return <EmptyList field="日记列表" />
         return (
             <React.Fragment>
-                <ScrollView style={{ borderWidth: 0, paddingLeft: 0, paddingTop: 30 }}>
+                <ScrollView style={{ borderWidth: 0, paddingLeft: 0, paddingTop: 30, backgroundColor: theme.palette.sky[0] }}>
                     <Timeline
                         renderDetail={this.renderDetail}
                         data={diaries}
                         innerCircle={'dot'}
                         circleSize={18}
+                        lineColor={theme.palette.sky[2]}
+                        circleColor={theme.palette.sky[2]}
+                        dotColor={theme.palette.sky[0]}
                         timeContainerStyle={{ minWidth: 110, borderWidth: 0 }}
                         timeStyle={{ width: 110, borderWidth: 0, fontSize: 20 }}
                     />

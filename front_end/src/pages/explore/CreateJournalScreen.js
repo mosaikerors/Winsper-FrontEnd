@@ -10,6 +10,7 @@ import stickers from "../../components/journal/stickers"
 import JournalBookSelector from '../../components/journal/JournalBookSelector';
 import { connect } from "react-redux"
 import AwesomeAlert from 'react-native-awesome-alerts';
+import theme from "../../theme"
 
 const requests = require('superagent');
 
@@ -154,7 +155,7 @@ class CreateJournal extends React.Component {
                     <View style={{ flexDirection: "row", justifyContent: "center", display: status === 1 ? "flex" : "none" }}>
                         <TouchableOpacity
                             style={{
-                                backgroundColor: "cyan",
+                                backgroundColor: theme.palette.sky[2],
                                 height: 50, width: 50, borderRadius: 25,
                                 alignItems: "center", justifyContent: "center",
                                 marginRight: 40, zIndex: 999,
@@ -166,7 +167,7 @@ class CreateJournal extends React.Component {
                         </TouchableOpacity>
                         <TouchableOpacity
                             style={{
-                                backgroundColor: "cyan",
+                                backgroundColor: theme.palette.sky[2],
                                 height: 50, width: 50, borderRadius: 25,
                                 alignItems: "center", justifyContent: "center", zIndex: 999,
                             }}
@@ -187,7 +188,7 @@ class CreateJournal extends React.Component {
                         {/* cancel */}
                         <TouchableOpacity
                             style={{
-                                backgroundColor: "cyan",
+                                backgroundColor: theme.palette.sky[2],
                                 height: 100, width: 100, borderRadius: 50,
                                 position: "relative", top: 20, right: 50,
                                 alignItems: "center", zIndex: 999,
@@ -201,7 +202,7 @@ class CreateJournal extends React.Component {
                         {/* add */}
                         <TouchableOpacity
                             style={{
-                                backgroundColor: "cyan",
+                                backgroundColor: theme.palette.sky[2],
                                 height: 80, width: 80, borderRadius: 40,
                                 position: "relative", top: 30,
                                 alignItems: "center", zIndex: 999
@@ -215,7 +216,7 @@ class CreateJournal extends React.Component {
                         {/* ok */}
                         <TouchableOpacity
                             style={{
-                                backgroundColor: "cyan",
+                                backgroundColor: theme.palette.sky[2],
                                 height: 100, width: 100, borderRadius: 50,
                                 position: "relative", top: 20, left: 50,
                                 alignItems: "center", zIndex: 999,

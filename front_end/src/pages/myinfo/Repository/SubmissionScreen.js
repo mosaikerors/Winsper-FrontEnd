@@ -9,6 +9,7 @@ import { NavigationEvents, withNavigationFocus } from 'react-navigation';
 import FontAwesome from "react-native-vector-icons/FontAwesome";
 import Loading from "../../../components/Loading"
 import EmptyList from "../../../components/EmptyList"
+import theme from "../../../theme"
 
 const mapStateToProps = state => ({
     token: state.user.token,
@@ -70,39 +71,41 @@ class SubmissionScreen extends React.Component {
     }
 
     render() {
-        const {heans} = this.state
+        const { heans } = this.state
         if (!heans)
             return <Loading />;
-        if (heans.length === 0) 
+        if (heans.length === 0)
             return <EmptyList field="投稿列表" />
         return (
             <React.Fragment>
-                <View style={{ height: 40, flexDirection: 'row-reverse' }}>
+                <View style={{ height: 40, flexDirection: 'row-reverse', backgroundColor: theme.palette.sky[0] }}>
                     <TouchableOpacity
                         style={{ borderWidth: 0, width: 100, justifyContent: "center", alignItems: "center", flexDirection: "row" }}
-                        onPress={()=> this.props.navigation.push("PostSubmission")}
+                        onPress={() => this.props.navigation.push("PostSubmission")}
                     >
                         <FontAwesome name={"envelope-o"} size={20} />
-                        <Text style={{fontSize: 20, marginLeft:5 }}>去投稿</Text>
+                        <Text style={{ fontSize: 20, marginLeft: 5 }}>去投稿</Text>
                     </TouchableOpacity>
                 </View>
                 <Divider />
-                <FlatList
-                    data={this.state.heans}
-                    renderItem={({ item, index }) => (
-                        <View style={{ flexDirection: "row" }}>
-                            <View style={{ width: "50%" }}>
-                                <HeanCard hId={item.left.hId} navigation={this.props.navigation} />
-                            </View>
-                            {item.right &&
+                <View style={{ backgroundColor: theme.palette.sky[0], flex: 1 }}>
+                    <FlatList
+                        data={this.state.heans}
+                        renderItem={({ item, index }) => (
+                            <View style={{ flexDirection: "row" }}>
                                 <View style={{ width: "50%" }}>
-                                    <HeanCard hId={item.right.hId} navigation={this.props.navigation} />
+                                    <HeanCard hId={item.left.hId} navigation={this.props.navigation} />
                                 </View>
-                            }
-                        </View>
-                    )}
-                    disableVirtualization
-                />
+                                {item.right &&
+                                    <View style={{ width: "50%" }}>
+                                        <HeanCard hId={item.right.hId} navigation={this.props.navigation} />
+                                    </View>
+                                }
+                            </View>
+                        )}
+                        disableVirtualization
+                    />
+                </View>
             </React.Fragment >
         );
     }

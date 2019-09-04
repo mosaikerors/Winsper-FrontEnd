@@ -5,6 +5,7 @@ import { Divider } from "react-native-elements"
 import FontAwesome from 'react-native-vector-icons/FontAwesome'
 import agent from "../../agent/index"
 import AwesomeAlert from 'react-native-awesome-alerts';
+import theme from "../../theme"
 
 const mapStateToProps = state => ({
     token: state.user.token,
@@ -34,7 +35,7 @@ class CreateDiaryScreen extends React.Component {
     render() {
         return (
             <React.Fragment>
-                <View style={{ margin: 5 }}>
+                <View style={{ padding: 5, borderWidth: 0, backgroundColor: theme.palette.sky[0] }}>
                     <View style={{ flexDirection: "row" }}>
                         <TextInput
                             placeholder="日记标题"

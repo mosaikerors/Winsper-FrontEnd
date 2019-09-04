@@ -20,6 +20,7 @@ import AccountInfoScreen from "./Settings/AccountInfoScreen"
 import PrivacySafetyScreen from "./Settings/PrivacySafetyScreen"
 import PostSubmissionScreen from "../explore/PostSubmissionScreen"
 import SelectHeanScreen from "../explore/SelectHeanScreen"
+import theme from "../../theme"
 
 const MyInfoScreenNavigator = createStackNavigator(
     {
@@ -49,6 +50,10 @@ const MyInfoScreenNavigator = createStackNavigator(
         initialRouteName: "LoggedOut",
         //initialRouteName: "LoggedIn",
         //headerMode: 'none',   // 是否显示页眉
+        defaultNavigationOptions: {
+            headerStyle: { backgroundColor: theme.palette.sky[1], },
+            //headerTintColor: 'black',
+        },
         navigationOptions: ({ navigation }) => {
             // topScreen: 当前页面
             const topScreen = navigation.state.routes[navigation.state.routes.length - 1].routeName;

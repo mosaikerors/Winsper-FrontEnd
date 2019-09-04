@@ -5,6 +5,7 @@ import FollowList from "../../components/myinfo/FollowList"
 import { connect } from "react-redux"
 import { NavigationEvents, withNavigationFocus } from 'react-navigation';
 import agent from "../../agent/index"
+import theme from "../../theme"
 
 const styles = StyleSheet.create({
     border: {
@@ -58,7 +59,7 @@ class FollowScreen extends React.Component {
         const { mutualFollow, followings, followers } = this.state;
         return (
             <React.Fragment>
-                <ScrollableTabView renderTabBar={() => <DefaultTabBar />} initialPage={initTab} style={{ marginTop: 0 }}>
+                <ScrollableTabView renderTabBar={() => <DefaultTabBar />} initialPage={initTab} style={{ backgroundColor: theme.palette.sky[0] }}>
                     <FollowList tabLabel="互相关注" followlist={mutualFollow} navigation={this.props.navigation} />
                     <FollowList tabLabel="我的关注" followlist={followings} navigation={this.props.navigation} />
                     <FollowList tabLabel="我的粉丝" followlist={followers} navigation={this.props.navigation} />

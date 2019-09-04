@@ -4,6 +4,7 @@ import { Button, Avatar } from 'react-native-elements'
 import agent from "../../../agent/index"
 import { connect } from "react-redux"
 import FontAwesome from "react-native-vector-icons/FontAwesome";
+import theme from "../../../theme"
 
 const styles = StyleSheet.create({
     username: {
@@ -23,7 +24,8 @@ const styles = StyleSheet.create({
     attendance: {
         marginTop: 46,
         marginRight: 34,
-        height: 40
+        height: 40,
+        //backgroundColor:theme.palette.sky[2]
     },
     checked: {
         width: 90,
@@ -37,6 +39,7 @@ const mapStateToProps = state => ({
     uId: state.user.uId,
     token: state.user.token,
     myUsername: state.user.username,
+    palette: state.user.theme
 });
 
 const mapDispatchToProps = dispatch => ({
@@ -75,11 +78,11 @@ class TopBanner extends React.Component {
     }
 
     render() {
-        const { username, avatar, isMe } = this.props;
+        const { username, avatar, isMe, palette } = this.props;
         const { feather, hasChecked, hasFollowed } = this.state;
         return (
             <React.Fragment>
-                <View style={{ flexDirection: "row", marginBottom: 12 }}>
+                <View style={{ flexDirection: "row", paddingBottom: 12, backgroundColor: theme.palette.sky[0] }}>
                     {avatar !== "" ?
                         <Avatar
                             rounded
@@ -118,11 +121,12 @@ class TopBanner extends React.Component {
                                     containerStyle={[styles.attendance, styles.border, styles.checked]}
                                     title="已签到"
                                     disabled
-                                    icon={{ name: "check" }}
+                                    icon={{ name: "check", color: theme.palette.sky[2] }}
                                 />
                             ) : (
                                     <Button containerStyle={[styles.attendance, styles.border, styles.unchecked]}
                                         title="签到"
+                                        buttonStyle={{ backgroundColor: theme.palette.sky[2] }}
                                         onPress={this.check}
                                     />
                                 )
@@ -133,12 +137,15 @@ class TopBanner extends React.Component {
                                 {hasFollowed ? (
                                     <Button
                                         containerStyle={[styles.attendance, styles.border, styles.checked]}
+                                        buttonStyle={{ backgroundColor: theme.palette.sky[2] }}
                                         title="已关注"
                                         onPress={this.toggleFollow}
-                                        icon={{ name: "check" }}
+                                        icon={{ name: "check", color: "white" }}
                                     />
                                 ) : (
-                                        <Button containerStyle={[styles.attendance, styles.border, styles.unchecked]}
+                                        <Button
+                                            containerStyle={[styles.attendance, styles.border, styles.unchecked]}
+                                            buttonStyle={{ backgroundColor: theme.palette.sky[2] }}
                                             title="关注"
                                             onPress={this.toggleFollow}
                                         />

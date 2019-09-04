@@ -33,7 +33,7 @@ class JournalBookSelector extends React.Component {
         return (
             <React.Fragment>
                 <Overlay overlayBackgroundColor="white" isVisible={isVisible}
-                    overlayStyle={{ opacity: 0.8, height: 320 }}
+                    overlayStyle={{ opacity: 0.8, height: 310 }}
                 >
                     <View style={{}}>
                         <Text style={{ fontSize: 28, alignSelf: "center" }}>选择手账本</Text>
@@ -47,7 +47,7 @@ class JournalBookSelector extends React.Component {
                         sliderWidth={325}
                     />
 
-                    <View style={{ borderWidth: 0, flexDirection: "row" }}>
+                    <View style={{ borderWidth: 0, flexDirection: "row",margin: 10}}>
                         <View style={{ flex: 1 }}>
                             <TouchableOpacity onPress={this.props.handleCancel}>
                                 <FontAwesome name="close" size={24} color="red" />

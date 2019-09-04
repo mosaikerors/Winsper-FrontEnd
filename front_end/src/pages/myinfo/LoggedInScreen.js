@@ -58,6 +58,7 @@ class LoggedInScreen extends React.Component {
                 <FollowBanner navigation={this.props.navigation} mutualFollow={mutualFollow} following={following} followers={followers} />
                 <Divider />
                 <DetailedBlock navigation={this.props.navigation} isMe={true} />
+                <Divider />
                 <BottomBanner navigation={this.props.navigation} />
             </React.Fragment>
         );

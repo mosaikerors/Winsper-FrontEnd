@@ -5,6 +5,7 @@ import { connect } from "react-redux"
 import FontAwesome from "react-native-vector-icons/FontAwesome";
 import Ionicons from "react-native-vector-icons/Ionicons";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
+import myTheme from "../../../theme"
 
 const styles = StyleSheet.create({
     border: {
@@ -34,8 +35,8 @@ class DetailedBlock extends React.Component {
         const otherUId = isMe ? this.props.uId : this.props.otherUId;
         return (
             <React.Fragment>
-                <Card containerStyle={{ flexDirection: 'column' }}>
-                    <View style={{ height: 100, flexDirection: 'row' }}>
+                <View style={{ flexDirection: 'column', backgroundColor: myTheme.palette.sky[0] }}>
+                    <View style={{ height: 100, flexDirection: 'row',justifyContent:"space-evenly" }}>
                         <View style={styles.block}>
                             <TouchableOpacity
                                 disabled={!isMe && !privacy.isMessagePublic}
@@ -43,7 +44,7 @@ class DetailedBlock extends React.Component {
                                 onPress={() => this.props.navigation.push('MessageList')}
                             >
                                 <View style={[{ borderWidth: 0, alignItems: "center" }, hasNewMessage && { position: "relative", top: 5 }]}>
-                                    <FontAwesome name={"comment-o"} size={26} />
+                                    <FontAwesome name={"comment-o"} size={26} color={myTheme.palette.sky[2]} />
                                     <Text style={{ fontSize: 18, marginTop: 5 }}>消息</Text>
                                 </View>
                                 <Badge
@@ -60,7 +61,7 @@ class DetailedBlock extends React.Component {
                                 disabled={!isMe && !privacy.isHeanPublic}
                                 style={styles.text} onPress={() => this.props.navigation.push('HeanList', { otherUId })}
                             >
-                                <FontAwesome name={"envelope-o"} size={26} />
+                                <FontAwesome name={"envelope-o"} size={26} color={myTheme.palette.sky[2]} />
                                 <Text style={{ fontSize: 18, marginTop: 5 }}>函</Text>
                             </TouchableOpacity>
                         </View>
@@ -69,7 +70,7 @@ class DetailedBlock extends React.Component {
                                 disabled={!isMe && !privacy.isCollectionPublic}
                                 style={styles.text} onPress={() => this.props.navigation.push('Collection', { otherUId })}
                             >
-                                <FontAwesome name={"star-o"} size={26} />
+                                <FontAwesome name={"star-o"} size={26} color={myTheme.palette.sky[2]} />
                                 <Text style={{ fontSize: 18, marginTop: 5 }}>收藏</Text>
                             </TouchableOpacity>
                         </View>
@@ -78,7 +79,7 @@ class DetailedBlock extends React.Component {
                                 disabled={!isMe && !privacy.isDiaryPublic}
                                 style={styles.text} onPress={() => this.props.navigation.push('DiaryList', { otherUId })}
                             >
-                                <FontAwesome name={"calendar-o"} size={26} />
+                                <FontAwesome name={"calendar-o"} size={26} color={myTheme.palette.sky[2]} />
                                 <Text style={{ fontSize: 18, marginTop: 5 }}>日记</Text>
                             </TouchableOpacity>
                         </View>
@@ -89,7 +90,7 @@ class DetailedBlock extends React.Component {
                                 disabled={!isMe && !privacy.isJournalPublic}
                                 style={styles.text} onPress={() => this.props.navigation.push('JournalList', { otherUId })}
                             >
-                                <Ionicons name={"ios-journal"} size={26} />
+                                <Ionicons name={"ios-journal"} size={26} color={myTheme.palette.sky[2]} />
                                 <Text style={{ fontSize: 18, marginTop: 5 }}>手账</Text>
                             </TouchableOpacity>
                         </View>
@@ -98,7 +99,7 @@ class DetailedBlock extends React.Component {
                                 disabled={!isMe && !privacy.isSubmissionPublic}
                                 style={styles.text} onPress={() => this.props.navigation.push('Submission', { otherUId })}
                             >
-                                <Ionicons name={"ios-paper-plane"} size={26} />
+                                <Ionicons name={"ios-paper-plane"} size={26} color={myTheme.palette.sky[2]} />
                                 <Text style={{ fontSize: 18, marginTop: 5 }}>投稿</Text>
                             </TouchableOpacity>
                         </View>
@@ -107,7 +108,7 @@ class DetailedBlock extends React.Component {
                                 disabled={!isMe && !privacy.isMoodReportPublic}
                                 style={styles.text} onPress={() => this.props.navigation.push('MoodReport', { otherUId })}
                             >
-                                <MaterialCommunityIcons name={"file"} size={26} />
+                                <MaterialCommunityIcons name={"file"} size={26} color={myTheme.palette.sky[2]} />
                                 <Text style={{ fontSize: 18, marginTop: 5 }}>心情报表</Text>
                             </TouchableOpacity>
                         </View>
@@ -116,12 +117,12 @@ class DetailedBlock extends React.Component {
                                 disabled={!isMe && !privacy.isCommentPublic}
                                 style={styles.text} onPress={() => this.props.navigation.push('Comment', { otherUId })}
                             >
-                                <MaterialCommunityIcons name={"comment"} size={26} />
+                                <MaterialCommunityIcons name={"comment"} size={26} color={myTheme.palette.sky[2]} />
                                 <Text style={{ fontSize: 18, marginTop: 5 }}>评论</Text>
                             </TouchableOpacity>
                         </View>
                     </View>
-                </Card>
+                </View>
             </React.Fragment>
         );
     }
