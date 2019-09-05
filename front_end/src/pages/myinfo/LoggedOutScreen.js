@@ -20,14 +20,11 @@ const login = StackActions.reset({
 const mapStateToProps = state => ({
     uId: state.user.uId,
     token: state.user.token,
-    needsAutoLogin: state.common.needsAutoLogin
 })
 
 const mapDispatchToProps = dispatch => ({
     onLoggedIn: (response) =>
         dispatch({ type: 'SIGN_IN', payload: response }),
-    onMount: () =>
-        dispatch({ type: 'AUTO_LOGIN' }),
     onReceiveMessage: () =>
         dispatch({ type: "RECEIVE_MESSAGE" })
 });
@@ -39,27 +36,24 @@ class LoggedOutScreen extends React.Component {
     }
 
     async componentWillMount() {
-        const { uId, token, needsAutoLogin } = this.props;
-        if (needsAutoLogin) {
-            const response = await agent.user.nextSignin(uId, token)
-            if (response.rescode === 0) {
-                this.props.onLoggedIn(response)
-                this.props.navigation.dispatch(login);
-                agent.ws = new WebSocket(`ws://202.120.40.8:30525/websocket?senderUId=${response.uId}`);
-                agent.ws.onopen = function () {
-                    console.log('open');
-                };
-                agent.ws.onmessage = (e) => {
-                    const message = eval("(" + e.data + ")");
-                    console.log("ws: " + message);
-                    this.props.onReceiveMessage()
-                };
-                agent.ws.onclose = function () {
-                    console.log('close');
-                };
-            }
+        const { uId, token } = this.props;
+        const response = await agent.user.nextSignin(uId, token)
+        if (response.rescode === 0) {
+            this.props.onLoggedIn(response)
+            this.props.navigation.dispatch(login);
+            agent.ws = new WebSocket(`ws://202.120.40.8:30525/websocket?senderUId=${response.uId}`);
+            agent.ws.onopen = function () {
+                console.log('open');
+            };
+            agent.ws.onmessage = (e) => {
+                const message = eval("(" + e.data + ")");
+                console.log("ws: " + message);
+                this.props.onReceiveMessage()
+            };
+            agent.ws.onclose = function () {
+                console.log('close');
+            };
         }
-        this.props.onMount()
     }
 
     render() {
