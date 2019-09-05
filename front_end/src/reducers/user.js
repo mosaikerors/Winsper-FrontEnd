@@ -3,6 +3,7 @@ const defaultState = {
     uId: 0,
     privacy: [true, true, true, true, true, true, true],
     username: null,
+    feather:0,
 }
 
 const user = (state = defaultState, action) => {
@@ -12,7 +13,8 @@ const user = (state = defaultState, action) => {
                 ...state,
                 token: action.payload.token,
                 uId: action.payload.uId,
-                username: action.payload.username
+                username: action.payload.username,
+                feather: action.payload.feather,
             }
         case 'UPDATE_TOKEN':
             return {
@@ -29,6 +31,11 @@ const user = (state = defaultState, action) => {
                 ...state,
                 token: '',
                 uId: 0
+            }
+        case 'UPDATE_FEATHER':
+            return { 
+                ...state,
+                feather: action.payload.feather,
             }
         default:
             return state;

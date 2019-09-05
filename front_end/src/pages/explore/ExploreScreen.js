@@ -72,7 +72,6 @@ class ExploreScreen extends React.Component {
                                 style={this.state.size} />
                         ))
                     }
-
                 </Carousel>
                 <View style={{ borderWidth: 0, alignItems: "center", paddingTop: 40, flex: 1, backgroundColor: theme.palette.sky[0] }}>
                     <View style={{ flexDirection: 'row' }}>

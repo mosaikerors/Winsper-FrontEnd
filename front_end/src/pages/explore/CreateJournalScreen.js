@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, TouchableOpacity, TextInput, ImageBackground, Image, ActivityIndicator, Text } from 'react-native';
+import { View, TouchableOpacity, TextInput, ImageBackground, Image, ActivityIndicator, Text, Dimensions } from 'react-native';
 import { Overlay, Divider } from "react-native-elements"
 import FontAwesome from 'react-native-vector-icons/FontAwesome'
 import Sticker from "../../components/journal/Sticker"
@@ -18,7 +18,19 @@ const requests = require('superagent');
 const CLOUDINARY_UPLOAD_PRESET = 'tklfxr2k';
 const CLOUDINARY_UPLOAD_URL = 'https://api.cloudinary.com/v1_1/dxm8ocsto/image/upload';
 
-const defaultBackgroundImage = require("../../../images/p3.jpg")
+const { width: windowWidth, height: viewportHeight } = Dimensions.get('window');
+
+const getSize = (stickerId, field) => {
+    const width = Image.resolveAssetSource(stickers[stickerId]).width;
+    const height = Image.resolveAssetSource(stickers[stickerId]).height;
+    const widthScale = (windowWidth / 4) / width;
+    const heightScale = 100 / height;
+    const minScale = widthScale < heightScale ? widthScale : heightScale;
+    const size = (field === "width" ? width : height) * minScale
+    return size;
+}
+
+const defaultBackgroundImage = require("../../../images/journal-background/default.jpg")
 
 const mapStateToProps = state => ({
     uId: state.user.uId,
@@ -131,8 +143,8 @@ class CreateJournal extends React.Component {
                 <Overlay overlayBackgroundColor="transparent" fullScreen isVisible={status === 5}
                     overlayStyle={{ justifyContent: "center", alignItems: "center" }}
                 >
-                    <ActivityIndicator size={60} color="blue" />
-                    <Text style={{ marginTop: 10, color: "blue", fontSize: 24 }}>正在上传...</Text>
+                    <ActivityIndicator size={60} color={theme.palette.sky[2]} />
+                    <Text style={{ marginTop: 10, color: theme.palette.sky[2], fontSize: 24 }}>正在上传...</Text>
                 </Overlay>
                 <ImageBackground source={this.state.backgroundImage} style={{ width: '100%', height: '100%', opacity: 1 }}>
                     {/* 画布 */}
@@ -140,8 +152,8 @@ class CreateJournal extends React.Component {
                         {this.state.stickersOnStage.map(sticker => (
                             <Sticker
                                 key={sticker.id}
-                                width={Image.resolveAssetSource(stickers[sticker.stickerId]).width}
-                                height={Image.resolveAssetSource(stickers[sticker.stickerId]).height}
+                                width={getSize(sticker.stickerId, "width")}
+                                height={getSize(sticker.stickerId, "height")}
                                 source={stickers[sticker.stickerId]}
                                 zIndex={sticker.zIndex}
                             />
@@ -181,8 +193,8 @@ class CreateJournal extends React.Component {
                     {/* 底部按钮 */}
                     <View
                         style={{
-                            flexDirection: "row", justifyContent: "space-between",
-                            display: status === 3 ? "none" : "flex", marginTop: -30, position: "relative", top: 30
+                            flexDirection: "row", justifyContent: status === 2 ? "center" : "space-between",
+                            display: status === 3 ? "none" : "flex", marginTop: -30, position: "relative", top: status === 2 ? 10 : 30
                         }}>
 
                         {/* cancel */}
@@ -192,6 +204,7 @@ class CreateJournal extends React.Component {
                                 height: 100, width: 100, borderRadius: 50,
                                 position: "relative", top: 20, right: 50,
                                 alignItems: "center", zIndex: 999,
+                                display: status === 2 ? "none" : "flex"
                             }}
                             ref="cancel"
                             onPress={() => this.props.navigation.pop()}
@@ -220,6 +233,7 @@ class CreateJournal extends React.Component {
                                 height: 100, width: 100, borderRadius: 50,
                                 position: "relative", top: 20, left: 50,
                                 alignItems: "center", zIndex: 999,
+                                display: status === 2 ? "none" : "flex"
                             }}
                             ref="ok"
                             onPress={this.submit}

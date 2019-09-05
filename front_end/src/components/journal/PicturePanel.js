@@ -1,13 +1,20 @@
 import React from 'react';
-import { View, Text, PanResponder, Animated, TouchableOpacity } from 'react-native';
-import { StyleSheet, Dimensions, Image, ScrollView } from 'react-native';
+import { View, Text, TouchableOpacity, StyleSheet, Dimensions, Image, ScrollView } from 'react-native';
+import { Divider } from "react-native-elements"
 import ScrollableTabView, { DefaultTabBar } from "react-native-scrollable-tab-view";
 import stickers from "./stickers"
+import theme from "../../theme"
+import { connect } from "react-redux"
+import journalBackground from "./journalBackground"
 
 const getScale = ({ width, height }) => {
-    const maxSize = width > height ? width : height;
-    return 70 / maxSize
+    const widthScale = (windowWidth / 5) / width;
+    const heightScale = 100 / height;
+    const minScale = widthScale < heightScale ? widthScale : heightScale;
+    return minScale
 }
+
+const { width: windowWidth, height: viewportHeight } = Dimensions.get('window');
 
 const styles = StyleSheet.create({
     stage: {
@@ -18,7 +25,7 @@ const styles = StyleSheet.create({
     drawer: { shadowColor: '#000000', shadowOpacity: 0.8, shadowRadius: 3 },
     controlPanel: {
         flex: 1,
-        backgroundColor: 'pink',
+        backgroundColor: theme.palette.sky[0]
     },
     controlPanelWelcome: {
         fontSize: 20,
@@ -29,68 +36,77 @@ const styles = StyleSheet.create({
     },
 });
 
-const bi1 = require("../../../images/journal-background/b1.jpg")
-const bi2 = require("../../../images/journal-background/b2.jpg")
-const bi3 = require("../../../images/journal-background/b3.jpg")
+const stickerGroups = [stickers.slice(0, 4), stickers.slice(4, 8), stickers.slice(8, 12)]
+const moreStickerGroups = [stickers.slice(12, 16), stickers.slice(16, 20), stickers.slice(20, 24)]
 
-const stickerGroug1 = stickers.slice(0, 5);
-const stickerGroug2 = stickers.slice(5, 10);
-const stickerGroug3 = stickers.slice(10, 15);
+const journalBackgroundLines = [journalBackground.slice(0, 3), journalBackground.slice(3, 6), journalBackground.slice(6, 9)]
+
+const mapStateToProps = state => ({
+    feather: state.user.feather,
+})
 
 class PicturePanel extends React.Component {
     render() {
+        const { feather } = this.props
         return (
             <View style={styles.controlPanel}>
                 <ScrollableTabView renderTabBar={() => <DefaultTabBar />} style={{}}>
                     <ScrollView tabLabel="贴纸">
                         <View style={{ justifyContent: "space-between" }}>
-                            <View style={{ flexDirection: "row", justifyContent: "space-around" }}>
-                                {stickerGroug1.map((sticker, index) => (
-                                    <TouchableOpacity onPress={() => this.props.addSticker(index)} >
-                                        <Image
-                                            source={sticker}
-                                            style={{ transform: [{ scale: getScale(Image.resolveAssetSource(sticker)) }] }}
-                                        />
-                                    </TouchableOpacity>
-                                ))}
-                            </View>
-                            <View style={{ flexDirection: "row", justifyContent: "space-around" }}>
-                                {stickerGroug2.map((sticker, index) => (
-                                    <TouchableOpacity onPress={() => this.props.addSticker(index + 5)} >
-                                        <Image
-                                            source={sticker}
-                                            style={{ transform: [{ scale: getScale(Image.resolveAssetSource(sticker)) }] }}
-                                        />
-                                    </TouchableOpacity>
-                                ))}
-                            </View>
-                            <View style={{ flexDirection: "row", justifyContent: "space-around" }}>
-                                {stickerGroug3.map((sticker, index) => (
-                                    <TouchableOpacity onPress={() => this.props.addSticker(index + 10)} >
-                                        <Image
-                                            source={sticker}
-                                            style={{ transform: [{ scale: getScale(Image.resolveAssetSource(sticker)) }] }}
-                                        />
-                                    </TouchableOpacity>
-                                ))}
-                            </View>
+                            {stickerGroups.map((stickerGroup, groupIndex) => (
+                                <View style={{ flexDirection: "row", justifyContent: "space-around" }}>
+                                    {stickerGroup.map((sticker, index) => (
+                                        <TouchableOpacity onPress={() => this.props.addSticker(index + 4 * groupIndex)}
+                                            style={{ width: windowWidth / 5, height: 100, justifyContent: "center", alignItems: "center" }}>
+                                            <Image
+                                                source={sticker}
+                                                style={{ transform: [{ scale: getScale(Image.resolveAssetSource(sticker)) }] }}
+                                            />
+                                        </TouchableOpacity>
+                                    ))}
+                                </View>
+                            ))}
+
+                            {feather >= 10 ?
+                                moreStickerGroups.map((stickerGroup, groupIndex) => (
+                                    <View style={{ flexDirection: "row", justifyContent: "space-around" }}>
+                                        {stickerGroup.map((sticker, index) => (
+                                            <TouchableOpacity onPress={() => this.props.addSticker(12 + index + 4 * groupIndex)}
+                                                style={{ width: windowWidth / 5, height: 100, justifyContent: "center", alignItems: "center" }}
+                                            >
+                                                <Image
+                                                    source={sticker}
+                                                    style={{ transform: [{ scale: getScale(Image.resolveAssetSource(sticker)) }] }}
+                                                />
+                                            </TouchableOpacity>
+                                        ))}
+                                    </View>
+                                ))
+                                :
+                                <View>
+                                    <Divider />
+                                    <Text style={{ alignSelf: "center", marginVertical: 5 }}>收集 10 根羽毛以解锁更多贴纸</Text>
+                                </View>
+                            }
                         </View>
                     </ScrollView>
-                    <View tabLabel="背景" style={{ flexDirection: "row" }}>
-                        <TouchableOpacity style={{ flex: 1 }} onPress={() => this.props.changeBackground(bi1)}>
-                            <Image source={bi1} style={{ height: 200, width: "100%" }} />
-                        </TouchableOpacity>
-                        <TouchableOpacity style={{ flex: 1 }} onPress={() => this.props.changeBackground(bi2)}>
-                            <Image source={bi2} style={{ height: 200, width: "100%" }} />
-                        </TouchableOpacity>
-                        <TouchableOpacity style={{ flex: 1 }} onPress={() => this.props.changeBackground(bi3)}>
-                            <Image source={bi3} style={{ height: 200, width: "100%" }} />
-                        </TouchableOpacity>
-                    </View>
+                    <ScrollView tabLabel="背景" style={{}}>
+                        {journalBackgroundLines.map((journalBackgroundLine, lineIndex) => (
+                            <View style={{ flexDirection: "row" }}>
+                                {journalBackgroundLine.map((journalBackgroundImage, index) => (
+                                    <TouchableOpacity style={{ flex: 1 }}
+                                        onPress={() => this.props.changeBackground(journalBackgroundImage)}
+                                    >
+                                        <Image source={journalBackgroundImage} style={{ height: 200, width: "100%" }} />
+                                    </TouchableOpacity>
+                                ))}
+                            </View>
+                        ))}
+                    </ScrollView>
                 </ScrollableTabView>
             </View>
         )
     }
 }
 
-export default PicturePanel;
+export default connect(mapStateToProps)(PicturePanel);

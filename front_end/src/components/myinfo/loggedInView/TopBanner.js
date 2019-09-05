@@ -42,6 +42,8 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => ({
+    onCheck: (feather) =>
+        dispatch({ type: 'UPDATE_FEATHER', payload: { feather } })
 });
 
 class TopBanner extends React.Component {
@@ -63,6 +65,7 @@ class TopBanner extends React.Component {
         const response = await agent.user.check(uId, token);
         if (response.rescode === 0) {
             this.setState({ feather: response.newFeather, hasChecked: true })
+            this.props.onCheck(response.newFeather)
         }
     }
 

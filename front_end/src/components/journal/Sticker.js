@@ -171,6 +171,7 @@ class Sticker extends React.Component {
                                     position: "absolute",
                                     top: (this.state.scale.y - 1) * this.props.height / 2,
                                     left: (this.state.scale.x - 1) * this.props.width / 2,
+                                    width: this.props.width, height: this.props.height,
                                     transform: [{ scale: this.state.scale.x }],
                                     //zIndex: this.state.onFocused ? 9999 : 0
                                 }]} /> :

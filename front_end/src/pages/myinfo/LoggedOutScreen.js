@@ -8,7 +8,7 @@ import { connect } from "react-redux"
 import agent from "../../agent/index"
 import { StackActions, NavigationActions } from "react-navigation";
 
-const backgroundImage = require("../../../images/p6.jpg")
+const backgroundImage = require("../../../images/signImage.jpg")
 
 const login = StackActions.reset({
     index: 0,
