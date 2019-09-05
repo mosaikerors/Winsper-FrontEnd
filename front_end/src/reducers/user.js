@@ -3,7 +3,6 @@ const defaultState = {
     uId: 0,
     privacy: [true, true, true, true, true, true, true],
     username: null,
-    theme: 'sky'
 }
 
 const user = (state = defaultState, action) => {
@@ -30,11 +29,6 @@ const user = (state = defaultState, action) => {
                 ...state,
                 token: '',
                 uId: 0
-            }
-        case 'CHANGE_THEME':
-            return {
-                ...state,
-                theme: action.payload.theme
             }
         default:
             return state;

@@ -39,7 +39,6 @@ const mapStateToProps = state => ({
     uId: state.user.uId,
     token: state.user.token,
     myUsername: state.user.username,
-    palette: state.user.theme
 });
 
 const mapDispatchToProps = dispatch => ({
@@ -78,7 +77,7 @@ class TopBanner extends React.Component {
     }
 
     render() {
-        const { username, avatar, isMe, palette } = this.props;
+        const { username, avatar, isMe } = this.props;
         const { feather, hasChecked, hasFollowed } = this.state;
         return (
             <React.Fragment>
