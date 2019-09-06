@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import Comment from '../../../components/hean/Comment'
-import { Avatar } from 'react-native-elements';
+import { Avatar, Divider } from 'react-native-elements';
 import { StyleSheet, KeyboardAvoidingView, View, Text, TextInput, Alert, ScrollView, TouchableOpacity } from 'react-native';
 import ImageGroup from '../../../components/hean/ImageGroup';
 import AntDesign from 'react-native-vector-icons/AntDesign'
@@ -15,8 +15,7 @@ import theme from "../../../theme"
 
 const css = StyleSheet.create({
     bottomBlank: {
-        height: 40,
-        backgroundColor: "#ffffff",
+        height: 40
     },
     username: {
         marginLeft: 10,
@@ -165,8 +164,8 @@ class HeanDetailScreen extends Component {
             return <Loading />;
         return (
             <React.Fragment>
-                <KeyboardAvoidingView style={{ borderWidth: 0, backgroundColor: theme.palette.sky[0] }}>
-                    <ScrollView style={css.view}>
+                <KeyboardAvoidingView style={{ borderWidth: 0, flex: 1, backgroundColor: theme.palette.sky[0] }}>
+                    <ScrollView style={[css.view, { borderWidth: 0 }]}>
 
                         {/* avatar, username, createdTime */}
                         <View style={[css.Icon, { borderWidth: 0, marginTop: 10 }]}>
@@ -200,41 +199,46 @@ class HeanDetailScreen extends Component {
                         {/* like, star and comment */}
                         <View style={css.IconGroup} >
                             <View style={css.Icon}>
-                                <TouchableOpacity onPress={this.changeLike}>
+                                <TouchableOpacity onPress={this.changeLike} style={{ borderWidth: 0, padding: 3 }}>
                                     <AntDesign
                                         name={"like2"}
                                         size={20}
                                         color={hasLiked ? theme.palette.sky[2] : "black"}
                                     />
                                 </TouchableOpacity>
-                                <Text>{likeCount}</Text>
+                                <Text style={{ marginLeft: 5 }}>{likeCount}</Text>
                             </View>
                             <View style={css.Icon}>
-                                <TouchableOpacity onPress={this.changeStar}>
+                                <TouchableOpacity onPress={this.changeStar} style={{ borderWidth: 0, padding: 3 }}>
                                     <Feather
                                         name={"star"}
                                         size={20}
                                         color={hasStarred ? theme.palette.sky[2] : "black"}
                                     />
                                 </TouchableOpacity>
-                                <Text>{starCount}</Text>
+                                <Text style={{ marginLeft: 5 }}>{starCount}</Text>
                             </View>
                             <View style={css.Icon}>
-                                <TouchableOpacity onPress={() => this.refs.input.focus()}>
+                                <TouchableOpacity onPress={() => this.refs.input.focus()} style={{ borderWidth: 0, padding: 3 }}>
                                     <FontAwesome
                                         name={"comment-o"}
                                         size={20}
                                     />
                                 </TouchableOpacity>
-                                <Text>{commentCount}</Text>
+                                <Text style={{ marginLeft: 5 }}>{commentCount}</Text>
                             </View>
                         </View>
-
+                        <Divider style={{ marginVertical: 5 }} />
                         {/* detailed comments */}
                         {comments.map((item, index) => (
                             <Comment comment={item} />
                         ))}
-                        <View style={css.bottomBlank} />
+                        {comments.length === 0 && (
+                            <View style={{ borderWidth: 0 }}>
+                                <Text style={{ alignSelf: 'center', fontSize: 16 }}>暂时还没有评论哦</Text>
+                            </View>
+                        )}
+                        <View style={[css.bottomBlank, { backgroundColor: theme.palette.sky[0] }]} />
                     </ScrollView>
 
                     {/* comment input bar */}
