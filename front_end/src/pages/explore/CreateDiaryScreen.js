@@ -19,7 +19,8 @@ class CreateDiaryScreen extends React.Component {
         this.state = {
             title: '',
             text: '',
-            showAlert: false
+            showAlert: false,
+            showNullAlert: false,
         }
         this.handleOk = this.handleOk.bind(this)
     }
@@ -27,6 +28,10 @@ class CreateDiaryScreen extends React.Component {
     async handleOk() {
         const { uId, token } = this.props;
         const { title, text } = this.state;
+        if (title === '' || text === '') {
+            this.setState({ showNullAlert: true })
+            return;
+        }
         const response = await agent.record.createDiary(uId, token, title, text)
         if (response.rescode === 0)
             this.setState({ showAlert: true })
@@ -64,6 +69,15 @@ class CreateDiaryScreen extends React.Component {
                     showConfirmButton={true}
                     confirmText="确认"
                     onConfirmPressed={() => this.props.navigation.pop()}
+                    closeOnTouchOutside={false}
+                    closeOnHardwareBackPress={false}
+                />
+                <AwesomeAlert
+                    show={this.state.showNullAlert}
+                    title="标题和正文不能为空哦"
+                    showConfirmButton={true}
+                    confirmText="好"
+                    onConfirmPressed={() => this.setState({ showNullAlert: false })}
                     closeOnTouchOutside={false}
                     closeOnHardwareBackPress={false}
                 />

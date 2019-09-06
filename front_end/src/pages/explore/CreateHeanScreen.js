@@ -1,6 +1,6 @@
 import React, { Component, Fragment } from 'react';
 import { View, NativeModules } from 'react-native';
-import { Button, ListItem,Divider } from 'react-native-elements'
+import { Button, ListItem, Divider } from 'react-native-elements'
 import { connect } from "react-redux";
 import RNFetchBlob from 'react-native-fetch-blob'
 import { TextareaItem } from '@ant-design/react-native'
@@ -30,7 +30,8 @@ class CreateHeanScreen extends Component {
             content: "",
             location: "",  // send to back end
             place: "添加地点",  // display to user
-            showAlert: false
+            showAlert: false,
+            showNullAlert: false,
         };
         this.addPlace = this.addPlace.bind(this);
         this.addImage = this.addImage.bind(this);
@@ -38,9 +39,12 @@ class CreateHeanScreen extends Component {
     }
 
     async upload() {
-        const { images } = this.state;
+        const { images, content } = this.state;
         const { uId, token } = this.props;
-
+        if (images.length === 0 && content === '') {
+            this.setState({ showNullAlert: true })
+            return;
+        }
         Geolocation.getCurrentPosition(async data => {
             const location = data.coords.longitude.toString() + "," + data.coords.latitude.toString()
             // construct request body
@@ -128,6 +132,15 @@ class CreateHeanScreen extends Component {
                         showConfirmButton={true}
                         confirmText="确认"
                         onConfirmPressed={() => this.props.navigation.pop()}
+                        closeOnTouchOutside={false}
+                        closeOnHardwareBackPress={false}
+                    />
+                    <AwesomeAlert
+                        show={this.state.showNullAlert}
+                        title="不能写一封没有文字或图片的函哦"
+                        showConfirmButton={true}
+                        confirmText="好"
+                        onConfirmPressed={() => this.setState({ showNullAlert: false })}
                         closeOnTouchOutside={false}
                         closeOnHardwareBackPress={false}
                     />

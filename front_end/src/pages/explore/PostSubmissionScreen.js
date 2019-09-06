@@ -22,7 +22,8 @@ class PostSubmissionScreen extends React.Component {
         this.state = {
             hId: null,
             reason: null,
-            showAlert: false
+            showAlert: false,
+            showNullAlert: false,
         }
         this.submit = this.submit.bind(this)
     }
@@ -30,6 +31,10 @@ class PostSubmissionScreen extends React.Component {
     async submit() {
         const { uId, token } = this.props;
         const { hId, reason } = this.state;
+        if (!hId || !reason) {
+            this.setState({ showNullAlert: true })
+            return;
+        }
         const response = await agent.hean.postSubmissions(uId, token, hId, reason);
         if (response.rescode === 0)
             this.setState({ showAlert: true })
@@ -74,7 +79,7 @@ class PostSubmissionScreen extends React.Component {
                         <Button
                             title="确认"
                             onPress={this.submit}
-                            buttonStyle={{ width: 90, height: 50, marginTop: 20, borderRadius: 50,backgroundColor: theme.palette.sky[2] }}
+                            buttonStyle={{ width: 90, height: 50, marginTop: 20, borderRadius: 50, backgroundColor: theme.palette.sky[2] }}
                             titleStyle={{ fontSize: 20 }}
                         />
                     </View>
@@ -85,6 +90,15 @@ class PostSubmissionScreen extends React.Component {
                     showConfirmButton={true}
                     confirmText="确认"
                     onConfirmPressed={() => this.props.navigation.pop()}
+                    closeOnTouchOutside={false}
+                    closeOnHardwareBackPress={false}
+                />
+                <AwesomeAlert
+                    show={this.state.showNullAlert}
+                    title="投稿需要选择一封函并且写上理由哦"
+                    showConfirmButton={true}
+                    confirmText="好"
+                    onConfirmPressed={() => this.setState({ showNullAlert: false })}
                     closeOnTouchOutside={false}
                     closeOnHardwareBackPress={false}
                 />
