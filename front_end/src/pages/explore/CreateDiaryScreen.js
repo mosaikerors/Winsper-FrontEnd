@@ -29,7 +29,7 @@ class CreateDiaryScreen extends React.Component {
         const { title, text } = this.state;
         const response = await agent.record.createDiary(uId, token, title, text)
         if (response.rescode === 0)
-            this.setState({ show: true })
+            this.setState({ showAlert: true })
         //this.props.navigation.pop()
     }
     render() {
