@@ -32,6 +32,7 @@ class JournalListScreen extends React.Component {
             journalBookCoverId: 0,
             journalBookName: null,
             showDeleteAlert: false,
+            otherUId: this.props.navigation.getParam("otherUId", this.props.uId),
         }
         this.updateState = this.updateState.bind(this);
         this.deleteJournal = this.deleteJournal.bind(this)
@@ -62,8 +63,8 @@ class JournalListScreen extends React.Component {
 
     async updateState() {
         const { uId, token } = this.props;
-        const { cntJournalBookIndex } = this.state
-        const response = await agent.record.getJournalBooks(uId, token, uId);
+        const { otherUId } = this.state
+        const response = await agent.record.getJournalBooks(uId, token, otherUId);
         if (response.rescode === 0) {
             await this.setState({ journalBooks: response.journalBooks })
             this.updateTargetJournals()
@@ -95,14 +96,18 @@ class JournalListScreen extends React.Component {
     }
 
     render() {
-        const { journalBooks, cntJournalBookIndex, journalToBeDeleted, isCreatingJournalBook, targetJournals, journalBookName } = this.state;
-
+        const { journalBooks, cntJournalBookIndex, journalToBeDeleted,
+            isCreatingJournalBook, targetJournals, journalBookName, otherUId } = this.state;
+        const { uId } = this.props
         if (!journalBooks)
             return <Loading />;
         if (journalBooks.length === 0)
             return (
                 <React.Fragment>
-                    <View style={{ height: 40, flexDirection: 'row-reverse', backgroundColor: theme.palette.sky[0] }}>
+                    <View style={{
+                        height: 40, flexDirection: 'row-reverse',
+                        backgroundColor: theme.palette.sky[0], display: uId === otherUId ? "flex" : "none"
+                    }}>
                         <TouchableOpacity
                             style={{ borderWidth: 0, width: 120, justifyContent: "center", alignItems: "center", flexDirection: "row" }}
                             onPress={() => this.setState({ isCreatingJournalBook: true, journalBooks: [0] })}
@@ -116,7 +121,10 @@ class JournalListScreen extends React.Component {
             )
         return (
             <React.Fragment>
-                <View style={{ height: 40, flexDirection: 'row-reverse', backgroundColor: theme.palette.sky[0] }}>
+                <View style={{
+                    height: 40, flexDirection: 'row-reverse',
+                    backgroundColor: theme.palette.sky[0], display: uId === otherUId ? "flex" : "none"
+                }}>
                     <TouchableOpacity
                         style={{ borderWidth: 0, width: 120, justifyContent: "center", alignItems: "center", flexDirection: "row" }}
                         onPress={() => this.setState({ isCreatingJournalBook: true })}
@@ -125,7 +133,10 @@ class JournalListScreen extends React.Component {
                         <Text style={{ fontSize: 20, marginLeft: 5 }}>新建手账本</Text>
                     </TouchableOpacity>
                 </View>
-                <View style={{ borderWidth: 0, height: 250, backgroundColor: theme.palette.sky[0] }}>
+                <View style={{
+                    borderWidth: 0, height: 250, backgroundColor: theme.palette.sky[0],
+                    paddingTop: uId === otherUId ? 0 : 15
+                }}>
                     <JournalBooks
                         journalBooks={journalBooks}
                         cntJournalBookIndex={cntJournalBookIndex}

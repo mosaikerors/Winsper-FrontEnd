@@ -36,10 +36,10 @@ class DetailedBlock extends React.Component {
         return (
             <React.Fragment>
                 <View style={{ flexDirection: 'column', backgroundColor: myTheme.palette.sky[0] }}>
-                    <View style={{ height: 100, flexDirection: 'row',justifyContent:"space-evenly" }}>
+                    <View style={{ height: 100, flexDirection: 'row', justifyContent: "space-evenly" }}>
                         <View style={styles.block}>
                             <TouchableOpacity
-                                disabled={!isMe && !privacy.isMessagePublic}
+                                disabled={!isMe}
                                 style={[styles.text, { borderWidth: 0 }]}
                                 onPress={() => this.props.navigation.push('MessageList')}
                             >
@@ -51,7 +51,7 @@ class DetailedBlock extends React.Component {
                                     status="success"
                                     containerStyle={{
                                         position: 'relative', bottom: 50, left: 20,
-                                        display: hasNewMessage ? "flex" : "none"
+                                        display: hasNewMessage && isMe ? "flex" : "none"
                                     }}
                                 />
                             </TouchableOpacity>

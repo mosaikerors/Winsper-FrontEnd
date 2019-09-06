@@ -12,6 +12,7 @@ import JournalListScreen from "./Repository/JournalListScreen";
 import JournalDetailScreen from "./Repository/JournalDetailScreen";
 import SubmissionScreen from "./Repository/SubmissionScreen";
 import MoodReportScreen from "./Repository/MoodReportScreen";
+import MoodReportDetailScreen from "./Repository/MoodReportDetailScreen";
 import CommentScreen from "./Repository/CommentScreen";
 import LoggedOutScreen from "./LoggedOutScreen"
 import SettingsScreen from "./Settings/SettingsScreen"
@@ -40,7 +41,8 @@ const MyInfoScreenNavigator = createStackNavigator(
         Submission: { screen: SubmissionScreen, navigationOptions: { title: '投稿' } },
         PostSubmission: { screen: PostSubmissionScreen, navigationOptions: { title: '投稿' } },
         SelectHean: { screen: SelectHeanScreen, navigationOptions: { title: '选择函' } },
-        MoodReport: { screen: MoodReportScreen },
+        MoodReport: { screen: MoodReportScreen, navigationOptions: { title: '心情报表' } },
+        MoodReportDetail: { screen: MoodReportDetailScreen, navigationOptions: { header: null }  },
         Comment: { screen: CommentScreen, navigationOptions: { title: '评论' } },
         Settings: { screen: SettingsScreen, navigationOptions: { title: '设置' } },
         AccountInfo: { screen: AccountInfoScreen, navigationOptions: { title: '账号信息' } },

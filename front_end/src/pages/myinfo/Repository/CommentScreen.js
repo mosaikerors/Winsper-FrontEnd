@@ -35,13 +35,15 @@ class CommentScreen extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            comments: null
+            comments: null,
+            otherUId: this.props.navigation.getParam("otherUId", this.props.uId),
         }
     }
 
     async componentWillMount() {
         const { uId, token } = this.props;
-        const response = await agent.hean.getComment(uId, token, uId);
+        const { otherUId } = this.state
+        const response = await agent.hean.getComment(uId, token, otherUId);
         if (response.rescode === 0)
             this.setState({ comments: response.comments })
 
@@ -67,7 +69,7 @@ class CommentScreen extends React.Component {
             return <EmptyList field="评论列表" />
         return (
             <React.Fragment>
-                <ScrollView style={{backgroundColor: theme.palette.sky[0]}}>
+                <ScrollView style={{ backgroundColor: theme.palette.sky[0] }}>
                     {comments.map((comment) => (
                         <View style={{
                             marginLeft: 40, marginRight: 40, marginTop: 20, marginBottom: 20,

@@ -12,8 +12,7 @@ const c11 = require("../../../images/journal-book-background/p11.jpg")
 const c12 = require("../../../images/journal-book-background/p12.jpg")
 const c13 = require("../../../images/journal-book-background/p13.jpg")
 const c14 = require("../../../images/journal-book-background/p14.jpg")
-const c15 = require("../../../images/journal-book-background/p15.jpg")
 
-const journalBookCovers = [c1, c2, c3, c4, c5, c6, c7, c8, c9, c10, c11, c12, c13, c14, c15]
+const journalBookCovers = [c1, c2, c3, c4, c5, c6, c7, c8, c9, c10, c11, c12, c13, c14]
 
 export default journalBookCovers;
