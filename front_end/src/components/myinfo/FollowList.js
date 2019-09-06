@@ -36,6 +36,8 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = dispatch => ({
 });
 
+const defaultAvatar = require("../../../images/defaultAvatar.jpg")
+
 class FollowList extends React.Component {
     render() {
         const { followlist } = this.props;
@@ -49,9 +51,12 @@ class FollowList extends React.Component {
                     {followlist.map((listItem, index) => (
                         <TouchableOpacity onPress={() => this.props.navigation.push("PersonPage", { uId: listItem.uId })}>
                             <ListItem
-                                containerStyle={{ backgroundColor: theme.palette.sky[0] }}
+                                containerStyle={{ backgroundColor: theme.palette.sky[0], borderWidth: 0 }}
                                 key={index}
-                                leftAvatar={{ source: { uri: listItem.avatar } }}
+                                leftAvatar={{
+                                    source: listItem.avatar === '' ? defaultAvatar : { uri: listItem.avatar },
+                                    containerStyle: { borderWidth: 1 }
+                                }}
                                 title={listItem.username}
                                 rightIcon={listItem.isMutualFollow && (
                                     <FontAwesome

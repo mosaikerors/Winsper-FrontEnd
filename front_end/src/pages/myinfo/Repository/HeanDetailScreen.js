@@ -53,6 +53,8 @@ const css = StyleSheet.create({
     }
 });
 
+const defaultAvatar = require("../../../../images/defaultAvatar.jpg")
+
 const mapStateToProps = state => ({
     token: state.user.token,
     uId: state.user.uId,
@@ -172,7 +174,7 @@ class HeanDetailScreen extends Component {
                             <Avatar
                                 rounded
                                 size={"medium"}
-                                source={{ uri: avatar }}
+                                source={avatar === '' ? defaultAvatar : { uri: avatar }}
                             />
                             <View style={[css.username, { borderWidth: 0, flex: 1 }]}>
                                 <Text style={{ fontSize: 20 }}>{username}</Text>

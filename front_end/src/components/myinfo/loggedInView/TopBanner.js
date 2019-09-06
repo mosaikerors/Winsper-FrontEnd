@@ -98,7 +98,7 @@ class TopBanner extends React.Component {
                         <Avatar
                             rounded
                             size="large"
-                            icon={{ name: "user", color: "cyan", type: "font-awesome" }}
+                            source={require("../../../../images/defaultAvatar.jpg")}
                             overlayContainerStyle={{ backgroundColor: 'white', flex: 4, borderWidth: 1 }}
                             activeOpacity={0.7}
                             containerStyle={{ marginTop: 25, marginLeft: 25, borderWidth: 1 }}

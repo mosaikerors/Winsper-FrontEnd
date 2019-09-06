@@ -33,8 +33,9 @@ class PersonPageScreen extends React.Component {
         const otherUId = this.props.navigation.getParam("uId", 0);
         const { uId, token } = this.props;
         const response = await agent.user.getOthersInfo(uId, token, otherUId);
+        console.log("res", response);
         if (response.rescode === 0)
-            this.setState({ userInfo: Object.assign({}, response, { otherUId }) });
+            this.setState({ userInfo: Object.assign({}, response, { otherUId, avatar: response.avater }) });
     }
 
     componentWillMount() {

@@ -27,6 +27,8 @@ const styles = StyleSheet.create({
     reply: { color: "#2979ff" }
 });
 
+const defaultAvatar = require("../../../images/defaultAvatar.jpg")
+
 class Comment extends Component {
     constructor(props) {
         super(props);
@@ -40,7 +42,7 @@ class Comment extends Component {
                     <Avatar
                         rounded
                         size={"small"}
-                        source={{ uri: comment.commenterAvatar }}
+                        source={comment.commenterAvatar === '' ? defaultAvatar : { uri: comment.commenterAvatar }}
                     />
                     <View style={styles.commenterInfo}>
                         <Text>{comment.commenterUsername}</Text>
