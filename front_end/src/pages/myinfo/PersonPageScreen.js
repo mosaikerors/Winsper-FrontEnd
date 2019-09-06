@@ -59,8 +59,6 @@ class PersonPageScreen extends React.Component {
                 <Divider />
                 {/* userInfo 里除了隐私设置还有其他一些信息比如 username，但是这里为了方便，选择将整个 userInfo 传进去，尽管只用到了其中的隐私设置 */}
                 <DetailedBlock navigation={this.props.navigation} privacy={this.state.userInfo} isMe={false} otherUId={otherUId} />
-                <Divider />
-                <View style={{ backgroundColor: theme.palette.sky[0], flex: 1 }}></View>
             </React.Fragment>
         );
     }
