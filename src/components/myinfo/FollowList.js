@@ -8,26 +8,6 @@ import agent from "../../agent/index"
 import EmptyList from "../EmptyList"
 import theme from "../../theme"
 
-const styles = StyleSheet.create({
-    border: {
-        borderWidth: 1,
-    },
-})
-
-const list = [
-    {
-        name: 'Amy Farha',
-        avatar_url: 'https://s3.amazonaws.com/uifaces/faces/twitter/ladylexy/128.jpg',
-        subtitle: 'Vice President'
-    },
-    {
-        name: 'Chris Jackson',
-        avatar_url: 'https://s3.amazonaws.com/uifaces/faces/twitter/adhamdannaway/128.jpg',
-        subtitle: 'Vice Chairman'
-    }
-];
-
-
 const mapStateToProps = state => ({
     uId: state.user.uId,
     token: state.user.token,
