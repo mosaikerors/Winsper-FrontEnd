@@ -1,5 +1,5 @@
 import React from "react";
-import { Text, View, StyleSheet, TouchableOpacity } from "react-native";
+import { Text, View, StyleSheet, TouchableOpacity, ScrollView} from "react-native";
 import { ListItem } from 'react-native-elements'
 import { connect } from "react-redux"
 import FontAwesome from "react-native-vector-icons/FontAwesome";
@@ -27,7 +27,7 @@ class FollowList extends React.Component {
             return <EmptyList field="关注列表" />;
         return (
             <React.Fragment>
-                <View>
+                <ScrollView>
                     {followlist.map((listItem, index) => (
                         <TouchableOpacity onPress={() => this.props.navigation.push("PersonPage", { uId: listItem.uId })}>
                             <ListItem
@@ -48,7 +48,7 @@ class FollowList extends React.Component {
                             />
                         </TouchableOpacity>
                     ))}
-                </View>
+                </ScrollView>
             </React.Fragment>
         );
     }
