@@ -41,7 +41,7 @@ class CreateHeanScreen extends Component {
     async upload() {
         const { images, content } = this.state;
         const { uId, token } = this.props;
-        if (images.length === 0 && content === '') {
+        if (images.length === 0 || content === '') {
             this.setState({ showNullAlert: true })
             return;
         }
@@ -87,7 +87,7 @@ class CreateHeanScreen extends Component {
             this.setState({
                 images: images.map(i => ({ uri: i.path, width: i.width, height: i.height, mime: i.mime }))
             });
-        }).catch(e => alert(e));
+        }).catch(e => {});
     }
 
     render() {
@@ -137,7 +137,7 @@ class CreateHeanScreen extends Component {
                     />
                     <AwesomeAlert
                         show={this.state.showNullAlert}
-                        title="不能写一封没有文字或图片的函哦"
+                        title="不能写一封没有文字和图片的函哦"
                         showConfirmButton={true}
                         confirmText="好"
                         onConfirmPressed={() => this.setState({ showNullAlert: false })}

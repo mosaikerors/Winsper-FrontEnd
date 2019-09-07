@@ -1,6 +1,7 @@
 import { createStackNavigator } from "react-navigation";
 import MapScreen from "./MapScreen";
 import HeanDetailScreen from "../myinfo/Repository/HeanDetailScreen"
+import theme from "../../theme"
 
 const MapScreenNavigator = createStackNavigator(
     {
@@ -9,6 +10,10 @@ const MapScreenNavigator = createStackNavigator(
     },
     {
         initialRouteName: "Map",
+        defaultNavigationOptions: {
+            headerStyle: { backgroundColor: theme.palette.sky[1], },
+            //headerTintColor: 'black',
+        },
         navigationOptions: ({ navigation }) => {
             // topScreen: 当前页面
             const topScreen = navigation.state.routes[navigation.state.routes.length - 1].routeName;
