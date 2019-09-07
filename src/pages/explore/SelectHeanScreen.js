@@ -6,6 +6,9 @@ import agent from "../../agent/index";
 import { connect } from "react-redux";
 import { NavigationEvents, withNavigationFocus } from 'react-navigation';
 import FontAwesome from "react-native-vector-icons/FontAwesome"
+import Loading from "../../components/Loading"
+import EmptyList from "../../components/EmptyList"
+import theme from "../../theme"
 
 const { width } = Dimensions.get("window");
 
@@ -42,10 +45,12 @@ class SelectHeanScreen extends React.Component {
     render() {
         const { selectedIndex, heans } = this.state
         if (!heans)
-            return null;
+            return <Loading />;
+        if (heans.length === 0)
+            return <EmptyList field="函列表" />
         return (
             <React.Fragment>
-                <View style={{ flexDirection: "row", width: "100%" }}>
+                <View style={{ flexDirection: "row", width: "100%", backgroundColor: theme.palette.sky[0] }}>
                     <View>
                         <TouchableOpacity onPress={() => this.props.navigation.pop()}>
                             <FontAwesome name="close" size={28} style={{ margin: 10 }} color="red" />
@@ -63,20 +68,22 @@ class SelectHeanScreen extends React.Component {
                     </View>
                 </View>
                 <Divider />
-                {heans.map((hean, index) => (
-                    <View>
-                        <TouchableOpacity
-                            onPress={() => {
-                                this.setState({ selectedIndex: this.state.selectedIndex === index ? null : index })
-                            }}
-                            style={this.state.selectedIndex === index && { borderWidth: 2, borderColor: "cyan" }}
-                            activeOpacity={0.8}
-                        >
-                            <HeanCard hId={hean.hId} whenSubmission={true} />
-                        </TouchableOpacity>
-                        <Divider />
-                    </View>
-                ))}
+                <View style={{ borderWidth: 0, flex: 1, backgroundColor: theme.palette.sky[0] }}>
+                    {heans.map((hean, index) => (
+                        <View>
+                            <TouchableOpacity
+                                onPress={() => {
+                                    this.setState({ selectedIndex: this.state.selectedIndex === index ? null : index })
+                                }}
+                                style={this.state.selectedIndex === index && { borderWidth: 2, borderColor: "cyan" }}
+                                activeOpacity={0.8}
+                            >
+                                <HeanCard hId={hean.hId} whenSubmission={true} />
+                            </TouchableOpacity>
+                            <Divider />
+                        </View>
+                    ))}
+                </View>
             </React.Fragment>
         );
     }
