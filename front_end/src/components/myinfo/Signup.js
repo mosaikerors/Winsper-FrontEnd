@@ -2,7 +2,8 @@ import React from "react";
 import { Text, View, StyleSheet } from "react-native";
 import { Button, Input } from 'react-native-elements'
 import agent from "../../agent/index"
-import Icon from "react-native-vector-icons/FontAwesome"
+import FontAwesome from "react-native-vector-icons/FontAwesome"
+import MaterialIcons from "react-native-vector-icons/MaterialIcons"
 import AwesomeAlert from 'react-native-awesome-alerts';
 import { connect } from "react-redux";
 import { StackActions, NavigationActions } from "react-navigation";
@@ -176,7 +177,7 @@ class Signup extends React.Component {
                     <View style={styles.inputContainer}>
                         <Input
                             placeholder="手机号"
-                            leftIcon={<Icon name="user" size={18} style={{ marginRight: 8, marginLeft: 6 }} />}
+                            leftIcon={<FontAwesome name="phone" size={18} style={{ marginRight: 8, marginLeft: 6 }} />}
                             inputContainerStyle={styles.input}
                             onChangeText={text => this.updateState('phone', text)}
                         />
@@ -185,7 +186,7 @@ class Signup extends React.Component {
                         <View style={{ width: '65%' }}>
                             <Input
                                 placeholder="验证码"
-                                leftIcon={<Icon name="user" size={18} style={{ marginRight: 8, marginLeft: 6 }} />}
+                                leftIcon={<MaterialIcons name="verified-user" size={18} style={{ marginRight: 8, marginLeft: 6 }} />}
                                 inputContainerStyle={[styles.input, { marginRight: 8 }]}
                                 onChangeText={text => this.updateState('code', text)}
                             />
@@ -210,7 +211,7 @@ class Signup extends React.Component {
                     <View style={styles.inputContainer}>
                         <Input
                             placeholder="用户名"
-                            leftIcon={<Icon name="user" size={18} style={{ marginRight: 8, marginLeft: 6 }} />}
+                            leftIcon={<FontAwesome name="user" size={18} style={{ marginRight: 10, marginLeft: 10 }} />}
                             inputContainerStyle={styles.input}
                             onChangeText={text => this.updateState('username', text)}
                         />
@@ -218,7 +219,7 @@ class Signup extends React.Component {
                     <View style={styles.inputContainer}>
                         <Input
                             placeholder="密码"
-                            leftIcon={<Icon name="user" size={18} style={{ marginRight: 8, marginLeft: 6 }} />}
+                            leftIcon={<FontAwesome name="shield" size={18} style={{ marginRight: 12, marginLeft: 10 }} />}
                             inputContainerStyle={styles.input}
                             onChangeText={text => this.updateState('password', text)}
                             secureTextEntry

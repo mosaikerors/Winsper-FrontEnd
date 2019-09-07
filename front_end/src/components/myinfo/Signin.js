@@ -4,7 +4,7 @@ import { Button, Input } from 'react-native-elements'
 import { StackActions, NavigationActions } from "react-navigation";
 import { connect } from "react-redux";
 import agent from "../../agent/index"
-import Icon from "react-native-vector-icons/FontAwesome"
+import FontAwesome from "react-native-vector-icons/FontAwesome"
 import AwesomeAlert from 'react-native-awesome-alerts';
 
 const styles = StyleSheet.create({
@@ -117,7 +117,7 @@ export class Signin extends React.Component {
                     <View style={styles.inputContainer}>
                         <Input
                             placeholder="手机号"
-                            leftIcon={<Icon name="user" size={18} style={{ marginRight: 8, marginLeft: 6 }} />}
+                            leftIcon={<FontAwesome name="phone" size={18} style={{ marginRight: 8, marginLeft: 6 }} />}
                             inputContainerStyle={styles.input}
                             value={this.state.phone}
                             onChangeText={text => this.updateState('phone', text)}
@@ -127,7 +127,7 @@ export class Signin extends React.Component {
                         <Input
                             textContentType="password"
                             placeholder="密码"
-                            leftIcon={<Icon name="user" size={18} style={{ marginRight: 8, marginLeft: 6 }} />}
+                            leftIcon={<FontAwesome name="shield" size={18} style={{ marginRight: 10, marginLeft: 8 }} />}
                             inputContainerStyle={styles.input}
                             value={this.state.password}
                             onChangeText={text => this.updateState('password', text)}
