@@ -39,18 +39,9 @@ class ExploreScreen extends React.Component {
         this.state = {
             size: { width: width, height: height / 3 },
             CarouselItem: [
-                {
-                    key: 1,
-                    src: "https://images.pexels.com/photos/1935220/pexels-photo-1935220.jpeg?auto=compress&cs=tinysrgb&dpr=2&w=500"
-                },
-                {
-                    key: 2,
-                    src: "https://images.pexels.com/photos/2679542/pexels-photo-2679542.jpeg?auto=compress&cs=tinysrgb&dpr=2&w=500"
-                },
-                {
-                    key: 3,
-                    src: "https://images.pexels.com/photos/2325505/pexels-photo-2325505.jpeg?auto=compress&cs=tinysrgb&dpr=2&w=500"
-                }
+                require("../../../images/c1.jpg"),
+                require("../../../images/c2.jpg"),
+                require("../../../images/c3.jpg"),
             ]
         }
     }
@@ -68,7 +59,7 @@ class ExploreScreen extends React.Component {
                         this.state.CarouselItem.map((item, i) => (
                             <Image
                                 key={i}
-                                source={{ uri: item.src }}
+                                source={item}
                                 style={this.state.size} />
                         ))
                     }
