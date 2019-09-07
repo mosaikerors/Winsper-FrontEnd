@@ -24,7 +24,8 @@ const messageIcons = [
     <Feather name={"star"} size={20} />,
     <FontAwesome name={"comment-o"} size={20} />,
     <FontAwesome name={"commenting-o"} size={20} />,
-    <FontAwesome name={"envelope-o"} size={20} />
+    <FontAwesome name={"envelope-o"} size={20} />,
+    <Feather name={"alert-triangle"} size={20} />
 ]
 
 const getBriefMessage = (message) => {
@@ -38,6 +39,8 @@ const getBriefMessage = (message) => {
         return `${message.senderUsername} 评论了你的函`;
     if (message.type === 5)
         return `你的投稿被选中了`;
+    if (message.type === 6)
+        return `违规内容提醒`;
 }
 
 const mapStateToProps = state => ({
@@ -100,7 +103,7 @@ class MessageListScreen extends React.Component {
             return <EmptyList field="消息列表" />
         return (
             <React.Fragment>
-                <View style={{ backgroundColor: theme.palette.sky[0],flex:1 }}>
+                <View style={{ backgroundColor: theme.palette.sky[0], flex: 1 }}>
                     <View style={{ borderWidth: 0, margin: 5, flexDirection: "row-reverse" }}>
                         <TouchableOpacity style={{ borderWidth: 0, flexDirection: "row" }}
                             onPress={this.readAll}
@@ -115,7 +118,7 @@ class MessageListScreen extends React.Component {
                             <View>
                                 <TouchableOpacity onPress={() => this.props.navigation.push("MessageDetail", { type: message.type })}>
                                     <ListItem
-                                        containerStyle={{backgroundColor: theme.palette.sky[0]}}
+                                        containerStyle={{ backgroundColor: theme.palette.sky[0] }}
                                         key={index}
                                         leftIcon={messageIcons[message.type - 1]}
                                         title={getBriefMessage(message)}

@@ -1,5 +1,5 @@
 import React from "react";
-import { Text, View, StyleSheet, TouchableOpacity,ScrollView } from "react-native";
+import { Text, View, StyleSheet, TouchableOpacity, ScrollView } from "react-native";
 import { ListItem } from 'react-native-elements'
 import { connect } from "react-redux"
 import agent from "../../../agent/index"
@@ -54,6 +54,10 @@ const getDetailedMessage = (type, message, navigation) => {
                 你的投稿被选中了
             </Text>
         );
+    if (type === 6)
+        return (
+            <Text style={{ fontSize: 24 }}>{message.text}</Text>
+        )
 }
 
 const mapStateToProps = state => ({
@@ -109,7 +113,7 @@ class MessageDetailScreen extends React.Component {
             return <EmptyList field="消息列表" />
         return (
             <React.Fragment>
-                <View style={{ height: 40, borderWidth: 0, flexDirection: "row-reverse",backgroundColor: theme.palette.sky[0] }}>
+                <View style={{ height: 40, borderWidth: 0, flexDirection: "row-reverse", backgroundColor: theme.palette.sky[0] }}>
                     <TouchableOpacity style={{ borderWidth: 0, flexDirection: "row", alignItems: "center" }}
                         onPress={this.deleteMessage}
                     >
@@ -117,7 +121,7 @@ class MessageDetailScreen extends React.Component {
                         <Text style={{ fontSize: 24, marginHorizontal: 5 }}>清空</Text>
                     </TouchableOpacity>
                 </View>
-                <ScrollView style={{backgroundColor: theme.palette.sky[0]}}>
+                <ScrollView style={{ backgroundColor: theme.palette.sky[0] }}>
                     {messages.map((message) => (
                         <View style={{ margin: 20, marginBottom: 10 }}>
                             {/* timestamp */}
