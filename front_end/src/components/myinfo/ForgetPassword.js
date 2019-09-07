@@ -107,7 +107,7 @@ class ForgetPassword extends React.Component {
                 token: response.token,
                 sendCodeButton: {
                     clickable: false,
-                    timeToClick: 5,  //can send code only once for each minute
+                    timeToClick: 60,  //can send code only once for each minute
                 }
             });
         }
