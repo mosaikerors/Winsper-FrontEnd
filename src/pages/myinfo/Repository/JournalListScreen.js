@@ -160,10 +160,13 @@ class JournalListScreen extends React.Component {
                                             style={{ borderWidth: 1, width: "88%", height: 160, margin: 10 }}
                                         />
                                     </TouchableOpacity>
-                                    <View style={{ flexDirection: "row", display: journalToBeDeleted === journal.journalId ? "flex" : "none" }}>
-                                        <View style={{ flex: 1 }}>
+                                    <View style={{
+                                        flexDirection: "row", justifyContent: "space-evenly", borderWidth: 0,
+                                        display: journalToBeDeleted === journal.journalId ? "flex" : "none"
+                                    }}>
+                                        <View>
                                             <TouchableOpacity onPress={() => this.setState({ journalToBeDeleted: null })}>
-                                                <FontAwesome name="close" size={28} style={{ margin: 10 }} color="red" />
+                                                <FontAwesome name="close" size={28} style={{ margin: 10 }} color={theme.palette.sky[2]} />
                                             </TouchableOpacity>
                                         </View>
                                         <TouchableOpacity onPress={() => this.setState({ showDeleteAlert: true })}>
