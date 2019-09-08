@@ -66,7 +66,6 @@ class MessageListScreen extends React.Component {
     async updateState() {
         const { uId, token } = this.props;
         const response = await agent.record.getMessageList(uId, token);
-
         if (response.rescode === 0)
             this.setState({ messages: response.messages })
         this.props.onReadMessage()

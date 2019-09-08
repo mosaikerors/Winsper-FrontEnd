@@ -1,5 +1,5 @@
 import React from "react";
-import { Text, Dimensions, TouchableOpacity, FlatList, View } from "react-native";
+import { Text, Dimensions, TouchableOpacity, FlatList, View,ScrollView } from "react-native";
 import { Divider } from 'react-native-elements'
 import HeanCard from "../../components/hean/HeanCard";
 import agent from "../../agent/index";
@@ -68,7 +68,7 @@ class SelectHeanScreen extends React.Component {
                     </View>
                 </View>
                 <Divider />
-                <View style={{ borderWidth: 0, flex: 1, backgroundColor: theme.palette.sky[0] }}>
+                <ScrollView style={{ borderWidth: 0, flex: 1, backgroundColor: theme.palette.sky[0] }}>
                     {heans.map((hean, index) => (
                         <View>
                             <TouchableOpacity
@@ -83,7 +83,7 @@ class SelectHeanScreen extends React.Component {
                             <Divider />
                         </View>
                     ))}
-                </View>
+                </ScrollView>
             </React.Fragment>
         );
     }
