@@ -20,6 +20,7 @@ class MoodReportDetailScreen extends React.Component {
         super(props)
         this.state = {
             moodReportId: this.props.navigation.getParam("moodReportId", 0),
+            week: this.props.navigation.getParam("week", 0),
             moodReport: null,
         }
     }
@@ -37,12 +38,12 @@ class MoodReportDetailScreen extends React.Component {
         const { moodReport } = this.state;
         if (!moodReport)
             return <Loading />
-        const { year, week, heanNum, keyword, mood, image, poem } = this.state.moodReport
+        const { year, heanNum, keyWord, mood, image, poem } = this.state.moodReport
         return (
             <React.Fragment>
                 <ImageBackground source={backgroundImage} style={{ width: '100%', height: '100%', opacity: 0.8 }}>
                     <View style={{ margin: 10, flexDirection: "row" }}>
-                        <Text style={{ fontSize: 36, borderWidth: 0, flex: 1 }}>{`${year} 年 第 ${week} 周`}</Text>
+                        <Text style={{ fontSize: 36, borderWidth: 0, flex: 1 }}>{`${year} 年 第 ${this.state.week} 周`}</Text>
                         <TouchableOpacity
                             style={{ borderWidth: 0, alignItems: "center", justifyContent: "center", padding: 5 }}
                             onPress={() => this.props.navigation.pop()}
@@ -59,7 +60,7 @@ class MoodReportDetailScreen extends React.Component {
                             <Text style={{ fontSize: 24 }}>关键词是</Text>
                         </View>
                         <View style={{ flex: 1, marginLeft: 10 }}>
-                            <Text style={{ fontSize: 60, color: theme.palette.sky[3] }}>{keyword}</Text>
+                            <Text style={{ fontSize: 60, color: theme.palette.sky[3] }}>{keyWord}</Text>
                         </View>
                     </View>
                     <View style={{ margin: 10, flexDirection: "row", borderWidth: 0, justifyContent: "center" }}>

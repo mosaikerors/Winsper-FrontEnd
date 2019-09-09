@@ -35,7 +35,6 @@ class MoodReportScreen extends React.Component {
         const { uId, token } = this.props;
         const { otherUId } = this.state
         const response = await agent.record.getMoodReportList(uId, token, otherUId)
-        console.log(response)
         if (response.rescode === 0) {
             this.setState({
                 moodReports: response.moodReports,
@@ -74,7 +73,10 @@ class MoodReportScreen extends React.Component {
                         {moodReports.map((moodReport, index) => (
                             <View style={{ borderWidth: 0 }}>
                                 <TouchableOpacity
-                                    onPress={() => this.props.navigation.push("MoodReportDetail", { moodReportId: moodReport.moodReportId })}
+                                    onPress={() => this.props.navigation.push("MoodReportDetail", {
+                                        moodReportId: moodReport.moodReportId,
+                                        week: moodReport.week
+                                    })}
                                 >
                                     <ListItem
                                         containerStyle={{ backgroundColor: theme.palette.sky[0] }}
