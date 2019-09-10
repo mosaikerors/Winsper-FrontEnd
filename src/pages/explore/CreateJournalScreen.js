@@ -118,7 +118,7 @@ class CreateJournal extends React.Component {
         const { uId, token } = this.props;
         console.log("got here")
         console.log("journalBookId", journalBookId)
-        const journalUrl = await captureScreen({ format: "jpg", result: "data-uri" }).then(uri =>
+        const journalUrl = await captureScreen({ format: "jpg", result: "data-uri", quality: 0.5 }).then(uri =>
             requests.post(CLOUDINARY_UPLOAD_URL)
                 .field('upload_preset', CLOUDINARY_UPLOAD_PRESET)
                 .field('file', uri)

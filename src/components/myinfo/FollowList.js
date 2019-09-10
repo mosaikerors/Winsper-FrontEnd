@@ -1,5 +1,5 @@
 import React from "react";
-import { Text, View, StyleSheet, TouchableOpacity } from "react-native";
+import { Text, View, StyleSheet, TouchableOpacity, ScrollView} from "react-native";
 import { ListItem } from 'react-native-elements'
 import { connect } from "react-redux"
 import FontAwesome from "react-native-vector-icons/FontAwesome";
@@ -7,26 +7,6 @@ import Loading from '../Loading'
 import agent from "../../agent/index"
 import EmptyList from "../EmptyList"
 import theme from "../../theme"
-
-const styles = StyleSheet.create({
-    border: {
-        borderWidth: 1,
-    },
-})
-
-const list = [
-    {
-        name: 'Amy Farha',
-        avatar_url: 'https://s3.amazonaws.com/uifaces/faces/twitter/ladylexy/128.jpg',
-        subtitle: 'Vice President'
-    },
-    {
-        name: 'Chris Jackson',
-        avatar_url: 'https://s3.amazonaws.com/uifaces/faces/twitter/adhamdannaway/128.jpg',
-        subtitle: 'Vice Chairman'
-    }
-];
-
 
 const mapStateToProps = state => ({
     uId: state.user.uId,
@@ -47,7 +27,7 @@ class FollowList extends React.Component {
             return <EmptyList field="关注列表" />;
         return (
             <React.Fragment>
-                <View>
+                <ScrollView>
                     {followlist.map((listItem, index) => (
                         <TouchableOpacity onPress={() => this.props.navigation.push("PersonPage", { uId: listItem.uId })}>
                             <ListItem
@@ -68,7 +48,7 @@ class FollowList extends React.Component {
                             />
                         </TouchableOpacity>
                     ))}
-                </View>
+                </ScrollView>
             </React.Fragment>
         );
     }

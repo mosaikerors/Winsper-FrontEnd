@@ -1,4 +1,4 @@
-import { View, StyleSheet } from "react-native";
+import { View, StyleSheet,TouchableOpacity } from "react-native";
 import { Avatar, Text, Divider } from "react-native-elements";
 import React, { Component } from "react";
 import { transformDate } from "../../util"
@@ -37,21 +37,23 @@ class Comment extends Component {
         const { comment } = this.props;
         return (
             <View style={styles.background}>
-                
+
                 <View style={styles.top}>
-                    <Avatar
-                        rounded
-                        size={"small"}
-                        source={comment.commenterAvatar === '' ? defaultAvatar : { uri: comment.commenterAvatar }}
-                    />
+                    <TouchableOpacity onPress={() => this.props.navigation.push("PersonPage", { uId: comment.commenterUId })}>
+                        <Avatar
+                            rounded
+                            size={"small"}
+                            source={comment.commenterAvatar === '' ? defaultAvatar : { uri: comment.commenterAvatar }}
+                        />
+                    </TouchableOpacity>
                     <View style={styles.commenterInfo}>
                         <Text>{comment.commenterUsername}</Text>
-                        <Text>{transformDate(comment.time, true)}</Text>
-                    </View>
+                    <Text>{transformDate(comment.time, true)}</Text>
                 </View>
-                <Text style={styles.text}>{comment.content}</Text>
-                
             </View>
+            <Text style={styles.text}>{comment.content}</Text>
+                
+            </View >
         )
     }
 }

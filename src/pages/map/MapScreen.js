@@ -39,21 +39,22 @@ export class MapScreen extends React.Component {
         this.state = {
             heans: [],
             longitude: 0,
-            latitude: 0
+            latitude: 0,
+            hackingNum: 0
         }
         this.updateState = this.updateState.bind(this);
     }
 
     async updateState() {
         const { uId, token } = this.props;
+        const { hackingNum } = this.state;
         Geolocation.getCurrentPosition(async data => {
             const longitude = data.coords.longitude
             const latitude = data.coords.latitude
             const response = await agent.hean.getPoints(uId, token, longitude, latitude, "all", "all");
-            console.log("res", response)
             if (response.rescode === 0) {
                 response.heans.forEach(hean => hean.longitude = hean.longtitude);
-                this.setState({ heans: response.heans, longitude, latitude })
+                this.setState({ heans: response.heans, longitude, latitude, hackingNum: hackingNum + 1 })
             }
         })
     }
@@ -71,8 +72,7 @@ export class MapScreen extends React.Component {
 
     // 目前的 <HeanCard /> 会立刻渲染，即实际上获取卡片形式的函的请求不会被延迟到点击 point 之后再发送
     render() {
-        const { longitude, latitude } = this.state;
-        console.log("long", longitude, "la", latitude)
+        const { longitude, latitude, hackingNum } = this.state;
         return (
             <React.Fragment>
                 <MapView
@@ -90,7 +90,7 @@ export class MapScreen extends React.Component {
                             image='flag'
                         >
                             <View style={{ width: 300, height: 280, borderWidth: 0, borderRadius: 0 }}>
-                                <HeanCard hId={hean.hId} navigation={this.props.navigation} />
+                                <HeanCard hId={hean.hId} navigation={this.props.navigation} hackingNum={hackingNum} />
                             </View>
                         </Marker>
                     ))}

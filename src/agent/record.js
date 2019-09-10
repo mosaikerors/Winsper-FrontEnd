@@ -106,34 +106,19 @@ const record = {
             .then(res => res.body)
             .catch(err => err.response.body),
     getMoodReportList: (uId, token, owner) =>
-        ({
-            rescode: 0,
-            positiveNum: 1,
-            neutralNum: 1,
-            negativeNum: 0,
-            moodReports: [{ moodReportId: 1, mood: 0, year: 2019, week: 30 }, { moodReportId: 2, mood: 1, year: 2019, week: 31 }]
-        }),
-    /*requests.get(API_ROOT + "/record/moodReport/list")
-        .set('Authorization', 'Bearer ' + token)
-        .set('uId', uId)
-        .query({ owner })
-        .then(res => res.body)
-        .catch(err => err.response.body),*/
+        requests.get(API_ROOT + "/record/moodReport/list")
+            .set('Authorization', 'Bearer ' + token)
+            .set('uId', uId)
+            .query({ owner })
+            .then(res => res.body)
+            .catch(err => err.response.body),
     getMoodReportDetail: (uId, token, moodReportId) =>
-        ({
-            rescode: 0,
-            moodReport: {
-                year: 2019, week: 30, heanNum: 5, keyword: "吃", mood: 0,
-                image: "https://images.pexels.com/photos/2679542/pexels-photo-2679542.jpeg?auto=compress&cs=tinysrgb&dpr=2&w=500",
-                poem:"一二三四五，二三四五六，三四五六七，五六七八九"
-            }
-        })
-        /*requests.get(API_ROOT + "/record/moodReport/detailed")
+        requests.get(API_ROOT + "/record/moodReport/detailed")
             .set('Authorization', 'Bearer ' + token)
             .set('uId', uId)
             .query({ moodReportId })
             .then(res => res.body)
-            .catch(err => err.response.body),*/
+            .catch(err => err.response.body),
 };
 
 export default record;

@@ -10,6 +10,8 @@ import FontAwesome from "react-native-vector-icons/FontAwesome";
 import Loading from "../../../components/Loading"
 import EmptyList from "../../../components/EmptyList"
 import theme from "../../../theme"
+import ScrollableTabView, { DefaultTabBar } from "react-native-scrollable-tab-view";
+import SubmissionList from "../../../components/myinfo/SubmissionList"
 
 const mapStateToProps = state => ({
     token: state.user.token,
@@ -25,20 +27,18 @@ class SubmissionScreen extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            heans: null,
-            otherUId: this.props.navigation.getParam("otherUId", this.props.uId)
+            mySubmission: null,
+            selectedSubmission: null,
+            otherUId: this.props.navigation.getParam("otherUId", this.props.uId),
         }
-        this.updateState = this.updateState.bind(this);
+        this.updateState = this.updateState.bind(this)
     }
 
     async updateState() {
         const { uId, token } = this.props;
-        const { otherUId } = this.state;
+        const { otherUId } = this.state
         let response;
-        if (otherUId === 0)  // view selected submission
-            response = await agent.hean.getSelectedSubmissions(uId, token, 1);  // todo: date here!
-        else  // view someone's submission
-            response = await agent.hean.getSubmissionsById(uId, token, otherUId)
+        response = await agent.hean.getSelectedSubmissions(uId, token, new Date().getTime());
         if (response.rescode === 0) {
             let heans = [];
             let tmp = {};
@@ -55,7 +55,26 @@ class SubmissionScreen extends React.Component {
                 tmp.right = null;
                 heans.push(JSON.parse(JSON.stringify(tmp)));  // for deep copy
             }
-            this.setState({ heans });
+            this.setState({ selectedSubmission: heans });
+        }
+        response = await agent.hean.getSubmissionsById(uId, token, otherUId)
+        if (response.rescode === 0) {
+            let heans = [];
+            let tmp = {};
+            response.heanCards.forEach((heanCard, index) => {
+                if ((index + 1) % 2 !== 0) {
+                    tmp.left = heanCard;
+                }
+                else {
+                    tmp.right = heanCard;
+                    heans.push(JSON.parse(JSON.stringify(tmp)));  // for deep copy
+                }
+            });
+            if (response.heanCards.length % 2 !== 0) {
+                tmp.right = null;
+                heans.push(JSON.parse(JSON.stringify(tmp)));  // for deep copy
+            }
+            this.setState({ mySubmission: heans });
         }
     }
 
@@ -71,42 +90,14 @@ class SubmissionScreen extends React.Component {
     }
 
     render() {
-        const { heans } = this.state
-        if (!heans)
-            return <Loading />;
-        if (heans.length === 0)
-            return <EmptyList field="投稿列表" />
+        const { selectedSubmission, mySubmission } = this.state;
         return (
             <React.Fragment>
-                <View style={{ height: 40, flexDirection: 'row-reverse', backgroundColor: theme.palette.sky[0] }}>
-                    <TouchableOpacity
-                        style={{ borderWidth: 0, width: 100, justifyContent: "center", alignItems: "center", flexDirection: "row" }}
-                        onPress={() => this.props.navigation.push("PostSubmission")}
-                    >
-                        <FontAwesome name={"envelope-o"} size={20} />
-                        <Text style={{ fontSize: 20, marginLeft: 5 }}>去投稿</Text>
-                    </TouchableOpacity>
-                </View>
-                <Divider />
-                <View style={{ backgroundColor: theme.palette.sky[0], flex: 1 }}>
-                    <FlatList
-                        data={this.state.heans}
-                        renderItem={({ item, index }) => (
-                            <View style={{ flexDirection: "row" }}>
-                                <View style={{ width: "50%" }}>
-                                    <HeanCard hId={item.left.hId} navigation={this.props.navigation} />
-                                </View>
-                                {item.right &&
-                                    <View style={{ width: "50%" }}>
-                                        <HeanCard hId={item.right.hId} navigation={this.props.navigation} />
-                                    </View>
-                                }
-                            </View>
-                        )}
-                        disableVirtualization
-                    />
-                </View>
-            </React.Fragment >
+                <ScrollableTabView renderTabBar={() => <DefaultTabBar />} initialPage={0} style={{ backgroundColor: theme.palette.sky[0] }}>
+                    <SubmissionList tabLabel="投稿栏" heans={selectedSubmission} navigation={this.props.navigation} />
+                    <SubmissionList tabLabel="我的投稿" heans={mySubmission} navigation={this.props.navigation} />
+                </ScrollableTabView>
+            </React.Fragment>
         );
     }
 }

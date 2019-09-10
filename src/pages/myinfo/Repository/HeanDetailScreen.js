@@ -162,6 +162,7 @@ class HeanDetailScreen extends Component {
     render() {
         const { hId, avatar, username, createdTime, pictures, comments } = this.state.heanDetailed;
         const { text, likeCount, starCount, commentCount, hasLiked, hasStarred } = this.state.heanCard;
+        const otherUId = this.state.heanDetailed.uId;
         if (!hId)
             return <Loading />;
         return (
@@ -171,11 +172,13 @@ class HeanDetailScreen extends Component {
 
                         {/* avatar, username, createdTime */}
                         <View style={[css.Icon, { borderWidth: 0, marginTop: 10 }]}>
-                            <Avatar
-                                rounded
-                                size={"medium"}
-                                source={avatar === '' ? defaultAvatar : { uri: avatar }}
-                            />
+                            <TouchableOpacity onPress={() => this.props.navigation.push("PersonPage", { uId: otherUId })}>
+                                <Avatar
+                                    rounded
+                                    size={"medium"}
+                                    source={avatar === '' ? defaultAvatar : { uri: avatar }}
+                                />
+                            </TouchableOpacity>
                             <View style={[css.username, { borderWidth: 0, flex: 1 }]}>
                                 <Text style={{ fontSize: 20 }}>{username}</Text>
                                 <Text>{transformDate(createdTime, true)}</Text>
@@ -233,7 +236,7 @@ class HeanDetailScreen extends Component {
                         <Divider style={{ marginVertical: 5 }} />
                         {/* detailed comments */}
                         {comments.map((item, index) => (
-                            <Comment comment={item} />
+                            <Comment comment={item} navigation={this.props.navigation} />
                         ))}
                         {comments.length === 0 && (
                             <View style={{ borderWidth: 0 }}>
